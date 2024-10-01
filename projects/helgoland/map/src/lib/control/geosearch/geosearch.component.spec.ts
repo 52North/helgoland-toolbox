@@ -14,20 +14,20 @@ describe('GeosearchComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    providers: [
+      providers: [
         MapCache,
         {
-            provide: GeoSearch,
-            useClass: NominatimGeoSearchService
-        }
-    ],
-    imports: [
+          provide: GeoSearch,
+          useClass: NominatimGeoSearchService,
+        },
+      ],
+      imports: [
         FormsModule,
         HttpClientModule,
         HelgolandCoreModule,
-        GeosearchControlComponent
-    ]
-}).compileComponents();
+        GeosearchControlComponent,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -44,7 +44,7 @@ describe('GeosearchComponent', () => {
   it('should search with point geometry in result', (done) => {
     component.searchTerm = 'gent';
     component.options = {
-      asPointGeometry: true
+      asPointGeometry: true,
     };
     component.triggerSearch();
     component.onResultChanged.subscribe((res: GeoSearchResult) => {
@@ -52,5 +52,4 @@ describe('GeosearchComponent', () => {
       done();
     });
   });
-
 });

@@ -1,6 +1,9 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { DatasetApiV1ConnectorProvider, HelgolandCoreModule } from '@helgoland/core';
+import {
+  DatasetApiV1ConnectorProvider,
+  HelgolandCoreModule,
+} from '@helgoland/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 
 import { DatasetApiInterfaceTesting } from '../../../../../testing/dataset-api-interface.testing';
@@ -14,19 +17,19 @@ describe('DatasetByStationSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HttpClientModule,
         TranslateTestingModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
-        DatasetByStationSelectorComponent
-    ],
-    providers: [
+        DatasetByStationSelectorComponent,
+      ],
+      providers: [
         DatasetApiInterfaceTesting,
         SettingsServiceTestingProvider,
         DatasetApiV1ConnectorProvider,
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -35,7 +38,7 @@ describe('DatasetByStationSelectorComponent', () => {
     component.station = {
       id: 'id',
       datasetIds: [],
-      label: 'label'
+      label: 'label',
     };
     component.url = 'url';
     fixture.detectChanges();

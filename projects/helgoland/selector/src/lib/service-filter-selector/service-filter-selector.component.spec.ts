@@ -13,17 +13,15 @@ describe('ServiceFilterSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HttpClientModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
         TranslateTestingModule,
-        ServiceFilterSelectorComponent
-    ],
-    providers: [
-        SettingsServiceTestingProvider
-    ]
-}).compileComponents();
+        ServiceFilterSelectorComponent,
+      ],
+      providers: [SettingsServiceTestingProvider],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

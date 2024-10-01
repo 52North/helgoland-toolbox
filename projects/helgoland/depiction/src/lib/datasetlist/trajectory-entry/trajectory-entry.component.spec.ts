@@ -12,16 +12,13 @@ describe('TrajectoryEntryComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HelgolandCoreModule,
         TranslateTestingModule,
-        TrajectoryEntryComponent
-    ],
-    providers: [
-        DatasetApiInterfaceTesting,
-        SettingsServiceTestingProvider
-    ]
-}).compileComponents();
+        TrajectoryEntryComponent,
+      ],
+      providers: [DatasetApiInterfaceTesting, SettingsServiceTestingProvider],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

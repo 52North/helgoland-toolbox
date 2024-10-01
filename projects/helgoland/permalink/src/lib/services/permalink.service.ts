@@ -1,8 +1,7 @@
 export abstract class PermalinkService<T> {
-
   public createPermalink = () => {
     return this.generatePermalink();
-  }
+  };
 
   public abstract validatePeramlink(): T;
 

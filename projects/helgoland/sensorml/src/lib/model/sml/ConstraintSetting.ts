@@ -6,10 +6,10 @@ import { AllowedValues } from '../swe/AllowedValues';
 import { DisplayName } from '../../common/decorators/DisplayName';
 
 export class ConstraintSetting extends AbstractSetting {
-    @DisplayName('Value')
-    override value: AllowedTokens | AllowedTimes | AllowedValues;
+  @DisplayName('Value')
+  override value: AllowedTokens | AllowedTimes | AllowedValues;
 
-    override toString() {
-        return 'Constraint setting';
-    }
+  override toString() {
+    return 'Constraint setting';
+  }
 }

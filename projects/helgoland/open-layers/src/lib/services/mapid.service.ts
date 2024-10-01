@@ -5,10 +5,9 @@ import { Observable, of, Subject } from 'rxjs';
  * Service to hold the corresponding map id
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OlMapId {
-
   private id: string | undefined;
 
   private subject: Subject<string> = new Subject();

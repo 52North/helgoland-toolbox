@@ -11,9 +11,9 @@ describe('LabelMapperComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [HttpClientModule, LabelMapperComponent],
-    providers: [LabelMapperService, SettingsService]
-}).compileComponents();
+      imports: [HttpClientModule, LabelMapperComponent],
+      providers: [LabelMapperService, SettingsService],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

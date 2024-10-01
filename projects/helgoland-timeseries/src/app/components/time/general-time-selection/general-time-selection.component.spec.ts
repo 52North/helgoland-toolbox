@@ -18,7 +18,7 @@ describe('GeneralTimeSelectionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HelgolandCoreModule,
         MatDatepickerModule,
         MatDividerModule,
@@ -29,9 +29,9 @@ describe('GeneralTimeSelectionComponent', () => {
         NoopAnimationsModule,
         ReactiveFormsModule,
         TranslateTestingModule,
-        GeneralTimeSelectionComponent
-    ]
-}).compileComponents();
+        GeneralTimeSelectionComponent,
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

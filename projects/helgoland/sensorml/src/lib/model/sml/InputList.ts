@@ -3,10 +3,10 @@ import { Input } from './Input';
 import { DisplayName } from '../../common/decorators/DisplayName';
 
 export class InputList extends AbstractSWE {
-    @DisplayName('Inputs')
-    inputs: Input[] = [];
+  @DisplayName('Inputs')
+  inputs: Input[] = [];
 
-    override toString() {
-        return 'Input list';
-    }
+  override toString() {
+    return 'Input list';
+  }
 }

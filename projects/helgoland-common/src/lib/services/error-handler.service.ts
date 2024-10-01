@@ -2,13 +2,10 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ErrorHandlerService {
-
-  constructor(
-    private snackBar: MatSnackBar
-  ) { }
+  constructor(private snackBar: MatSnackBar) {}
 
   error(message: any, userDismiss = false, options: MatSnackBarConfig = {}) {
     let errorMessage = '';
@@ -21,5 +18,4 @@ export class ErrorHandlerService {
     }
     this.snackBar.open(errorMessage, dismiss, options);
   }
-
 }

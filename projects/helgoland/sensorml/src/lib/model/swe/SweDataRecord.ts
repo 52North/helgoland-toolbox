@@ -8,18 +8,18 @@ import { DisplayName } from '../../common/decorators/DisplayName';
  * choices
  */
 export class SweDataRecord extends AbstractDataComponent {
-    /**
-     * Definition of the field provided as a nested data component. The field can
-     * be scalar or can itself be an aggregate such as a record, choice or array
-     */
-    @DisplayName('Fields')
-    fields: SweField[] = [];
+  /**
+   * Definition of the field provided as a nested data component. The field can
+   * be scalar or can itself be an aggregate such as a record, choice or array
+   */
+  @DisplayName('Fields')
+  fields: SweField[] = [];
 
-    override toString() {
-        return 'Data Record Component';
-    }
+  override toString() {
+    return 'Data Record Component';
+  }
 
-    getValue() {
-        this.toString();
-    }
+  getValue() {
+    this.toString();
+  }
 }

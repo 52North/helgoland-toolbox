@@ -6,10 +6,7 @@ import { LocateService } from './locate.service';
 describe('LocateService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        LocateService,
-        MapCache
-      ]
+      providers: [LocateService, MapCache],
     });
   });
 

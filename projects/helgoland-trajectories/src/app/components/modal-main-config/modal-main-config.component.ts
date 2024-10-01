@@ -24,14 +24,10 @@ import { ConfigurationService } from './../../services/configuration.service';
     TranslateModule,
     VersionInfoComponent,
   ],
-  standalone: true
+  standalone: true,
 })
 export class ModalMainConfigComponent {
-
   public languages = this.configSrvc.configuration?.languages;
 
-  constructor(
-    private configSrvc: ConfigurationService
-  ) { }
-
+  constructor(private configSrvc: ConfigurationService) {}
 }

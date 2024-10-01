@@ -9,17 +9,14 @@ describe('PermalinkToClipboardComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
-        ClipboardModule,
-        PermalinkToClipboardComponent
-    ]
-}).compileComponents();
+      imports: [ClipboardModule, PermalinkToClipboardComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PermalinkToClipboardComponent);
     component = fixture.componentInstance;
-    component.url = "test";
+    component.url = 'test';
     fixture.detectChanges();
   });
 

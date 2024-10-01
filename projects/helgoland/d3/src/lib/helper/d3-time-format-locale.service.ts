@@ -6,10 +6,9 @@ import moment from 'moment';
  * This service formats the time labels for the time axis in d3. Internationalisation will be managed by moment.
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class D3TimeFormatLocaleService {
-
   protected formatMillisecond = '.SSS';
   protected formatSecond = ':ss';
   protected formatMinute = 'HH:mm';
@@ -19,20 +18,27 @@ export class D3TimeFormatLocaleService {
   protected formatMonth = 'MMM YY';
   protected formatYear = 'YYYY';
 
-  constructor(
-    protected timezoneSrvc: TimezoneService
-  ) { }
+  constructor(protected timezoneSrvc: TimezoneService) {}
 
   public formatTime(time: number): string {
     const curr = this.timezoneSrvc.createTzDate(time);
 
-    const format = this.roundSecond(time) < curr ? this.formatMillisecond
-      : this.roundMinute(time) < curr ? this.formatSecond
-        : this.roundHour(time) < curr ? this.formatMinute
-          : this.roundDay(time) < curr ? this.formatHour
-            : this.roundMonth(time) < curr ? (this.roundWeek(time) < curr ? this.formatDay : this.formatWeek)
-              : this.roundYear(time) < curr ? this.formatMonth
-                : this.formatYear;
+    const format =
+      this.roundSecond(time) < curr
+        ? this.formatMillisecond
+        : this.roundMinute(time) < curr
+          ? this.formatSecond
+          : this.roundHour(time) < curr
+            ? this.formatMinute
+            : this.roundDay(time) < curr
+              ? this.formatHour
+              : this.roundMonth(time) < curr
+                ? this.roundWeek(time) < curr
+                  ? this.formatDay
+                  : this.formatWeek
+                : this.roundYear(time) < curr
+                  ? this.formatMonth
+                  : this.formatYear;
 
     return this.timezoneSrvc.formatTzDate(moment(time), format);
   }
@@ -64,5 +70,4 @@ export class D3TimeFormatLocaleService {
   private roundDay(time: number) {
     return this.timezoneSrvc.createTzDate(time).startOf('day');
   }
-
 }

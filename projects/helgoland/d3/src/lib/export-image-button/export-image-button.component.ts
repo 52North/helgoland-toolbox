@@ -1,18 +1,16 @@
 import {
   ApplicationRef,
   Component,
-  ComponentFactoryResolver,
   ComponentRef,
   EmbeddedViewRef,
-  Injector,
   Input,
+  ViewContainerRef,
 } from '@angular/core';
 import {
   DatasetOptions,
   DatasetType,
   HelgolandServicesConnector,
   HelgolandTimeseries,
-  Required,
   Time,
   Timespan,
 } from '@helgoland/core';
@@ -20,22 +18,20 @@ import * as d3 from 'd3';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { D3TimeseriesGraphComponent } from '../d3-timeseries-graph/d3-timeseries-graph.component';
+import { D3SeriesGraphWrapperComponent } from '../d3-series-graph/d3-series-graph-wrapper/d3-series-graph-wrapper.component';
+import { D3PlotOptions } from '../d3-series-graph/models/d3-plot-options';
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
-import { D3PlotOptions } from '../model/d3-plot-options';
-import { NgIf } from '@angular/common';
 
 const wrapperClassName = 'export-diagram-wrapper';
 
 @Component({
-    selector: 'n52-export-image-button',
-    templateUrl: './export-image-button.component.html',
-    styleUrls: ['./export-image-button.component.scss'],
-    standalone: true,
-    imports: [NgIf]
+  selector: 'n52-export-image-button',
+  templateUrl: './export-image-button.component.html',
+  styleUrls: ['./export-image-button.component.scss'],
+  standalone: true,
+  imports: [],
 })
 export class ExportImageButtonComponent {
-
   /**
    * List of datasetIds, similiar to the timeseries component
    */
@@ -51,8 +47,7 @@ export class ExportImageButtonComponent {
   /**
    * Timespan, similiar to the timeseries component
    */
-  @Input()
-  @Required
+  @Input({ required: true })
   timespan!: Timespan;
 
   /**
@@ -104,8 +99,8 @@ export class ExportImageButtonComponent {
   presenterOptions: D3PlotOptions = {
     showTimeLabel: false,
     showReferenceValues: true,
-    grid: true
-  }
+    grid: true,
+  };
 
   public loading: boolean = false;
 
@@ -115,11 +110,10 @@ export class ExportImageButtonComponent {
   constructor(
     private servicesConnector: HelgolandServicesConnector,
     private applicationRef: ApplicationRef,
-    private injector: Injector,
-    private componentFactoryResolver: ComponentFactoryResolver,
+    private viewContainerRef: ViewContainerRef,
     private timeSrvc: Time,
-    private graphHelper: D3GraphHelperService
-  ) { }
+    private graphHelper: D3GraphHelperService,
+  ) {}
 
   public exportImage() {
     this.createDiagramElem();
@@ -133,21 +127,27 @@ export class ExportImageButtonComponent {
     this.internalWidth = this.width;
 
     if (this.showFirstLastDate && !this.presenterOptions.timeRangeLabel) {
-      this.presenterOptions.timeRangeLabel = { show: true, format: 'L' }
+      this.presenterOptions.timeRangeLabel = { show: true, format: 'L' };
     }
 
-    const comp = this.appendComponentToBody(D3TimeseriesGraphComponent) as ComponentRef<D3TimeseriesGraphComponent>;
+    const comp = this.appendComponentToBody(
+      D3SeriesGraphWrapperComponent,
+    ) as ComponentRef<D3SeriesGraphWrapperComponent>;
 
     comp.instance.datasetIds = this.datasetIds;
     comp.instance.datasetOptions = this.datasetOptions;
-    comp.instance.setTimespan(this.timespan);
+    comp.instance.yaxisModifier = false;
+    comp.instance.timespan = this.timespan;
     comp.instance.presenterOptions = this.presenterOptions;
 
-    comp.instance.dataLoaded.subscribe(loaded => {
+    comp.instance.dataLoaded.subscribe((loaded) => {
+      debugger;
       if (loaded.size === 0 && once) {
         once = false;
         setTimeout(() => {
-          const temp = this.prepareSelector(`.${wrapperClassName} n52-d3-timeseries-graph`);
+          const temp = this.prepareSelector(
+            `.${wrapperClassName} n52-d3-series-graph-wrapper`,
+          );
           const svgElem = document.querySelector<SVGSVGElement>(temp);
           if (svgElem) {
             this.diagramAdjustments(svgElem).subscribe(() => {
@@ -165,13 +165,15 @@ export class ExportImageButtonComponent {
             });
           }
         }, 1000);
-      };
-    })
+      }
+    });
   }
 
   private diagramAdjustments(svgElem: SVGSVGElement): Observable<void> {
     // adjust y axis fill out
-    svgElem.querySelectorAll<SVGSVGElement>('.y.axisDiv').forEach(el => el.style.fill = 'none');
+    svgElem
+      .querySelectorAll<SVGSVGElement>('.y.axisDiv')
+      .forEach((el) => (el.style.fill = 'none'));
 
     // adjust grid lines
     d3.selectAll('.d3 .grid .tick line').style('stroke', '#d3d3d3');
@@ -183,39 +185,73 @@ export class ExportImageButtonComponent {
 
   private addLegend(element: SVGSVGElement): Observable<void> {
     if (this.showLegend) {
-      const obs: Observable<{ label: d3.Selection<SVGGElement, unknown, null, undefined> | undefined, xPos: number }>[] = [];
+      const obs: Observable<{
+        label: d3.Selection<SVGGElement, unknown, null, undefined> | undefined;
+        xPos: number;
+      }>[] = [];
       const selection = d3.select(element);
       this.datasetOptions.forEach((option, k) => {
         if (option.visible) {
           obs.push(
-            this.servicesConnector.getDataset(k, { type: DatasetType.Timeseries }).pipe(map(ts => {
-              if (ts.firstValue && ts.lastValue && this.timeSrvc.overlaps(this.timespan, ts.firstValue.timestamp, ts.lastValue.timestamp)) {
-                const label = selection.append<SVGGElement>('g').attr('class', 'legend-entry');
-                this.graphHelper.drawDatasetSign(label, option, -10, -5, false);
-                label.append<SVGGraphicsElement>('svg:text').text(this.createLabelText(ts));
-                this.internalHeight += 25;
-                return {
-                  label,
-                  xPos: this.internalHeight - 10
-                };
-              } else {
-                return {
-                  label: undefined,
-                  xPos: 0
-                };
-              }
-            }))
+            this.servicesConnector
+              .getDataset(k, { type: DatasetType.Timeseries })
+              .pipe(
+                map((ts) => {
+                  if (
+                    ts.firstValue &&
+                    ts.lastValue &&
+                    this.timeSrvc.overlaps(
+                      this.timespan,
+                      ts.firstValue.timestamp,
+                      ts.lastValue.timestamp,
+                    )
+                  ) {
+                    const label = selection
+                      .append<SVGGElement>('g')
+                      .attr('class', 'legend-entry');
+                    this.graphHelper.drawDatasetSign(
+                      label,
+                      this.graphHelper.convertDatasetOptions(option),
+                      -10,
+                      -5,
+                      false,
+                    );
+                    label
+                      .append<SVGGraphicsElement>('svg:text')
+                      .text(this.createLabelText(ts));
+                    this.internalHeight += 25;
+                    return {
+                      label,
+                      xPos: this.internalHeight - 10,
+                    };
+                  } else {
+                    return {
+                      label: undefined,
+                      xPos: 0,
+                    };
+                  }
+                }),
+              ),
           );
         }
       });
-      return forkJoin(obs).pipe(map(elem => {
-        const maxWidth = Math.max(...elem.map(e => e.label?.node() ? e.label.node()!.getBBox().width : 0));
-        elem.forEach(e => {
-          if (e.label) {
-            e.label.attr('transform', `translate(${(this.internalWidth - maxWidth) / 2},${e.xPos})`);
-          }
-        });
-      }));
+      return forkJoin(obs).pipe(
+        map((elem) => {
+          const maxWidth = Math.max(
+            ...elem.map((e) =>
+              e.label?.node() ? e.label.node()!.getBBox().width : 0,
+            ),
+          );
+          elem.forEach((e) => {
+            if (e.label) {
+              e.label.attr(
+                'transform',
+                `translate(${(this.internalWidth - maxWidth) / 2},${e.xPos})`,
+              );
+            }
+          });
+        }),
+      );
     } else {
       return of();
     }
@@ -240,18 +276,32 @@ export class ExportImageButtonComponent {
       const graph = selection.select<SVGGraphicsElement>('g');
 
       this.moveDown(graph, addedHeight);
-      const titleElem = selection.append<SVGGraphicsElement>('svg:text').text(this.title);
+      const titleElem = selection
+        .append<SVGGraphicsElement>('svg:text')
+        .text(this.title);
       const titleElemNode = titleElem.node();
       if (titleElem && titleElemNode) {
         const titleWidth = titleElemNode.getBBox().width;
-        titleElem.attr('x', (this.internalWidth - titleWidth) / 2).attr('y', '15');
+        titleElem
+          .attr('x', (this.internalWidth - titleWidth) / 2)
+          .attr('y', '15');
       }
     }
   }
 
-  private moveDown(graph: d3.Selection<SVGGraphicsElement, any, null, undefined>, sizeToMove: number) {
-    const matrix = (document.getElementById(graph.attr('id')) as any).transform.baseVal.consolidate().matrix;
-    graph.attr('transform', `matrix(${matrix.a} ${matrix.b} ${matrix.c} ${matrix.d} ${matrix.e} ${matrix.f + sizeToMove})`);
+  private moveDown(
+    graph: d3.Selection<SVGGraphicsElement, any, null, undefined>,
+    sizeToMove: number,
+  ) {
+    const matrix = (
+      document.getElementById(graph.attr('id')) as any
+    ).transform.baseVal.consolidate().matrix;
+    graph.attr(
+      'transform',
+      `matrix(${matrix.a} ${matrix.b} ${matrix.c} ${matrix.d} ${matrix.e} ${
+        matrix.f + sizeToMove
+      })`,
+    );
   }
 
   private createPngImageDownload(element: SVGSVGElement) {
@@ -268,11 +318,17 @@ export class ExportImageButtonComponent {
     img.onload = () => {
       canvas.getContext('2d')?.drawImage(img, 0, 0);
       win.revokeObjectURL(url);
-      const uri = canvas.toDataURL('image/png').replace('image/png', 'octet/stream');
+      const uri = canvas
+        .toDataURL('image/png')
+        .replace('image/png', 'octet/stream');
       const a = document.createElement('a');
       document.body.appendChild(a);
-      a.href = uri
-      a.download = (element.id || element.getAttribute('name') || element.getAttribute('aria-label') || this.fileName) + '.png';
+      a.href = uri;
+      a.download =
+        (element.id ||
+          element.getAttribute('name') ||
+          element.getAttribute('aria-label') ||
+          this.fileName) + '.png';
       a.click();
       window.URL.revokeObjectURL(uri);
       document.body.removeChild(a);
@@ -281,14 +337,22 @@ export class ExportImageButtonComponent {
   }
 
   private createSvgDownload(element: SVGSVGElement) {
-    console.log(`Generate SVG file with width: ${this.internalWidth} and height: ${this.internalHeight}`);
+    console.log(
+      `Generate SVG file with width: ${this.internalWidth} and height: ${this.internalHeight}`,
+    );
     const serializer = new XMLSerializer();
     let source = serializer.serializeToString(element);
     if (!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
-      source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+      source = source.replace(
+        /^<svg/,
+        '<svg xmlns="http://www.w3.org/2000/svg"',
+      );
     }
     if (!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)) {
-      source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+      source = source.replace(
+        /^<svg/,
+        '<svg xmlns:xlink="http://www.w3.org/1999/xlink"',
+      );
     }
     source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
     const svgBlob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
@@ -310,11 +374,7 @@ export class ExportImageButtonComponent {
 
   private appendComponentToBody(component: any) {
     // create component ref
-    const componentRef = this.componentFactoryResolver.resolveComponentFactory(component)
-      .create(this.injector);
-
-    // attach component to the appRef.
-    this.applicationRef.attachView(componentRef.hostView);
+    const componentRef = this.viewContainerRef.createComponent(component);
 
     // get DOM element from component
     const domElem = (componentRef.hostView as EmbeddedViewRef<any>)
@@ -339,5 +399,4 @@ export class ExportImageButtonComponent {
     document.querySelector(`.${wrapperClassName}`)?.remove();
     componentRef.destroy();
   }
-
 }

@@ -5,7 +5,10 @@ import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 
 import { SettingsServiceTestingProvider } from '../../../../../testing/settings.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
-import { MultiServiceFilterEndpoint, MultiServiceFilterSelectorComponent } from './multi-service-filter-selector.component';
+import {
+  MultiServiceFilterEndpoint,
+  MultiServiceFilterSelectorComponent,
+} from './multi-service-filter-selector.component';
 
 describe('MultiServiceFilterSelectorComponent', () => {
   let component: MultiServiceFilterSelectorComponent;
@@ -13,17 +16,15 @@ describe('MultiServiceFilterSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HttpClientModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
         TranslateTestingModule,
-        MultiServiceFilterSelectorComponent
-    ],
-    providers: [
-        SettingsServiceTestingProvider
-    ]
-}).compileComponents();
+        MultiServiceFilterSelectorComponent,
+      ],
+      providers: [SettingsServiceTestingProvider],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -45,17 +46,15 @@ describe('MultiServiceFilterSelectorComponent creation', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HttpClientModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
         TranslateTestingModule,
-        MultiServiceFilterSelectorComponent
-    ],
-    providers: [
-        SettingsServiceTestingProvider
-    ]
-}).compileComponents();
+        MultiServiceFilterSelectorComponent,
+      ],
+      providers: [SettingsServiceTestingProvider],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -63,12 +62,21 @@ describe('MultiServiceFilterSelectorComponent creation', () => {
     component = fixture.componentInstance;
     component.filterList = [
       { url: 'https://fluggs.wupperverband.de/sws5/api/' },
-      { url: 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/', filter: { feature: '14' } }
+      {
+        url: 'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/',
+        filter: { feature: '14' },
+      },
     ];
     component.endpoint = MultiServiceFilterEndpoint.offering;
-    component.onItemSelected.subscribe(res => alert(res));
+    component.onItemSelected.subscribe((res) => alert(res));
     component.ngOnChanges({});
-    fixtureInterval = window.setInterval(() => fixture['_isDestroyed'] ? clearInterval(fixtureInterval) : fixture.detectChanges(), 100);
+    fixtureInterval = window.setInterval(
+      () =>
+        fixture['_isDestroyed']
+          ? clearInterval(fixtureInterval)
+          : fixture.detectChanges(),
+      100,
+    );
   });
 
   it('should create', () => {

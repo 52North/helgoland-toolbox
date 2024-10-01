@@ -30,19 +30,16 @@ describe('ListSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HttpClientModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
         TranslateTestingModule,
         ListSelectorComponent,
-        MultiServiceFilterSelectorComponent
-    ],
-    providers: [
-        ListSelectorService,
-        SettingsServiceTestingProvider
-    ]
-}).compileComponents();
+        MultiServiceFilterSelectorComponent,
+      ],
+      providers: [ListSelectorService, SettingsServiceTestingProvider],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -63,28 +60,28 @@ describe('ListSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HttpClientModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
         TranslateTestingModule,
         HelgolandCachingModule,
         ListSelectorComponent,
-        MultiServiceFilterSelectorComponent
-    ],
-    providers: [
+        MultiServiceFilterSelectorComponent,
+      ],
+      providers: [
         {
-            provide: DatasetApiInterface,
-            useClass: SplittedDataDatasetApiInterface
+          provide: DatasetApiInterface,
+          useClass: SplittedDataDatasetApiInterface,
         },
         DatasetApiV1ConnectorProvider,
         DatasetApiV2ConnectorProvider,
         DatasetApiV3ConnectorProvider,
         DatasetStaConnectorProvider,
         ListSelectorService,
-        SettingsServiceTestingProvider
-    ]
-}).compileComponents();
+        SettingsServiceTestingProvider,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -92,36 +89,45 @@ describe('ListSelectorComponent', () => {
     component = fixture.componentInstance;
     component.selectorId = 'test-id';
     component.providerList = [
-      { id: '1', url: 'https://fluggs.wupperverband.de/sws5/api/', filter: {} }
+      { id: '1', url: 'https://fluggs.wupperverband.de/sws5/api/', filter: {} },
     ];
     component.filter = {
       type: DatasetType.Timeseries,
-      platformType: PlatformTypes.mobile
+      platformType: PlatformTypes.mobile,
     };
     component.parameters = [
       {
         type: MultiServiceFilterEndpoint.category,
         header: 'Category',
-        filterList: []
-      }, {
+        filterList: [],
+      },
+      {
         type: MultiServiceFilterEndpoint.feature,
         header: 'Feature',
-        filterList: []
-      }, {
+        filterList: [],
+      },
+      {
         type: MultiServiceFilterEndpoint.phenomenon,
         header: 'Phenomenon',
-        filterList: []
-      }, {
+        filterList: [],
+      },
+      {
         type: MultiServiceFilterEndpoint.procedure,
         header: 'Procedure',
-        filterList: []
-      }
+        filterList: [],
+      },
     ];
     component.ngOnChanges({
-      'providerList': new SimpleChange(null, component.providerList, true)
+      providerList: new SimpleChange(null, component.providerList, true),
     });
-    component.onDatasetSelection.subscribe(datasets => console.log(datasets));
-    fixtureInterval = window.setInterval(() => fixture['_isDestroyed'] ? clearInterval(fixtureInterval) : fixture.detectChanges(), 100);
+    component.onDatasetSelection.subscribe((datasets) => console.log(datasets));
+    fixtureInterval = window.setInterval(
+      () =>
+        fixture['_isDestroyed']
+          ? clearInterval(fixtureInterval)
+          : fixture.detectChanges(),
+      100,
+    );
   });
 
   it('should create', () => {

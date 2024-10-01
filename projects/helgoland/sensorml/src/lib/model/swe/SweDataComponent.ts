@@ -1,4 +1,3 @@
-
 import { SweVector } from './SweVector';
 import { SweDataRecord } from './SweDataRecord';
 import { SweMatrix } from './SweMatrix';
@@ -16,18 +15,18 @@ import { SweCategoryRange } from './SweCategoryRange';
 import { SweDataChoice } from './SweDataChoice';
 
 export type SweDataComponent =
-    SweVector
-    | SweDataRecord
-    | SweMatrix
-    | SweDataArray
-    | SweText
-    | SweTime
-    | SweCount
-    | SweBoolean
-    | SweQuantity
-    | SweCategory
-    | SweTimeRange
-    | SweCountRange
-    | SweQuantityRange
-    | SweCategoryRange
-    | SweDataChoice;
+  | SweVector
+  | SweDataRecord
+  | SweMatrix
+  | SweDataArray
+  | SweText
+  | SweTime
+  | SweCount
+  | SweBoolean
+  | SweQuantity
+  | SweCategory
+  | SweTimeRange
+  | SweCountRange
+  | SweQuantityRange
+  | SweCategoryRange
+  | SweDataChoice;

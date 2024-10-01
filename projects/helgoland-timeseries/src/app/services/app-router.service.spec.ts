@@ -8,9 +8,7 @@ describe('AppRouterService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ]
+      imports: [RouterTestingModule],
     });
     service = TestBed.inject(AppRouterService);
   });

@@ -1,4 +1,4 @@
 export interface PresenterHighlight {
-    internalId: string;
-    dataIndex: number;
+  internalId: string;
+  dataIndex: number;
 }

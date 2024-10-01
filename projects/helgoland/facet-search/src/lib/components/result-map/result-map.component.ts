@@ -1,11 +1,23 @@
-import { AfterViewInit, Component, EventEmitter, Input, KeyValueDiffers, OnDestroy, OnInit, Output, ElementRef } from '@angular/core';
-import { Required } from '@helgoland/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  KeyValueDiffers,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { CachedMapComponent, MapCache } from '@helgoland/map';
 import { geoJSON } from 'leaflet';
 import * as L from 'leaflet';
 import { Subscription } from 'rxjs';
 
-import { FacetSearchElement, FacetSearchElementFeature, FacetSearchService } from '../../facet-search-model';
+import {
+  FacetSearchElement,
+  FacetSearchElementFeature,
+  FacetSearchService,
+} from '../../facet-search-model';
 
 delete (L.Icon.Default as any).prototype['_getIconUrl'];
 L.Icon.Default.mergeOptions({
@@ -15,14 +27,16 @@ L.Icon.Default.mergeOptions({
 });
 
 @Component({
-    selector: 'n52-result-map',
-    templateUrl: './result-map.component.html',
-    styleUrls: ['./result-map.component.scss'],
-    standalone: true
+  selector: 'n52-result-map',
+  templateUrl: './result-map.component.html',
+  styleUrls: ['./result-map.component.scss'],
+  standalone: true,
 })
-export class ResultMapComponent extends CachedMapComponent implements OnInit, AfterViewInit, OnDestroy {
-
-  @Input() @Required public facetSearchService!: FacetSearchService;
+export class ResultMapComponent
+  extends CachedMapComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
+  @Input({ required: true }) public facetSearchService!: FacetSearchService;
 
   @Input() public cluster = true;
 
@@ -34,23 +48,29 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
 
   @Input() public nextResultsZoom = true;
 
-  @Output() public selectedFeature: EventEmitter<{ feature: FacetSearchElementFeature, url: string }> = new EventEmitter();
+  @Output() public selectedFeature: EventEmitter<{
+    feature: FacetSearchElementFeature;
+    url: string;
+  }> = new EventEmitter();
 
-  @Output() public selectedEntry: EventEmitter<FacetSearchElement> = new EventEmitter();
+  @Output() public selectedEntry: EventEmitter<FacetSearchElement> =
+    new EventEmitter();
 
   private markerFeatureGroup: L.FeatureGroup | undefined;
   private resultsSubs: Subscription | undefined;
 
   constructor(
     protected override mapCache: MapCache,
-    protected differs: KeyValueDiffers
+    protected differs: KeyValueDiffers,
   ) {
     super(mapCache, differs);
   }
 
   override ngOnInit() {
     super.ngOnInit();
-    this.resultsSubs = this.facetSearchService.getResults().subscribe(ts => this.fetchResults(ts));
+    this.resultsSubs = this.facetSearchService
+      .getResults()
+      .subscribe((ts) => this.fetchResults(ts));
   }
 
   override ngOnDestroy() {
@@ -68,42 +88,54 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
 
   private fetchResults(entries: FacetSearchElement[]) {
     if (this.map) {
-      if (this.markerFeatureGroup) { this.map.removeLayer(this.markerFeatureGroup); }
+      if (this.markerFeatureGroup) {
+        this.map.removeLayer(this.markerFeatureGroup);
+      }
       if (this.cluster) {
         this.markerFeatureGroup = L.markerClusterGroup({ animate: true });
       } else {
         this.markerFeatureGroup = L.featureGroup();
       }
       if (this.aggregateToStations) {
-        const features = new Map<string, {feature: FacetSearchElementFeature, url: string}>();
-        entries.forEach(e => {
+        const features = new Map<
+          string,
+          { feature: FacetSearchElementFeature; url: string }
+        >();
+        entries.forEach((e) => {
           if (e.feature) {
             const id = `${e.feature.id}-${e.url}`;
             if (!features.has(id) && e.url) {
-              features.set(id, {feature: e.feature, url: e.url});
+              features.set(id, { feature: e.feature, url: e.url });
             }
           }
         });
-        features.forEach(v => {
+        features.forEach((v) => {
           const geom = this.createFeatureGeometry(v);
-          if (geom) { this.markerFeatureGroup!.addLayer(geom); }
+          if (geom) {
+            this.markerFeatureGroup!.addLayer(geom);
+          }
         });
         if (features.size === 1 && this.selectSingleStation) {
           const entry = features.get(features.keys().next().value);
           this.selectedFeature.emit(entry);
         }
       } else {
-        entries.forEach(e => {
+        entries.forEach((e) => {
           if (e.feature) {
             const marker = this.createEntryGeometry(e.feature);
-            if (marker) { this.markerFeatureGroup!.addLayer(marker); }
+            if (marker) {
+              this.markerFeatureGroup!.addLayer(marker);
+            }
           }
         });
       }
       this.markerFeatureGroup.addTo(this.map);
 
       const bounds = this.markerFeatureGroup.getBounds();
-      if (bounds.isValid() && (this.autoZoomToResults || this.nextResultsZoom)) {
+      if (
+        bounds.isValid() &&
+        (this.autoZoomToResults || this.nextResultsZoom)
+      ) {
         this.map.fitBounds(bounds);
         this.map.invalidateSize();
         this.nextResultsZoom = false;
@@ -111,7 +143,10 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
     }
   }
 
-  private createFeatureGeometry(elem: {feature: FacetSearchElementFeature, url: string}): L.GeoJSON | undefined {
+  private createFeatureGeometry(elem: {
+    feature: FacetSearchElementFeature;
+    url: string;
+  }): L.GeoJSON | undefined {
     if (elem.feature) {
       const geometry = geoJSON(elem.feature.geometry);
       geometry.on('mouseup', () => this.selectedFeature.emit(elem));
@@ -128,5 +163,4 @@ export class ResultMapComponent extends CachedMapComponent implements OnInit, Af
     }
     return undefined;
   }
-
 }

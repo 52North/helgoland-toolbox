@@ -5,7 +5,6 @@ const TIME_IN_MS = 3000;
 
 @Injectable()
 export class NotifierService {
-
   private notifierTimeout: any;
 
   constructor() {
@@ -25,9 +24,15 @@ export class NotifierService {
     const notifierElement = document.getElementById(ID);
     if (notifierElement) {
       notifierElement.innerHTML = text;
-      notifierElement.className = notifierElement.className.replace('hide', 'show');
+      notifierElement.className = notifierElement.className.replace(
+        'hide',
+        'show',
+      );
       this.notifierTimeout = setTimeout(() => {
-        notifierElement.className = notifierElement.className.replace('show', 'hide');
+        notifierElement.className = notifierElement.className.replace(
+          'show',
+          'hide',
+        );
       }, TIME_IN_MS);
     }
   }

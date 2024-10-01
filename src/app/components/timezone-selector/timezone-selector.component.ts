@@ -6,18 +6,13 @@ import { TimezoneService } from '@helgoland/core';
   selector: 'n52-timezone-selector',
   templateUrl: './timezone-selector.component.html',
   styleUrls: ['./timezone-selector.component.scss'],
-  imports: [
-    MatSelectModule
-  ],
-  standalone: true
+  imports: [MatSelectModule],
+  standalone: true,
 })
 export class TimezoneSelectorComponent implements OnInit {
-
   public timezone: string | undefined;
 
-  constructor(
-    private timezoneSrvc: TimezoneService
-  ) { }
+  constructor(private timezoneSrvc: TimezoneService) {}
 
   ngOnInit() {
     this.timezone = this.timezoneSrvc.getTimezoneName();
@@ -26,5 +21,4 @@ export class TimezoneSelectorComponent implements OnInit {
   changeTimezone(msc: MatSelectChange) {
     this.timezoneSrvc.setTimezone(msc.value);
   }
-
 }

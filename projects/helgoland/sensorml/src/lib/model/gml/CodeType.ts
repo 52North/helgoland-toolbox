@@ -7,18 +7,18 @@ import { DisplayName } from '../../common/decorators/DisplayName';
  * scheme, authority, or pattern for the term.
  */
 export class CodeType {
-    @DisplayName('Value')
-    value: string;
+  @DisplayName('Value')
+  value: string;
 
-    @DisplayName('Code space')
-    codeSpace: string;
+  @DisplayName('Code space')
+  codeSpace: string;
 
-    constructor(value: string, codeSpace: string = null) {
-        this.value = value;
-        this.codeSpace = codeSpace;
-    }
+  constructor(value: string, codeSpace: string = null) {
+    this.value = value;
+    this.codeSpace = codeSpace;
+  }
 
-    toString() {
-        return this.value && this.value.length ? this.value : 'Code type';
-    }
+  toString() {
+    return this.value && this.value.length ? this.value : 'Code type';
+  }
 }

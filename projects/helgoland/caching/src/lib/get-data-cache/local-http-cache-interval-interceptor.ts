@@ -6,7 +6,6 @@ import {
   HttpRequestOptions,
   HttpServiceHandler,
   HttpServiceInterceptor,
-  ReferenceValues,
   Timespan,
   TimeValueTuple,
 } from '@helgoland/core';
@@ -19,15 +18,18 @@ import { HttpCacheInterval } from '../model';
 import { CachedIntersection, CachedObject } from './local-http-cache-interval';
 
 @Injectable()
-export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor {
-
+export class LocalHttpCacheIntervalInterceptor
+  implements HttpServiceInterceptor
+{
   private expirationAtMs = 30000;
 
   constructor(
     protected cache: HttpCacheInterval,
-    @Optional() @Inject(CacheConfigService) config: CacheConfig
+    @Optional() @Inject(CacheConfigService) config: CacheConfig,
   ) {
-    if (config && config.cachingDurationInMilliseconds) { this.expirationAtMs = config.cachingDurationInMilliseconds; }
+    if (config && config.cachingDurationInMilliseconds) {
+      this.expirationAtMs = config.cachingDurationInMilliseconds;
+    }
   }
 
   /**
@@ -37,9 +39,10 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
    * @param next {HttpServiceHandler} forward to further functions
    */
   public intercept(
-    req: HttpRequest<any>, metadata: HttpRequestOptions, next: HttpServiceHandler
+    req: HttpRequest<any>,
+    metadata: HttpRequestOptions,
+    next: HttpServiceHandler,
   ): Observable<HttpEvent<any>> {
-
     const urlID = this.decodeID(req.url);
     let expanded = false;
     let generalize = false;
@@ -67,34 +70,55 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
     if (!metadata.forceUpdate) {
       const reqTimespan = this.decodeTimespan(req.params.get('timespan'));
       // check cache for existing timespans
-      intersectedCache = this.cache.getIntersection(req.url, reqTimespan, generalize);
+      intersectedCache = this.cache.getIntersection(
+        req.url,
+        reqTimespan,
+        generalize,
+      );
 
-      if (intersectedCache && (intersectedCache.timespans.length === 0 || (Math.floor(intersectedCache.timespans[0].from / 1000) === Math.floor(intersectedCache.timespans[0].to / 1000)))) {
+      if (
+        intersectedCache &&
+        (intersectedCache.timespans.length === 0 ||
+          Math.floor(intersectedCache.timespans[0].from / 1000) ===
+            Math.floor(intersectedCache.timespans[0].to / 1000))
+      ) {
         if (intersectedCache.cachedObjects[0]) {
           // requested timespan is covered by existing cachedObject
-          return new Observable<HttpEvent<any>>((observer: Observer<HttpEvent<any>>) => {
-            const httpResponse = intersectedCache.cachedObjects[0].httpResponse;
-            const resHttpEvent = this.createHttpResponse(urlID, expanded, httpResponse, intersectedCache);
-            observer.next(resHttpEvent); // intersectedCache.cachedObjects[0].httpEvent);
-            observer.complete();
-          });
+          return new Observable<HttpEvent<any>>(
+            (observer: Observer<HttpEvent<any>>) => {
+              const httpResponse =
+                intersectedCache.cachedObjects[0].httpResponse;
+              const resHttpEvent = this.createHttpResponse(
+                urlID,
+                expanded,
+                httpResponse,
+                intersectedCache,
+              );
+              observer.next(resHttpEvent); // intersectedCache.cachedObjects[0].httpEvent);
+              observer.complete();
+            },
+          );
         } else {
           // case that there is intersection with cache, but the requested time interval contains no data values
-          return new Observable<HttpEvent<any>>((observer: Observer<HttpEvent<any>>) => {
-            const body: any = {};
-            body[urlID] = {
-              values: [],
-              referenceValues: []
-            };
-            observer.next(new HttpResponse({
-              body: !expanded ? { values: [], referenceValues: [] } : body,
-              // headers: ,
-              status: 200,
-              statusText: 'OK',
-              url: req.url
-            }));
-            observer.complete();
-          });
+          return new Observable<HttpEvent<any>>(
+            (observer: Observer<HttpEvent<any>>) => {
+              const body: any = {};
+              body[urlID] = {
+                values: [],
+                referenceValues: [],
+              };
+              observer.next(
+                new HttpResponse({
+                  body: !expanded ? { values: [], referenceValues: [] } : body,
+                  // headers: ,
+                  status: 200,
+                  statusText: 'OK',
+                  url: req.url,
+                }),
+              );
+              observer.complete();
+            },
+          );
           // return next.handle(req, metadata);
         }
       } else {
@@ -103,13 +127,11 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
           // if more than one not covered timespans need to be requested, use origin request only
           // customReqs.push(req);
           // reqOptions.push(metadata);
-
           // TODO adapt here to handle more than one customized request, see 2 lines below
-
         } else if (intersectedCache && intersectedCache.timespans.length > 0) {
           // customize request, if requested timespan is not fully covered by existing cachedObjects
           // currently for one request only
-          intersectedCache.timespans.forEach(ts => {
+          intersectedCache.timespans.forEach((ts) => {
             let params = req.params;
             params = params.set('timespan', this.encodeTimespan(ts));
             const cReq = req.clone({ params });
@@ -127,48 +149,74 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
       customReqs.push(req);
       originReq = true;
     }
-    if (reqOptions.length === 0) { reqOptions.push(metadata); }
+    if (reqOptions.length === 0) {
+      reqOptions.push(metadata);
+    }
 
     const newRequest = customReqs[0];
     const newOptions = reqOptions[0];
 
     // use origin request for not covered timespans
     // or use custom request for not fully covered timespans
-    return new Observable<HttpEvent<any>>((observer: Observer<HttpEvent<any>>) => {
-      const shared = next.handle(newRequest, newOptions).pipe(share());
-      shared.subscribe((res) => {
-        if (res instanceof HttpResponse) {
-          const expirationTime = metadata.expirationAtMs ? metadata.expirationAtMs : this.expirationAtMs;
-          const resultUrl = this.getUrlWithoutParams(res.url);
-          // for ts data
-          const cachedItem: CachedObject = {
-            values: !expanded ? res.body : res.body[urlID],
-            expirationDate: moment(moment(new Date())).add(expirationTime, 'milliseconds').toDate(),
-            expirationAtMs: expirationTime,
-            httpResponse: res,
-            requestTs: this.decodeTimespan(newRequest.params.get('timespan'))
-          };
-          if (cachedItem.values.values.length > 0) {
-            // update cache
-            this.cache.put(resultUrl, cachedItem, generalize, originReq);
-          }
-          if (!originReq && intersectedCache && intersectedCache.cachedObjects.length > 0) {
-            if (cachedItem.values.values.length > 0) {
-              res = this.createHttpResponse(urlID, expanded, res, intersectedCache, cachedItem);
-            } else {
-              res = this.createHttpResponse(urlID, expanded, res, intersectedCache);
+    return new Observable<HttpEvent<any>>(
+      (observer: Observer<HttpEvent<any>>) => {
+        const shared = next.handle(newRequest, newOptions).pipe(share());
+        shared.subscribe({
+          next: (res) => {
+            if (res instanceof HttpResponse) {
+              const expirationTime = metadata.expirationAtMs
+                ? metadata.expirationAtMs
+                : this.expirationAtMs;
+              const resultUrl = this.getUrlWithoutParams(res.url);
+              // for ts data
+              const cachedItem: CachedObject = {
+                values: !expanded ? res.body : res.body[urlID],
+                expirationDate: moment(moment(new Date()))
+                  .add(expirationTime, 'milliseconds')
+                  .toDate(),
+                expirationAtMs: expirationTime,
+                httpResponse: res,
+                requestTs: this.decodeTimespan(
+                  newRequest.params.get('timespan'),
+                ),
+              };
+              if (cachedItem.values.values.length > 0) {
+                // update cache
+                this.cache.put(resultUrl, cachedItem, generalize, originReq);
+              }
+              if (
+                !originReq &&
+                intersectedCache &&
+                intersectedCache.cachedObjects.length > 0
+              ) {
+                if (cachedItem.values.values.length > 0) {
+                  res = this.createHttpResponse(
+                    urlID,
+                    expanded,
+                    res,
+                    intersectedCache,
+                    cachedItem,
+                  );
+                } else {
+                  res = this.createHttpResponse(
+                    urlID,
+                    expanded,
+                    res,
+                    intersectedCache,
+                  );
+                }
+              }
+              observer.next(res);
+              observer.complete();
             }
-          }
-          observer.next(res);
-          observer.complete();
-        }
-
-      }, (error) => {
-        observer.error(error);
-        observer.complete();
-      });
-    });
-
+          },
+          error: (error) => {
+            observer.error(error);
+            observer.complete();
+          },
+        });
+      },
+    );
   }
 
   /**
@@ -176,43 +224,96 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
    * @param intersected
    * @param newCachedObject
    */
-  private createHttpResponse(urlID: string, expanded: boolean, httpResponse: HttpResponse<any>, intersected: CachedIntersection, newCachedObject?: CachedObject): HttpEvent<any> {
+  private createHttpResponse(
+    urlID: string,
+    expanded: boolean,
+    httpResponse: HttpResponse<any>,
+    intersected: CachedIntersection,
+    newCachedObject?: CachedObject,
+  ): HttpEvent<any> {
     const resObj: Data<TimeValueTuple> = intersected.cachedObjects[0].values;
     let newObjValuesTimespan: Timespan;
     if (newCachedObject) {
       // add values of new cached object at the beginning
-      newObjValuesTimespan = new Timespan(newCachedObject.values.values[0][0], newCachedObject.values.values[newCachedObject.values.values.length - 1][0]);
+      newObjValuesTimespan = new Timespan(
+        newCachedObject.values.values[0][0],
+        newCachedObject.values.values[
+          newCachedObject.values.values.length - 1
+        ][0],
+      );
       if (newObjValuesTimespan.to <= resObj.values[0][0]) {
         resObj.values = newCachedObject.values.values.concat(resObj.values);
-        resObj.referenceValues = this.concatReferenceValues(resObj, newCachedObject.values);
-        resObj.valueBeforeTimespan = this.selectValueBeforeTimespan(resObj, newCachedObject.values);
-        resObj.valueAfterTimespan = this.selectValueAfterTimespan(resObj, newCachedObject.values);
+        resObj.referenceValues = this.concatReferenceValues(
+          resObj,
+          newCachedObject.values,
+        );
+        resObj.valueBeforeTimespan = this.selectValueBeforeTimespan(
+          resObj,
+          newCachedObject.values,
+        );
+        resObj.valueAfterTimespan = this.selectValueAfterTimespan(
+          resObj,
+          newCachedObject.values,
+        );
       }
-
     }
     for (let i = 1; i < intersected.cachedObjects.length; i++) {
       const currVal = intersected.cachedObjects[i].values;
       // add values of new cached object inbetween
-      if (newCachedObject && newObjValuesTimespan.from >= resObj.values[resObj.values.length - 1][0] && newObjValuesTimespan.to <= currVal.values[0][0]) {
+      if (
+        newCachedObject &&
+        newObjValuesTimespan.from >=
+          resObj.values[resObj.values.length - 1][0] &&
+        newObjValuesTimespan.to <= currVal.values[0][0]
+      ) {
         resObj.values = resObj.values.concat(newCachedObject.values.values);
-        resObj.referenceValues = this.concatReferenceValues(newCachedObject.values, resObj);
-        resObj.valueBeforeTimespan = this.selectValueBeforeTimespan(resObj, newCachedObject.values);
-        resObj.valueAfterTimespan = this.selectValueAfterTimespan(resObj, newCachedObject.values);
+        resObj.referenceValues = this.concatReferenceValues(
+          newCachedObject.values,
+          resObj,
+        );
+        resObj.valueBeforeTimespan = this.selectValueBeforeTimespan(
+          resObj,
+          newCachedObject.values,
+        );
+        resObj.valueAfterTimespan = this.selectValueAfterTimespan(
+          resObj,
+          newCachedObject.values,
+        );
       }
       resObj.values = resObj.values.concat(currVal.values);
       resObj.referenceValues = this.concatReferenceValues(currVal, resObj);
       // add values of new cached object at the end
-      if (i >= intersected.cachedObjects.length - 1 && newCachedObject && newObjValuesTimespan.from >= currVal.values[currVal.values.length - 1][0]) {
+      if (
+        i >= intersected.cachedObjects.length - 1 &&
+        newCachedObject &&
+        newObjValuesTimespan.from >=
+          currVal.values[currVal.values.length - 1][0]
+      ) {
         resObj.values = resObj.values.concat(newCachedObject.values.values);
-        resObj.referenceValues = this.concatReferenceValues(newCachedObject.values, resObj);
+        resObj.referenceValues = this.concatReferenceValues(
+          newCachedObject.values,
+          resObj,
+        );
       }
-      resObj.valueBeforeTimespan = this.selectValueBeforeTimespan(resObj, currVal);
-      resObj.valueAfterTimespan = this.selectValueAfterTimespan(resObj, currVal);
+      resObj.valueBeforeTimespan = this.selectValueBeforeTimespan(
+        resObj,
+        currVal,
+      );
+      resObj.valueAfterTimespan = this.selectValueAfterTimespan(
+        resObj,
+        currVal,
+      );
     }
-    if (resObj.valueBeforeTimespan && resObj.valueBeforeTimespan[0] > resObj.values[0][0]) {
+    if (
+      resObj.valueBeforeTimespan &&
+      resObj.valueBeforeTimespan[0] > resObj.values[0][0]
+    ) {
       resObj.valueBeforeTimespan = resObj.values[0];
     }
-    if (resObj.valueAfterTimespan && resObj.valueAfterTimespan[0] < resObj.values[resObj.values.length - 1][0]) {
+    if (
+      resObj.valueAfterTimespan &&
+      resObj.valueAfterTimespan[0] < resObj.values[resObj.values.length - 1][0]
+    ) {
       resObj.valueAfterTimespan = resObj.values[resObj.values.length - 1];
     }
 
@@ -223,7 +324,7 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
       headers: httpResponse.headers,
       status: httpResponse.status,
       statusText: httpResponse.statusText,
-      url: httpResponse.url
+      url: httpResponse.url,
     });
   }
 
@@ -232,8 +333,14 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
    * @param base {Data<TimeValueTuple>} array of values
    * @param adds {Data<TimeValueTuple>} array of values
    */
-  private concatReferenceValues(base: Data<TimeValueTuple>, adds: Data<TimeValueTuple>): ReferenceValues<TimeValueTuple> {
-    const res: ReferenceValues<TimeValueTuple> = Object.assign({}, base.referenceValues);
+  private concatReferenceValues(
+    base: Data<TimeValueTuple>,
+    adds: Data<TimeValueTuple>,
+  ): ReferenceValues<TimeValueTuple> {
+    const res: ReferenceValues<TimeValueTuple> = Object.assign(
+      {},
+      base.referenceValues,
+    );
     // Object.assign(res, adds.referenceValues);
     // for (const key in res) {
     //   if (key) {
@@ -267,7 +374,16 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
       const idx = ts.indexOf('/');
       const start = ts.substring(0, idx);
       const end = ts.substring(idx + 1);
-      return new Timespan(Math.min(moment(new Date(start)).unix() * 1000, moment(new Date(end)).unix() * 1000), Math.max(moment(new Date(start)).unix() * 1000, moment(new Date(end)).unix() * 1000));
+      return new Timespan(
+        Math.min(
+          moment(new Date(start)).unix() * 1000,
+          moment(new Date(end)).unix() * 1000,
+        ),
+        Math.max(
+          moment(new Date(start)).unix() * 1000,
+          moment(new Date(end)).unix() * 1000,
+        ),
+      );
     }
     return null;
   }
@@ -277,7 +393,7 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
    * @param timespan {Timespan} timespan to be encoded to a string format
    */
   private encodeTimespan(timespan: Timespan): string {
-    return (moment(timespan.from).format() + '/' + moment(timespan.to).format());
+    return moment(timespan.from).format() + '/' + moment(timespan.to).format();
   }
 
   /**
@@ -296,10 +412,15 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
    * @param el1 {Data<TimeValueTuple>}
    * @param el2 {Data<TimeValueTuple>}
    */
-  private selectValueBeforeTimespan(el1: Data<TimeValueTuple>, el2: Data<TimeValueTuple>): TimeValueTuple | undefined {
+  private selectValueBeforeTimespan(
+    el1: Data<TimeValueTuple>,
+    el2: Data<TimeValueTuple>,
+  ): TimeValueTuple | undefined {
     if (el1.valueBeforeTimespan) {
       if (el2.valueBeforeTimespan) {
-        return el1.valueBeforeTimespan[0] < el2.valueBeforeTimespan[0] ? el1.valueBeforeTimespan : el2.valueBeforeTimespan;
+        return el1.valueBeforeTimespan[0] < el2.valueBeforeTimespan[0]
+          ? el1.valueBeforeTimespan
+          : el2.valueBeforeTimespan;
       } else {
         return el1.valueBeforeTimespan;
       }
@@ -315,10 +436,15 @@ export class LocalHttpCacheIntervalInterceptor implements HttpServiceInterceptor
    * @param el1 {Data<TimeValueTuple>}
    * @param el2 {Data<TimeValueTuple>}
    */
-  private selectValueAfterTimespan(el1: Data<TimeValueTuple>, el2: Data<TimeValueTuple>): TimeValueTuple | undefined {
+  private selectValueAfterTimespan(
+    el1: Data<TimeValueTuple>,
+    el2: Data<TimeValueTuple>,
+  ): TimeValueTuple | undefined {
     if (el1.valueAfterTimespan) {
       if (el2.valueAfterTimespan) {
-        return el1.valueAfterTimespan[0] < el2.valueAfterTimespan[0] ? el1.valueAfterTimespan : el2.valueAfterTimespan;
+        return el1.valueAfterTimespan[0] < el2.valueAfterTimespan[0]
+          ? el1.valueAfterTimespan
+          : el2.valueAfterTimespan;
       } else {
         return el1.valueAfterTimespan;
       }

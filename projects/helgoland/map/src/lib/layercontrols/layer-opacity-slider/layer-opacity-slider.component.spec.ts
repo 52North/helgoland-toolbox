@@ -9,9 +9,8 @@ describe('LayerOpacitySliderComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [FormsModule, LayerOpacitySliderComponent]
-})
-      .compileComponents();
+      imports: [FormsModule, LayerOpacitySliderComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

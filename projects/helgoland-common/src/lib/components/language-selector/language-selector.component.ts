@@ -8,11 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'helgoland-common-language-selector',
   templateUrl: './language-selector.component.html',
   styleUrls: ['./language-selector.component.scss'],
-  imports: [
-    CommonModule,
-    MatSelectModule,
-    TranslateModule,
-  ],
-  standalone: true
+  imports: [CommonModule, MatSelectModule, TranslateModule],
+  standalone: true,
 })
-export class LanguageSelectorComponent extends LocalSelectorComponent { }
+export class LanguageSelectorComponent extends LocalSelectorComponent {}

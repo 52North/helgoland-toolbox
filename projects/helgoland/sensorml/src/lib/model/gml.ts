@@ -1,4 +1,3 @@
-
 export * from './gml/AbstractFeature';
 export * from './gml/AbstractGeometricPrimitive';
 export * from './gml/AbstractGeometry';

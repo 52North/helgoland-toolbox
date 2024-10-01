@@ -7,17 +7,17 @@ import { TimezoneService } from './timezone.service';
 import { TzDatePipe } from './tz-date.pipe';
 
 describe('TzDatePipe', () => {
+  beforeEach(() =>
+    TestBed.configureTestingModule({
+      imports: [HelgolandCoreModule, TranslateTestingModule],
+    }),
+  );
 
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [
-      HelgolandCoreModule,
-      TranslateTestingModule,
-    ]
-  }));
-
-  it('create an instance', inject([TimezoneService, TranslateService], (timezoneSrvc: TimezoneService, translateSrvc: TranslateService) => {
-    const pipe = new TzDatePipe(timezoneSrvc, translateSrvc);
-    expect(pipe).toBeTruthy();
-  }));
-
+  it('create an instance', inject(
+    [TimezoneService, TranslateService],
+    (timezoneSrvc: TimezoneService, translateSrvc: TranslateService) => {
+      const pipe = new TzDatePipe(timezoneSrvc, translateSrvc);
+      expect(pipe).toBeTruthy();
+    },
+  ));
 });

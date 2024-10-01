@@ -1,7 +1,11 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
@@ -13,19 +17,19 @@ describe('ModalDiagramSettingsComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         TranslateTestingModule,
         HttpClientModule,
         MatButtonToggleModule,
         MatSlideToggleModule,
         MatDialogModule,
-        ModalDiagramSettingsComponent
-    ],
-    providers: [
+        ModalDiagramSettingsComponent,
+      ],
+      providers: [
         { provide: MatDialogRef, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: {} }
-    ]
-}).compileComponents();
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

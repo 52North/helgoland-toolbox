@@ -10,18 +10,21 @@ describe('TimespanShiftSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HelgolandCoreModule,
         TranslateTestingModule,
-        TimespanShiftSelectorComponent
-    ]
-}).compileComponents();
+        TimespanShiftSelectorComponent,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TimespanShiftSelectorComponent);
     component = fixture.componentInstance;
-    component.timespan = new Timespan(new Date().getTime() - 10000000, new Date().getTime());
+    component.timespan = new Timespan(
+      new Date().getTime() - 10000000,
+      new Date().getTime(),
+    );
     fixture.detectChanges();
   });
 

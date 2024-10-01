@@ -3,8 +3,7 @@
   "ignorePatterns": [
     "projects/**/*"
   ],
-  "overrides": [
-    {
+  "overrides": [{
       "files": [
         "*.ts"
       ],
@@ -16,7 +15,8 @@
       },
       "extends": [
         "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates"
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:prettier/recommended"
       ],
       "rules": {
         "@angular-eslint/directive-selector": [
@@ -35,6 +35,9 @@
             "style": "kebab-case"
           }
         ]
+        // "indent": [
+        //   "warn", 2, { "SwitchCase": 1 }
+        // ]
       }
     },
     {
@@ -42,9 +45,12 @@
         "*.html"
       ],
       "extends": [
-        "plugin:@angular-eslint/template/recommended"
+        "plugin:@angular-eslint/template/recommended",
+        "plugin:prettier/recommended"
       ],
-      "rules": {}
+      "rules": {
+        "prettier/prettier": ["error", { "parser": "angular" }]
+      }
     }
   ]
 }

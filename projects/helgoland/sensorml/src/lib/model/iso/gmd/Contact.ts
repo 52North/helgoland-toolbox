@@ -9,22 +9,22 @@ import { DisplayName } from '../../../common/decorators/DisplayName';
  * organisation
  */
 export class Contact {
-    @DisplayName('Phone')
-    phone: Phone = new Phone();
+  @DisplayName('Phone')
+  phone: Phone = new Phone();
 
-    @DisplayName('Address')
-    address: Address = new Address();
+  @DisplayName('Address')
+  address: Address = new Address();
 
-    @DisplayName('Online resource')
-    onlineResource: OnlineResource = new OnlineResource();
+  @DisplayName('Online resource')
+  onlineResource: OnlineResource = new OnlineResource();
 
-    @DisplayName('Hours of service')
-    hoursOfService: string;
+  @DisplayName('Hours of service')
+  hoursOfService: string;
 
-    @DisplayName('Contact instructions')
-    contactInstructions: string;
+  @DisplayName('Contact instructions')
+  contactInstructions: string;
 
-    toString() {
-        return 'Contact';
-    }
+  toString() {
+    return 'Contact';
+  }
 }

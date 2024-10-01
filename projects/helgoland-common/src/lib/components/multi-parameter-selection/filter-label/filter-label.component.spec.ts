@@ -9,11 +9,8 @@ describe('FilterLabelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
-        TranslateTestingModule,
-        FilterLabelComponent
-    ]
-}).compileComponents();
+      imports: [TranslateTestingModule, FilterLabelComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

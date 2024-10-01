@@ -1,12 +1,13 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { Component, Input, OnInit } from '@angular/core';
+import { SeriesGraphDataset } from '@helgoland/d3';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { FavoriteService, FavoriteTogglerComponent } from '@helgoland/favorite';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
+import { FavoriteService } from '../../../services/favorite.service';
 import { NotifierService } from '../../../services/notifier.service';
 
 @Component({
@@ -20,32 +21,60 @@ import { NotifierService } from '../../../services/notifier.service';
     MatTooltipModule,
     TranslateModule,
   ],
-  standalone: true
+  standalone: true,
 })
-export class FavoriteToggleButtonComponent extends FavoriteTogglerComponent {
+export class FavoriteToggleButtonComponent implements OnInit {
+  @Input({ required: true })
+  dataset!: SeriesGraphDataset;
+
+  isFavorite = false;
+  canBeFavorite = false;
 
   constructor(
-    protected override favSrvc: FavoriteService,
-    protected override translate: TranslateService,
+    protected favSrvc: FavoriteService,
+    protected translate: TranslateService,
     protected notifier: NotifierService,
-    protected liveAnnouncer: LiveAnnouncer
-  ) {
-    super(favSrvc, translate);
+    protected liveAnnouncer: LiveAnnouncer,
+  ) {}
+
+  ngOnInit(): void {
+    this.canBeFavorite = this.favSrvc.canBeFavorite(this.dataset?.id);
+    if (this.canBeFavorite) {
+      this.checkFavState();
+      this.favSrvc.countChange.subscribe((_) => this.checkFavState());
+    }
   }
 
-  protected override addFavorite() {
-    super.addFavorite();
-    this.inform(`${this.translate.instant('events.add-favorite')}: ${this.dataset.label}`);
+  private checkFavState() {
+    this.isFavorite = this.favSrvc.isFavorite(this.dataset?.id);
   }
 
-  protected override removeFavorite() {
-    super.removeFavorite();
-    this.inform(`${this.translate.instant('events.remove-favorite')}: ${this.dataset.label}`);
+  toggle() {
+    this.isFavorite ? this.removeFavorite() : this.createFavorite();
+  }
+
+  protected createFavorite() {
+    this.favSrvc.createFavorite(this.dataset);
+    this.isFavorite = true;
+    this.inform(
+      `${this.translate.instant('events.add-favorite')}: ${
+        this.dataset.description.phenomenonLabel
+      } @ ${this.dataset.description.platformLabel}`,
+    );
+  }
+
+  protected removeFavorite() {
+    this.favSrvc.removeFavorite(this.dataset.id);
+    this.isFavorite = false;
+    this.inform(
+      `${this.translate.instant('events.remove-favorite')}: ${
+        this.dataset.description.phenomenonLabel
+      } @ ${this.dataset.description.platformLabel}`,
+    );
   }
 
   private inform(message: string) {
     this.liveAnnouncer.announce(message);
     this.notifier.notify(message);
   }
-
 }

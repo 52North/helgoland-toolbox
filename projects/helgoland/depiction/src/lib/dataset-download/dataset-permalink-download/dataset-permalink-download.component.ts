@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import {
   DatasetApiMapping,
   HelgolandCsvExportLinkParams,
@@ -8,17 +14,15 @@ import {
   Timespan,
 } from '@helgoland/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgIf } from '@angular/common';
 
 @Component({
-    selector: 'n52-dataset-permalink-download',
-    templateUrl: './dataset-permalink-download.component.html',
-    styleUrls: ['./dataset-permalink-download.component.css'],
-    standalone: true,
-    imports: [NgIf, TranslateModule]
+  selector: 'n52-dataset-permalink-download',
+  templateUrl: './dataset-permalink-download.component.html',
+  styleUrls: ['./dataset-permalink-download.component.css'],
+  standalone: true,
+  imports: [TranslateModule],
 })
 export class DatasetPermalinkDownloadComponent implements OnChanges, OnInit {
-
   @Input()
   public internalId: InternalDatasetId | string | undefined;
 
@@ -33,8 +37,8 @@ export class DatasetPermalinkDownloadComponent implements OnChanges, OnInit {
   constructor(
     protected apiMapping: DatasetApiMapping,
     protected internalIdHandler: InternalIdHandler,
-    protected servicesConnector: HelgolandServicesConnector
-  ) { }
+    protected servicesConnector: HelgolandServicesConnector,
+  ) {}
 
   ngOnInit(): void {
     if (this.internalId && this.timeInterval) {
@@ -50,14 +54,18 @@ export class DatasetPermalinkDownloadComponent implements OnChanges, OnInit {
     }
   }
 
-  private createLink(internalId: string | InternalDatasetId, timespan: Timespan) {
+  private createLink(
+    internalId: string | InternalDatasetId,
+    timespan: Timespan,
+  ) {
     const params: HelgolandCsvExportLinkParams = {
       zip: true,
       generalize: true,
-      timespan
+      timespan,
     };
     params.lang = this.language && this.language !== '' ? this.language : 'en';
-    this.servicesConnector.createCsvDataExportLink(internalId, params).subscribe(link => this.downloadLink = link);
+    this.servicesConnector
+      .createCsvDataExportLink(internalId, params)
+      .subscribe((link) => (this.downloadLink = link));
   }
-
 }

@@ -5,22 +5,24 @@ import { Subscription } from 'rxjs';
 import { TimezoneService } from './timezone.service';
 
 @Pipe({
-    name: 'tzDate',
-    pure: false,
-    standalone: true
+  name: 'tzDate',
+  pure: false,
+  standalone: true,
 })
 export class TzDatePipe implements PipeTransform, OnDestroy {
-
   date!: Date | number | string;
   format: string | undefined;
   formattedDate: string = '';
-  onTimezoneChanged: Subscription = this.timezoneSrvc.timezoneChange.subscribe(() => this.updateDate());
-  onTranslationChanged: Subscription = this.translateSrvc.onLangChange.subscribe(() => this.updateDate());
+  onTimezoneChanged: Subscription = this.timezoneSrvc.timezoneChange.subscribe(
+    () => this.updateDate(),
+  );
+  onTranslationChanged: Subscription =
+    this.translateSrvc.onLangChange.subscribe(() => this.updateDate());
 
   constructor(
     private timezoneSrvc: TimezoneService,
-    private translateSrvc: TranslateService
-  ) { }
+    private translateSrvc: TranslateService,
+  ) {}
 
   transform(date: Date | number | string, ...args: any[]): any {
     if (!date) {
@@ -46,5 +48,4 @@ export class TzDatePipe implements PipeTransform, OnDestroy {
     this.onTimezoneChanged.unsubscribe();
     this.onTranslationChanged.unsubscribe();
   }
-
 }

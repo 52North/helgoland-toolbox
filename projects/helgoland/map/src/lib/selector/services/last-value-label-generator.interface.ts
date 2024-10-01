@@ -8,14 +8,14 @@ export const enum LastValuePresentation {
   /**
    * textual presentation of the last value, done with LastValueLabelGenerator
    */
-  Textual
+  Textual,
 }
 
 export abstract class LastValueLabelGenerator {
-
   /**
    * Creates an icon label based on a given timeseries.
    */
-  public abstract createIconLabel(ts: HelgolandTimeseries): L.DivIcon | undefined;
-
+  public abstract createIconLabel(
+    ts: HelgolandTimeseries,
+  ): L.DivIcon | undefined;
 }

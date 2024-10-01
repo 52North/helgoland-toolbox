@@ -17,15 +17,13 @@ import { ColorPickerModule } from 'ngx-color-picker';
     MatCheckboxModule,
     MatIconModule,
   ],
-  standalone: true
+  standalone: true,
 })
 export class LegendEntryComponent extends TrajectoryEntryComponent {
-
   confirmColor(color: string) {
     if (this.datasetOptions) {
       this.datasetOptions.color = color;
       this.onUpdateOptions.emit(this.datasetOptions);
     }
   }
-
 }

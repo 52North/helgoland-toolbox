@@ -5,11 +5,14 @@ import { ListSelectorService } from './list-selector.service';
 describe('ListSelectorService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ListSelectorService]
+      providers: [ListSelectorService],
     });
   });
 
-  it('should be created', inject([ListSelectorService], (service: ListSelectorService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', inject(
+    [ListSelectorService],
+    (service: ListSelectorService) => {
+      expect(service).toBeTruthy();
+    },
+  ));
 });

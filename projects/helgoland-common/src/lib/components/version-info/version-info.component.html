@@ -1,3 +1,11 @@
-<div>{{ 'main-config.version.build-time' | translate }}: {{versions.buildDate | tzDate : 'L LT'}}</div>
-<div>{{ 'main-config.version.toolbox-version' | translate }}: {{versions.version}}</div>
-<div>{{ 'main-config.version.git-commit' | translate }}: {{versions.commitId}}</div>
+<div>
+  {{ "main-config.version.build-time" | translate }}:
+  {{ versions.buildDate | tzDate: "L LT" }}
+</div>
+<div>
+  {{ "main-config.version.toolbox-version" | translate }}:
+  {{ versions.version }}
+</div>
+<div>
+  {{ "main-config.version.git-commit" | translate }}: {{ versions.commitId }}
+</div>

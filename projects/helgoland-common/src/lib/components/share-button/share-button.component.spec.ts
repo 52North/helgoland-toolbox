@@ -13,15 +13,15 @@ describe('ShareButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         MatSnackBarModule,
         HttpClientModule,
         MatIconModule,
         MatTooltipModule,
         TranslateTestingModule,
-        ShareButtonComponent
-    ]
-}).compileComponents();
+        ShareButtonComponent,
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

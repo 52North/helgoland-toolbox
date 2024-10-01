@@ -9,8 +9,8 @@ describe('OlLayerLegendUrlComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [HelgolandCoreModule, OlLayerLegendUrlComponent]
-}).compileComponents();
+      imports: [HelgolandCoreModule, OlLayerLegendUrlComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

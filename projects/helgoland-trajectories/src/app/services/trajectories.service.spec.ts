@@ -8,9 +8,7 @@ describe('TrajectoriesService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HelgolandCoreModule
-      ]
+      imports: [HelgolandCoreModule],
     });
     service = TestBed.inject(TrajectoriesService);
   });

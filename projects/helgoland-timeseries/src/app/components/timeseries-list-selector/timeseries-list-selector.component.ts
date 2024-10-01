@@ -11,18 +11,14 @@ import { TimeseriesService } from './../../services/timeseries-service.service';
   selector: 'helgoland-timeseries-list-selector',
   templateUrl: './timeseries-list-selector.component.html',
   styleUrls: ['./timeseries-list-selector.component.scss'],
-  imports: [
-    CommonModule,
-    MatListModule
-  ],
-  standalone: true
+  imports: [CommonModule, MatListModule],
+  standalone: true,
 })
 export class TimeseriesListSelectorComponent extends MultiServiceFilterSelectorComponent {
-
   constructor(
     protected override servicesConnector: HelgolandServicesConnector,
     protected override translate: TranslateService,
-    public timeseriesSrvc: TimeseriesService
+    public timeseriesSrvc: TimeseriesService,
   ) {
     super(servicesConnector, translate);
   }
@@ -35,5 +31,4 @@ export class TimeseriesListSelectorComponent extends MultiServiceFilterSelectorC
       this.timeseriesSrvc.removeDataset(ds.internalId);
     }
   }
-
 }

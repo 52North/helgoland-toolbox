@@ -9,11 +9,9 @@ describe('ZoomControlComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [ZoomControlComponent],
-    providers: [
-        MapCache
-    ]
-}).compileComponents();
+      imports: [ZoomControlComponent],
+      providers: [MapCache],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

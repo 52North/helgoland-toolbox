@@ -11,15 +11,13 @@ describe('DatasetExportComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HelgolandCoreModule,
         TranslateTestingModule,
-        DatasetExportComponent
-    ],
-    providers: [
-        SettingsServiceTestingProvider
-    ]
-}).compileComponents();
+        DatasetExportComponent,
+      ],
+      providers: [SettingsServiceTestingProvider],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

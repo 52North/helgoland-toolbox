@@ -12,11 +12,14 @@ describe('Service: VocabNercLabelMapper', () => {
       providers: [
         VocabNercLabelMapperService,
         { provide: SettingsService, useClass: MockedSettingsService },
-      ]
+      ],
     });
   });
 
-  it('should ...', inject([VocabNercLabelMapperService], (service: VocabNercLabelMapperService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should ...', inject(
+    [VocabNercLabelMapperService],
+    (service: VocabNercLabelMapperService) => {
+      expect(service).toBeTruthy();
+    },
+  ));
 });

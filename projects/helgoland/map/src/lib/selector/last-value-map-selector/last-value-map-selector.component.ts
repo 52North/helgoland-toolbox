@@ -16,25 +16,38 @@ import {
   HelgolandTimeseries,
   StatusIntervalResolverService,
 } from '@helgoland/core';
-import { circleMarker, featureGroup, geoJSON, Layer, Map, Marker, marker } from 'leaflet';
+import {
+  circleMarker,
+  featureGroup,
+  geoJSON,
+  Layer,
+  Map,
+  Marker,
+  marker,
+} from 'leaflet';
 import { forkJoin, Observable, Observer } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
 import { MapCache } from '../../base/map-cache.service';
 import { MapSelectorComponent } from '../map-selector.component';
-import { LastValueLabelGenerator, LastValuePresentation } from '../services/last-value-label-generator.interface';
+import {
+  LastValueLabelGenerator,
+  LastValuePresentation,
+} from '../services/last-value-label-generator.interface';
 
 /**
  * Displays selectable series with their last values on an map.
  */
 @Component({
-    selector: 'n52-last-value-map-selector',
-    templateUrl: '../map-selector.component.html',
-    styleUrls: ['../map-selector.component.scss'],
-    standalone: true
+  selector: 'n52-last-value-map-selector',
+  templateUrl: '../map-selector.component.html',
+  styleUrls: ['../map-selector.component.scss'],
+  standalone: true,
 })
-export class LastValueMapSelectorComponent extends MapSelectorComponent<HelgolandTimeseries> implements AfterViewInit, DoCheck, OnChanges {
-
+export class LastValueMapSelectorComponent
+  extends MapSelectorComponent<HelgolandTimeseries>
+  implements AfterViewInit, DoCheck, OnChanges
+{
   /**
    * The list of internal series IDs, which should be presented with their last values on the map.
    */
@@ -45,7 +58,8 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
    * Presentation type how to display the series.
    */
   @Input()
-  public lastValuePresentation: LastValuePresentation = LastValuePresentation.Colorized;
+  public lastValuePresentation: LastValuePresentation =
+    LastValuePresentation.Colorized;
 
   /**
    * Ignores all Statusintervals where the timestamp is before a given duration in milliseconds and draws instead the default marker.
@@ -64,10 +78,12 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
     protected override cd: ChangeDetectorRef,
     protected servicesConnector: HelgolandServicesConnector,
     protected lastValueLabelGenerator: LastValueLabelGenerator,
-    protected statusIntervalResolver: StatusIntervalResolverService
+    protected statusIntervalResolver: StatusIntervalResolverService,
   ) {
     super(mapCache, kvDiffers, cd);
-    this._lastValueSeriesIDsDiff = this.iDiffers.find(this.lastValueSeriesIDs).create();
+    this._lastValueSeriesIDsDiff = this.iDiffers
+      .find(this.lastValueSeriesIDs)
+      .create();
   }
 
   public override ngDoCheck() {
@@ -75,14 +91,13 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
     const changes = this._lastValueSeriesIDsDiff.diff(this.lastValueSeriesIDs);
 
     if (changes && this.map) {
-
       const ids: string[] = [];
-      changes.forEachAddedItem(record => {
+      changes.forEachAddedItem((record) => {
         ids.push(record.item);
       });
       this.createMarkersBySeriesIDs(ids, this.map);
 
-      changes.forEachRemovedItem(record => {
+      changes.forEachRemovedItem((record) => {
         this.removeMarker(record.item);
       });
     }
@@ -97,12 +112,22 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
 
   private createMarkersBySeriesIDs(ids: string[], map: L.Map) {
     const obsList: Array<Observable<any>> = [];
-    ids.forEach(id => {
-      const tsObs = this.servicesConnector.getDataset(id, { type: DatasetType.Timeseries });
-      obsList.push(tsObs.pipe(switchMap(val => this.createMarker(val).pipe(tap(res => {
-        this.markerFeatureGroup.addLayer(res);
-        res.on('click', () => this.onSelected.emit(val));
-      })))));
+    ids.forEach((id) => {
+      const tsObs = this.servicesConnector.getDataset(id, {
+        type: DatasetType.Timeseries,
+      });
+      obsList.push(
+        tsObs.pipe(
+          switchMap((val) =>
+            this.createMarker(val).pipe(
+              tap((res) => {
+                this.markerFeatureGroup.addLayer(res);
+                res.on('click', () => this.onSelected.emit(val));
+              }),
+            ),
+          ),
+        ),
+      );
     });
     this.finalizeMarkerObservables(obsList, map);
   }
@@ -129,11 +154,19 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
 
   private createColorizedMarker(ts: HelgolandTimeseries): Observable<Layer> {
     return new Observable<Layer>((observer: Observer<Layer>) => {
-      this.servicesConnector.getDatasetExtras(ts).subscribe(extras => {
+      this.servicesConnector.getDatasetExtras(ts).subscribe((extras) => {
         let coloredMarker: Layer | undefined = undefined;
         if (extras.statusIntervals) {
-          if (ts.lastValue && (ts.lastValue.timestamp) > new Date().getTime() - this.ignoreStatusIntervalIfBeforeDuration) {
-            const interval = this.statusIntervalResolver.getMatchingInterval(ts.lastValue.value, extras.statusIntervals);
+          if (
+            ts.lastValue &&
+            ts.lastValue.value &&
+            ts.lastValue.timestamp >
+              new Date().getTime() - this.ignoreStatusIntervalIfBeforeDuration
+          ) {
+            const interval = this.statusIntervalResolver.getMatchingInterval(
+              ts.lastValue.value,
+              extras.statusIntervals,
+            );
             if (interval) {
               coloredMarker = this.createColoredMarker(ts, interval.color);
             }
@@ -157,7 +190,11 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
     return this.createFilledMarker(ts, '#000', 10);
   }
 
-  private createFilledMarker(ts: HelgolandTimeseries, color: string, radius: number): Layer {
+  private createFilledMarker(
+    ts: HelgolandTimeseries,
+    color: string,
+    radius: number,
+  ): Layer {
     let geometry: Layer;
     if (ts.platform.geometry?.type === 'Point') {
       const point = ts.platform.geometry as GeoJSON.Point;
@@ -166,7 +203,7 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
         fillColor: color,
         fillOpacity: 0.8,
         radius: 10,
-        weight: 2
+        weight: 2,
       });
     } else {
       geometry = geoJSON(ts.platform.geometry, {
@@ -174,8 +211,8 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
           color: '#000',
           fillColor: color,
           fillOpacity: 0.8,
-          weight: 2
-        })
+          weight: 2,
+        }),
       });
     }
     if (geometry) {
@@ -186,11 +223,13 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
   }
 
   private createLabeledMarker(ts: HelgolandTimeseries): Observable<Marker> {
-    return new Observable<Marker>(observer => {
+    return new Observable<Marker>((observer) => {
       const icon = this.lastValueLabelGenerator.createIconLabel(ts);
       if (ts.platform.geometry?.type === 'Point') {
         const point = ts.platform.geometry as GeoJSON.Point;
-        const genMarker = marker([point.coordinates[1], point.coordinates[0]], { icon });
+        const genMarker = marker([point.coordinates[1], point.coordinates[0]], {
+          icon,
+        });
         this.setId(genMarker, ts.internalId);
         observer.next(genMarker);
         observer.complete();
@@ -199,7 +238,7 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
   }
 
   private setId(m: Layer, id: string) {
-    if (m instanceof Marker<any>) {
+    if (m instanceof Marker) {
       // m.feature = {
       //   id,
       //   type: 'Feature',
@@ -220,5 +259,4 @@ export class LastValueMapSelectorComponent extends MapSelectorComponent<Helgolan
       this.markerFeatureGroup.removeLayer(searchedLayer);
     }
   }
-
 }

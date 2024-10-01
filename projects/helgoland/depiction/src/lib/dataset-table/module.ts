@@ -6,15 +6,13 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DatasetTableComponent } from './dataset-table.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule,
-        HelgolandCoreModule,
-        DatasetTableComponent
-    ],
-    exports: [
-        DatasetTableComponent
-    ],
-    providers: []
+  imports: [
+    CommonModule,
+    TranslateModule,
+    HelgolandCoreModule,
+    DatasetTableComponent,
+  ],
+  exports: [DatasetTableComponent],
+  providers: [],
 })
-export class HelgolandDatasetTableModule { }
+export class HelgolandDatasetTableModule {}

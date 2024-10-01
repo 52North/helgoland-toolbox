@@ -10,21 +10,21 @@ import { DisplayName } from '../../common/decorators/DisplayName';
  * gml:AbstractGMLType.
  */
 export abstract class AbstractFeature extends AbstractGML {
-    /**
-     * The value of the gml:boundedBy property describes an envelope that encloses
-     * the entire feature instance, and is primarily useful for supporting rapid
-     * searching for features that occur in a particular location.
-     */
-    @DisplayName('Bounded by')
-    boundedBy: Envelope;
-    /**
-     * The value of the gml:location property describes the extent, position or
-     * relative location of the feature.
-     */
-    @DisplayName('Location')
-    location: any;
+  /**
+   * The value of the gml:boundedBy property describes an envelope that encloses
+   * the entire feature instance, and is primarily useful for supporting rapid
+   * searching for features that occur in a particular location.
+   */
+  @DisplayName('Bounded by')
+  boundedBy: Envelope;
+  /**
+   * The value of the gml:location property describes the extent, position or
+   * relative location of the feature.
+   */
+  @DisplayName('Location')
+  location: any;
 
-    override toString() {
-        return 'Abstract feature';
-    }
+  override toString() {
+    return 'Abstract feature';
+  }
 }

@@ -7,7 +7,6 @@ import { LastValueLabelGenerator } from './last-value-label-generator.interface'
 
 @Injectable()
 export class LastValueLabelGeneratorService extends LastValueLabelGenerator {
-
   constructor() {
     super();
   }
@@ -17,10 +16,9 @@ export class LastValueLabelGeneratorService extends LastValueLabelGenerator {
       const date = moment(ts.lastValue.timestamp).fromNow();
       return L.divIcon({
         className: 'last-value-container',
-        html: `<span class="last-value-label">${ts.lastValue.value}&nbsp;${ts.uom}</span><br><span class="last-value-date">${date}</span>`
+        html: `<span class="last-value-label">${ts.lastValue.value}&nbsp;${ts.uom}</span><br><span class="last-value-date">${date}</span>`,
       });
     }
     return undefined;
   }
-
 }

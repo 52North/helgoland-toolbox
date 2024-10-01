@@ -1,4 +1,10 @@
-<div *ngIf="datasetApis">
-  <n52-service-selector [datasetApiList]="datasetApis" [supportStations]="true" [filter]="providerFilter"
-    [showUnresolvableServices]="true"></n52-service-selector>
-</div>
+@if (datasetApis) {
+  <div>
+    <n52-service-selector
+      [datasetApiList]="datasetApis"
+      [supportStations]="true"
+      [filter]="providerFilter"
+      [showUnresolvableServices]="true"
+    ></n52-service-selector>
+  </div>
+}

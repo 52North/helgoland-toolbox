@@ -13,15 +13,15 @@ describe('ModalMainConfigButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         MatDialogModule,
         TranslateTestingModule,
         HttpClientModule,
         MatIconModule,
         MatTooltipModule,
-        ModalMainConfigButtonComponent
-    ]
-}).compileComponents();
+        ModalMainConfigButtonComponent,
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

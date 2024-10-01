@@ -1,7 +1,7 @@
 import { Settings } from '@helgoland/core';
 
 export const environment = {
-  production: true
+  production: true,
 };
 
 export let settings: Settings;

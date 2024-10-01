@@ -1,0 +1,135 @@
+import { CommonModule } from '@angular/common';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { HelgolandCoreModule, Time, TimeInterval } from '@helgoland/core';
+import { SeriesGraphDataset } from '@helgoland/d3';
+import { HelgolandLabelMapperModule } from '@helgoland/depiction';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LoadingOverlayProgressBarComponent } from 'helgoland-common';
+
+import { FavoriteToggleButtonComponent } from '../favorites/favorite-toggle-button/favorite-toggle-button.component';
+import { ModalEditTimeseriesOptionsComponent } from '../modal-edit-timeseries-options/modal-edit-timeseries-options.component';
+import { TimeseriesEntrySymbolComponent } from '../timeseries-entry-symbol/timeseries-entry-symbol.component';
+
+@Component({
+  selector: 'helgoland-dataset-legend-entry',
+  templateUrl: './dataset-legend-entry.component.html',
+  styleUrls: ['./dataset-legend-entry.component.scss'],
+  imports: [
+    CommonModule,
+    FavoriteToggleButtonComponent,
+    HelgolandLabelMapperModule,
+    HelgolandCoreModule,
+    LoadingOverlayProgressBarComponent,
+    MatButtonModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
+    TimeseriesEntrySymbolComponent,
+    TranslateModule,
+  ],
+  standalone: true,
+})
+export class DatasetLegendEntryComponent implements OnChanges {
+  // Remove later:
+  error = false;
+  // loading = false;
+  //
+
+  @Input({ required: true })
+  dataset!: SeriesGraphDataset;
+
+  @Input({ required: true })
+  selected!: boolean;
+
+  @Input({ required: true })
+  timeInterval!: TimeInterval;
+
+  @Output() datasetDeleted: EventEmitter<void> = new EventEmitter();
+
+  @Output() selectDate: EventEmitter<Date> = new EventEmitter();
+
+  hasData = true;
+
+  constructor(
+    public translateSrvc: TranslateService,
+    protected timeSrvc: Time,
+    private dialog: MatDialog,
+  ) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['timeInterval']) {
+      this.checkDataInTimespan();
+    }
+  }
+
+  removeDataset() {
+    this.datasetDeleted.emit();
+  }
+
+  toggleSelection() {
+    this.dataset.setSelected(!this.dataset.selected);
+  }
+
+  toggleVisibility() {
+    this.dataset.setVisible(!this.dataset.visible);
+  }
+
+  editDatasetOptions() {
+    const dialogRef = this.dialog.open(ModalEditTimeseriesOptionsComponent, {
+      data: {
+        dataset: this.dataset,
+      },
+    });
+  }
+
+  toggleSeparateYAxis() {
+    const yAxis = this.dataset.yAxis;
+    yAxis.separate = !yAxis.separate;
+    this.dataset.setYAxis(yAxis);
+  }
+
+  jumpToFirstTimeStamp() {
+    if (this.dataset.description.firstValue) {
+      this.selectDate.emit(
+        new Date(this.dataset.description.firstValue.timestamp),
+      );
+    }
+  }
+
+  jumpToLastTimeStamp() {
+    if (this.dataset.description.lastValue) {
+      this.selectDate.emit(
+        new Date(this.dataset.description.lastValue.timestamp),
+      );
+    }
+  }
+
+  private checkDataInTimespan() {
+    if (
+      this.timeInterval &&
+      this.dataset.description &&
+      this.dataset.description.firstValue &&
+      this.dataset.description.lastValue
+    ) {
+      this.hasData = this.timeSrvc.overlaps(
+        this.timeInterval,
+        this.dataset.description.firstValue.timestamp,
+        this.dataset.description.lastValue.timestamp,
+      );
+    }
+  }
+}

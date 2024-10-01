@@ -9,8 +9,8 @@ describe('TimeListSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [HelgolandCoreModule, TimeListSelectorComponent]
-}).compileComponents();
+      imports: [HelgolandCoreModule, TimeListSelectorComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

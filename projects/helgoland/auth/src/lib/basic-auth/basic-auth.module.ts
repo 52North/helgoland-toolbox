@@ -16,8 +16,8 @@ import { BasicAuthService } from './basic-auth.service';
     {
       provide: HTTP_SERVICE_INTERCEPTORS,
       useClass: BasicAuthInterceptorService,
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
-export class HelgolandBasicAuthModule { }
+export class HelgolandBasicAuthModule {}

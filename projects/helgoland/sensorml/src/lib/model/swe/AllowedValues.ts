@@ -6,10 +6,10 @@ import { DisplayName } from '../../common/decorators/DisplayName';
  * a list of inclusive ranges
  */
 export class AllowedValues extends AbstractNumericAllowedValues {
-    @DisplayName('Values')
-    override values: Array<number | [number, number]> = [];
+  @DisplayName('Values')
+  override values: Array<number | [number, number]> = [];
 
-    override toString() {
-        return 'Allowed values';
-    }
+  override toString() {
+    return 'Allowed values';
+  }
 }

@@ -9,11 +9,9 @@ describe('ExtentControlComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [ExtentControlComponent],
-    providers: [
-        MapCache
-    ]
-}).compileComponents();
+      imports: [ExtentControlComponent],
+      providers: [MapCache],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

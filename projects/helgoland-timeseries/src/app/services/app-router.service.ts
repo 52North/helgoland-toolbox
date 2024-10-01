@@ -12,12 +12,11 @@ export const LIST_SELECTION_ROUTE = 'list-selection';
   providedIn: 'root',
 })
 export class AppRouterService {
-
   constructor(
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {
-    this.router.events.subscribe(val => {
+    this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
         if (val.url.indexOf(LIST_SELECTION_ROUTE) > -1) {
           this.openListSelection();
@@ -25,12 +24,12 @@ export class AppRouterService {
         if (val.url.indexOf(MAP_SELECTION_ROUTE) > -1) {
           this.openMapSelection();
         }
-      };
-    })
+      }
+    });
   }
 
   public toDiagram() {
-    this.router.navigate([''])
+    this.router.navigate(['']);
   }
 
   public toMapSelection() {
@@ -52,17 +51,16 @@ export class AppRouterService {
   private openMapSelection() {
     const dialogRef = this.dialog.open(MapSelectionComponent, {
       autoFocus: false,
-      panelClass: 'modal-map-selection'
+      panelClass: 'modal-map-selection',
     });
-    dialogRef.afterClosed().subscribe(res => this.resetNavigation());
+    dialogRef.afterClosed().subscribe((res) => this.resetNavigation());
   }
 
   private openListSelection() {
     const dialogRef = this.dialog.open(ListSelectionComponent, {
       autoFocus: false,
-      minWidth: '600px'
+      minWidth: '600px',
     });
-    dialogRef.afterClosed().subscribe(res => this.resetNavigation());
+    dialogRef.afterClosed().subscribe((res) => this.resetNavigation());
   }
-
 }

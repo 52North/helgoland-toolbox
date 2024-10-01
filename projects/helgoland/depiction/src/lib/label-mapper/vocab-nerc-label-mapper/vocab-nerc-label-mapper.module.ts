@@ -6,16 +6,13 @@ import { LABEL_MAPPER_HANDLER } from '../label-mapper.service';
 import { VocabNercLabelMapperService } from './vocab-nerc-label-mapper.service';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    HelgolandLabelMapperModule
-  ],
+  imports: [CommonModule, HelgolandLabelMapperModule],
   providers: [
     {
       provide: LABEL_MAPPER_HANDLER,
       useClass: VocabNercLabelMapperService,
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
-export class VocabNercLabelMapperModule { }
+export class VocabNercLabelMapperModule {}

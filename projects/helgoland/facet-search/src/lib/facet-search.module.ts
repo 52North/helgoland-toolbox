@@ -22,17 +22,13 @@ const COMPONENTS = [
  * - parameter list facet
  */
 @NgModule({
-    imports: [
-        CommonModule,
-        HelgolandCoreModule,
-        COMPONENTS
-    ],
-    exports: [COMPONENTS],
-    providers: [
-        {
-            provide: FacetSearchService,
-            useClass: FacetSearchServiceImpl
-        }
-    ]
+  imports: [CommonModule, HelgolandCoreModule, COMPONENTS],
+  exports: [COMPONENTS],
+  providers: [
+    {
+      provide: FacetSearchService,
+      useClass: FacetSearchServiceImpl,
+    },
+  ],
 })
-export class HelgolandFacetSearchModule { }
+export class HelgolandFacetSearchModule {}

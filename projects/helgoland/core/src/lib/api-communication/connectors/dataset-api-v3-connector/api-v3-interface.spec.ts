@@ -9,25 +9,25 @@ import { HelgolandCoreModule } from './../../../core.module';
 import { ApiV3InterfaceService } from './api-v3-interface';
 
 describe('ApiV3InterfaceService', () => {
-
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [
-      HelgolandCoreModule,
-      TranslateTestingModule
-    ],
-    providers: [
-      SettingsServiceTestingProvider,
-      BasicAuthTestingProviders,
-      {
-        provide: HTTP_SERVICE_INTERCEPTORS,
-        useClass: BasicAuthInterceptorService,
-        multi: true
-      }
-    ]
-  }));
+  beforeEach(() =>
+    TestBed.configureTestingModule({
+      imports: [HelgolandCoreModule, TranslateTestingModule],
+      providers: [
+        SettingsServiceTestingProvider,
+        BasicAuthTestingProviders,
+        {
+          provide: HTTP_SERVICE_INTERCEPTORS,
+          useClass: BasicAuthInterceptorService,
+          multi: true,
+        },
+      ],
+    }),
+  );
 
   it('should be created', () => {
-    const service: ApiV3InterfaceService = TestBed.inject(ApiV3InterfaceService);
+    const service: ApiV3InterfaceService = TestBed.inject(
+      ApiV3InterfaceService,
+    );
     // const timespan: Timespan = new Timespan(new Date(2010, 1, 1), new Date(2020, 1, 1));
     // service.getSamplings('', {
     //   timespan: encodeURI(moment(timespan.from).format() + '/' + moment(timespan.to).format()),

@@ -5,8 +5,8 @@ import { settings } from '../../environments/environment';
 
 @Injectable()
 export class ExtendedSettingsService extends SettingsService<Settings> {
-    constructor() {
-        super();
-        this.setSettings(settings);
-    }
+  constructor() {
+    super();
+    this.setSettings(settings);
+  }
 }

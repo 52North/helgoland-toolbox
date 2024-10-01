@@ -9,18 +9,17 @@ describe('AutoUpdateTimespanComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
-        HelgolandCoreModule,
-        AutoUpdateTimespanComponent
-    ]
-})
-      .compileComponents();
+      imports: [HelgolandCoreModule, AutoUpdateTimespanComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AutoUpdateTimespanComponent);
     component = fixture.componentInstance;
-    component.currentTimespan = new Timespan(new Date().getTime() - 10000000, new Date().getTime());
+    component.currentTimespan = new Timespan(
+      new Date().getTime() - 10000000,
+      new Date().getTime(),
+    );
     component.timeInterval = 100000;
     component.refreshInterval = 2;
     fixture.detectChanges();
@@ -57,5 +56,4 @@ describe('AutoUpdateTimespanComponent', () => {
   //   expect(component.currentTimespan.from).toBeGreaterThan(oldTimespan.from);
   //   expect(component.currentTimespan.to).toBeGreaterThan(oldTimespan.to);
   // }));
-
 });

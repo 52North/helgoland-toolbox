@@ -13,18 +13,18 @@ describe('ProfileEntryComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HelgolandCoreModule,
         TranslateTestingModule,
         ProfileEntryComponent,
-        LabelMapperComponent
-    ],
-    providers: [
+        LabelMapperComponent,
+      ],
+      providers: [
         DatasetApiInterfaceTesting,
         LabelMapperService,
-        SettingsService
-    ]
-}).compileComponents();
+        SettingsService,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -37,5 +37,4 @@ describe('ProfileEntryComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 });

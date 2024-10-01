@@ -9,10 +9,7 @@ const LOCATED_MARKER_ID = 'located';
 
 @Injectable()
 export class LocateService {
-
-  constructor(
-    protected mapCache: MapCache
-  ) { }
+  constructor(protected mapCache: MapCache) {}
 
   public startLocate(id: string) {
     const map = this.mapCache.getMap(id);
@@ -27,7 +24,7 @@ export class LocateService {
     map.locate({
       watch: true,
       setView: true,
-      timeout: 30000
+      timeout: 30000,
     });
   }
 
@@ -40,10 +37,12 @@ export class LocateService {
 
   private removeMarker(map: L.Map) {
     map.eachLayer((entry) => {
-      if (entry instanceof L.Marker && entry.options.title === LOCATED_MARKER_ID) {
+      if (
+        entry instanceof L.Marker &&
+        entry.options.title === LOCATED_MARKER_ID
+      ) {
         map.removeLayer(entry);
       }
     });
   }
-
 }

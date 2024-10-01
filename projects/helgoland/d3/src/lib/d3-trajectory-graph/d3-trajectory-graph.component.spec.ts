@@ -13,17 +13,14 @@ describe('D3TrajectoryGraphComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HttpClientModule,
         HelgolandCoreModule,
         TranslateTestingModule,
-        D3TrajectoryGraphComponent
-    ],
-    providers: [
-        DatasetApiInterfaceTesting,
-        SettingsServiceTestingProvider
-    ]
-}).compileComponents();
+        D3TrajectoryGraphComponent,
+      ],
+      providers: [DatasetApiInterfaceTesting, SettingsServiceTestingProvider],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

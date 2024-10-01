@@ -6,12 +6,20 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule, MatSelectionListChange } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { HelgolandCoreModule, HelgolandServicesConnector } from '@helgoland/core';
+import {
+  HelgolandCoreModule,
+  HelgolandServicesConnector,
+  Parameter,
+} from '@helgoland/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
-import { DatasetByStationSelectorComponent, SelectableDataset } from '@helgoland/selector';
+import {
+  DatasetByStationSelectorComponent,
+  SelectableDataset,
+} from '@helgoland/selector';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { AppRouterService } from '../../services/app-router.service';
+import { DatasetsService } from '../../services/graph-datasets.service';
 import { TimeseriesService } from './../../services/timeseries-service.service';
 
 @Component({
@@ -30,20 +38,23 @@ import { TimeseriesService } from './../../services/timeseries-service.service';
     MatProgressBarModule,
     TranslateModule,
   ],
-  standalone: true
+  standalone: true,
 })
 export class ModalDatasetByStationSelectorComponent extends DatasetByStationSelectorComponent {
-
   constructor(
     protected override servicesConnector: HelgolandServicesConnector,
     public override translateSrvc: TranslateService,
     public appRouter: AppRouterService,
-    public timeseries: TimeseriesService
+    public graphDatasetsSrvc: DatasetsService,
+    public timeseries: TimeseriesService,
   ) {
     super(servicesConnector, translateSrvc);
   }
 
-  protected override prepareResult(result: SelectableDataset, selection: boolean) {
+  protected override prepareResult(
+    result: SelectableDataset,
+    selection: boolean,
+  ) {
     if (this.timeseries.hasDataset(result.internalId)) {
       selection = true;
     }
@@ -59,4 +70,7 @@ export class ModalDatasetByStationSelectorComponent extends DatasetByStationSele
     }
   }
 
+  public getCategoryLabel(categories: Parameter[]) {
+    return categories.map((e) => e.label).join(', ');
+  }
 }

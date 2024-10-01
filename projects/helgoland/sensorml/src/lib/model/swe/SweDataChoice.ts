@@ -8,22 +8,22 @@ import { DisplayName } from '../../common/decorators/DisplayName';
  * disjoint union)
  */
 export class SweDataChoice extends AbstractDataComponent {
-    /**
-     * This category component marks the data stream element that will indicate
-     * the actual choice made. Possible choices are listed in the Category
-     * constraint section as an enumeration and should map to item names.
-     */
-    @DisplayName('Choice value')
-    choiceValue: SweCategory[] = [];
+  /**
+   * This category component marks the data stream element that will indicate
+   * the actual choice made. Possible choices are listed in the Category
+   * constraint section as an enumeration and should map to item names.
+   */
+  @DisplayName('Choice value')
+  choiceValue: SweCategory[] = [];
 
-    @DisplayName('Items')
-    items: SweDataChoiceItem[] = [];
+  @DisplayName('Items')
+  items: SweDataChoiceItem[] = [];
 
-    override toString() {
-        return super.toString('SWE data choice');
-    }
+  override toString() {
+    return super.toString('SWE data choice');
+  }
 
-    getValue() {
-        return this.toString();
-    }
+  getValue() {
+    return this.toString();
+  }
 }

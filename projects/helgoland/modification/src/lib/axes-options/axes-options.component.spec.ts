@@ -8,8 +8,8 @@ describe('AxesOptionsComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [AxesOptionsComponent]
-}).compileComponents();
+      imports: [AxesOptionsComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

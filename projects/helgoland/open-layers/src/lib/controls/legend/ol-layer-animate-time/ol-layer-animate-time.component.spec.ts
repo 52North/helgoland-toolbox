@@ -10,8 +10,8 @@ describe('OlLayerAnimateTimeComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [HelgolandCoreModule, OlLayerAnimateTimeComponent]
-}).compileComponents();
+      imports: [HelgolandCoreModule, OlLayerAnimateTimeComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

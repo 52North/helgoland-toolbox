@@ -11,12 +11,12 @@ describe('DarkModeButtonComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         TranslateTestingModule,
         HttpClientTestingModule,
-        DarkModeButtonComponent
-    ]
-}).compileComponents();
+        DarkModeButtonComponent,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

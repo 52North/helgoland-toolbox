@@ -20,12 +20,11 @@ import { NoDataEntryComponent } from './no-data-entry/no-data-entry.component';
     FormsModule,
     CommonModule,
     HelgolandD3Module,
-    NoDataEntryComponent
+    NoDataEntryComponent,
   ],
-  standalone: true
+  standalone: true,
 })
 export class DiagramExportComponent implements OnInit {
-
   public title = 'Exported Diagram';
   public height = 300;
   public width = 500;
@@ -45,9 +44,7 @@ export class DiagramExportComponent implements OnInit {
 
   public timespan: Timespan | undefined;
 
-  constructor(
-    private color: ColorService
-  ) { }
+  constructor(private color: ColorService) {}
 
   ngOnInit() {
     this.datasetIds.forEach((entry) => {
@@ -74,5 +71,4 @@ export class DiagramExportComponent implements OnInit {
   private setTimespan() {
     this.timespan = new Timespan(this.start, this.end);
   }
-
 }

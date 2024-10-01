@@ -7,17 +7,14 @@ import { DatasetExportComponent } from './dataset-export/dataset-export.componen
 import { DatasetPermalinkDownloadComponent } from './dataset-permalink-download/dataset-permalink-download.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule,
-        HelgolandCoreModule,
-        DatasetExportComponent,
-        DatasetPermalinkDownloadComponent
-    ],
-    exports: [
-        DatasetExportComponent,
-        DatasetPermalinkDownloadComponent
-    ],
-    providers: []
+  imports: [
+    CommonModule,
+    TranslateModule,
+    HelgolandCoreModule,
+    DatasetExportComponent,
+    DatasetPermalinkDownloadComponent,
+  ],
+  exports: [DatasetExportComponent, DatasetPermalinkDownloadComponent],
+  providers: [],
 })
-export class HelgolandDatasetDownloadModule { }
+export class HelgolandDatasetDownloadModule {}

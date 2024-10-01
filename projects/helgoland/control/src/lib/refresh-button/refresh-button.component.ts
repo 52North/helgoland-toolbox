@@ -1,15 +1,22 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { NgClass } from '@angular/common';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { Settings, SettingsService } from '@helgoland/core';
-import { NgClass, NgIf } from '@angular/common';
 
 @Component({
-    selector: 'n52-refresh-button',
-    templateUrl: './refresh-button.component.html',
-    standalone: true,
-    imports: [NgClass, NgIf]
+  selector: 'n52-refresh-button',
+  templateUrl: './refresh-button.component.html',
+  standalone: true,
+  imports: [NgClass],
 })
 export class RefreshButtonComponent implements OnChanges, OnInit {
-
   @Input()
   public refreshInterval: number | undefined;
 
@@ -21,13 +28,12 @@ export class RefreshButtonComponent implements OnChanges, OnInit {
 
   private interval: number | undefined;
 
-  constructor(
-    protected settings: SettingsService<Settings>
-  ) { }
+  constructor(protected settings: SettingsService<Settings>) {}
 
   public ngOnInit(): void {
     if (!this.refreshInterval) {
-      const refreshDataInterval = this.settings.getSettings().refreshDataInterval;
+      const refreshDataInterval =
+        this.settings.getSettings().refreshDataInterval;
       this.refreshInterval = refreshDataInterval ? refreshDataInterval : 60;
     }
     this.evaluteRefreshing();
@@ -41,7 +47,9 @@ export class RefreshButtonComponent implements OnChanges, OnInit {
 
   public toggle() {
     this.toggled = !this.toggled;
-    if (this.toggled) { this.refresh(); }
+    if (this.toggled) {
+      this.refresh();
+    }
     this.evaluteRefreshing();
   }
 
@@ -54,7 +62,10 @@ export class RefreshButtonComponent implements OnChanges, OnInit {
   }
 
   private startRefreshInterval() {
-    this.interval = window.setInterval(() => this.refresh(), this.refreshInterval! * 1000);
+    this.interval = window.setInterval(
+      () => this.refresh(),
+      this.refreshInterval! * 1000,
+    );
   }
 
   private stopRefreshInterval() {
@@ -64,5 +75,4 @@ export class RefreshButtonComponent implements OnChanges, OnInit {
   private refresh() {
     this.refreshing.emit(true);
   }
-
 }

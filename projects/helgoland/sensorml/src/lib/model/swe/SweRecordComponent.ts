@@ -1,4 +1,3 @@
-
 import { SweDataRecord } from './SweDataRecord';
 import { SweVector } from './SweVector';
 

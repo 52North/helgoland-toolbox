@@ -9,14 +9,13 @@ import { OlBaseComponent } from '../../ol-base.component';
  * Control component for an overview map
  */
 @Component({
-    selector: 'n52-ol-overview-map',
-    template: '',
-    encapsulation: ViewEncapsulation.None,
-    styleUrls: ['ol-overview-map.component.scss'],
-    standalone: true
+  selector: 'n52-ol-overview-map',
+  template: '',
+  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['ol-overview-map.component.scss'],
+  standalone: true,
 })
 export class OlOverviewMapComponent extends OlBaseComponent {
-
   /**
    * Collapsed on startup
    */
@@ -35,7 +34,8 @@ export class OlOverviewMapComponent extends OlBaseComponent {
   /**
    * position of the overview map
    */
-  @Input() position: 'upperleft' | 'upperright' | 'bottomleft' | 'bottomright' = 'bottomleft';
+  @Input() position: 'upperleft' | 'upperright' | 'bottomleft' | 'bottomright' =
+    'bottomleft';
 
   mapInitialized(map: Map) {
     const control = new OverviewMap({
@@ -44,7 +44,7 @@ export class OlOverviewMapComponent extends OlBaseComponent {
       label: this.createLabel(),
       collapsed: this.collased,
       collapsible: this.collapsible,
-      layers: this.layers
+      layers: this.layers,
     });
     map.addControl(control);
   }
@@ -68,5 +68,4 @@ export class OlOverviewMapComponent extends OlBaseComponent {
   generateClassName(): string {
     return `ol-overviewmap ol-custom-overviewmap ol-${this.position}-overviewmap`;
   }
-
 }

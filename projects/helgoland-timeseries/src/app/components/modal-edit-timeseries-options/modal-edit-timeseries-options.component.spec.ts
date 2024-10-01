@@ -15,20 +15,20 @@ describe('ModalEditTimeseriesOptionsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         TranslateTestingModule,
         HttpClientModule,
         MatSliderModule,
         MatSlideToggleModule,
         FormsModule,
         ColorPickerModule,
-        ModalEditTimeseriesOptionsComponent
-    ],
-    providers: [
+        ModalEditTimeseriesOptionsComponent,
+      ],
+      providers: [
         { provide: MatDialogRef, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: {} }
-    ]
-}).compileComponents();
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -1,5 +1,15 @@
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
-import { DatasetOptions, DefinedTimespan, DefinedTimespanService, HelgolandCoreModule } from '@helgoland/core';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
+import {
+  DatasetOptions,
+  DefinedTimespan,
+  DefinedTimespanService,
+  HelgolandCoreModule,
+} from '@helgoland/core';
 
 import { SettingsServiceTestingProvider } from '../../../../../testing/settings.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
@@ -15,23 +25,20 @@ describe('ExportImageButtonComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
-        HelgolandCoreModule,
-        TranslateTestingModule,
-        HelgolandD3Module
-    ],
-    providers: [
-        SettingsServiceTestingProvider
-    ]
-}).compileComponents();
+      imports: [HelgolandCoreModule, TranslateTestingModule, HelgolandD3Module],
+      providers: [SettingsServiceTestingProvider],
+    }).compileComponents();
   }));
 
-  beforeEach(inject([DefinedTimespanService], (service: DefinedTimespanService) => {
-    fixture = TestBed.createComponent(ExportImageButtonComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-    definedTimespanSrvc = service;
-  }));
+  beforeEach(inject(
+    [DefinedTimespanService],
+    (service: DefinedTimespanService) => {
+      fixture = TestBed.createComponent(ExportImageButtonComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+      definedTimespanSrvc = service;
+    },
+  ));
 
   it('should create', () => {
     expect(component).toBeTruthy();

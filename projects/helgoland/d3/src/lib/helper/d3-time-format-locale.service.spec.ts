@@ -7,15 +7,15 @@ import { TranslateTestingModule } from '../../../../../testing/translate.testing
 describe('D3TimeFormatLocaleService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        TranslateTestingModule
-      ],
-      providers: [D3TimeFormatLocaleService]
+      imports: [HttpClientModule, TranslateTestingModule],
+      providers: [D3TimeFormatLocaleService],
     });
   });
 
-  it('should be created', inject([D3TimeFormatLocaleService], (service: D3TimeFormatLocaleService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', inject(
+    [D3TimeFormatLocaleService],
+    (service: D3TimeFormatLocaleService) => {
+      expect(service).toBeTruthy();
+    },
+  ));
 });

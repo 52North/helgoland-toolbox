@@ -1,6 +1,9 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { DatasetApiV1ConnectorProvider, HelgolandCoreModule } from '@helgoland/core';
+import {
+  DatasetApiV1ConnectorProvider,
+  HelgolandCoreModule,
+} from '@helgoland/core';
 
 import { MapCache } from '../../base/map-cache.service';
 import { HelgolandMapSelectorModule } from '../module';
@@ -16,26 +19,29 @@ describe('LastValueMapSelectorComponent with external Data', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HttpClientModule,
         HelgolandCoreModule,
         TranslateTestingModule,
-        HelgolandMapSelectorModule
-    ],
-    providers: [
+        HelgolandMapSelectorModule,
+      ],
+      providers: [
         DatasetApiInterfaceTesting,
         DatasetApiV1ConnectorProvider,
         SettingsServiceTestingProvider,
-        MapCache
-    ]
-}).compileComponents();
+        MapCache,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LastValueMapSelectorComponent);
     (fixture.nativeElement as HTMLElement).style.height = '500px';
     component = fixture.componentInstance;
-    component.fitBounds = [[49.5, 3.27], [51.5, 5.67]];
+    component.fitBounds = [
+      [49.5, 3.27],
+      [51.5, 5.67],
+    ];
     component.avoidZoomToSelection = false;
     component.fitBoundsMarkerOptions = { padding: [20, 20] };
     fixture.detectChanges();
@@ -49,7 +55,7 @@ describe('LastValueMapSelectorComponent with external Data', () => {
       // 'https://fluggs.wupperverband.de/sws5/api/__78',
       // 'https://fluggs.wupperverband.de/sws5/api/__95'
     ];
-    component.onSelected.subscribe(res => console.log(res));
+    component.onSelected.subscribe((res) => console.log(res));
     fixture.detectChanges();
     done();
 
@@ -63,4 +69,3 @@ describe('LastValueMapSelectorComponent with external Data', () => {
     // }, 2000);
   });
 });
-

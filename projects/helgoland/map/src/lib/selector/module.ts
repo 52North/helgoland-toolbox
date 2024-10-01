@@ -11,14 +11,14 @@ import { StationMapSelectorComponent } from './station-map-selector/station-map-
 import { ProfileTrajectoryMapSelectorComponent } from './trajectory-map-selector/trajectory-map-selector.component';
 
 const COMPONENTS = [
-    StationMapSelectorComponent,
-    ProfileTrajectoryMapSelectorComponent,
-    LastValueMapSelectorComponent,
-    PlatformMapViewerComponent
+  StationMapSelectorComponent,
+  ProfileTrajectoryMapSelectorComponent,
+  LastValueMapSelectorComponent,
+  PlatformMapViewerComponent,
 ];
 
 export interface HelgolandMapSelectorModuleConfig {
-    lastValueLabelGeneratorService: Type<LastValueLabelGenerator>;
+  lastValueLabelGeneratorService: Type<LastValueLabelGenerator>;
 }
 
 /**
@@ -26,26 +26,29 @@ export interface HelgolandMapSelectorModuleConfig {
  * - map based selection
  */
 @NgModule({
-    imports: [
-        CommonModule,
-        HelgolandCoreModule,
-        HelgolandMapModule,
-        COMPONENTS
-    ],
-    exports: [
-        COMPONENTS
-    ],
-    providers: [
-        { provide: LastValueLabelGenerator, useClass: LastValueLabelGeneratorService }
-    ]
+  imports: [CommonModule, HelgolandCoreModule, HelgolandMapModule, COMPONENTS],
+  exports: [COMPONENTS],
+  providers: [
+    {
+      provide: LastValueLabelGenerator,
+      useClass: LastValueLabelGeneratorService,
+    },
+  ],
 })
 export class HelgolandMapSelectorModule {
-    static forRoot(config?: HelgolandMapSelectorModuleConfig): ModuleWithProviders<HelgolandMapSelectorModule> {
-        return {
-            ngModule: HelgolandMapSelectorModule,
-            providers: [
-                { provide: LastValueLabelGenerator, useClass: config && config.lastValueLabelGeneratorService || LastValueLabelGeneratorService }
-            ]
-        };
-    }
+  static forRoot(
+    config?: HelgolandMapSelectorModuleConfig,
+  ): ModuleWithProviders<HelgolandMapSelectorModule> {
+    return {
+      ngModule: HelgolandMapSelectorModule,
+      providers: [
+        {
+          provide: LastValueLabelGenerator,
+          useClass:
+            (config && config.lastValueLabelGeneratorService) ||
+            LastValueLabelGeneratorService,
+        },
+      ],
+    };
+  }
 }

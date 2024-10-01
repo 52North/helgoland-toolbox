@@ -9,8 +9,8 @@ describe('OlLayerTitleComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [HelgolandCoreModule, OlLayerTitleComponent]
-}).compileComponents();
+      imports: [HelgolandCoreModule, OlLayerTitleComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

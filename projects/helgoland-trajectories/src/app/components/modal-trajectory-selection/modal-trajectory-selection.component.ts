@@ -12,7 +12,10 @@ import {
   HelgolandServicesConnector,
   Parameter,
 } from '@helgoland/core';
-import { MultiServiceFilter, MultiServiceFilterEndpoint } from '@helgoland/selector';
+import {
+  MultiServiceFilter,
+  MultiServiceFilterEndpoint,
+} from '@helgoland/selector';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   LoadingOverlayProgressBarComponent,
@@ -42,11 +45,11 @@ import { ParameterTypeLabelComponent } from './parameter-type-label/parameter-ty
     ServiceListSelectorComponent,
     TranslateModule,
   ],
-  standalone: true
+  standalone: true,
 })
 export class ModalTrajectorySelectionComponent implements OnInit {
-
-  public datasetApis: DatasetApi[] = this.configSrvc.configuration?.datasetApis || [];
+  public datasetApis: DatasetApi[] =
+    this.configSrvc.configuration?.datasetApis || [];
 
   public datasetsLoading: boolean | undefined;
 
@@ -54,8 +57,8 @@ export class ModalTrajectorySelectionComponent implements OnInit {
 
   public providerFilter: HelgolandParameterFilter = {
     type: DatasetType.Trajectory,
-    expanded: true
-  }
+    expanded: true,
+  };
 
   public filterEnpoints = MultiServiceFilterEndpoint;
 
@@ -63,15 +66,15 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     public dialogRef: MatDialogRef<ModalTrajectorySelectionComponent>,
     private configSrvc: ConfigurationService,
     private servicesConnector: HelgolandServicesConnector,
-    private trajectorySrvc: TrajectoriesService
-  ) { }
+    private trajectorySrvc: TrajectoriesService,
+  ) {}
 
   ngOnInit(): void {
     this.filterList.push({
       selectedFilter: ParameterType.PROVIDER,
       expanded: true,
       possibleFilters: [],
-      apiFilter: []
+      apiFilter: [],
     });
   }
 
@@ -82,14 +85,16 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     }
     this.filterList.push({
       expanded: true,
-      possibleFilters: [ParameterType.PLATFORM, ParameterType.OFFERING, ParameterType.PHENOMENON],
-      apiFilter: [{
-        url: service.apiUrl,
-        filter: {
-          service: service.id,
-          type: DatasetType.Trajectory
-        }
-      }]
+      possibleFilters: [ParameterType.OFFERING, ParameterType.PHENOMENON],
+      apiFilter: [
+        {
+          url: service.apiUrl,
+          filter: {
+            service: service.id,
+            type: DatasetType.Trajectory,
+          },
+        },
+      ],
     });
   }
 
@@ -103,9 +108,6 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     if (entry.selectedFilter === ParameterType.FEATURE) {
       delete entry.apiFilter[0].filter?.feature;
     }
-    if (entry.selectedFilter === ParameterType.PLATFORM) {
-      delete entry.apiFilter[0].filter?.platform;
-    }
     entry.selectedFilter = filter;
   }
 
@@ -114,7 +116,7 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     filter.expanded = false;
 
     // find entry and clear following
-    const fi = this.filterList.findIndex(e => e === filter);
+    const fi = this.filterList.findIndex((e) => e === filter);
     this.filterList.splice(fi + 1);
 
     // add new Entry
@@ -129,23 +131,22 @@ export class ModalTrajectorySelectionComponent implements OnInit {
       case ParameterType.FEATURE:
         apiFilter[0].filter!.feature = item.id;
         break;
-      case ParameterType.PLATFORM:
-        apiFilter[0].filter!.platform = item.id;
-        break;
       default:
         throw new Error(`not implemented for ${filter.selectedFilter}`);
     }
-    const possibleFilters = [ParameterType.PLATFORM, ParameterType.OFFERING, ParameterType.PHENOMENON];
+    const possibleFilters = [ParameterType.OFFERING, ParameterType.PHENOMENON];
 
-    // only allow feature filter, if previously platform and offering or phenomenon are selected
-    const previousFilter = this.filterList.map(e => e.selectedFilter);
-    if (previousFilter.indexOf(ParameterType.PLATFORM) > -1 &&
-      (previousFilter.indexOf(ParameterType.OFFERING) > -1 || previousFilter.indexOf(ParameterType.PHENOMENON) > -1)) {
+    // only allow feature filter, if previously offering or phenomenon are selected
+    const previousFilter = this.filterList.map((e) => e.selectedFilter);
+    if (
+      previousFilter.indexOf(ParameterType.OFFERING) > -1 ||
+      previousFilter.indexOf(ParameterType.PHENOMENON) > -1
+    ) {
       possibleFilters.push(ParameterType.FEATURE);
     }
     for (let index = 0; index < this.filterList.length; index++) {
       const f = this.filterList[index].selectedFilter;
-      const idx = possibleFilters.findIndex(e => e === f);
+      const idx = possibleFilters.findIndex((e) => e === f);
       if (idx >= 0) {
         possibleFilters.splice(idx, 1);
       }
@@ -154,7 +155,8 @@ export class ModalTrajectorySelectionComponent implements OnInit {
       expanded: true,
       possibleFilters,
       apiFilter,
-      selectedFilter: possibleFilters.length === 1 ? possibleFilters[0] : undefined
+      selectedFilter:
+        possibleFilters.length === 1 ? possibleFilters[0] : undefined,
     });
   }
 
@@ -163,13 +165,12 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     const dsFilter = filter.apiFilter[0].filter!;
     dsFilter.feature = item.id;
     this.datasetsLoading = true;
-    this.servicesConnector.getDatasets(url, dsFilter).subscribe(res => {
+    this.servicesConnector.getDatasets(url, dsFilter).subscribe((res) => {
       if (res.length > 0) {
         this.trajectorySrvc.mainTrajectoryId = res[0].internalId;
         this.dialogRef.close();
       }
       this.datasetsLoading = false;
-    })
+    });
   }
-
 }

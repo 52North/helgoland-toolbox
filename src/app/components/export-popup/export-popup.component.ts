@@ -3,8 +3,16 @@ import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { HelgolandCoreModule, HelgolandTimeseries, Timespan } from '@helgoland/core';
-import { DownloadType, ExportOptions, HelgolandDatasetDownloadModule } from '@helgoland/depiction';
+import {
+  HelgolandCoreModule,
+  HelgolandTimeseries,
+  Timespan,
+} from '@helgoland/core';
+import {
+  DownloadType,
+  ExportOptions,
+  HelgolandDatasetDownloadModule,
+} from '@helgoland/depiction';
 
 @Component({
   selector: 'n52-export-popup',
@@ -15,12 +23,11 @@ import { DownloadType, ExportOptions, HelgolandDatasetDownloadModule } from '@he
     MatDatepickerModule,
     FormsModule,
     HelgolandCoreModule,
-    CommonModule
+    CommonModule,
   ],
-  standalone: true
+  standalone: true,
 })
 export class ExportPopupComponent {
-
   public exportOptions!: ExportOptions;
   public inputId: string;
   public loading = false;
@@ -35,7 +42,7 @@ export class ExportPopupComponent {
     public dialogRef: MatDialogRef<ExportPopupComponent>,
 
     @Inject(MAT_DIALOG_DATA)
-    public data: { id: string, timespan: Timespan }
+    public data: { id: string; timespan: Timespan },
   ) {
     this.inputId = data.id;
 
@@ -49,6 +56,10 @@ export class ExportPopupComponent {
     this.onDownload(DownloadType.CSV);
   }
 
+  onXSLXDownload() {
+    this.onDownload(DownloadType.XLSX);
+  }
+
   /**
    * Function that triggers the download of the data based on the specified parameters.
    * @param dwType {string} typy of the download file (csv or xlsx)
@@ -57,7 +68,7 @@ export class ExportPopupComponent {
     if (this.selectedStart && this.selectedEnd) {
       this.exportOptions = {
         downloadType: dwType,
-        timeperiod: new Timespan(this.selectedStart, this.selectedEnd)
+        timeperiod: new Timespan(this.selectedStart, this.selectedEnd),
       };
     }
   }
@@ -88,5 +99,4 @@ export class ExportPopupComponent {
   public onClose(): void {
     this.dialogRef.close('closes');
   }
-
 }

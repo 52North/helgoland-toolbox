@@ -1,6 +1,10 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { HelgolandSelectorModule } from '@helgoland/selector';
 import { HelgolandCommonModule } from 'helgoland-common';
 
@@ -13,19 +17,19 @@ describe('ModalListSettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         TranslateTestingModule,
         HttpClientModule,
         HelgolandCommonModule,
         MatDialogModule,
         HelgolandSelectorModule,
-        ModalListSettingsComponent
-    ],
-    providers: [
+        ModalListSettingsComponent,
+      ],
+      providers: [
         { provide: MatDialogRef, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: {} }
-    ]
-}).compileComponents();
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

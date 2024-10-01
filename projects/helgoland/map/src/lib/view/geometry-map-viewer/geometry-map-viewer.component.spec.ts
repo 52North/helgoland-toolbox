@@ -9,11 +9,9 @@ describe('GeometryMapViewerComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [GeometryMapViewerComponent],
-    providers: [
-        MapCache
-    ]
-}).compileComponents();
+      imports: [GeometryMapViewerComponent],
+      providers: [MapCache],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -8,9 +8,8 @@ describe('StringTogglerComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [StringTogglerComponent]
-})
-      .compileComponents();
+      imports: [StringTogglerComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

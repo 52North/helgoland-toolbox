@@ -12,17 +12,13 @@ describe('FavoriteTogglerComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HttpClientModule,
         TranslateTestingModule,
-        FavoriteTogglerComponent
-    ],
-    providers: [
-        FavoriteService,
-        LocalStorage,
-        NotifierService
-    ]
-}).compileComponents();
+        FavoriteTogglerComponent,
+      ],
+      providers: [FavoriteService, LocalStorage, NotifierService],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

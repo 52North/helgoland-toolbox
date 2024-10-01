@@ -17,7 +17,7 @@ describe('ModalDatasetByStationSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
         MatBadgeModule,
@@ -27,9 +27,9 @@ describe('ModalDatasetByStationSelectorComponent', () => {
         MatProgressBarModule,
         RouterTestingModule,
         TranslateTestingModule,
-        ModalDatasetByStationSelectorComponent
-    ]
-}).compileComponents();
+        ModalDatasetByStationSelectorComponent,
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -8,37 +8,37 @@ import { DisplayName } from '../../../common/decorators/DisplayName';
  * organisations associated with the dataset
  */
 export class ResponsibleParty {
-    @DisplayName('Individual name')
-    individualName: string;
+  @DisplayName('Individual name')
+  individualName: string;
 
-    @DisplayName('Organisation name')
-    organisationName: string;
+  @DisplayName('Organisation name')
+  organisationName: string;
 
-    @DisplayName('Position name')
-    positionName: string;
+  @DisplayName('Position name')
+  positionName: string;
 
-    @DisplayName('Contact info')
-    contactInfo: Contact;
+  @DisplayName('Contact info')
+  contactInfo: Contact;
 
-    @DisplayName('Role')
-    role: Role;
+  @DisplayName('Role')
+  role: Role;
 
-    toString() {
-        return 'Responsible party';
+  toString() {
+    return 'Responsible party';
+  }
+
+  getLabel() {
+    if (this.individualName) {
+      return this.individualName;
+    } else {
+      return this.toString();
     }
+  }
 
-    getLabel() {
-        if (this.individualName) {
-            return this.individualName;
-        } else {
-            return this.toString();
-        }
+  getValue() {
+    if (this.organisationName) {
+      return this.organisationName;
     }
-
-    getValue() {
-        if (this.organisationName) {
-            return this.organisationName;
-        }
-        return undefined;
-    }
+    return undefined;
+  }
 }

@@ -13,15 +13,15 @@ describe('LanguageSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         TranslateTestingModule,
         BrowserAnimationsModule,
         HttpClientModule,
         MatFormFieldModule,
         MatSelectModule,
-        LanguageSelectorComponent
-    ]
-}).compileComponents();
+        LanguageSelectorComponent,
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

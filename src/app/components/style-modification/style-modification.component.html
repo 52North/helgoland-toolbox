@@ -1,6 +1,10 @@
 <h1 mat-dialog-title>Style options</h1>
 <div mat-dialog-content>
-  <n52-color-selector [color]="option.color" [colorList]="colorList" (onColorChange)="setColor($event)">
+  <n52-color-selector
+    [color]="option.color"
+    [colorList]="colorList"
+    (onColorChange)="setColor($event)"
+  >
   </n52-color-selector>
 </div>
 <div>
@@ -10,10 +14,14 @@
   <mat-checkbox [(ngModel)]="zeroBasedYAxis">zero based y-axis</mat-checkbox>
 </div>
 <div>
-  <mat-checkbox [(ngModel)]="autoRangeSelection">keep selected range</mat-checkbox>
+  <mat-checkbox [(ngModel)]="autoRangeSelection"
+    >keep selected range</mat-checkbox
+  >
 </div>
 <div>
-  <mat-checkbox [(ngModel)]="separateYAxis">separate dataset from axis</mat-checkbox>
+  <mat-checkbox [(ngModel)]="separateYAxis"
+    >separate dataset from axis</mat-checkbox
+  >
 </div>
 <div>
   <mat-form-field>
@@ -37,7 +45,10 @@
     </mat-select>
   </mat-form-field>
 </div>
-<n52-min-max-range [range]="option.yAxisRange!" (onRangeChange)="updateRange($event)"></n52-min-max-range>
-<div mat-dialog-actions style="float: right;">
+<n52-min-max-range
+  [range]="option.yAxisRange!"
+  (onRangeChange)="updateRange($event)"
+></n52-min-max-range>
+<div mat-dialog-actions style="float: right">
   <button mat-button (click)="onOk()">Ok</button>
 </div>

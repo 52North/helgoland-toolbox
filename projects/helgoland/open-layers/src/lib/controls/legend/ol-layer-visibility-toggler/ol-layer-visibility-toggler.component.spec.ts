@@ -8,9 +8,8 @@ describe('OlLayerVisibilityTogglerComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [OlLayerVisibilityTogglerComponent]
-})
-      .compileComponents();
+      imports: [OlLayerVisibilityTogglerComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

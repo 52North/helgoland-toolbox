@@ -4,7 +4,11 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
-import { BasicAuthInformer, BasicAuthService, BasicAuthServiceMaintainer } from '@helgoland/auth';
+import {
+  BasicAuthInformer,
+  BasicAuthService,
+  BasicAuthServiceMaintainer,
+} from '@helgoland/auth';
 import { HelgolandCachingModule } from '@helgoland/caching';
 import {
   DatasetApiInterface,
@@ -20,8 +24,14 @@ import {
   SplittedDataDatasetApiInterface,
   StatusCheckService,
 } from '@helgoland/core';
-import { EventingApiService, EventingImplApiInterface } from '@helgoland/eventing';
-import { FavoriteService, JsonFavoriteExporterService } from '@helgoland/favorite';
+import {
+  EventingApiService,
+  EventingImplApiInterface,
+} from '@helgoland/eventing';
+import {
+  FavoriteService,
+  JsonFavoriteExporterService,
+} from '@helgoland/favorite';
 import { GeoSearch, NominatimGeoSearchService } from '@helgoland/map';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -45,7 +55,7 @@ Promise.all([settingsPromise]).then((config: any) => {
     providers: [
       {
         provide: SettingsService,
-        useClass: ExtendedSettingsService
+        useClass: ExtendedSettingsService,
       },
       provideRouter(ROUTES),
       importProvidersFrom(
@@ -53,16 +63,16 @@ Promise.all([settingsPromise]).then((config: any) => {
           loader: {
             provide: TranslateLoader,
             useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-        })
+            deps: [HttpClient],
+          },
+        }),
       ),
       importProvidersFrom(
         HelgolandCachingModule.forRoot({
           cachingDurationInMilliseconds: 300000,
           getDataCacheActive: false,
-          logging: false
-        })
+          logging: false,
+        }),
       ),
       importProvidersFrom(MatMomentDateModule),
       provideHttpClient(),
@@ -78,7 +88,7 @@ Promise.all([settingsPromise]).then((config: any) => {
 
       {
         provide: DatasetApiInterface,
-        useClass: SplittedDataDatasetApiInterface
+        useClass: SplittedDataDatasetApiInterface,
       },
       // createEnvironmentInjector([
       //   { provide: PhotosService, useClass: CustomPhotosService },
@@ -91,19 +101,19 @@ Promise.all([settingsPromise]).then((config: any) => {
 
       {
         provide: GeoSearch,
-        useClass: NominatimGeoSearchService
+        useClass: NominatimGeoSearchService,
       },
       BasicAuthService,
       BasicAuthServiceMaintainer,
       {
         provide: EventingApiService,
-        useClass: EventingImplApiInterface
+        useClass: EventingImplApiInterface,
       },
       // SensorMLXmlService,
       // // XmlService,
       {
         provide: BasicAuthInformer,
-        useClass: BasicAuthInformerImplService
+        useClass: BasicAuthInformerImplService,
       },
       // {
       //   provide: HELGOLAND_SERVICE_CONNECTOR_HANDLER,
@@ -121,7 +131,6 @@ Promise.all([settingsPromise]).then((config: any) => {
       //     showZeroValues: true
       //   } as FacetSearchConfig
       // }
-    ]
+    ],
   });
 });
-

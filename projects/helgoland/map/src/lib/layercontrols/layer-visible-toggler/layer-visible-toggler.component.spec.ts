@@ -10,18 +10,18 @@ describe('LayerVisibleTogglerComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [LayerVisibleTogglerComponent],
-    providers: [MapCache]
-}).compileComponents();
+      imports: [LayerVisibleTogglerComponent],
+      providers: [MapCache],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LayerVisibleTogglerComponent);
     component = fixture.componentInstance;
     component.layeroptions = {
-      label: "test",
+      label: 'test',
       layer: new Layer(),
-      visible: false
+      visible: false,
     };
     fixture.detectChanges();
   });

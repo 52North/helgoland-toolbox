@@ -7,10 +7,9 @@ export const ROUTES: Routes = [
   {
     path: '**',
     pathMatch: 'full',
-    component: DiagramViewComponent
-  }
+    component: DiagramViewComponent,
+  },
 ];
-
 
 Marker.prototype.options.icon = icon({
   iconRetinaUrl: 'assets/img/marker-icon-2x.png',
@@ -20,5 +19,5 @@ Marker.prototype.options.icon = icon({
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   tooltipAnchor: [16, -28],
-  shadowSize: [41, 41]
+  shadowSize: [41, 41],
 });

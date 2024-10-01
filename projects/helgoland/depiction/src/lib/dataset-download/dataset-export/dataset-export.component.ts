@@ -1,16 +1,24 @@
 // @ts-nocheck
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {
   DatasetType,
   HelgolandServicesConnector,
   HelgolandTimeseries,
   HelgolandTimeseriesData,
   IDataset,
-  Required,
   Time,
   Timespan,
 } from '@helgoland/core';
 import moment from 'moment';
+import { utils, WorkBook, WorkSheet, writeFile } from 'xlsx';
 
 type xlsxExport = any[][];
 
@@ -23,18 +31,17 @@ export interface ExportOptions {
 }
 
 export enum DownloadType {
-  CSV = 'csv'
+  CSV = 'csv',
+  XLSX = 'xlsx',
 }
 
 @Component({
-    selector: 'n52-dataset-export',
-    templateUrl: './dataset-export.component.html',
-    styleUrls: ['./dataset-export.component.scss'],
-    standalone: true
+  selector: 'n52-dataset-export',
+  templateUrl: './dataset-export.component.html',
+  styleUrls: ['./dataset-export.component.scss'],
+  standalone: true,
 })
-
 export class DatasetExportComponent implements OnInit, OnChanges {
-
   private dataset: HelgolandTimeseries;
   private fileName = 'timeseries';
   private timespan: Timespan;
@@ -42,8 +49,7 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   /**
    * options to define the export parameters
    */
-  @Input() 
-  @Required 
+  @Input({ required: true })
   public exportOptions!: ExportOptions;
 
   /**
@@ -55,7 +61,8 @@ export class DatasetExportComponent implements OnInit, OnChanges {
    * returns the metadata of the selected dataset to be visualized
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onMetadataChange: EventEmitter<HelgolandTimeseries> = new EventEmitter();
+  @Output() public onMetadataChange: EventEmitter<HelgolandTimeseries> =
+    new EventEmitter();
 
   /**
    * Output to inform the loading status, while file is created
@@ -66,18 +73,23 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   constructor(
     protected servicesConnector: HelgolandServicesConnector,
     protected timeSrvc: Time,
-  ) { }
+  ) {}
 
   ngOnInit() {
     if (this.inputId) {
-      this.servicesConnector.getDataset(this.inputId, { type: DatasetType.Timeseries }).subscribe(
-        ds => {
-          this.dataset = ds;
-          this.timespan = new Timespan(this.dataset.firstValue.timestamp, this.dataset.lastValue.timestamp);
-          this.onMetadataChange.emit(ds);
-        },
-        error => this.onError(error)
-      );
+      this.servicesConnector
+        .getDataset(this.inputId, { type: DatasetType.Timeseries })
+        .subscribe({
+          next: (ds) => {
+            this.dataset = ds;
+            this.timespan = new Timespan(
+              this.dataset.firstValue.timestamp,
+              this.dataset.lastValue.timestamp,
+            );
+            this.onMetadataChange.emit(ds);
+          },
+          error: (error) => this.onError(error),
+        });
     }
   }
 
@@ -88,17 +100,23 @@ export class DatasetExportComponent implements OnInit, OnChanges {
       if (this.timespan.from > this.timespan.to) {
         this.timespan = {
           from: this.timespan.to,
-          to: this.timespan.from
+          to: this.timespan.from,
         };
       }
-      if (this.exportOptions.timeperiod.from < this.dataset.firstValue.timestamp) {
+      if (
+        this.exportOptions.timeperiod.from < this.dataset.firstValue.timestamp
+      ) {
         this.timespan.from = this.dataset.firstValue.timestamp;
-      } else if (this.exportOptions.timeperiod.from > this.dataset.lastValue.timestamp) {
+      } else if (
+        this.exportOptions.timeperiod.from > this.dataset.lastValue.timestamp
+      ) {
         this.timespan.from = this.dataset.lastValue.timestamp;
       }
       if (this.exportOptions.timeperiod.to > this.dataset.lastValue.timestamp) {
         this.timespan.to = this.dataset.lastValue.timestamp;
-      } else if (this.exportOptions.timeperiod.to < this.dataset.firstValue.timestamp) {
+      } else if (
+        this.exportOptions.timeperiod.to < this.dataset.firstValue.timestamp
+      ) {
         this.timespan.to = this.dataset.firstValue.timestamp;
       }
       if (this.exportOptions.downloadType) {
@@ -120,45 +138,61 @@ export class DatasetExportComponent implements OnInit, OnChanges {
     // get dataset data
     const buffer = new Timespan(this.timespan.from, this.timespan.to);
 
-    this.servicesConnector.getDatasetData(dataset, buffer,
-      {
-        generalize: false
-      }).subscribe(
-        (result) => this.prepareData(dataset, result as HelgolandTimeseriesData, dwType),
-        error => this.onError(error),
-        () => this.onCompleteLoadingData(dataset)
-      );
+    this.servicesConnector
+      .getDatasetData(dataset, buffer, { generalize: false })
+      .subscribe({
+        next: (result) =>
+          this.prepareData(dataset, result as HelgolandTimeseriesData, dwType),
+        error: (error) => this.onError(error),
+        complete: () => this.onCompleteLoadingData(dataset),
+      });
   }
-  private prepareData(dataset: HelgolandTimeseries, result: HelgolandTimeseriesData, dwType: DownloadType): void {
+  private prepareData(
+    dataset: HelgolandTimeseries,
+    result: HelgolandTimeseriesData,
+    dwType: DownloadType,
+  ): void {
     console.log('Preparing data ...');
     let exportData: xlsxExport = [
       ['Station', dataset.parameters.feature.label],
     ];
 
-    if (dataset.platform.geometry && dataset.platform.geometry.type === 'Point') {
-      exportData.push(['Latitude', dataset.platform.geometry['coordinates'][1]]);
-      exportData.push(['Longitude', dataset.platform.geometry['coordinates'][0]]);
+    if (
+      dataset.platform.geometry &&
+      dataset.platform.geometry.type === 'Point'
+    ) {
+      exportData.push([
+        'Latitude',
+        dataset.platform.geometry['coordinates'][1],
+      ]);
+      exportData.push([
+        'Longitude',
+        dataset.platform.geometry['coordinates'][0],
+      ]);
     }
 
-    const phenomenonLabel = dataset.parameters.phenomenon.label + ' (' + dataset.uom + ')';
-    exportData.push(['Phenomenon', phenomenonLabel])
+    const phenomenonLabel =
+      dataset.parameters.phenomenon.label + ' (' + dataset.uom + ')';
+    exportData.push(['Phenomenon', phenomenonLabel]);
 
     // TODO: change momentJS date format based on timezone ( this.timezone )
-    exportData = exportData.concat(result.values.map(el => [moment(el[0]).format(), el[1]]));
+    exportData = exportData.concat(
+      result.values.map((el) => [moment(el[0]).format(), el[1]]),
+    );
     this.downloadData(exportData, dwType);
   }
 
-  // private downloadData(data: xlsxExport, dwType: DownloadType): void {
-  //   console.log('Downloading data ...');
-  //   /* generate worksheet */
-  //   const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
-  //   /* generate workbook and add the worksheet */
-  //   const wb: XLSX.WorkBook = XLSX.utils.book_new();
-  //   XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-  //   /* save to file depending on download type */
-  //   this.fileName += '.' + dwType;
-  //   XLSX.writeFile(wb, this.fileName);
-  // }
+  private downloadData(data: xlsxExport, dwType: DownloadType): void {
+    console.log('Downloading data ...');
+    /* generate worksheet */
+    const ws: WorkSheet = utils.aoa_to_sheet(data);
+    /* generate workbook and add the worksheet */
+    const wb: WorkBook = utils.book_new();
+    utils.book_append_sheet(wb, ws, 'Sheet1');
+    /* save to file depending on download type */
+    this.fileName += '.' + dwType;
+    writeFile(wb, this.fileName);
+  }
 
   private onError(error: Error): void {
     console.log('Loading data - error:');
@@ -182,5 +216,4 @@ export class DatasetExportComponent implements OnInit, OnChanges {
     // return parseFloat(moment(date).format('X'));
     return Date.parse(date); // Number(date);
   }
-
 }

@@ -8,9 +8,8 @@ describe('OlMapComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [OlMapComponent]
-})
-      .compileComponents();
+      imports: [OlMapComponent],
+    }).compileComponents();
   }));
 
   // beforeEach(() => {
@@ -25,5 +24,5 @@ describe('OlMapComponent', () => {
 
   it('should be fixed', () => {
     expect(true).toBeTruthy();
-  })
+  });
 });

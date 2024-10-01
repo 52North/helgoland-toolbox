@@ -1,11 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { DefinedTimespan, DefinedTimespanService, Timespan } from '@helgoland/core';
-import { PermalinkService } from '@helgoland/permalink';
-import { forkJoin, from, Observable, of } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import {
+  DefinedTimespan,
+  DefinedTimespanService,
+  Timespan,
+} from '@helgoland/core';
+import { Observable, of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 
-import { TimeseriesService } from './../../services/timeseries-service.service';
+import {
+  DATASET_STATE_SERVICE_INJECTION,
+  DatasetStateService,
+} from '../../services/service-interfaces';
+import { StorageService } from '../../services/storage-service.service';
+import { DatasetsService } from './../../services/graph-datasets.service';
 
 const PARAM_IDS = 'ids';
 const ID_SEPERATOR = '!!';
@@ -14,62 +22,121 @@ const TIME_SEPERATOR = '|';
 const PARAM_DEFINED_TIME = 'defined_time';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class DiagramViewPermalinkService extends PermalinkService<void> {
-
+export class DiagramViewInitStateService {
   constructor(
-    private timeseriesSrvc: TimeseriesService,
+    private graphDatasetsSrvc: DatasetsService,
     private activatedRoute: ActivatedRoute,
-    private definedTimeintervalSrvc: DefinedTimespanService
+    private definedTimeintervalSrvc: DefinedTimespanService,
+    private storageSrvc: StorageService,
+    @Optional()
+    @Inject(DATASET_STATE_SERVICE_INJECTION)
+    private datasetStateServices: DatasetStateService[] | undefined,
   ) {
-    super();
+    if (this.datasetStateServices === null) {
+      this.datasetStateServices = [];
+    }
   }
 
-  public validatePeramlink(): Observable<void> {
+  public preloadDatasets(): Observable<boolean> {
     return this.activatedRoute.queryParams.pipe(
-      mergeMap(params => this.handleParams(params)),
-      map(bla => void 0)
+      mergeMap((params) => this.handleParams(params)),
     );
   }
 
   private handleParams(params: Params): Observable<boolean> {
-    const valid: Observable<boolean>[] = [];
+    this.handleTimeParam(params);
     if (params[PARAM_IDS]) {
-      this.timeseriesSrvc.removeAllDatasets(true);
+      this.graphDatasetsSrvc.deleteAllDatasets();
       const ids = (params[PARAM_IDS] as string).split(ID_SEPERATOR);
-      valid.push(...ids.map((id) => from(this.timeseriesSrvc.addDataset(id))));
+      let foundOne = false;
+      ids.forEach((id) => {
+        this.datasetStateServices?.some((dss) => {
+          const handled = dss.validatePermaId(id);
+          if (handled) {
+            foundOne = true;
+          }
+        });
+      });
+      this.removeQueryParam(PARAM_IDS);
+      return of(foundOne);
+    } else {
+      const ids = this.storageSrvc.loadOrder();
+      let foundOne = false;
+      ids?.forEach((id) => {
+        this.datasetStateServices?.some((dss) => {
+          const handled = dss.handleStoredDs(id);
+          if (handled) {
+            foundOne = true;
+          }
+        });
+      });
+      return of(foundOne);
     }
+  }
+
+  private handleTimeParam(params: Params) {
     if (params[PARAM_TIME]) {
       const time = (params[PARAM_TIME] as string).split(TIME_SEPERATOR);
       if (time.length === 2) {
         const start = parseInt(time[0], 10);
         const end = parseInt(time[1], 10);
-        this.timeseriesSrvc.timespan = new Timespan(start, end);
+        this.graphDatasetsSrvc.timespan = new Timespan(start, end);
       }
+      this.removeQueryParam(PARAM_TIME);
     } else if (params[PARAM_DEFINED_TIME]) {
       const definedTime = params[PARAM_DEFINED_TIME] as DefinedTimespan;
       const timespan = this.definedTimeintervalSrvc.getInterval(definedTime);
-      if (timespan) { this.timeseriesSrvc.timespan = timespan; }
+      if (timespan) {
+        this.graphDatasetsSrvc.timespan = timespan;
+      }
     }
-    if (valid.length) {
-      return forkJoin(valid).pipe(map(() => true));
-    } else {
-      return of(true);
-    };
   }
 
-  protected generatePermalink(): string {
+  private removeQueryParam(param: string) {
+    const url = new URL(window.location.href);
+    url.searchParams.delete(param);
+    history.replaceState(history.state, '', url.href);
+  }
+
+  public generatePermalink = () => {
     let paramUrl = '';
-    if (this.timeseriesSrvc.hasDatasets()) {
-      const id = this.timeseriesSrvc.datasetIds.join(ID_SEPERATOR);
-      paramUrl = this.createBaseUrl() + '?' + PARAM_IDS + '=' + encodeURIComponent(id);
-      if (this.timeseriesSrvc.timespan) {
-        paramUrl = paramUrl + '&' + PARAM_TIME + '=' + encodeURIComponent(this.timeseriesSrvc.timespan.from
-          + TIME_SEPERATOR + this.timeseriesSrvc.timespan.to);
+    if (this.graphDatasetsSrvc.hasDatasets()) {
+      const ids: string[] = [];
+      this.graphDatasetsSrvc.datasets.forEach((ds) => {
+        this.datasetStateServices?.forEach((dss) => {
+          const permaId = dss.getPermaId(ds);
+          if (permaId !== undefined) {
+            ids.push(permaId);
+          }
+        });
+      });
+      const id = ids.join(ID_SEPERATOR);
+      paramUrl =
+        this.createBaseUrl() + '?' + PARAM_IDS + '=' + encodeURIComponent(id);
+      if (this.graphDatasetsSrvc.timespan) {
+        paramUrl =
+          paramUrl +
+          '&' +
+          PARAM_TIME +
+          '=' +
+          encodeURIComponent(
+            this.graphDatasetsSrvc.timespan.from +
+              TIME_SEPERATOR +
+              this.graphDatasetsSrvc.timespan.to,
+          );
       }
     }
     return paramUrl;
-  }
+  };
 
+  protected createBaseUrl() {
+    const url = window.location.href;
+    if (url.indexOf('?') !== -1) {
+      return url.substring(0, url.indexOf('?'));
+    } else {
+      return url;
+    }
+  }
 }

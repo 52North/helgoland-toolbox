@@ -9,19 +9,15 @@ import { ServiceSelectorService } from './service-selector.service';
 describe('ServiceSelectorService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        HelgolandCoreModule,
-        TranslateTestingModule
-      ],
-      providers: [
-        ServiceSelectorService,
-        SettingsServiceTestingProvider
-      ]
+      imports: [HttpClientModule, HelgolandCoreModule, TranslateTestingModule],
+      providers: [ServiceSelectorService, SettingsServiceTestingProvider],
     });
   });
 
-  it('should be created', inject([ServiceSelectorService], (service: ServiceSelectorService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', inject(
+    [ServiceSelectorService],
+    (service: ServiceSelectorService) => {
+      expect(service).toBeTruthy();
+    },
+  ));
 });

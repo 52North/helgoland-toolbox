@@ -7,10 +7,10 @@ import { DisplayName } from '../../common/decorators/DisplayName';
  * enumerated list of time values
  */
 export class AllowedTimes extends AbstractNumericAllowedValues {
-    @DisplayName('Values')
-    override values: Array<TimePosition | [TimePosition, TimePosition]> = [];
+  @DisplayName('Values')
+  override values: Array<TimePosition | [TimePosition, TimePosition]> = [];
 
-    override toString() {
-        return 'Allowed times';
-    }
+  override toString() {
+    return 'Allowed times';
+  }
 }

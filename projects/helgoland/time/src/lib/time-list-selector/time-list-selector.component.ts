@@ -1,17 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Required, TzDatePipe } from '@helgoland/core';
-import { NgFor } from '@angular/common';
+import { TzDatePipe } from '@helgoland/core';
 
 @Component({
-    selector: 'n52-time-list-selector',
-    templateUrl: './time-list-selector.component.html',
-    standalone: true,
-    imports: [NgFor, TzDatePipe]
+  selector: 'n52-time-list-selector',
+  templateUrl: './time-list-selector.component.html',
+  standalone: true,
+  imports: [TzDatePipe],
 })
 export class TimeListSelectorComponent {
-
-  @Input()
-  @Required
+  @Input({ required: true })
   public timeList!: number[];
 
   @Output()
@@ -21,5 +18,4 @@ export class TimeListSelectorComponent {
   public selectTime(timestamp: number) {
     this.onTimeSelected.emit(timestamp);
   }
-
 }

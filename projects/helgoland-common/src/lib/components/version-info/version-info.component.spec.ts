@@ -11,14 +11,13 @@ describe('VersionInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         TranslateTestingModule,
         HelgolandCoreModule,
         HttpClientModule,
-        VersionInfoComponent
-    ]
-})
-      .compileComponents();
+        VersionInfoComponent,
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

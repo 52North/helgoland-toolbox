@@ -8,9 +8,8 @@ describe('PermalinkNewWindowComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [PermalinkNewWindowComponent]
-})
-      .compileComponents();
+      imports: [PermalinkNewWindowComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

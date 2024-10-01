@@ -1,4 +1,10 @@
-<button mat-icon-button (click)="openFavoriteList()" matTooltip="{{'favorite-list-button.tooltip' | translate}}"
-  attr.aria-label="{{'favorite-list-button.tooltip' | translate}}">
-  <mat-icon [matBadge]="favCount !== 0 ? favCount : ''">star</mat-icon>
+<button
+  mat-icon-button
+  (click)="openFavoriteList()"
+  matTooltip="{{ 'favorite-list-button.tooltip' | translate }}"
+  attr.aria-label="{{ 'favorite-list-button.tooltip' | translate }}"
+>
+  <mat-icon [matBadge]="favoriteSrvc.countChange | async" aria-hidden="false"
+    >star</mat-icon
+  >
 </button>

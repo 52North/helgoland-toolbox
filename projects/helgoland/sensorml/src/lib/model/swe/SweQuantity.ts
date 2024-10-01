@@ -9,26 +9,26 @@ import { DisplayName } from '../../common/decorators/DisplayName';
  * store value of a continuous quantity
  */
 export class SweQuantity extends AbstractSimpleComponent {
-    /**
-     * Value is optional, to enable structure to act as a schema for values
-     * provided using other encodings
-     */
-    @DisplayName('Value')
-    override value: number;
-    /**
-     * Unit of measure used to express the value of this data component
-     */
-    @DisplayName('Unit of measure')
-    uom: UnitOfMeasure = new UnitOfMeasure();
+  /**
+   * Value is optional, to enable structure to act as a schema for values
+   * provided using other encodings
+   */
+  @DisplayName('Value')
+  override value: number;
+  /**
+   * Unit of measure used to express the value of this data component
+   */
+  @DisplayName('Unit of measure')
+  uom: UnitOfMeasure = new UnitOfMeasure();
 
-    @DisplayName('Constraint')
-    override constraint: AllowedValues = new AllowedValues();
+  @DisplayName('Constraint')
+  override constraint: AllowedValues = new AllowedValues();
 
-    override toString() {
-        return 'Quantity Component';
-    }
+  override toString() {
+    return 'Quantity Component';
+  }
 
-    getValue() {
-        return this.value;
-    }
+  getValue() {
+    return this.value;
+  }
 }

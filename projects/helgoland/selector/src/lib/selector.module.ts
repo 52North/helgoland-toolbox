@@ -7,9 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DatasetByStationSelectorComponent } from './dataset-by-station-selector/dataset-by-station-selector.component';
 import { ListSelectorComponent } from './list-selector/list-selector.component';
 import { ListSelectorService } from './list-selector/list-selector.service';
-import {
-  MultiServiceFilterSelectorComponent,
-} from './multi-service-filter-selector/multi-service-filter-selector.component';
+import { MultiServiceFilterSelectorComponent } from './multi-service-filter-selector/multi-service-filter-selector.component';
 import { ServiceFilterSelectorComponent } from './service-filter-selector/service-filter-selector.component';
 import { ServiceSelectorComponent } from './service-selector/service-selector.component';
 import { ServiceSelectorService } from './service-selector/service-selector.service';
@@ -22,27 +20,24 @@ import { ServiceSelectorService } from './service-selector/service-selector.serv
  *   - service selection component
  */
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule,
-        HelgolandLabelMapperModule,
-        HelgolandCoreModule,
-        ServiceSelectorComponent,
-        ServiceFilterSelectorComponent,
-        DatasetByStationSelectorComponent,
-        MultiServiceFilterSelectorComponent,
-        ListSelectorComponent
-    ],
-    exports: [
-        ServiceSelectorComponent,
-        ServiceFilterSelectorComponent,
-        DatasetByStationSelectorComponent,
-        MultiServiceFilterSelectorComponent,
-        ListSelectorComponent
-    ],
-    providers: [
-        ServiceSelectorService,
-        ListSelectorService
-    ]
+  imports: [
+    CommonModule,
+    TranslateModule,
+    HelgolandLabelMapperModule,
+    HelgolandCoreModule,
+    ServiceSelectorComponent,
+    ServiceFilterSelectorComponent,
+    DatasetByStationSelectorComponent,
+    MultiServiceFilterSelectorComponent,
+    ListSelectorComponent,
+  ],
+  exports: [
+    ServiceSelectorComponent,
+    ServiceFilterSelectorComponent,
+    DatasetByStationSelectorComponent,
+    MultiServiceFilterSelectorComponent,
+    ListSelectorComponent,
+  ],
+  providers: [ServiceSelectorService, ListSelectorService],
 })
-export class HelgolandSelectorModule { }
+export class HelgolandSelectorModule {}

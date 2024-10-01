@@ -6,13 +6,13 @@ import { AbstractAllowedValues } from './AbstractAllowedValues';
  * or a regular expression pattern
  */
 export class AllowedTokens extends AbstractAllowedValues {
-    @DisplayName('Values')
-    override values: string[] = [];
+  @DisplayName('Values')
+  override values: string[] = [];
 
-    @DisplayName('Pattern')
-    pattern = '';
+  @DisplayName('Pattern')
+  pattern = '';
 
-    override toString() {
-        return 'Allowed tokens';
-    }
+  override toString() {
+    return 'Allowed tokens';
+  }
 }

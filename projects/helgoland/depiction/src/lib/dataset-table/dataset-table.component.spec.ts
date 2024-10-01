@@ -12,16 +12,13 @@ describe('DatasetTableComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HelgolandCoreModule,
         TranslateTestingModule,
-        DatasetTableComponent
-    ],
-    providers: [
-        DatasetApiInterfaceTesting,
-        SettingsServiceTestingProvider
-    ]
-}).compileComponents();
+        DatasetTableComponent,
+      ],
+      providers: [DatasetApiInterfaceTesting, SettingsServiceTestingProvider],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -33,5 +30,4 @@ describe('DatasetTableComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 });

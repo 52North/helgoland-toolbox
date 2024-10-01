@@ -12,14 +12,14 @@ describe('ServiceListSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HelgolandSelectorModule,
         MatListModule,
         MatProgressBarModule,
         TranslateTestingModule,
-        ServiceListSelectorComponent
-    ]
-}).compileComponents();
+        ServiceListSelectorComponent,
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

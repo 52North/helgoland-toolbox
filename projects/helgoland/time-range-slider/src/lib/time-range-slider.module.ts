@@ -6,12 +6,8 @@ import { TimeRangeSliderComponent } from './time-range-slider.component';
 import { TimeRangeSliderCache } from './time-range-slider.service';
 
 @NgModule({
-    exports: [TimeRangeSliderComponent],
-    imports: [
-        CommonModule,
-        HelgolandCoreModule,
-        TimeRangeSliderComponent
-    ],
-    providers: [TimeRangeSliderCache]
+  exports: [TimeRangeSliderComponent],
+  imports: [CommonModule, HelgolandCoreModule, TimeRangeSliderComponent],
+  providers: [TimeRangeSliderCache],
 })
-export class HelgolandTimeRangeSliderModule { }
+export class HelgolandTimeRangeSliderModule {}

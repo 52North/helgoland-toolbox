@@ -6,9 +6,7 @@ import { FirstLatestTimeseriesEntryComponent } from '@helgoland/depiction';
   selector: 'n52-no-data-entry',
   templateUrl: './no-data-entry.component.html',
   styleUrls: ['./no-data-entry.component.css'],
-  imports: [
-    CommonModule
-  ],
-  standalone: true
+  imports: [CommonModule],
+  standalone: true,
 })
-export class NoDataEntryComponent extends FirstLatestTimeseriesEntryComponent { }
+export class NoDataEntryComponent extends FirstLatestTimeseriesEntryComponent {}

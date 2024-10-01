@@ -5,13 +5,11 @@ import { HelgolandCoreModule } from '../core.module';
 import { TimezoneService } from './timezone.service';
 
 describe('TimezoneService', () => {
-
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [
-      HelgolandCoreModule,
-      TranslateTestingModule
-    ],
-  }));
+  beforeEach(() =>
+    TestBed.configureTestingModule({
+      imports: [HelgolandCoreModule, TranslateTestingModule],
+    }),
+  );
 
   it('should be created', () => {
     const service: TimezoneService = TestBed.inject(TimezoneService);
@@ -25,5 +23,4 @@ describe('TimezoneService', () => {
     expect(service.getTimezoneName()).toBe(tz);
     service.setTimezone();
   });
-
 });

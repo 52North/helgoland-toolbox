@@ -14,7 +14,7 @@ const COMPONENTS = [
   TimeListSelectorComponent,
   TimespanShiftSelectorComponent,
   TimespanButtonComponent,
-  AutoUpdateTimespanComponent
+  AutoUpdateTimespanComponent,
 ];
 
 /**
@@ -22,14 +22,7 @@ const COMPONENTS = [
  * - different time controls to manipulate a timestamp or timeinterval
  */
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        HelgolandCoreModule,
-        COMPONENTS
-    ],
-    exports: [
-        COMPONENTS
-    ]
+  imports: [CommonModule, FormsModule, HelgolandCoreModule, COMPONENTS],
+  exports: [COMPONENTS],
 })
-export class HelgolandTimeModule { }
+export class HelgolandTimeModule {}

@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 
-import { AdditionalDataGraphComponent } from './pages/additional-data-graph/additional-data-graph.component';
 import { DiagramExportComponent } from './pages/diagram-export/diagram-export.component';
 import { EventingComponent } from './pages/eventing/eventing.component';
 import { FacetSearchComponent } from './pages/facet-search/facet-search.component';
@@ -25,13 +24,15 @@ export const ROUTES: Routes = [
   { path: 'eventing', component: EventingComponent },
   { path: 'favorite', component: FavoriteComponent },
   { path: 'graph-legend', component: GraphLegendComponent },
-  { path: 'additional-data-graph', component: AdditionalDataGraphComponent },
   { path: 'list-selection', component: ListSelectionComponent },
   { path: 'map-selector', component: MapSelectorComponent },
   { path: 'map-view', component: MapViewComponent },
   { path: 'permalink', component: PermalinkComponent },
   { path: 'profile-entry', component: ProfileEntryComponent },
-  { path: 'service-filter-selector', component: ServiceFilterSelectorDemoPageComponent },
+  {
+    path: 'service-filter-selector',
+    component: ServiceFilterSelectorDemoPageComponent,
+  },
   { path: 'service-selector', component: ServiceSelectorComponent },
   { path: 'table', component: TableComponent },
   { path: 'time', component: TimeComponent },
@@ -42,5 +43,5 @@ export const ROUTES: Routes = [
   { path: 'facet-search', component: FacetSearchComponent },
   { path: 'sensorml', component: SensormlComponent },
   { path: 'sandbox', component: SandboxComponent },
-  { path: '**', redirectTo: '/', pathMatch: 'full' }
+  { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];

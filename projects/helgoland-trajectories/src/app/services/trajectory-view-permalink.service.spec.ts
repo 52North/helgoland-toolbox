@@ -9,10 +9,7 @@ describe('TrajectoryViewPermalinkService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HelgolandCoreModule,
-        RouterTestingModule
-      ]
+      imports: [HelgolandCoreModule, RouterTestingModule],
     });
     service = TestBed.inject(TrajectoryViewPermalinkService);
   });

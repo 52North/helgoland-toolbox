@@ -3,21 +3,21 @@ import { Term } from './Term';
 import { DisplayName } from '../../common/decorators/DisplayName';
 
 export class IdentifierList extends AbstractMetadataList {
-    @DisplayName('Identifiers')
-    identifiers: Term[] = [];
+  @DisplayName('Identifiers')
+  identifiers: Term[] = [];
 
-    override toString() {
-        return 'Identifier list';
-    }
+  override toString() {
+    return 'Identifier list';
+  }
 
-    getLabel() {
-        return this.toString();
-    }
+  getLabel() {
+    return this.toString();
+  }
 
-    getValue() {
-        if (this.identifiers.length > 0) {
-            return this.identifiers.join(', ');
-        }
-        return undefined;
+  getValue() {
+    if (this.identifiers.length > 0) {
+      return this.identifiers.join(', ');
     }
+    return undefined;
+  }
 }

@@ -6,14 +6,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   selector: 'helgoland-loading-overlay-spinner',
   templateUrl: './loading-overlay-spinner.component.html',
   styleUrls: ['./loading-overlay-spinner.component.scss'],
-  imports: [
-    MatProgressSpinnerModule,
-    CommonModule
-  ],
-  standalone: true
+  imports: [MatProgressSpinnerModule, CommonModule],
+  standalone: true,
 })
 export class LoadingOverlaySpinnerComponent {
-
   @Input() loadingHint: string | undefined;
-
 }

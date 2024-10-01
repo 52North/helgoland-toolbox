@@ -11,22 +11,19 @@ describe('FirstLatestTimeseriesEntryComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HelgolandCoreModule,
         TranslateTestingModule,
-        FirstLatestTimeseriesEntryComponent
-    ],
-    providers: [
-        SettingsServiceTestingProvider
-    ]
-})
-      .compileComponents();
+        FirstLatestTimeseriesEntryComponent,
+      ],
+      providers: [SettingsServiceTestingProvider],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FirstLatestTimeseriesEntryComponent);
     component = fixture.componentInstance;
-    component.datasetId = "temp__temp";
+    component.datasetId = 'temp__temp';
     fixture.detectChanges();
   });
 

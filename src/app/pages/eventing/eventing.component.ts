@@ -17,13 +17,10 @@ import {
 @Component({
   templateUrl: './eventing.component.html',
   styleUrls: ['./eventing.component.css'],
-  imports: [
-    CommonModule
-  ],
-  standalone: true
+  imports: [CommonModule],
+  standalone: true,
 })
 export class EventingComponent {
-
   private readonly url = '';
 
   public loading: boolean = false;
@@ -40,7 +37,7 @@ export class EventingComponent {
 
   constructor(
     private basicAuthServices: BasicAuthServiceMaintainer,
-    private eventingApi: EventingApiService
+    private eventingApi: EventingApiService,
   ) {
     this.basicAuthServices.registerService(this.url);
   }
@@ -51,47 +48,50 @@ export class EventingComponent {
       limit: 10,
       offset: 5,
       expanded: true,
-      latest: true
+      latest: true,
     };
-    this.eventingApi.getEvents(this.url, params).subscribe(
-      res => this.eventResults = res,
-      (error: HttpErrorResponse) => this.requestError = error.message,
-      () => this.loading = false
-    );
+    this.eventingApi.getEvents(this.url, params).subscribe({
+      next: (res) => (this.eventResults = res),
+      error: (error: HttpErrorResponse) => (this.requestError = error.message),
+      complete: () => (this.loading = false),
+    });
   }
 
   public requestSubscriptions() {
     this.startloading();
     const params: SubscriptionFilter = { limit: 1 };
-    this.eventingApi.getSubscriptions(this.url, params).subscribe(
-      res => this.subscriptionResults = res,
-      (error: HttpErrorResponse) => this.requestError = error.message,
-      () => this.loading = false
-    );
+    this.eventingApi.getSubscriptions(this.url, params).subscribe({
+      next: (res) => (this.subscriptionResults = res),
+      error: (error: HttpErrorResponse) => (this.requestError = error.message),
+      complete: () => (this.loading = false),
+    });
   }
 
   public requestPublications() {
     this.startloading();
     const params: PublicationFilter = { limit: 1 };
-    this.eventingApi.getPublications(this.url, params).subscribe(
-      res => this.publicationResults = res,
-      this.showError(),
-      () => this.loading = false
-    );
+    this.eventingApi.getPublications(this.url, params).subscribe({
+      next: (res) => (this.publicationResults = res),
+      error: this.showError(),
+      complete: () => (this.loading = false),
+    });
   }
 
   private showError(): (error: any) => void {
-    return (error: HttpErrorResponse) => this.requestError = error.message;
+    return (error: HttpErrorResponse) => (this.requestError = error.message);
   }
 
   public requestNotifications() {
     this.startloading();
-    const params: NotificationFilter = { limit: 10, publications: ['80', '81'] };
-    this.eventingApi.getNotifications(this.url, params).subscribe(
-      res => this.notificationResults = res,
-      (error: HttpErrorResponse) => this.requestError = error.message,
-      () => this.loading = false
-    );
+    const params: NotificationFilter = {
+      limit: 10,
+      publications: ['80', '81'],
+    };
+    this.eventingApi.getNotifications(this.url, params).subscribe({
+      next: (res) => (this.notificationResults = res),
+      error: (error: HttpErrorResponse) => (this.requestError = error.message),
+      complete: () => (this.loading = false),
+    });
   }
 
   private startloading() {
@@ -99,5 +99,4 @@ export class EventingComponent {
     this.eventResults = undefined;
     this.subscriptionResults = undefined;
   }
-
 }

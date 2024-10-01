@@ -8,4 +8,10 @@ import { SweText } from './SweText';
 /**
  * Re-usable group providing a choice of scalar data components
  */
-export type SweAnyScalar = SweBoolean | SweCount | SweQuantity | SweTime | SweCategory | SweText;
+export type SweAnyScalar =
+  | SweBoolean
+  | SweCount
+  | SweQuantity
+  | SweTime
+  | SweCategory
+  | SweText;

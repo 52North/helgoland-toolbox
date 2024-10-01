@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { inject, TestBed } from '@angular/core/testing';
 
 import { MapHandlerService } from './map-handler.service';
@@ -8,7 +7,7 @@ describe('Service: MapHandler', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [],
-      imports: [HelgolandMapModule]
+      imports: [HelgolandMapModule],
     });
   });
 

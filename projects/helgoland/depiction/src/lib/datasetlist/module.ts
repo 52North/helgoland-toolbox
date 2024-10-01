@@ -6,12 +6,8 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { HelgolandLabelMapperModule } from '../label-mapper/label-mapper.module';
 import { ProfileEntryComponent } from './profile-entry/profile-entry.component';
-import {
-  ConfigurableTimeseriesEntryComponent,
-} from './timeseries/configurable-timeseries-entry/configurable-timeseries-entry.component';
-import {
-  FirstLatestTimeseriesEntryComponent,
-} from './timeseries/first-latest-timeseries-entry/first-latest-timeseries-entry.component';
+import { ConfigurableTimeseriesEntryComponent } from './timeseries/configurable-timeseries-entry/configurable-timeseries-entry.component';
+import { FirstLatestTimeseriesEntryComponent } from './timeseries/first-latest-timeseries-entry/first-latest-timeseries-entry.component';
 import { SimpleTimeseriesEntryComponent } from './timeseries/simple-timeseries-entry/simple-timeseries-entry.component';
 import {
   ReferenceValueColorCache,
@@ -25,7 +21,7 @@ const COMPONENTS = [
   SimpleTimeseriesEntryComponent,
   FirstLatestTimeseriesEntryComponent,
   ProfileEntryComponent,
-  TrajectoryEntryComponent
+  TrajectoryEntryComponent,
 ];
 
 /**
@@ -33,20 +29,15 @@ const COMPONENTS = [
  * - display component of different dataset types
  */
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule,
-        HelgolandCoreModule,
-        HelgolandLabelMapperModule,
-        FormsModule,
-        COMPONENTS
-    ],
-    exports: [
-        COMPONENTS
-    ],
-    providers: [
-        ReferenceValueColorCache
-    ]
+  imports: [
+    CommonModule,
+    TranslateModule,
+    HelgolandCoreModule,
+    HelgolandLabelMapperModule,
+    FormsModule,
+    COMPONENTS,
+  ],
+  exports: [COMPONENTS],
+  providers: [ReferenceValueColorCache],
 })
-export class HelgolandDatasetlistModule {
-}
+export class HelgolandDatasetlistModule {}

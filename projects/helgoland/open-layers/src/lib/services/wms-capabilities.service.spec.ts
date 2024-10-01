@@ -4,12 +4,16 @@ import { HelgolandCoreModule } from '@helgoland/core';
 import { WmsCapabilitiesService } from './wms-capabilities.service';
 
 describe('WmsCapabilitiesService', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [HelgolandCoreModule]
-  }));
+  beforeEach(() =>
+    TestBed.configureTestingModule({
+      imports: [HelgolandCoreModule],
+    }),
+  );
 
   it('should be created', () => {
-    const service: WmsCapabilitiesService = TestBed.inject(WmsCapabilitiesService);
+    const service: WmsCapabilitiesService = TestBed.inject(
+      WmsCapabilitiesService,
+    );
     expect(service).toBeTruthy();
   });
 
@@ -22,5 +26,4 @@ describe('WmsCapabilitiesService', () => {
   //       });
   //   })();
   // });
-
 });

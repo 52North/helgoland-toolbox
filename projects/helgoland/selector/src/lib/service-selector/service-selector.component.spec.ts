@@ -13,17 +13,14 @@ describe('ServiceSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HttpClientModule,
         HelgolandCoreModule,
         TranslateTestingModule,
-        ServiceSelectorComponent
-    ],
-    providers: [
-        ServiceSelectorService,
-        SettingsServiceTestingProvider,
-    ]
-}).compileComponents();
+        ServiceSelectorComponent,
+      ],
+      providers: [ServiceSelectorService, SettingsServiceTestingProvider],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -35,7 +32,7 @@ describe('ServiceSelectorComponent', () => {
     // }];
     component.filter = {
       lang: 'de',
-      type: DatasetType.Timeseries
+      type: DatasetType.Timeseries,
     };
     fixture.detectChanges();
   });

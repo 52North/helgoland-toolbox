@@ -11,10 +11,19 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DatasetOptions, HelgolandTrajectory, Timespan } from '@helgoland/core';
-import { D3AxisType, D3GraphOptions, D3SelectionRange, HelgolandD3Module } from '@helgoland/d3';
+import {
+  D3AxisType,
+  D3GraphOptions,
+  D3SelectionRange,
+  HelgolandD3Module,
+} from '@helgoland/d3';
 import { HelgolandMapViewModule } from '@helgoland/map';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { LoadingOverlayProgressBarComponent, LoadingOverlaySpinnerComponent, ShareButtonComponent } from 'helgoland-common';
+import {
+  LoadingOverlayProgressBarComponent,
+  LoadingOverlaySpinnerComponent,
+  ShareButtonComponent,
+} from 'helgoland-common';
 
 import { TrajectoriesService } from '../../services/trajectories.service';
 import { LegendEntryComponent } from '../legend-entry/legend-entry.component';
@@ -48,10 +57,9 @@ import { TrajectoryLabelComponent } from './../trajectory-label/trajectory-label
     TrajectoryLabelComponent,
     TranslateModule,
   ],
-  standalone: true
+  standalone: true,
 })
 export class TrajectoryViewComponent implements OnInit {
-
   public trajectory: HelgolandTrajectory | undefined;
 
   public timespan: Timespan | undefined;
@@ -75,37 +83,48 @@ export class TrajectoryViewComponent implements OnInit {
   public graphOptions: D3GraphOptions = {
     axisType: D3AxisType.Time,
     dotted: false,
-    groupYAxis: true
+    groupYAxis: true,
   };
 
   public trajectoryGraphLoading: boolean = false;
 
   public axisTypes = [
-    { type: D3AxisType.Distance, label: this.translateSrvc.instant('chart-styling.xaxis-option.distance') },
-    { type: D3AxisType.Time, label: this.translateSrvc.instant('chart-styling.xaxis-option.time') },
-    { type: D3AxisType.Ticks, label: this.translateSrvc.instant('chart-styling.xaxis-option.ticks') }
-  ]
+    {
+      type: D3AxisType.Distance,
+      label: this.translateSrvc.instant('chart-styling.xaxis-option.distance'),
+    },
+    {
+      type: D3AxisType.Time,
+      label: this.translateSrvc.instant('chart-styling.xaxis-option.time'),
+    },
+    {
+      type: D3AxisType.Ticks,
+      label: this.translateSrvc.instant('chart-styling.xaxis-option.ticks'),
+    },
+  ];
 
   constructor(
     public trajectorySrvc: TrajectoriesService,
     public translateSrvc: TranslateService,
     public permalinkSrvc: TrajectoryViewPermalinkService,
-    private dialog: MatDialog
-  ) { }
+    private dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
-    this.permalinkSrvc.validatePeramlink().subscribe(_ => {
+    this.permalinkSrvc.validatePeramlink().subscribe((_) => {
       this.initializeView();
     });
 
-    this.trajectorySrvc.loading.subscribe(loading => this.loading = loading);
-    this.trajectorySrvc.result.subscribe(res => {
+    this.trajectorySrvc.loading.subscribe(
+      (loading) => (this.loading = loading),
+    );
+    this.trajectorySrvc.result.subscribe((res) => {
       this.trajectory = res.trajectory;
       this.timespan = res.timespan;
       this.geometry = res.geometry;
       this.datasetIds = res.datasetIds;
       this.options = res.options;
-    })
+    });
   }
 
   private initializeView() {
@@ -118,7 +137,7 @@ export class TrajectoryViewComponent implements OnInit {
     if (this.geometry) {
       this.highlightGeometry = {
         type: 'LineString',
-        coordinates: this.geometry.coordinates.slice(range.from, range.to)
+        coordinates: this.geometry.coordinates.slice(range.from, range.to),
       } as GeoJSON.GeoJsonObject;
     }
   }
@@ -128,7 +147,7 @@ export class TrajectoryViewComponent implements OnInit {
       this.selection = range;
       this.zoomToGeometry = {
         type: 'LineString',
-        coordinates: this.geometry.coordinates.slice(range.from, range.to)
+        coordinates: this.geometry.coordinates.slice(range.from, range.to),
       };
     }
   }
@@ -137,7 +156,7 @@ export class TrajectoryViewComponent implements OnInit {
     if (this.geometry) {
       this.highlightGeometry = {
         type: 'Point',
-        coordinates: this.geometry.coordinates[idx]
+        coordinates: this.geometry.coordinates[idx],
       } as GeoJSON.GeoJsonObject;
     }
   }
@@ -155,7 +174,10 @@ export class TrajectoryViewComponent implements OnInit {
   }
 
   public openSelection(disableClose = false) {
-    this.dialog.open(ModalTrajectorySelectionComponent, { disableClose, autoFocus: false });
+    this.dialog.open(ModalTrajectorySelectionComponent, {
+      disableClose,
+      autoFocus: false,
+    });
   }
 
   public openMainConfig() {
@@ -163,7 +185,6 @@ export class TrajectoryViewComponent implements OnInit {
   }
 
   public setGraphLoading(loading: boolean) {
-    setTimeout(() => this.trajectoryGraphLoading = loading);
+    setTimeout(() => (this.trajectoryGraphLoading = loading));
   }
-
 }

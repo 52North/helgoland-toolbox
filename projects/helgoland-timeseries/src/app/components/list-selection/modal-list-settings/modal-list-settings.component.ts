@@ -1,6 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { DatasetApi, HelgolandService } from '@helgoland/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ServiceListSelectorComponent } from 'helgoland-common';
@@ -21,16 +25,15 @@ export interface ListConfig {
     ServiceListSelectorComponent,
     TranslateModule,
   ],
-  standalone: true
+  standalone: true,
 })
 export class ModalListSettingsComponent {
-
   public datasetApis: DatasetApi[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<ModalListSettingsComponent>,
     private configSrvc: ConfigurationService,
-    @Inject(MAT_DIALOG_DATA) public listConfig: ListConfig
+    @Inject(MAT_DIALOG_DATA) public listConfig: ListConfig,
   ) {
     if (this.configSrvc.configuration?.datasetApis) {
       this.datasetApis = this.configSrvc.configuration?.datasetApis;

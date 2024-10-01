@@ -1,0 +1,498 @@
+import {
+  Component,
+  EventEmitter,
+  Input,
+  IterableDiffers,
+  OnChanges,
+  Optional,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
+import {
+  ColorService,
+  Data,
+  DatasetOptions,
+  DatasetPresenterComponent,
+  DatasetType,
+  HelgolandDataset,
+  HelgolandServicesConnector,
+  HelgolandTimeseries,
+  HelgolandTimeseriesData,
+  InternalIdHandler,
+  SumValuesService,
+  Time,
+  Timespan,
+  TimeValueTuple,
+  TimezoneService,
+} from '@helgoland/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { duration, unitOfTime } from 'moment';
+
+import {
+  D3SeriesGraphErrorHandler,
+  D3SeriesSimpleGraphErrorHandler,
+} from '../../d3-timeseries-graph/d3-series-graph-error-handler.service';
+import { D3GraphHelperService } from '../../helper/d3-graph-helper.service';
+import { D3GraphId } from '../../helper/d3-graph-id.service';
+import { D3PointSymbolDrawerService } from '../../helper/d3-point-symbol-drawer.service';
+import { D3HoveringService } from '../../helper/hovering/d3-hovering-service';
+import { D3SimpleHoveringService } from '../../helper/hovering/d3-simple-hovering.service';
+import { D3GraphCopyrightComponent } from '../controls/d3-graph-copyright/d3-graph-copyright.component';
+import { D3GraphOverviewSelectionComponent } from '../controls/d3-graph-overview-selection/d3-graph-overview-selection.component';
+import {
+  D3SeriesGraphComponent,
+  D3SeriesGraphOptions,
+} from '../d3-series-graph.component';
+import { HighlightOutput } from '../models/d3-highlight';
+import { D3PlotOptions, HoveringStyle } from '../models/d3-plot-options';
+import {
+  AxisSettings,
+  DatasetChild,
+  DatasetDescription,
+  DatasetStyle,
+  SeriesGraphDataset,
+} from '../models/series-graph-dataset';
+
+@Component({
+  selector: 'n52-d3-series-graph-wrapper',
+  templateUrl: './d3-series-graph-wrapper.component.html',
+  styleUrls: ['./d3-series-graph-wrapper.component.scss'],
+  providers: [D3GraphId],
+  imports: [
+    D3GraphCopyrightComponent,
+    D3GraphOverviewSelectionComponent,
+    D3SeriesGraphComponent,
+  ],
+  standalone: true,
+})
+export class D3SeriesGraphWrapperComponent
+  extends DatasetPresenterComponent<DatasetOptions, D3PlotOptions>
+  implements OnChanges
+{
+  @Input() public yaxisModifier: boolean | undefined;
+
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
+  @Output() public onHighlightChanged: EventEmitter<HighlightOutput> =
+    new EventEmitter();
+
+  @Input() public hoveringService: D3HoveringService =
+    new D3SimpleHoveringService(this.timezoneSrvc, this.pointSymbolDrawer);
+
+  @Input()
+  public mainTimeInterval: Timespan | undefined;
+
+  public datasets: SeriesGraphDataset[] = [];
+  public override timespan: Timespan | undefined;
+
+  public graphOptions: D3SeriesGraphOptions = {
+    grid: true,
+    showTimeLabel: false,
+    hoverStyle: HoveringStyle.point,
+    timeRangeLabel: {
+      show: false,
+    },
+    yaxis: true,
+    yaxisModifier: true,
+  };
+
+  @ViewChild(D3SeriesGraphComponent)
+  private d3Graph!: D3SeriesGraphComponent;
+
+  protected datasetMap: Map<string, HelgolandTimeseries> = new Map();
+
+  constructor(
+    protected override iterableDiffers: IterableDiffers,
+    protected override servicesConnector: HelgolandServicesConnector,
+    protected override datasetIdResolver: InternalIdHandler,
+    protected override timeSrvc: Time,
+    protected override translateService: TranslateService,
+    protected override timezoneSrvc: TimezoneService,
+    protected sumValues: SumValuesService,
+    protected colorService: ColorService,
+    protected graphHelper: D3GraphHelperService,
+    protected pointSymbolDrawer: D3PointSymbolDrawerService,
+    @Optional()
+    protected errorHandler: D3SeriesGraphErrorHandler = new D3SeriesSimpleGraphErrorHandler(),
+  ) {
+    super(
+      iterableDiffers,
+      servicesConnector,
+      datasetIdResolver,
+      timeSrvc,
+      translateService,
+      timezoneSrvc,
+    );
+    if (!this.presenterOptions) {
+      this.presenterOptions = {
+        hoverStyle: HoveringStyle.none,
+      };
+    }
+  }
+
+  public override ngOnChanges(changes: SimpleChanges): void {
+    super.ngOnChanges(changes);
+    if (changes['yaxisModifier']) {
+      this.graphOptions.yaxisModifier =
+        this.yaxisModifier !== undefined
+          ? this.yaxisModifier
+          : this.graphOptions.yaxisModifier;
+      this.drawGraph();
+    }
+  }
+
+  public reloadDataForDatasets(datasetIds: string[]): void {
+    datasetIds.forEach((id) => {
+      if (this.datasetMap.has(id)) {
+        this.loadDatasetData(id);
+      }
+    });
+  }
+
+  protected onLanguageChanged(langChangeEvent: LangChangeEvent): void {}
+
+  protected onTimezoneChanged(timezone: string): void {
+    throw new Error('Method not implemented.');
+  }
+
+  protected timeIntervalChanges(): void {
+    this.datasetMap.forEach((dataset) =>
+      this.loadDatasetData(dataset.internalId),
+    );
+  }
+
+  protected addDataset(id: string, url: string): void {
+    this.servicesConnector
+      .getDataset(
+        { id, url },
+        {
+          locale: this.translateService.currentLang,
+          type: DatasetType.Timeseries,
+        },
+      )
+      .subscribe({
+        next: (res) => this.loadAddedDataset(res),
+        error: (err) => this.errorHandler.handleDatasetLoadError(err),
+      });
+  }
+
+  protected removeDataset(id: string): void {
+    const dataset = this.datasetMap.get(id);
+    // first remove all reference values
+    // dataset.referenceValues.forEach(refVal => {
+    //   const refValIdx = this.graphDatasets.findIndex(e => e.id === this.createRefValueId(id, refVal.referenceValueId));
+    //   if (refValIdx >= 0) {
+    //     this.graphDatasets.splice(refValIdx, 1);
+    //   }
+    // })
+    // now delete dataset
+    this.datasetMap.delete(id);
+    const spliceIdx = this.datasets.findIndex((e) => e.id === id);
+    if (spliceIdx >= 0) {
+      this.datasets.splice(spliceIdx, 1);
+    }
+  }
+
+  protected setSelectedId(id: string): void {
+    const dataset = this.datasets.find((e) => e.id === id);
+    if (dataset) {
+      dataset.setSelected(true);
+    }
+    this.drawGraph();
+  }
+
+  protected removeSelectedId(id: string): void {
+    const dataset = this.datasets.find((e) => e.id === id);
+    if (dataset) {
+      dataset.setSelected(false);
+    }
+    this.drawGraph();
+  }
+
+  protected presenterOptionsChanged(options: D3PlotOptions): void {
+    this.graphOptions.grid =
+      options.grid !== undefined ? options.grid : this.graphOptions.grid;
+    this.graphOptions.hoverStyle =
+      options.hoverStyle !== undefined
+        ? options.hoverStyle
+        : this.graphOptions.hoverStyle;
+    this.graphOptions.showTimeLabel =
+      options.showTimeLabel !== undefined
+        ? options.showTimeLabel
+        : this.graphOptions.showTimeLabel;
+    this.graphOptions.timeRangeLabel =
+      options.timeRangeLabel !== undefined
+        ? options.timeRangeLabel
+        : this.graphOptions.timeRangeLabel;
+    this.graphOptions.togglePanZoom =
+      options.togglePanZoom !== undefined
+        ? options.togglePanZoom
+        : this.graphOptions.togglePanZoom;
+    this.graphOptions.yaxis =
+      options.yaxis !== undefined ? options.yaxis : this.graphOptions.yaxis;
+    this.graphOptions.yaxisModifier =
+      this.yaxisModifier !== undefined
+        ? this.yaxisModifier
+        : this.graphOptions.yaxisModifier;
+    if (this.presenterOptions) {
+      this.presenterOptions.timespanBufferFactor =
+        this.presenterOptions.timespanBufferFactor !== undefined
+          ? this.presenterOptions.timespanBufferFactor
+          : 0.2;
+      this.presenterOptions.requestBeforeAfterValues =
+        this.presenterOptions.requestBeforeAfterValues !== undefined
+          ? this.presenterOptions.requestBeforeAfterValues
+          : false;
+    }
+    this.drawGraph();
+  }
+
+  protected datasetOptionsChanged(
+    id: string,
+    options: DatasetOptions,
+    firstChange: boolean,
+  ): void {
+    if (!firstChange) {
+      const dataset = this.datasets.find((e) => e.id === id);
+      if (dataset) {
+        dataset.setYAxis(this.getAxisSettings(options), false);
+        dataset.setStyle(this.getGraphStyle(options), false);
+        dataset.setVisible(options.visible, false);
+        dataset.children.forEach((child) => {
+          const ref = options.showReferenceValues.find(
+            (e) => e.id === child.id,
+          );
+          if (ref) {
+            child.setColor(ref.color);
+            child.setVisible(true, false);
+          } else {
+            child.setVisible(false, false);
+          }
+        });
+      }
+      this.loadDatasetData(id);
+    }
+  }
+
+  protected onResize(): void {}
+
+  private loadAddedDataset(dataset: HelgolandDataset): void {
+    if (dataset instanceof HelgolandTimeseries) {
+      let dsEntry = this.datasets.find((e) => e.id === dataset.internalId);
+      const options = this.datasetOptions?.get(dataset.internalId);
+      if (dsEntry === undefined && options) {
+        const style = this.getGraphStyle(options);
+        const yaxis = this.getAxisSettings(options);
+        const selected =
+          this.selectedDatasetIds.indexOf(dataset.internalId) >= 0;
+        const description: DatasetDescription = {
+          categoryLabel: dataset.parameters.category?.map((e) => e.label),
+          phenomenonLabel: dataset.parameters.phenomenon?.label,
+          platformLabel: dataset.platform.label,
+          procedureLabel: dataset.parameters.procedure?.label,
+          featureLabel: dataset.parameters.feature?.label,
+          uom: dataset.uom,
+          firstValue: dataset.firstValue,
+          lastValue: dataset.lastValue,
+        };
+        dsEntry = new SeriesGraphDataset(
+          dataset.internalId,
+          style,
+          yaxis,
+          options.visible,
+          selected,
+          description,
+        );
+        dataset.referenceValues.forEach((ref) => {
+          dsEntry!.addChild(
+            new DatasetChild(
+              ref.referenceValueId,
+              ref.label,
+              ref.visible || false,
+              [],
+              '',
+            ),
+          );
+        });
+        this.datasets.push(dsEntry);
+      }
+      this.datasetMap.set(dataset.internalId, dataset);
+      this.loadDatasetData(dataset.internalId);
+    } else {
+      // console.error(`Dataset with internal id ${dataset.internalId} is not HelgolandTimeseries`);
+    }
+  }
+
+  private loadDatasetData(id: string) {
+    const datasetOptions = this.datasetOptions?.get(id);
+    const dataset = this.datasetMap.get(id);
+    if (dataset && this.timespan) {
+      const dsEntry = this.datasets.find((e) => e.id === dataset.internalId);
+      if (dsEntry) {
+        dsEntry.setDataLoading(true);
+        this.informDatasetLoading(this.getLoadedDatasets());
+        if (
+          this.presenterOptions?.sendDataRequestOnlyIfDatasetTimespanCovered &&
+          dataset.firstValue &&
+          dataset.lastValue &&
+          !this.timeSrvc.overlaps(
+            this.timespan,
+            dataset.firstValue.timestamp,
+            dataset.lastValue.timestamp,
+          )
+        ) {
+          this.prepareData(dsEntry, new HelgolandTimeseriesData([]));
+          this.onCompleteLoadingData(dsEntry);
+        } else if (this.presenterOptions?.timespanBufferFactor) {
+          const buffer = this.timeSrvc.getBufferedTimespan(
+            this.timespan,
+            this.presenterOptions.timespanBufferFactor,
+            duration(1, 'day').asMilliseconds(),
+          );
+          this.onContentLoading.emit(true);
+          // if (this.runningDataRequests.has(dataset.internalId)) {
+          //   this.runningDataRequests.get(dataset.internalId).unsubscribe();
+          //   this.onCompleteLoadingData(dataset);
+          // }
+          const request = this.servicesConnector
+            .getDatasetData(dataset, buffer, {
+              expanded:
+                this.presenterOptions?.showReferenceValues ||
+                this.presenterOptions?.requestBeforeAfterValues,
+              generalize:
+                this.presenterOptions?.generalizeAllways ||
+                datasetOptions?.generalize,
+            })
+            .subscribe({
+              next: (result) => {
+                this.prepareData(dsEntry, result);
+                this.onCompleteLoadingData(dsEntry);
+              },
+              error: (error) => {
+                this.errorHandler.handleDataLoadError(error, dataset);
+                this.onCompleteLoadingData(dsEntry);
+              },
+            });
+          // if (!request.closed) {
+          //   this.runningDataRequests.set(dataset.internalId, request);
+          // }
+        }
+      }
+    }
+  }
+
+  private onCompleteLoadingData(dataset: SeriesGraphDataset): void {
+    // this.runningDataRequests.delete(dataset.internalId);
+    dataset.setDataLoading(false);
+    const loadedIds = this.getLoadedDatasets();
+    this.informDatasetLoading(loadedIds);
+    if (loadedIds.length === 0) {
+      this.onContentLoading.emit(false);
+    }
+  }
+
+  private getLoadedDatasets(): string[] {
+    return this.datasets.filter((e) => e.dataLoading).map((e) => e.id);
+  }
+
+  private informDatasetLoading(ids: string[]) {
+    this.dataLoaded.emit(new Set(ids));
+  }
+
+  public updateTimespan(timespan: Timespan) {
+    this.onTimespanChanged.emit(timespan);
+  }
+
+  public datasetSelected(selectedIds: string[]) {
+    this.onDatasetSelected.emit(selectedIds);
+  }
+
+  private prepareData(
+    dsEntry: SeriesGraphDataset,
+    rawdata: HelgolandTimeseriesData,
+  ): void {
+    if (rawdata instanceof HelgolandTimeseriesData) {
+      // add surrounding entries to the set
+      if (rawdata.valueBeforeTimespan) {
+        rawdata.values.unshift(rawdata.valueBeforeTimespan);
+      }
+      if (rawdata.valueAfterTimespan) {
+        rawdata.values.push(rawdata.valueAfterTimespan);
+      }
+
+      // const data = this.generalizer.generalizeData(rawdata, this.width, this.timespan); // TODO: eher in graph componente
+
+      const datasetIdx = this.datasets.findIndex((e) => e.id === dsEntry.id);
+      const options = this.datasetOptions?.get(dsEntry.id);
+
+      // sum values for bar chart visualization
+      if (options && options.type === 'bar') {
+        const startOf = options.barStartOf as unitOfTime.StartOf;
+        const period = duration(options.barPeriod);
+        if (period.asMilliseconds() === 0) {
+          throw new Error(`${dsEntry.id} needs a valid barPeriod`);
+        }
+        rawdata.values = this.sumValues.sum(startOf, period, rawdata.values);
+      }
+
+      const data = rawdata.values.map((e) => ({
+        timestamp: e[0],
+        value: e[1],
+      }));
+      this.addReferenceValueDatasets(dsEntry, rawdata);
+      dsEntry.setData(data);
+    }
+  }
+
+  private addReferenceValueDatasets(
+    ds: SeriesGraphDataset,
+    rawdata: HelgolandTimeseriesData,
+  ) {
+    if (ds.children && ds.children.length) {
+      ds.children.forEach((child) => {
+        const refVals = rawdata.referenceValues[child.id];
+        if (refVals) {
+          child.setData(this.createReferenceValueData(rawdata, child.id));
+        }
+      });
+    }
+  }
+
+  private createReferenceValueData(
+    data: Data<TimeValueTuple>,
+    refId: string,
+  ): { timestamp: number; value: number }[] {
+    let refValues = data.referenceValues[refId] as any;
+    if (!(refValues instanceof Array)) {
+      if (refValues.valueBeforeTimespan) {
+        refValues.values.unshift(refValues.valueBeforeTimespan);
+      }
+      if (refValues.valueAfterTimespan) {
+        refValues.values.push(refValues.valueAfterTimespan);
+      }
+      refValues = refValues.values;
+    }
+    return refValues.map((d: any) => ({ timestamp: d[0], value: d[1] }));
+  }
+
+  private getGraphStyle(options: DatasetOptions): DatasetStyle {
+    const color = options.color ? options.color : this.colorService.getColor();
+    return this.graphHelper.convertDatasetOptions(options);
+  }
+
+  private getAxisSettings(options: DatasetOptions): AxisSettings {
+    return new AxisSettings(
+      true,
+      options.separateYAxis,
+      options.zeroBasedYAxis,
+      options.autoRangeSelection,
+      options.yAxisRange,
+    );
+  }
+
+  private drawGraph() {
+    if (this.d3Graph) {
+      this.d3Graph.redrawCompleteGraph();
+    }
+  }
+}

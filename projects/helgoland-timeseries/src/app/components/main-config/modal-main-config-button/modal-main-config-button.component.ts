@@ -11,22 +11,13 @@ import { ModalMainConfigComponent } from '../modal-main-config/modal-main-config
   selector: 'helgoland-modal-main-config-button',
   templateUrl: './modal-main-config-button.component.html',
   styleUrls: ['./modal-main-config-button.component.scss'],
-  imports: [
-    MatTooltipModule,
-    TranslateModule,
-    MatIconModule,
-    MatButtonModule
-  ],
-  standalone: true
+  imports: [MatTooltipModule, TranslateModule, MatIconModule, MatButtonModule],
+  standalone: true,
 })
 export class ModalMainConfigButtonComponent {
-
-  constructor(
-    private dialog: MatDialog
-  ) { }
+  constructor(private dialog: MatDialog) {}
 
   public openMainConfig() {
     this.dialog.open(ModalMainConfigComponent);
   }
-
 }

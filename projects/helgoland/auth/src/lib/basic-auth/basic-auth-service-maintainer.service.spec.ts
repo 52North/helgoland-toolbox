@@ -6,17 +6,15 @@ import { BasicAuthServiceMaintainer } from './basic-auth-service-maintainer.serv
 describe('BasicAuthServicesKeeperService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HelgolandCoreModule
-      ],
-      providers: [
-        BasicAuthServiceMaintainer,
-        SettingsService
-      ]
+      imports: [HelgolandCoreModule],
+      providers: [BasicAuthServiceMaintainer, SettingsService],
     });
   });
 
-  it('should be created', inject([BasicAuthServiceMaintainer], (service: BasicAuthServiceMaintainer) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', inject(
+    [BasicAuthServiceMaintainer],
+    (service: BasicAuthServiceMaintainer) => {
+      expect(service).toBeTruthy();
+    },
+  ));
 });

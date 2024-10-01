@@ -8,13 +8,8 @@ import { GeometryMapViewerComponent } from './geometry-map-viewer/geometry-map-v
  * - geometry map viewer component
  */
 @NgModule({
-    imports: [
-        HelgolandMapModule,
-        GeometryMapViewerComponent
-    ],
-    exports: [
-        GeometryMapViewerComponent
-    ],
-    providers: []
+  imports: [HelgolandMapModule, GeometryMapViewerComponent],
+  exports: [GeometryMapViewerComponent],
+  providers: [],
 })
-export class HelgolandMapViewModule { }
+export class HelgolandMapViewModule {}

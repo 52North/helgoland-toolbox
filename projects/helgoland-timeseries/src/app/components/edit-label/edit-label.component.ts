@@ -29,10 +29,9 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
     ReactiveFormsModule,
   ],
-  standalone: true
+  standalone: true,
 })
 export class EditLabelComponent implements AfterViewInit, OnInit {
-
   fc = new FormControl('');
 
   @Input() label: string | undefined;
@@ -43,9 +42,7 @@ export class EditLabelComponent implements AfterViewInit, OnInit {
 
   editedLabel: string | undefined;
 
-  constructor(
-    private cd: ChangeDetectorRef
-  ) { }
+  constructor(private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.editedLabel = this.label;
@@ -67,5 +64,4 @@ export class EditLabelComponent implements AfterViewInit, OnInit {
   public confirm() {
     this.labelChanged.emit(this.editedLabel);
   }
-
 }

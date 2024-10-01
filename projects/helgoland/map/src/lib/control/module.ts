@@ -14,7 +14,7 @@ const COMPONENTS = [
   LocateControlComponent,
   ZoomControlComponent,
   GeosearchControlComponent,
-  ExtentControlComponent
+  ExtentControlComponent,
 ];
 
 /**
@@ -26,18 +26,14 @@ const COMPONENTS = [
  * - extent control
  */
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        HelgolandCoreModule,
-        HelgolandMapModule,
-        COMPONENTS
-    ],
-    exports: [
-        COMPONENTS
-    ],
-    providers: [
-        LocateService
-    ]
+  imports: [
+    CommonModule,
+    FormsModule,
+    HelgolandCoreModule,
+    HelgolandMapModule,
+    COMPONENTS,
+  ],
+  exports: [COMPONENTS],
+  providers: [LocateService],
 })
-export class HelgolandMapControlModule { }
+export class HelgolandMapControlModule {}

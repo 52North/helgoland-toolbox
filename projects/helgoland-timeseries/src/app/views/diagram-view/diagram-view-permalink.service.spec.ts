@@ -13,8 +13,8 @@ describe('DiagramViewPermalinkService', () => {
       imports: [
         HelgolandCoreModule,
         RouterTestingModule,
-        TranslateTestingModule
-      ]
+        TranslateTestingModule,
+      ],
     });
     service = TestBed.inject(DiagramViewPermalinkService);
   });

@@ -7,16 +7,20 @@ import { SumValuesService } from './sum-values.service';
 describe('SumValuesService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SumValuesService]
+      providers: [SumValuesService],
     });
   });
 
-  it('should be created', inject([SumValuesService], (service: SumValuesService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', inject(
+    [SumValuesService],
+    (service: SumValuesService) => {
+      expect(service).toBeTruthy();
+    },
+  ));
 
-  it('should be created', inject([SumValuesService],
-    (sumValues: SumValuesService, ) => {
+  it('should be created', inject(
+    [SumValuesService],
+    (sumValues: SumValuesService) => {
       const data: TimeValueTuple[] = [
         [1558634400000, 1.075],
         [1558638000000, 1.645],
@@ -48,7 +52,7 @@ describe('SumValuesService', () => {
         [1558731600000, NaN],
         [1558735200000, NaN],
         [1558738800000, NaN],
-        [1558742400000, NaN]
+        [1558742400000, NaN],
       ];
       // for (let index = 0; index <= 100; index++) {
       //   const time = moment().minutes(index).seconds(0).milliseconds(0).unix() * 1000;
@@ -57,7 +61,6 @@ describe('SumValuesService', () => {
       // }
       const result = sumValues.sum('hour', moment.duration(2, 'hour'), data);
       expect(sumValues).toBeTruthy();
-    })
-  );
-
+    },
+  ));
 });

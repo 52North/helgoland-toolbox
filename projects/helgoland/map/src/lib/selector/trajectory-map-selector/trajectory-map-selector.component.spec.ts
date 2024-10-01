@@ -14,18 +14,18 @@ describe('ProfileTrajectoryMapSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [
+      imports: [
         HttpClientModule,
         HelgolandCoreModule,
         TranslateTestingModule,
-        ProfileTrajectoryMapSelectorComponent
-    ],
-    providers: [
+        ProfileTrajectoryMapSelectorComponent,
+      ],
+      providers: [
         DatasetApiInterfaceTesting,
         SettingsServiceTestingProvider,
-        MapCache
-    ]
-}).compileComponents();
+        MapCache,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -5,11 +5,11 @@ import { CodeType } from './CodeType';
  * in an instance.
  */
 export class CodeWithAuthority extends CodeType {
-    constructor(value: string, codeSpace: string) {
-        super(value, codeSpace);
-    }
+  constructor(value: string, codeSpace: string) {
+    super(value, codeSpace);
+  }
 
-    override toString() {
-        return 'Code with authority';
-    }
+  override toString() {
+    return 'Code with authority';
+  }
 }

@@ -5,11 +5,14 @@ import { FacetSearchServiceImpl } from './facet-search.service';
 describe('FacetSearchServiceImpl', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [FacetSearchServiceImpl]
+      providers: [FacetSearchServiceImpl],
     });
   });
 
-  it('should be created', inject([FacetSearchServiceImpl], (service: FacetSearchServiceImpl) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', inject(
+    [FacetSearchServiceImpl],
+    (service: FacetSearchServiceImpl) => {
+      expect(service).toBeTruthy();
+    },
+  ));
 });
