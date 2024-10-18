@@ -41,7 +41,7 @@
           @switch (entry.selectedFilter) {
             @case ("category") {
               <helgoland-common-parameter-list-selector
-                [endpoint]="filterEndpoints.category"
+                [endpoint]="'category'"
                 [filterList]="entry.apiFilter"
                 (onItemSelected)="itemSelected(entry, $event)"
               >
@@ -49,7 +49,7 @@
             }
             @case ("feature") {
               <helgoland-common-parameter-list-selector
-                [endpoint]="filterEndpoints.feature"
+                [endpoint]="'feature'"
                 [filterList]="entry.apiFilter"
                 (onItemSelected)="itemSelected(entry, $event)"
               >
@@ -57,7 +57,7 @@
             }
             @case ("phenomenon") {
               <helgoland-common-parameter-list-selector
-                [endpoint]="filterEndpoints.phenomenon"
+                [endpoint]="'phenomenon'"
                 [filterList]="entry.apiFilter"
                 (onItemSelected)="itemSelected(entry, $event)"
               >
@@ -65,7 +65,7 @@
             }
             @case ("procedure") {
               <helgoland-common-parameter-list-selector
-                [endpoint]="filterEndpoints.procedure"
+                [endpoint]="'procedure'"
                 [filterList]="entry.apiFilter"
                 (onItemSelected)="itemSelected(entry, $event)"
               >
@@ -73,7 +73,7 @@
             }
             @case ("timeseries") {
               <helgoland-timeseries-list-selector
-                [endpoint]="filterEndpoints.dataset"
+                [endpoint]="'dataset'"
                 [filterList]="entry.apiFilter"
               >
               </helgoland-timeseries-list-selector>
