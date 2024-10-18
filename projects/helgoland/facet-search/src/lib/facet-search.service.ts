@@ -136,7 +136,7 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     return this.createTimespan(this.entries);
   }
 
-  public setSelectedTimespan(timespan: Timespan) {
+  public setSelectedTimespan(timespan?: Timespan) {
     this.selectedTimespan = timespan;
     this.setFilteredEntries();
   }
