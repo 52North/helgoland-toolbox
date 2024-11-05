@@ -122,6 +122,7 @@ export interface DatasetDescription {
   procedureLabel?: string;
   categoryLabel?: string[];
   featureLabel?: string;
+  serviceLabel?: string;
   firstValue?: FirstLastValue;
   lastValue?: FirstLastValue;
 }

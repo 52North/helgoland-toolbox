@@ -792,8 +792,7 @@ export class D3SeriesGraphComponent
         } else {
           // find matching axis or add new
           const axis = this.yAxes.find(
-            (e) =>
-              e.uom.includes(axisSettings.entry.description.uom) && !e.seperate,
+            (e) => e.uom === axisSettings.entry.description.uom && !e.seperate,
           );
           if (axis) {
             // add id to axis
