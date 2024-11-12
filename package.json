@@ -90,6 +90,12 @@
     "typescript-logging": "^0.6.3",
     "zone.js": "0.14.2"
   },
+  "optionalDependencies": {
+    "@nx/nx-darwin-arm64": "18.3.5",
+    "@nx/nx-darwin-x64": "18.3.5",
+    "@nx/nx-linux-x64-gnu": "18.3.5",
+    "@nx/nx-win32-x64-msvc": "18.3.5"
+  },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.3.5",
     "@angular-eslint/builder": "17.3.0",
