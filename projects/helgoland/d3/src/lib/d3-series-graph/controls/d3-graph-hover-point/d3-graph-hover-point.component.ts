@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Timespan, TimezoneService } from '@helgoland/core';
+import { TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
 import { Delaunay } from 'd3-delaunay';
 import moment from 'moment';
@@ -13,12 +13,15 @@ import { D3SimpleHoveringService } from '../../../helper/hovering/d3-simple-hove
 import { DataEntry } from '../../../model/d3-general';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import {
+  AdjustBackgroundOptions,
   D3GraphExtent,
+  D3GraphObserver,
   D3SeriesGraphControl,
 } from '../../d3-series-graph-control';
 import { HighlightOutput, HighlightValue } from '../../models/d3-highlight';
 import {
   BarStyle,
+  GraphDataEntry,
   LineStyle,
   SeriesGraphDataset,
 } from '../../models/series-graph-dataset';
@@ -42,7 +45,10 @@ interface BarHoverElement extends HoveredElement {
   styleUrls: ['./d3-graph-hover-point.component.scss'],
   standalone: true,
 })
-export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
+export class D3GraphHoverPointComponent
+  extends D3SeriesGraphControl
+  implements D3GraphObserver
+{
   @Input() public hoveringService: D3HoveringService =
     new D3SimpleHoveringService(this.timezoneSrvc, this.pointSymbolDrawer);
 
@@ -52,14 +58,15 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
 
   protected d3Graph: D3GraphInterface | undefined;
   protected drawLayer: d3.Selection<SVGGElement, any, any, any> | undefined;
-  protected background: d3.Selection<SVGSVGElement, any, any, any> | undefined;
+  protected background: d3.Selection<SVGGElement, any, any, any> | undefined;
   protected disableHovering: boolean = false;
   protected datasets: SeriesGraphDataset[] | undefined;
   protected graphExtent: D3GraphExtent | undefined;
-  protected graphLayer: d3.Selection<SVGSVGElement, any, any, any> | undefined;
+  protected graphLayer: d3.Selection<SVGGElement, any, any, any> | undefined;
   protected previousPoint: HoveredElement | undefined;
 
   protected previousBars: BarHoverElement[] = [];
+  protected data: Map<string, GraphDataEntry[]> | undefined;
 
   constructor(
     protected override graphId: D3GraphId,
@@ -76,23 +83,18 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
     this.d3Graph.redrawCompleteGraph();
   }
 
-  public adjustBackground(
-    background: d3.Selection<SVGSVGElement, any, any, any>,
-    graphExtent: D3GraphExtent,
-    datasets: SeriesGraphDataset[],
-    graph: d3.Selection<SVGSVGElement, any, any, any>,
-    timespan: Timespan,
-  ) {
+  adjustBackground(options: AdjustBackgroundOptions) {
     if (!this.drawLayer && this.d3Graph) {
       this.drawLayer = this.d3Graph.getDrawingLayer('hovering-point-layer');
       if (this.hoveringService) {
         this.hoveringService.initPointHovering(this.drawLayer);
       }
     }
-    this.background = background;
-    this.graphExtent = graphExtent;
-    this.datasets = datasets;
-    this.graphLayer = graph;
+    this.background = options.background;
+    this.graphExtent = options.graphExtent;
+    this.datasets = options.preparedDatasets;
+    this.graphLayer = options.graph;
+    this.data = options.preparedData;
   }
 
   public mousemoveBackground(event: MouseEvent) {
@@ -242,15 +244,16 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
 
     this.datasets?.forEach((ds, i) => {
       if (ds.style instanceof LineStyle && ds.visible) {
+        const data = this.data!.get(ds.id)!;
         const delaunay = Delaunay.from(
-          ds.data,
+          data,
           (d) => d.xDiagCoord!,
           (d) => d.yDiagCoord!,
         );
         const idx = delaunay.find(x, y);
 
         if (idx != null && !isNaN(idx) && this.graphLayer) {
-          const datum = ds.data[idx] as DataEntry;
+          const datum = data[idx] as DataEntry;
           const distance = this.distance(
             datum.xDiagCoord!,
             datum.yDiagCoord!,
@@ -276,10 +279,11 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
     const nearest: BarHoverElement[] = [];
     this.datasets?.every((ds, i) => {
       if (ds.style instanceof BarStyle) {
+        const data = this.data!.get(ds.id)!;
         const shiftedTime = moment(time).subtract(ds.style.period).valueOf();
-        const idx = ds.data.findIndex((d) => d.timestamp > shiftedTime);
-        if (idx > -1 && ds.data[idx] && this.graphLayer) {
-          const id = `bar-${ds.data[idx].timestamp}-${i}`;
+        const idx = data.findIndex((d) => d.timestamp > shiftedTime);
+        if (idx > -1 && data[idx] && this.graphLayer) {
+          const id = `bar-${data[idx].timestamp}-${i}`;
           const match = this.graphLayer.select(`#${id}`);
           const barHeight =
             (match.attr('height') && Number.parseFloat(match.attr('height'))) ||
@@ -288,7 +292,7 @@ export class D3GraphHoverPointComponent extends D3SeriesGraphControl {
             nearest.push({
               selection: match,
               dataset: ds,
-              dataEntry: ds.data[idx],
+              dataEntry: data[idx],
             });
             return true;
           }

@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -25,7 +24,7 @@ import {
 } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as d3 from 'd3';
-import moment, { duration, unitOfTime } from 'moment';
+import moment, { unitOfTime } from 'moment';
 import { Subscription } from 'rxjs/internal/Subscription';
 
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
@@ -37,10 +36,8 @@ import { D3HoveringService } from '../helper/hovering/d3-hovering-service';
 import { D3SimpleHoveringService } from '../helper/hovering/d3-simple-hovering.service';
 import { RangeCalculationsService } from '../helper/range-calculations.service';
 import { DataEntry, YAxis, YAxisSettings } from '../model/d3-general';
-import { D3GraphCopyrightComponent } from './controls/d3-graph-copyright/d3-graph-copyright.component';
 import { D3GraphHoverLineComponent } from './controls/d3-graph-hover-line/d3-graph-hover-line.component';
 import { D3GraphHoverPointComponent } from './controls/d3-graph-hover-point/d3-graph-hover-point.component';
-import { D3GraphOverviewSelectionComponent } from './controls/d3-graph-overview-selection/d3-graph-overview-selection.component';
 import { D3GraphPanZoomInteractionComponent } from './controls/d3-graph-pan-zoom-interaction/d3-graph-pan-zoom-interaction.component';
 import { D3YAxisModifierComponent } from './controls/d3-y-axis-modifier/d3-y-axis-modifier.component';
 import { D3GraphInterface } from './d3-graph.interface';
@@ -53,6 +50,7 @@ import {
   LineStyle,
   SeriesGraphDataset,
 } from './models/series-graph-dataset';
+import { sumDataEntry } from '../helper/sumValues';
 
 const TICKS_COUNT_YAXIS = 5;
 
@@ -109,12 +107,9 @@ interface DatasetEventSubscriptions {
   standalone: true,
   imports: [
     D3GraphPanZoomInteractionComponent,
-    D3GraphCopyrightComponent,
-    NgIf,
     D3YAxisModifierComponent,
     D3GraphHoverLineComponent,
     D3GraphHoverPointComponent,
-    D3GraphOverviewSelectionComponent,
   ],
 })
 export class D3SeriesGraphComponent
@@ -158,6 +153,8 @@ export class D3SeriesGraphComponent
 
   // data types
   protected preparedAxes: Map<string, YAxisSettings> = new Map();
+  protected preparedData: Map<string, GraphDataEntry[]> = new Map();
+
   protected listOfUoms: string[] = [];
   /** calculated y axes for the diagram */
   private yAxes: YAxis[] = [];
@@ -411,9 +408,25 @@ export class D3SeriesGraphComponent
       }
     }
 
+    if (entry.style instanceof BarStyle) {
+      const neustartOf = entry.style.startOf;
+      const neuperiod = entry.style.period;
+
+      if (neuperiod.asMilliseconds() === 0) {
+        throw new Error(`${entry.id} needs a valid barPeriod`);
+      }
+      const values = sumDataEntry(neustartOf, neuperiod, entry.data);
+      this.preparedData.set(entry.id, values);
+      fixedMin = true;
+      visualMin = 0;
+    } else {
+      this.preparedData.set(entry.id, entry.data);
+    }
+
     // set variable extend bounds
     if (visualMin === undefined || visualMax === undefined) {
-      const baseDataExtent = d3.extent<DataEntry, number>(entry.data, (d) => {
+      const data = this.preparedData.get(entry.id)!;
+      const baseDataExtent = d3.extent<DataEntry, number>(data, (d) => {
         // if (typeof d.value === 'number') {
         if (!isNaN(d.value)) {
           // with timespan restriction, it only selects values inside the selected timespan
@@ -556,6 +569,7 @@ export class D3SeriesGraphComponent
 
   private prepareDatasets() {
     if (this.datasets && this.datasets.length) {
+      this.preparedData = new Map();
       this.datasets.forEach((entry) => {
         if (entry.data.length > 0) {
           this.processData(entry);
@@ -706,13 +720,14 @@ export class D3SeriesGraphComponent
           margin: this.margin,
           xScale: this.xScaleBase,
         };
-        e.adjustBackground(
-          this.background!,
+        e.adjustBackground({
+          background: this.background!,
+          graph: this.graph,
           graphExtent,
-          this.datasets,
-          this.graph,
-          this.timespan!,
-        );
+          preparedDatasets: this.datasets,
+          preparedData: this.preparedData,
+          timespan: this.timespan!,
+        });
       }
     });
     this.drawBackground();
@@ -1198,7 +1213,8 @@ export class D3SeriesGraphComponent
    * @param entry {DataEntry} Object containing a dataset.
    */
   protected drawChart(entry: SeriesGraphDataset, idx: number): void {
-    if (entry.data.length > 0 && entry.visible) {
+    const data = this.preparedData.get(entry.id);
+    if (data && data.length > 0 && entry.visible) {
       const yaxis = this.yAxes.find((e) => e.ids.indexOf(entry.id) >= 0);
       if (yaxis) {
         // create body to clip graph
@@ -1268,7 +1284,7 @@ export class D3SeriesGraphComponent
     yScaleBase: d3.ScaleLinear<number, number>,
   ) {
     const pointRadius = this.calculatePointRadius(ds);
-    const data = ds.data.filter((d) => !isNaN(d.value));
+    const data = this.preparedData.get(ds.id)!.filter((d) => !isNaN(d.value));
 
     // create graph line
     const line = this.createLine(this.xScaleBase!, yScaleBase);
@@ -1355,7 +1371,7 @@ export class D3SeriesGraphComponent
 
     this.graphBody
       .selectAll('.bar')
-      .data(ds.data)
+      .data(this.preparedData.get(ds.id))
       .enter()
       .append('rect')
       .attr('class', 'bar')
