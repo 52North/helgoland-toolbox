@@ -67,7 +67,7 @@ describe('MultiServiceFilterSelectorComponent creation', () => {
         filter: { feature: '14' },
       },
     ];
-    component.endpoint = MultiServiceFilterEndpoint.offering;
+    component.endpoint = 'offering';
     component.onItemSelected.subscribe((res) => alert(res));
     component.ngOnChanges({});
     fixtureInterval = window.setInterval(
