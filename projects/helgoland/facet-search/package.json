@@ -1,6 +1,6 @@
 {
   "name": "@helgoland/facet-search",
-  "version": "17.0.0",
+  "version": "17.0.1",
   "dependencies": {
     "@angular/common": "^16.0.0 || ^17.0.0",
     "@angular/core": "^16.0.0 || ^17.0.0",
