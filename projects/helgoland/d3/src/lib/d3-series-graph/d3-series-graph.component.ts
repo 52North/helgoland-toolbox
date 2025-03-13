@@ -35,6 +35,7 @@ import { D3TimeFormatLocaleService } from '../helper/d3-time-format-locale.servi
 import { D3HoveringService } from '../helper/hovering/d3-hovering-service';
 import { D3SimpleHoveringService } from '../helper/hovering/d3-simple-hovering.service';
 import { RangeCalculationsService } from '../helper/range-calculations.service';
+import { sumDataEntry } from '../helper/sumValues';
 import { DataEntry, YAxis, YAxisSettings } from '../model/d3-general';
 import { D3GraphHoverLineComponent } from './controls/d3-graph-hover-line/d3-graph-hover-line.component';
 import { D3GraphHoverPointComponent } from './controls/d3-graph-hover-point/d3-graph-hover-point.component';
@@ -50,7 +51,6 @@ import {
   LineStyle,
   SeriesGraphDataset,
 } from './models/series-graph-dataset';
-import { sumDataEntry } from '../helper/sumValues';
 
 const TICKS_COUNT_YAXIS = 5;
 
@@ -1303,7 +1303,7 @@ export class D3SeriesGraphComponent
     if (ds.style.pointSymbol) {
       this.graphBody
         .selectAll('.symbol')
-        .data(data)
+        .data(data.filter((d) => d.value !== null))
         .enter()
         .append('path')
         .attr('id', (d: GraphDataEntry) => 'dot-' + d.timestamp + '-' + idx)
@@ -1325,7 +1325,7 @@ export class D3SeriesGraphComponent
     } else {
       this.graphBody
         .selectAll('.graphDots')
-        .data(data)
+        .data(data.filter((d) => d.value !== null))
         .enter()
         .append('circle')
         .attr('class', 'graphDots')
@@ -1340,7 +1340,7 @@ export class D3SeriesGraphComponent
         .selectAll('.highlightDots')
         .data(
           data
-            .filter((d) => !isNaN(d.value) && d.highlight)
+            .filter((d) => !isNaN(d.value) && d.value !== null && d.highlight)
             .map((d) => {
               d.highlight = false;
               return d;
@@ -1407,7 +1407,9 @@ export class D3SeriesGraphComponent
   ) {
     return d3
       .line<DataEntry>()
-      .defined((d) => !isNaN(d.timestamp) && !isNaN(d.value))
+      .defined(
+        (d) => !isNaN(d.timestamp) && !isNaN(d.value) && d.value !== null,
+      )
       .x((d) => {
         d.xDiagCoord = xScaleBase(d.timestamp);
         return d.xDiagCoord;
