@@ -21,6 +21,7 @@
 	"diagram-view.no-timeseries.hint": "Currently no timeseries are selected. Choose one of the following ways:",
 	"diagram-view.open-diagram-settings": "Open diagram settings",
 	"diagram-view.remove-legend-entries.tooltip": "Remove all timeseries",
+	"diagram-view.error-loading-overview-data": "Error while loading overview data for:",
 	"events.add-favorite": "Add favorite",
 	"events.add-timeseries": "Add timeseries",
 	"events.all-timeseries-removed": "Removed all timeseries",

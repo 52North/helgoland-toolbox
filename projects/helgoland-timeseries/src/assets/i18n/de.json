@@ -21,6 +21,7 @@
 	"diagram-view.no-timeseries.hint": "Derzeit sind keine Zeitreihen ausgewählt. Folgende Wege sind möglich:",
 	"diagram-view.open-diagram-settings": "Öffne Diagrammeinstellungen",
 	"diagram-view.remove-legend-entries.tooltip": "Entferne alle Zeitreihen",
+	"diagram-view.error-loading-overview-data": "Fehler beim laden der Übersichtsdiagramdaten für:",
 	"events.add-favorite": "Favorit hinzugefügt",
 	"events.add-timeseries": "Zeitreihe hinzugefügt",
 	"events.all-timeseries-removed": "Alle Zeitreihen entfernt",
