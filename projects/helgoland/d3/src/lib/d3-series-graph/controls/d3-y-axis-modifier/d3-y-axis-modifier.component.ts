@@ -4,7 +4,10 @@ import { MinMaxRange } from '@helgoland/core';
 import { D3GraphId } from '../../../helper/d3-graph-id.service';
 import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { YAxis } from '../../../model/d3-general';
-import { D3SeriesGraphControl } from '../../d3-series-graph-control';
+import {
+  D3GraphObserver,
+  D3SeriesGraphControl,
+} from '../../d3-series-graph-control';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import { D3GraphHelperService } from './../../../helper/d3-graph-helper.service';
 
@@ -17,7 +20,7 @@ import { D3GraphHelperService } from './../../../helper/d3-graph-helper.service'
 })
 export class D3YAxisModifierComponent
   extends D3SeriesGraphControl
-  implements OnDestroy
+  implements OnDestroy, D3GraphObserver
 {
   /**
    * Enables shift buttons for every y axis in the corresponding timeseries graph component.

@@ -14,11 +14,16 @@ import { D3GraphId } from '../../../helper/d3-graph-id.service';
 import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import {
+  AdjustBackgroundOptions,
   D3GraphExtent,
+  D3GraphObserver,
   D3SeriesGraphControl,
 } from '../../d3-series-graph-control';
 import { D3Copyright } from '../../models/d3-plot-options';
-import { SeriesGraphDataset } from '../../models/series-graph-dataset';
+import {
+  GraphDataEntry,
+  SeriesGraphDataset,
+} from '../../models/series-graph-dataset';
 
 @Component({
   selector: 'n52-d3-graph-copyright',
@@ -29,7 +34,7 @@ import { SeriesGraphDataset } from '../../models/series-graph-dataset';
 })
 export class D3GraphCopyrightComponent
   extends D3SeriesGraphControl
-  implements OnChanges, OnDestroy
+  implements OnChanges, OnDestroy, D3GraphObserver
 {
   /**
    * Copyright, which should be shown on the graph
@@ -43,7 +48,7 @@ export class D3GraphCopyrightComponent
 
   protected labelRect: d3.Selection<BaseType, any, any, any> | undefined;
   protected labelText: d3.Selection<BaseType, any, any, any> | undefined;
-  protected background: d3.Selection<SVGSVGElement, any, any, any> | undefined;
+  protected background: d3.Selection<SVGGElement, any, any, any> | undefined;
   protected graphExtent: D3GraphExtent | undefined;
 
   constructor(
@@ -64,15 +69,9 @@ export class D3GraphCopyrightComponent
     this.d3Graph = graph;
   }
 
-  public adjustBackground(
-    background: d3.Selection<SVGSVGElement, any, any, any>,
-    graphExtent: D3GraphExtent,
-    preparedData: SeriesGraphDataset[],
-    graph: d3.Selection<SVGSVGElement, any, any, any>,
-    timespan: Timespan,
-  ): void {
-    this.background = background;
-    this.graphExtent = graphExtent;
+  adjustBackground(options: AdjustBackgroundOptions) {
+    this.background = options.background;
+    this.graphExtent = options.graphExtent;
     if (this.copyright && this.d3Graph) {
       this.clearLayer();
       this.copyrightLayer = this.d3Graph.getDrawingLayer('copyright', true);

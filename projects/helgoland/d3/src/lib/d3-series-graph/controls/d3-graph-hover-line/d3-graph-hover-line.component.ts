@@ -8,10 +8,15 @@ import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { DataEntry } from '../../../model/d3-general';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import {
+  AdjustBackgroundOptions,
   D3GraphExtent,
+  D3GraphObserver,
   D3SeriesGraphControl,
 } from '../../d3-series-graph-control';
-import { SeriesGraphDataset } from '../../models/series-graph-dataset';
+import {
+  GraphDataEntry,
+  SeriesGraphDataset,
+} from '../../models/series-graph-dataset';
 
 export interface HoverlineLabel {
   text: d3.Selection<SVGGElement, any, any, any>;
@@ -28,13 +33,16 @@ const TIME_LABEL_CLASS = 'time-label';
   encapsulation: ViewEncapsulation.None,
   standalone: true,
 })
-export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
+export class D3GraphHoverLineComponent
+  extends D3SeriesGraphControl
+  implements D3GraphObserver
+{
   @Input() showLabels = true;
 
   @Input() showTimelLabel = true;
 
   protected d3Graph: D3GraphInterface | undefined;
-  protected background: d3.Selection<SVGSVGElement, any, any, any> | undefined;
+  protected background: d3.Selection<SVGGElement, any, any, any> | undefined;
   protected graphExtent: D3GraphExtent | undefined;
   protected disableHovering: boolean = false;
   protected lastDraw = new Date().getTime();
@@ -43,6 +51,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
 
   protected labels: Map<string, HoverlineLabel> = new Map();
   protected drawLayer: d3.Selection<SVGGElement, any, any, any> | undefined;
+  protected data: Map<string, GraphDataEntry[]> | undefined;
 
   constructor(
     protected override graphId: D3GraphId,
@@ -58,21 +67,16 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
     this.d3Graph.redrawCompleteGraph();
   }
 
-  public adjustBackground(
-    background: d3.Selection<SVGSVGElement, any, any, any>,
-    graphExtent: D3GraphExtent,
-    datasets: SeriesGraphDataset[],
-    graph: d3.Selection<SVGSVGElement, any, any, any>,
-    timespan: Timespan,
-  ) {
+  adjustBackground(options: AdjustBackgroundOptions) {
     if (!this.drawLayer && this.d3Graph) {
       this.drawLayer = this.d3Graph.getDrawingLayer('hovering-line-layer');
     }
     this.createHoverLine();
     this.labels.clear();
-    this.background = background;
-    this.graphExtent = graphExtent;
-    this.datasets = datasets;
+    this.background = options.background;
+    this.graphExtent = options.graphExtent;
+    this.datasets = options.preparedDatasets;
+    this.data = options.preparedData;
   }
 
   public override cleanUp() {
@@ -156,7 +160,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
   }
 
   protected moveHoverLineIndicator(event: MouseEvent): void {
-    if (this.background && this.datasets && this.graphExtent) {
+    if (this.background && this.datasets && this.graphExtent && this.data) {
       const time = new Date().getTime();
       if (this.lastDraw + this.drawLatency < time) {
         const mouse = d3.pointer(event);
@@ -165,7 +169,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
           this.datasets.forEach((entry, entryIdx) => {
             const idx = this.getItemForX(
               mouse[0] + this.graphExtent!.leftOffset,
-              entry.data,
+              this.data!.get(entry.id)!,
             );
             if (idx) this.showLabel(entry, idx, mouse[0], entryIdx);
           });
@@ -243,7 +247,7 @@ export class D3GraphHoverLineComponent extends D3SeriesGraphControl {
     xCoordMouse: number,
     entryIdx: number,
   ) {
-    const item: DataEntry = entry.data[idx];
+    const item: DataEntry = this.data!.get(entry.id)![idx];
 
     if (!this.labels.has(entry.id)) {
       this.createLabel(entry);

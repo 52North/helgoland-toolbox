@@ -61,7 +61,7 @@ export abstract class FacetSearchService {
   ): FacetParameter | undefined;
   abstract setEntries(entries: FacetSearchElement[]): void;
   abstract getFilteredResults(): FacetSearchElement[];
-  abstract setSelectedTimespan(timespan: Timespan): void;
+  abstract setSelectedTimespan(timespan?: Timespan): void;
   abstract getSelectedTimespan(): Timespan | undefined;
   abstract getFilteredTimespan(): Timespan | undefined;
   abstract getCompleteTimespan(): Timespan | undefined;

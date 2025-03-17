@@ -13,10 +13,11 @@ import { D3GraphId } from '../../../helper/d3-graph-id.service';
 import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import {
+  AdjustBackgroundOptions,
   D3GraphExtent,
+  D3GraphObserver,
   D3SeriesGraphControl,
 } from '../../d3-series-graph-control';
-import { SeriesGraphDataset } from '../../models/series-graph-dataset';
 
 @Component({
   selector: 'n52-d3-graph-overview-selection',
@@ -27,7 +28,7 @@ import { SeriesGraphDataset } from '../../models/series-graph-dataset';
 })
 export class D3GraphOverviewSelectionComponent
   extends D3SeriesGraphControl
-  implements OnChanges
+  implements OnChanges, D3GraphObserver
 {
   // difference to timespan/timeInterval --> if brush, then this is the timespan of the main-diagram
   @Input({ required: true })
@@ -51,7 +52,7 @@ export class D3GraphOverviewSelectionComponent
     super(graphId, graphs, graphHelper);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges) {
     if (changes['selectionTimeInterval']) {
       this.drawOverviewSelection();
     }
@@ -61,13 +62,9 @@ export class D3GraphOverviewSelectionComponent
     this.graphComp = graph;
   }
 
-  public adjustBackground(
-    background: d3.Selection<SVGSVGElement, any, any, any>,
-    graphExtent: D3GraphExtent,
-    preparedData: SeriesGraphDataset[],
-    graph: d3.Selection<SVGSVGElement, any, any, any>,
-    timespan: Timespan,
-  ) {
+  adjustBackground(options: AdjustBackgroundOptions) {
+    const timespan = options.timespan;
+    const graphExtent = options.graphExtent;
     if (
       this.timespanChanged(timespan) ||
       this.graphExtentChanged(graphExtent)
@@ -77,10 +74,8 @@ export class D3GraphOverviewSelectionComponent
       if (!this.drawLayer && this.graphComp) {
         this.drawLayer = this.graphComp.getDrawingLayer('overview-layer', true);
       }
-
       this.completeTimespan = timespan;
       this.graphExtent = graphExtent;
-
       this.drawOverviewSelection();
     }
   }

@@ -537,8 +537,15 @@ export class TimeseriesServiceImpl
           })
           .subscribe({
             next: (result) => this.prepareOverviewData(dataset, result),
-            error: (error) =>
-              this.errorHandler.handleDataLoadError(error, dataset),
+            error: (error) => {
+              const message = this.translate.instant(
+                'diagram-view.error-loading-overview-data',
+              );
+              const label = `${dataset.parameters.phenomenon?.label} @ ${dataset.platform.label}`;
+              this.notifier.notify(`${message} ${label}`);
+              this.graphDatasetsSrvc.setOverviewDataLoading(id, false);
+              this.errorHandler.handleDataLoadError(error, dataset);
+            },
           });
       }
     }

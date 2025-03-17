@@ -5,17 +5,23 @@ import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
 import { D3GraphId } from '../helper/d3-graph-id.service';
 import { D3Graphs } from '../helper/d3-graphs.service';
 import { YAxis } from '../model/d3-general';
-import { SeriesGraphDataset } from './models/series-graph-dataset';
+import {
+  GraphDataEntry,
+  SeriesGraphDataset,
+} from './models/series-graph-dataset';
 import { D3GraphInterface } from './d3-graph.interface';
 
+export interface AdjustBackgroundOptions {
+  background: d3.Selection<SVGGElement, any, any, any>;
+  graphExtent: D3GraphExtent;
+  preparedDatasets: SeriesGraphDataset[];
+  preparedData: Map<string, GraphDataEntry[]>;
+  graph: d3.Selection<SVGGElement, any, any, any>;
+  timespan: Timespan;
+}
+
 export interface D3GraphObserver {
-  adjustBackground?(
-    background: d3.Selection<SVGGElement, any, any, any>,
-    graphExtent: D3GraphExtent,
-    preparedData: SeriesGraphDataset[],
-    graph: d3.Selection<SVGGElement, any, any, any>,
-    timespan: Timespan,
-  ): void;
+  adjustBackground?(options: AdjustBackgroundOptions): void;
   cleanUp?(): void;
   mousemoveBackground?(event: MouseEvent): void;
   mouseoverBackground?(event: MouseEvent): void;

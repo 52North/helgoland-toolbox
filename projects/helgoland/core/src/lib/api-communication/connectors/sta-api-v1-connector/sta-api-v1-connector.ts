@@ -412,7 +412,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
       const lastFilter: StaFilter<
         DatastreamSelectParams,
         DatastreamExpandParams
-      > = {};
+      > = this.createDatastreamFilter(filter);
       lastFilter.$expand = 'Observations($orderby=phenomenonTime;$top=1)';
       lastFilter.$select = {
         Observations: true,

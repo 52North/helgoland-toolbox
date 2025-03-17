@@ -76,8 +76,6 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
 
   phenomenonFilter: MultiServiceFilter[] = [];
 
-  phenomenonEndpoint = MultiServiceFilterEndpoint.phenomenon;
-
   cluster = true;
 
   constructor(
