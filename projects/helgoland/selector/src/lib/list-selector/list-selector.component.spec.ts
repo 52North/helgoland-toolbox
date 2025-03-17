@@ -97,22 +97,22 @@ describe('ListSelectorComponent', () => {
     };
     component.parameters = [
       {
-        type: MultiServiceFilterEndpoint.category,
+        type: 'category',
         header: 'Category',
         filterList: [],
       },
       {
-        type: MultiServiceFilterEndpoint.feature,
+        type: 'feature',
         header: 'Feature',
         filterList: [],
       },
       {
-        type: MultiServiceFilterEndpoint.phenomenon,
+        type: 'phenomenon',
         header: 'Phenomenon',
         filterList: [],
       },
       {
-        type: MultiServiceFilterEndpoint.procedure,
+        type: 'procedure',
         header: 'Procedure',
         filterList: [],
       },

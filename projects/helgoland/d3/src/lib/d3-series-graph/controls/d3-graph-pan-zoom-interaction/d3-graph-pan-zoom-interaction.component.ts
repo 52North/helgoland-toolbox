@@ -11,7 +11,9 @@ import {
 } from '../../models/series-graph-dataset';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import {
+  AdjustBackgroundOptions,
   D3GraphExtent,
+  D3GraphObserver,
   D3SeriesGraphControl,
 } from '../../d3-series-graph-control';
 
@@ -21,7 +23,10 @@ import {
   styleUrls: ['./d3-graph-pan-zoom-interaction.component.scss'],
   standalone: true,
 })
-export class D3GraphPanZoomInteractionComponent extends D3SeriesGraphControl {
+export class D3GraphPanZoomInteractionComponent
+  extends D3SeriesGraphControl
+  implements D3GraphObserver
+{
   protected dragging: boolean = false;
   protected dragStart: [number, number] | undefined;
   protected dragCurrent: [number, number] | undefined;
@@ -43,8 +48,9 @@ export class D3GraphPanZoomInteractionComponent extends D3SeriesGraphControl {
 
   protected timespan: Timespan | undefined;
   protected graphExtent: D3GraphExtent | undefined;
-  protected graph: d3.Selection<SVGSVGElement, any, any, any> | undefined;
+  protected graph: d3.Selection<SVGGElement, any, any, any> | undefined;
   protected datasets: SeriesGraphDataset[] = [];
+  protected data: Map<string, GraphDataEntry[]> | undefined;
 
   constructor(
     protected override graphId: D3GraphId,
@@ -58,17 +64,12 @@ export class D3GraphPanZoomInteractionComponent extends D3SeriesGraphControl {
     this.d3Graph = graph;
   }
 
-  public adjustBackground(
-    background: d3.Selection<SVGSVGElement, any, any, any>,
-    graphExtent: D3GraphExtent,
-    datasets: SeriesGraphDataset[],
-    graph: d3.Selection<SVGSVGElement, any, any, any>,
-    timespan: Timespan,
-  ) {
-    this.timespan = timespan;
-    this.graphExtent = graphExtent;
-    this.graph = graph;
-    this.datasets = datasets;
+  adjustBackground(options: AdjustBackgroundOptions) {
+    this.timespan = options.timespan;
+    this.graphExtent = options.graphExtent;
+    this.graph = options.graph;
+    this.datasets = options.preparedDatasets;
+    this.data = options.preparedData;
   }
 
   public zoomStartBackground(event: MouseEvent) {
@@ -176,7 +177,7 @@ export class D3GraphPanZoomInteractionComponent extends D3SeriesGraphControl {
    * Function that draws a rectangle when zoom is started and the mouse is moving.
    */
   protected zoomHandler(
-    d3GraphElem: d3.Selection<SVGSVGElement, any, any, any>,
+    d3GraphElem: d3.Selection<SVGGElement, any, any, any>,
     graphExtent: D3GraphExtent,
     event: MouseEvent,
   ) {
@@ -249,14 +250,15 @@ export class D3GraphPanZoomInteractionComponent extends D3SeriesGraphControl {
     end += graphExtent.leftOffset;
 
     preparedData.forEach((entry) => {
-      const matchStart = entry.data.find((elem, index, array) => {
+      const data = this.data!.get(entry.id)!;
+      const matchStart = data.find((elem, index, array) => {
         if (elem.xDiagCoord && elem.xDiagCoord >= start) {
           return array[index] !== undefined;
         }
         return undefined;
       });
       if (matchStart) domMinArr.push(matchStart);
-      const matchEnd = entry.data.find((elem, index, array) => {
+      const matchEnd = data.find((elem, index, array) => {
         if (elem.xDiagCoord && elem.xDiagCoord >= end) {
           return array[index] !== undefined;
         }
@@ -290,7 +292,7 @@ export class D3GraphPanZoomInteractionComponent extends D3SeriesGraphControl {
    * Function that configurates and draws the rectangle.
    */
   protected drawDragRectangle(
-    d3GraphElem: d3.Selection<SVGSVGElement, any, any, any>,
+    d3GraphElem: d3.Selection<SVGGElement, any, any, any>,
     graphExtent: D3GraphExtent,
     event: MouseEvent,
   ): void {

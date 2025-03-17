@@ -51,8 +51,6 @@ export class ListSelectionComponent implements OnInit {
 
   public filterList: ParameterListEntry[] = [];
 
-  public filterEndpoints = MultiServiceFilterEndpoint;
-
   constructor(
     private dialog: MatDialog,
     private serviceConnector: HelgolandServicesConnector,

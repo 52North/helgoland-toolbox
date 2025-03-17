@@ -303,12 +303,15 @@ export class D3SeriesGraphWrapperComponent
           selected,
           description,
         );
-        dataset.referenceValues.forEach((ref) => {
+        dataset.referenceValues.forEach((refVal) => {
+          const refVis = !!options.showReferenceValues.find(
+            (ref) => ref.id === refVal.referenceValueId,
+          );
           dsEntry!.addChild(
             new DatasetChild(
-              ref.referenceValueId,
-              ref.label,
-              ref.visible || false,
+              refVal.referenceValueId,
+              refVal.label,
+              refVis,
               [],
               '',
             ),

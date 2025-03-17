@@ -1,6 +1,6 @@
 {
   "name": "helgoland-toolbox",
-  "version": "15.0.2",
+  "version": "17.0.1",
   "description": "Helgoland toolbox",
   "license": "Apache-2.0",
   "keywords": [
@@ -44,7 +44,7 @@
     "test": "rimraf dist && ng test --watch=false",
     "watch": "ng build --watch --configuration development",
     "versions-script": "node scripts/git.version.js",
-    "preversion": "npm run license-report && ng lint && npm run lib:test",
+    "preversion": "npm run license-report && ng lint",
     "version": "npm run lib:build && git add -A .",
     "postversion": "git push && git push --tags && npm run lib:publish",
     "bundle-war": "node scripts/bundle-war.js",

@@ -20,22 +20,22 @@ import {
 export class ListSelectionComponent {
   public categoryParams: ListSelectorParameter[] = [
     {
-      type: MultiServiceFilterEndpoint.platform,
+      type: 'platform',
       header: 'Platform',
       filterList: [],
     },
     {
-      type: MultiServiceFilterEndpoint.feature,
+      type: 'feature',
       header: 'Station',
       filterList: [],
     },
     {
-      type: MultiServiceFilterEndpoint.phenomenon,
+      type: 'phenomenon',
       header: 'Phänomen',
       filterList: [],
     },
     {
-      type: MultiServiceFilterEndpoint.procedure,
+      type: 'procedure',
       header: 'Sensor',
       filterList: [],
     },

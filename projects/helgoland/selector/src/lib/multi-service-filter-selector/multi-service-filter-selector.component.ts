@@ -22,15 +22,14 @@ export interface MultiServiceFilter {
   filter?: HelgolandParameterFilter;
 }
 
-export enum MultiServiceFilterEndpoint {
-  offering = 'offering',
-  phenomenon = 'phenomenon',
-  procedure = 'procedure',
-  feature = 'feature',
-  category = 'category',
-  platform = 'platform',
-  dataset = 'dataset',
-}
+export type MultiServiceFilterEndpoint =
+  | 'offering'
+  | 'phenomenon'
+  | 'procedure'
+  | 'feature'
+  | 'category'
+  | 'platform'
+  | 'dataset';
 
 /**
  * Component to select an item out of a list of provider with a given filter combination.
@@ -91,49 +90,49 @@ export class MultiServiceFilterSelectorComponent
       const filter = entry.filter || {};
       this.loading++;
       switch (this.endpoint) {
-        case MultiServiceFilterEndpoint.offering:
+        case 'offering':
           this.servicesConnector.getOfferings(entry.url, filter).subscribe({
             next: (res) =>
               this.setItems(res, filter, entry.url, filter.service),
             error: (error) => this.errorOnLoading(),
           });
           break;
-        case MultiServiceFilterEndpoint.phenomenon:
+        case 'phenomenon':
           this.servicesConnector.getPhenomena(entry.url, filter).subscribe({
             next: (res) =>
               this.setItems(res, filter, entry.url, filter.service),
             error: (error) => this.errorOnLoading(),
           });
           break;
-        case MultiServiceFilterEndpoint.procedure:
+        case 'procedure':
           this.servicesConnector.getProcedures(entry.url, filter).subscribe({
             next: (res) =>
               this.setItems(res, filter, entry.url, filter.service),
             error: (error) => this.errorOnLoading(),
           });
           break;
-        case MultiServiceFilterEndpoint.feature:
+        case 'feature':
           this.servicesConnector.getFeatures(entry.url, filter).subscribe({
             next: (res) =>
               this.setItems(res, filter, entry.url, filter.service),
             error: (error) => this.errorOnLoading(),
           });
           break;
-        case MultiServiceFilterEndpoint.category:
+        case 'category':
           this.servicesConnector.getCategories(entry.url, filter).subscribe({
             next: (res) =>
               this.setItems(res, filter, entry.url, filter.service),
             error: (error) => this.errorOnLoading(),
           });
           break;
-        case MultiServiceFilterEndpoint.platform:
+        case 'platform':
           this.servicesConnector.getPlatforms(entry.url, filter).subscribe({
             next: (res) =>
               this.setItems(res, filter, entry.url, filter.service),
             error: (error) => this.errorOnLoading(),
           });
           break;
-        case MultiServiceFilterEndpoint.dataset:
+        case 'dataset':
           this.servicesConnector.getDatasets(entry.url, filter).subscribe({
             next: (res) =>
               this.setItems(res, filter, entry.url, filter.service),
