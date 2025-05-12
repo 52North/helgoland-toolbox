@@ -125,38 +125,52 @@
         <div
           class="entry-line clickable"
           (click)="jumpToFirstTimeStamp(); $event.stopPropagation()"
+          matTooltip="{{
+            'diagram-view.legend.entry.first-value-tooltip' | translate
+          }}"
+          style="display: flex; align-items: center"
         >
-          <span>
-            {{ "diagram-view.legend.entry.first-value-at" | translate }}:
-          </span>
-          <span>
-            {{ dataset.description.firstValue.timestamp | tzDate }}
-          </span>
-          @if (dataset.description.firstValue.value) {
+          <mat-icon>chevron_right</mat-icon>
+          <div>
             <span>
-              ({{ dataset.description.firstValue.value }}
-              {{ dataset.description.uom }})
+              {{ "diagram-view.legend.entry.first-value-at" | translate }}:
             </span>
-          }
+            <span>
+              {{ dataset.description.firstValue.timestamp | tzDate }}
+            </span>
+            @if (dataset.description.firstValue.value) {
+              <span>
+                ({{ dataset.description.firstValue.value }}
+                {{ dataset.description.uom }})
+              </span>
+            }
+          </div>
         </div>
       }
       @if (dataset.description.lastValue) {
         <div
           class="entry-line clickable"
           (click)="jumpToLastTimeStamp(); $event.stopPropagation()"
+          matTooltip="{{
+            'diagram-view.legend.entry.last-value-tooltip' | translate
+          }}"
+          style="display: flex; align-items: center"
         >
-          <span>
-            {{ "diagram-view.legend.entry.last-value-at" | translate }}:
-          </span>
-          <span>
-            {{ dataset.description.lastValue.timestamp | tzDate }}
-          </span>
-          @if (dataset.description.lastValue.value) {
+          <mat-icon>chevron_right</mat-icon>
+          <div>
             <span>
-              ({{ dataset.description.lastValue.value }}
-              {{ dataset.description.uom }})
+              {{ "diagram-view.legend.entry.last-value-at" | translate }}:
             </span>
-          }
+            <span>
+              {{ dataset.description.lastValue.timestamp | tzDate }}
+            </span>
+            @if (dataset.description.lastValue.value) {
+              <span>
+                ({{ dataset.description.lastValue.value }}
+                {{ dataset.description.uom }})
+              </span>
+            }
+          </div>
         </div>
       }
       @if (dataset.children.length > 0) {
