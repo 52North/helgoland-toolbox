@@ -31,6 +31,7 @@
 	"events.remove-timeseries": "Zeitreihe entfernt",
 	"events.timespan-changed-from": "Zeitraum geändert von",
 	"events.timespan-changed-to": "bis",
+	"events.timespan-to-old": "Für den bisher ausgewählten Zeitraum sind keine Daten mehr vorhanden, deswegen springt der Client auf eine aktuellen Zeitraum",
 	"favorite-list-button.tooltip": "Favoritenliste öffnen",
 	"favorite-toggle-button.tooltip": "Zu Favoriten hinzufügen",
 	"favorites.single-favorite.add-to-diagram": "Zum Diagram hinzufügen",

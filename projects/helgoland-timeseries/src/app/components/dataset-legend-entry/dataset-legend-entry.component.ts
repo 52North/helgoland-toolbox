@@ -56,7 +56,7 @@ export class DatasetLegendEntryComponent implements OnChanges {
   selected!: boolean;
 
   @Input({ required: true })
-  timeInterval!: TimeInterval;
+  timeInterval!: TimeInterval | undefined;
 
   @Output() datasetDeleted: EventEmitter<void> = new EventEmitter();
 

@@ -31,6 +31,7 @@
 	"events.remove-timeseries": "Remove timeseries",
 	"events.timespan-changed-from": "Changed timeframe for diagram from",
 	"events.timespan-changed-to": "to",
+	"events.timespan-to-old": "There is no more data available for the previously selected period, so the client jumps to a current period",
 	"favorite-list-button.tooltip": "Open favorites",
 	"favorite-toggle-button.tooltip": "Add to favorites",
 	"favorites.single-favorite.add-to-diagram": "Add to diagram",

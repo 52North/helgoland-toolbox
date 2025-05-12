@@ -181,7 +181,7 @@ export class DiagramViewComponent implements OnInit {
 
   public jumpToDate(date: Date) {
     this.graphDatasetsSrvc.timespan = this.time.centerTimespan(
-      this.graphDatasetsSrvc.timespan,
+      this.graphDatasetsSrvc.timespan!,
       date,
     );
   }

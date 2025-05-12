@@ -162,11 +162,13 @@
         </div>
 
         <div>
-          <helgoland-general-time-selection
-            [timespan]="graphDatasetsSrvc.timespan"
-            (timespanChanged)="graphDatasetsSrvc.timespan = $event"
-          >
-          </helgoland-general-time-selection>
+          @if (graphDatasetsSrvc.timespan) {
+            <helgoland-general-time-selection
+              [timespan]="graphDatasetsSrvc.timespan"
+              (timespanChanged)="graphDatasetsSrvc.timespan = $event"
+            >
+            </helgoland-general-time-selection>
+          }
         </div>
 
         @if (diagramConfig.overviewVisible) {
@@ -174,18 +176,20 @@
             @if (overviewLoading) {
               <helgoland-loading-overlay-progress-bar />
             }
-            <n52-d3-series-graph
-              #overview
-              [datasets]="graphDatasetsSrvc.overviewDatasets"
-              [timespan]="graphDatasetsSrvc.overviewTimespan"
-              [graphOptions]="overviewOptions"
-              (timespanChanged)="graphDatasetsSrvc.timespan = $event"
-            >
-              <n52-d3-graph-overview-selection
-                [selectionTimeInterval]="graphDatasetsSrvc.timespan"
+            @if (graphDatasetsSrvc.timespan) {
+              <n52-d3-series-graph
+                #overview
+                [datasets]="graphDatasetsSrvc.overviewDatasets"
+                [timespan]="graphDatasetsSrvc.overviewTimespan"
+                [graphOptions]="overviewOptions"
+                (timespanChanged)="graphDatasetsSrvc.timespan = $event"
               >
-              </n52-d3-graph-overview-selection>
-            </n52-d3-series-graph>
+                <n52-d3-graph-overview-selection
+                  [selectionTimeInterval]="graphDatasetsSrvc.timespan"
+                >
+                </n52-d3-graph-overview-selection>
+              </n52-d3-series-graph>
+            }
           </div>
         }
       </div>
