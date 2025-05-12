@@ -128,7 +128,7 @@ export class D3GraphHoverPointComponent
   protected mouseMoved(event: MouseEvent) {
     this.unhighlight();
     const pos = this.getCurrentMousePosition(event);
-    if (pos && this.graphExtent) {
+    if (pos && this.graphExtent && this.data?.size) {
       const nearestPoint = this.findNearestPoint(pos.x, pos.y);
       if (nearestPoint) {
         this.highlightPoint(nearestPoint);
