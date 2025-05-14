@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
 import { Subject } from 'rxjs';
 
+import { ConfigurationService } from './configuration.service';
 import { NotifierService } from './notifier.service';
 import { StorageService } from './storage-service.service';
 
@@ -37,7 +38,7 @@ export class DatasetsService {
   public loadingOverviewDataChanged: EventEmitter<Set<string>> =
     new EventEmitter();
 
-  private _timespan: Timespan = this.initTimespan();
+  private _timespan: Timespan | undefined;
 
   constructor(
     protected timeSrvc: Time,
@@ -46,16 +47,18 @@ export class DatasetsService {
     protected timezoneSrvc: TimezoneService,
     protected notifier: NotifierService,
     protected storageSrvc: StorageService,
-  ) {
-    this.initTimespan();
-  }
+    protected configSrvc: ConfigurationService,
+  ) {}
 
-  get timespan(): Timespan {
+  get timespan(): Timespan | undefined {
     return this._timespan;
   }
 
-  get overviewTimespan(): Timespan {
-    return this.timeSrvc.getBufferedTimespan(this._timespan, 2);
+  get overviewTimespan(): Timespan | undefined {
+    if (this._timespan) {
+      return this.timeSrvc.getBufferedTimespan(this._timespan, 2);
+    }
+    return undefined;
   }
 
   get datasets(): SeriesGraphDataset[] {
@@ -161,14 +164,16 @@ export class DatasetsService {
     this.overviewDatasets.splice(idx, 1);
   }
 
-  deleteAllDatasets() {
+  deleteAllDatasets(quiet?: boolean) {
     this._datasets
       .map((e) => e.id)
       .forEach((id) => this.deleteDataset(id, false));
-    this.la.announce(this.translate.instant('events.all-timeseries-removed'));
-    this.notifier.notify(
-      this.translate.instant('events.all-timeseries-removed'),
-    );
+    if (!quiet) {
+      this.la.announce(this.translate.instant('events.all-timeseries-removed'));
+      this.notifier.notify(
+        this.translate.instant('events.all-timeseries-removed'),
+      );
+    }
   }
 
   datasetsSelected(): boolean {
@@ -183,15 +188,40 @@ export class DatasetsService {
     );
   }
 
-  private initTimespan() {
-    return (
-      this.timeSrvc.loadTimespan(TIME_CACHE_PARAM) ||
-      this.timeSrvc.createByDurationWithEnd(
-        moment.duration(1, 'days'),
-        new Date(),
-        'day',
-      )
-    );
+  initTimespan(timespan?: Timespan) {
+    if (timespan) {
+      this.timespan = this.validateTimespan(timespan);
+    } else {
+      const localStoreTimespan = this.timeSrvc.loadTimespan(TIME_CACHE_PARAM);
+      if (localStoreTimespan) {
+        this.timespan = this.validateTimespan(localStoreTimespan);
+      } else {
+        this.timespan = this.timeSrvc.createByDurationWithEnd(
+          moment.duration(1, 'days'),
+          new Date(),
+          'day',
+        );
+      }
+    }
+  }
+
+  private validateTimespan(timespan: Timespan): Timespan {
+    const daysForOldTimespanCheck =
+      this.configSrvc.configuration.daysForOldTimespanCheck;
+    if (!isNaN(daysForOldTimespanCheck)) {
+      const old = moment()
+        .subtract(daysForOldTimespanCheck, 'days')
+        .startOf('day')
+        .toDate()
+        .getTime();
+      const current = timespan.to > old;
+      if (!current) {
+        const message = this.translate.instant('events.timespan-to-old');
+        this.notifier.notify(message, 8000);
+        return this.timeSrvc.centerTimespan(timespan, new Date());
+      }
+    }
+    return timespan;
   }
 
   private getDatasetEntryIndex(id: string): number {

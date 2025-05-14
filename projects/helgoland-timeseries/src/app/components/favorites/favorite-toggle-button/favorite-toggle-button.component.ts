@@ -1,10 +1,10 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Component, Input, OnInit } from '@angular/core';
-import { SeriesGraphDataset } from '@helgoland/d3';
 import { CommonModule } from '@angular/common';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { SeriesGraphDataset } from '@helgoland/d3';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { FavoriteService } from '../../../services/favorite.service';

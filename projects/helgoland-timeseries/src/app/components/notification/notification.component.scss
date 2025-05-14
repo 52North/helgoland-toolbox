@@ -1,0 +1,19 @@
+.message-container {
+    display: flex;
+    align-items: center;
+    padding: 5px 0px;
+    
+    .message {
+        flex: 1;
+    }
+
+    &+.message-container {
+        border-top: grey 1px solid;
+    }
+
+    .small-clear-button {
+        width: 30px !important;
+        height: 30px !important;
+        padding: 4px;
+    }
+}

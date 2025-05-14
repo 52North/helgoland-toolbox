@@ -8,6 +8,7 @@ import {
 import { Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
+import { NotifierService } from '../../services/notifier.service';
 import {
   DATASET_STATE_SERVICE_INJECTION,
   DatasetStateService,
@@ -30,6 +31,7 @@ export class DiagramViewInitStateService {
     private activatedRoute: ActivatedRoute,
     private definedTimeintervalSrvc: DefinedTimespanService,
     private storageSrvc: StorageService,
+    protected notifier: NotifierService,
     @Optional()
     @Inject(DATASET_STATE_SERVICE_INJECTION)
     private datasetStateServices: DatasetStateService[] | undefined,
@@ -46,9 +48,11 @@ export class DiagramViewInitStateService {
   }
 
   private handleParams(params: Params): Observable<boolean> {
-    this.handleTimeParam(params);
+    const timespan = this.createTimespan(params);
+    this.graphDatasetsSrvc.initTimespan(timespan);
+
     if (params[PARAM_IDS]) {
-      this.graphDatasetsSrvc.deleteAllDatasets();
+      this.graphDatasetsSrvc.deleteAllDatasets(true);
       const ids = (params[PARAM_IDS] as string).split(ID_SEPERATOR);
       let foundOne = false;
       ids.forEach((id) => {
@@ -76,22 +80,23 @@ export class DiagramViewInitStateService {
     }
   }
 
-  private handleTimeParam(params: Params) {
+  private createTimespan(params: Params): Timespan | undefined {
     if (params[PARAM_TIME]) {
       const time = (params[PARAM_TIME] as string).split(TIME_SEPERATOR);
       if (time.length === 2) {
         const start = parseInt(time[0], 10);
         const end = parseInt(time[1], 10);
-        this.graphDatasetsSrvc.timespan = new Timespan(start, end);
+        this.removeQueryParam(PARAM_TIME);
+        return new Timespan(start, end);
       }
-      this.removeQueryParam(PARAM_TIME);
     } else if (params[PARAM_DEFINED_TIME]) {
       const definedTime = params[PARAM_DEFINED_TIME] as DefinedTimespan;
       const timespan = this.definedTimeintervalSrvc.getInterval(definedTime);
       if (timespan) {
-        this.graphDatasetsSrvc.timespan = timespan;
+        return timespan;
       }
     }
+    return undefined;
   }
 
   private removeQueryParam(param: string) {
