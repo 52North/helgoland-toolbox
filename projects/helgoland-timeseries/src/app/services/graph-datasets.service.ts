@@ -218,7 +218,13 @@ export class DatasetsService {
       if (!current) {
         const message = this.translate.instant('events.timespan-to-old');
         this.notifier.notify(message, 8000);
-        return this.timeSrvc.centerTimespan(timespan, new Date());
+        const diff = timespan.to - timespan.from;
+        if (diff < 2 * 60 * 60 * 1000) {
+          // timespan smaller 2 hours, then show at least 2 hours
+          return this.timeSrvc.generateTimespan({ hours: 2 }, 'end');
+        } else {
+          return this.timeSrvc.generateTimespan({ milliseconds: diff }, 'end');
+        }
       }
     }
     return timespan;
