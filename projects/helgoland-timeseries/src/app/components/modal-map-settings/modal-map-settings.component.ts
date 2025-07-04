@@ -34,7 +34,6 @@ export interface MapConfig {
     ServiceListSelectorComponent,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class ModalMapSettingsComponent {
   public datasetApis: DatasetApi[];

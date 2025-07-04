@@ -28,7 +28,6 @@ const wrapperClassName = 'export-diagram-wrapper';
   selector: 'n52-export-image-button',
   templateUrl: './export-image-button.component.html',
   styleUrls: ['./export-image-button.component.scss'],
-  standalone: true,
   imports: [],
 })
 export class ExportImageButtonComponent {

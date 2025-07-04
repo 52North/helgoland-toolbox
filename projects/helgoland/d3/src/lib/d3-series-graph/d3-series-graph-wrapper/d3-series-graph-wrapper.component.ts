@@ -64,7 +64,6 @@ import {
     D3GraphOverviewSelectionComponent,
     D3SeriesGraphComponent,
   ],
-  standalone: true,
 })
 export class D3SeriesGraphWrapperComponent
   extends DatasetPresenterComponent<DatasetOptions, D3PlotOptions>

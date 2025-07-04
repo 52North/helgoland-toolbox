@@ -18,7 +18,6 @@ import moment from 'moment';
     HelgolandTimeRangeSliderModule,
     CommonModule,
   ],
-  standalone: true,
 })
 export class TimeComponent {
   public selectedTimespan!: Timespan;

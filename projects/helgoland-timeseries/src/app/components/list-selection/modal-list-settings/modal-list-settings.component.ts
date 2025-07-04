@@ -25,7 +25,6 @@ export interface ListConfig {
     ServiceListSelectorComponent,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class ModalListSettingsComponent {
   public datasetApis: DatasetApi[] = [];

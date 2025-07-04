@@ -28,7 +28,6 @@ export interface DiagramConfig {
     MatButtonToggleModule,
     MatDialogModule,
   ],
-  standalone: true,
 })
 export class ModalDiagramSettingsComponent {
   constructor(

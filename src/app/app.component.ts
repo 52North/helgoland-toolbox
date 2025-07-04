@@ -22,7 +22,6 @@ import { TimezoneSelectorComponent } from './components/timezone-selector/timezo
     MatSidenavModule,
     MatListModule,
   ],
-  standalone: true,
 })
 export class AppComponent {
   public languageList: Language[];

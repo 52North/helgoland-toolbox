@@ -31,7 +31,6 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./facet-search.component.scss'],
   imports: [HelgolandFacetSearchModule, MatDatepickerModule, CommonModule],
   providers: [MapCache],
-  standalone: true,
 })
 export class FacetSearchComponent {
   public timeseries: Timeseries[] = [];

@@ -11,15 +11,14 @@ import {
 } from '@angular/core';
 import { DatasetOptions, Time, TimeInterval, Timespan } from '@helgoland/core';
 
-import { D3PlotOptions } from '../models/d3-plot-options';
 import { D3SeriesGraphWrapperComponent } from '../d3-series-graph-wrapper/d3-series-graph-wrapper.component';
+import { D3PlotOptions } from '../models/d3-plot-options';
 
 @Component({
   selector: 'n52-d3-series-graph-overview-wrapper',
   templateUrl: './d3-series-graph-overview-wrapper.component.html',
   styleUrls: ['./d3-series-graph-overview-wrapper.component.scss'],
   imports: [D3SeriesGraphWrapperComponent],
-  standalone: true,
 })
 export class D3SeriesGraphOverviewWrapperComponent
   implements OnChanges, AfterViewInit, OnDestroy

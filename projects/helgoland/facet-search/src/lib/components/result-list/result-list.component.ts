@@ -18,7 +18,6 @@ import {
   selector: 'n52-result-list',
   templateUrl: './result-list.component.html',
   styleUrls: ['./result-list.component.scss'],
-  standalone: true,
   imports: [TzDatePipe],
 })
 export class ResultListComponent implements OnInit, OnDestroy {

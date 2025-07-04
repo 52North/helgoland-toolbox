@@ -37,7 +37,6 @@ export type MultiServiceFilterEndpoint =
 @Component({
   selector: 'n52-multi-service-filter-selector',
   templateUrl: './multi-service-filter-selector.component.html',
-  standalone: true,
   imports: [NgStyle],
 })
 export class MultiServiceFilterSelectorComponent

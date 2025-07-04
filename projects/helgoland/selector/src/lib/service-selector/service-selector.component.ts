@@ -21,7 +21,6 @@ interface ExtendedHelgolandService extends HelgolandService {
   selector: 'n52-service-selector',
   templateUrl: './service-selector.component.html',
   styleUrls: ['./service-selector.component.scss'],
-  standalone: true,
   imports: [CommonModule, TranslateModule],
 })
 export class ServiceSelectorComponent implements OnInit {

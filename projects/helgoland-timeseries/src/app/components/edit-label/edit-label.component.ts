@@ -29,7 +29,6 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
     ReactiveFormsModule,
   ],
-  standalone: true,
 })
 export class EditLabelComponent implements AfterViewInit, OnInit {
   fc = new FormControl('');

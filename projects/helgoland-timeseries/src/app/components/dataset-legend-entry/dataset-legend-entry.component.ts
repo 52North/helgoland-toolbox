@@ -41,7 +41,6 @@ import { TimeseriesEntrySymbolComponent } from '../timeseries-entry-symbol/times
     TimeseriesEntrySymbolComponent,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class DatasetLegendEntryComponent implements OnChanges {
   // Remove later:

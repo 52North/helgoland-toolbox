@@ -4,9 +4,10 @@ import { registerLocaleData } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
 import {
-  APP_INITIALIZER,
   enableProdMode,
   importProvidersFrom,
+  inject,
+  provideAppInitializer,
 } from '@angular/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -113,12 +114,14 @@ bootstrapApplication(AppComponent, {
         },
       }),
     ),
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initApplication,
-      deps: [ConfigurationService, TranslateService, LocalStorage],
-      multi: true,
-    },
+    provideAppInitializer(() => {
+      const initializerFn = initApplication(
+        inject(ConfigurationService),
+        inject(TranslateService),
+        inject(LocalStorage),
+      );
+      return initializerFn();
+    }),
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     {
       provide: SettingsService,

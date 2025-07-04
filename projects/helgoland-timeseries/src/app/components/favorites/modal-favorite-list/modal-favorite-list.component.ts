@@ -28,7 +28,6 @@ interface EditableFavorite extends Favorite {
     MatDialogModule,
     EditLabelComponent,
   ],
-  standalone: true,
 })
 export class ModalFavoriteListComponent implements OnInit {
   public singles: EditableFavorite[] = [];

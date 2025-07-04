@@ -3,9 +3,10 @@ import 'moment/locale/de';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import {
-  APP_INITIALIZER,
   enableProdMode,
   importProvidersFrom,
+  inject,
+  provideAppInitializer,
 } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -99,12 +100,14 @@ bootstrapApplication(AppComponent, {
       }),
     ),
     importProvidersFrom(HelgolandCoreModule),
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initApplication,
-      deps: [ConfigurationService, TranslateService, LocalStorage],
-      multi: true,
-    },
+    provideAppInitializer(() => {
+      const initializerFn = initApplication(
+        inject(ConfigurationService),
+        inject(TranslateService),
+        inject(LocalStorage),
+      );
+      return initializerFn();
+    }),
     {
       provide: SettingsService,
       useExisting: ConfigurationService,

@@ -7,7 +7,6 @@ import { HelgolandModificationModule } from '@helgoland/modification';
   templateUrl: './timeseries-graph.component.html',
   styleUrls: ['./timeseries-graph.component.css'],
   imports: [HelgolandD3Module, HelgolandModificationModule],
-  standalone: true,
 })
 export class TimeseriesGraphComponent {
   public datasetIds = ['https://fluggs.wupperverband.de/sws5/api/__63'];

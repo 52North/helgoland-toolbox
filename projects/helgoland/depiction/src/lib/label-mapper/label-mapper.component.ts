@@ -6,7 +6,6 @@ import { LabelMapperService } from './label-mapper.service';
   selector: 'n52-label-mapper',
   templateUrl: './label-mapper.component.html',
   styleUrls: ['./label-mapper.component.scss'],
-  standalone: true,
   imports: [],
 })
 export class LabelMapperComponent implements OnChanges {

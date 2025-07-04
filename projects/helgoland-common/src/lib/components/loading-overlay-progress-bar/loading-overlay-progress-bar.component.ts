@@ -6,7 +6,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
   templateUrl: './loading-overlay-progress-bar.component.html',
   styleUrls: ['./loading-overlay-progress-bar.component.scss'],
   imports: [MatProgressBarModule],
-  standalone: true,
 })
 export class LoadingOverlayProgressBarComponent {
   @Input() progressBarPosition: 'top' | 'bottom' | undefined;

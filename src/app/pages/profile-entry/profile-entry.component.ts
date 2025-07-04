@@ -9,7 +9,6 @@ import { StyleModificationComponent } from '../../components/style-modification/
   templateUrl: './profile-entry.component.html',
   styleUrls: ['./profile-entry.component.scss'],
   imports: [HelgolandDatasetlistModule, MatDialogModule],
-  standalone: true,
 })
 export class ProfileEntryComponent {
   public id =

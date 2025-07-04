@@ -13,7 +13,6 @@ import { FormsModule } from '@angular/forms';
   selector: 'n52-min-max-range',
   templateUrl: './min-max-range.component.html',
   styleUrls: ['./min-max-range.component.css'],
-  standalone: true,
   imports: [FormsModule],
 })
 export class MinMaxRangeComponent implements OnChanges {

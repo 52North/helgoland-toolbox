@@ -19,7 +19,6 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
   selector: 'n52-dataset-table',
   templateUrl: './dataset-table.component.html',
   styleUrls: ['./dataset-table.component.scss'],
-  standalone: true,
   imports: [NgStyle, TzDatePipe],
 })
 export class DatasetTableComponent

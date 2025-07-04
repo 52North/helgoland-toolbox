@@ -25,7 +25,6 @@ import {
     HelgolandCoreModule,
     CommonModule,
   ],
-  standalone: true,
 })
 export class ExportPopupComponent {
   public exportOptions!: ExportOptions;

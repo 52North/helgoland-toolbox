@@ -18,7 +18,6 @@ import {
   templateUrl: './eventing.component.html',
   styleUrls: ['./eventing.component.css'],
   imports: [CommonModule],
-  standalone: true,
 })
 export class EventingComponent {
   private readonly url = '';

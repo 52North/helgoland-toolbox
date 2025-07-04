@@ -57,7 +57,6 @@ import { TrajectoryLabelComponent } from './../trajectory-label/trajectory-label
     TrajectoryLabelComponent,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class TrajectoryViewComponent implements OnInit {
   public trajectory: HelgolandTrajectory | undefined;

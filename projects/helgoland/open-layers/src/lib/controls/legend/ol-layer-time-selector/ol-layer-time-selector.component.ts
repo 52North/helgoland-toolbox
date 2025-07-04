@@ -13,7 +13,6 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
 @Component({
   selector: 'n52-ol-layer-time-selector',
   templateUrl: './ol-layer-time-selector.component.html',
-  standalone: true,
   imports: [FormsModule, TzDatePipe],
 })
 export class OlLayerTimeSelectorComponent implements OnInit {

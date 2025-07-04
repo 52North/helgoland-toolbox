@@ -31,7 +31,6 @@ import { StyleModificationComponent } from '../../components/style-modification/
     CommonModule,
     MatDialogModule,
   ],
-  standalone: true,
 })
 export class TrajectoryComponent implements OnInit {
   public geometry!: LineString;

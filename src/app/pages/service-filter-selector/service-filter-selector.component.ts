@@ -5,6 +5,5 @@ import { HelgolandSelectorModule } from '@helgoland/selector';
   templateUrl: './service-filter-selector.component.html',
   styleUrls: ['./service-filter-selector.component.css'],
   imports: [HelgolandSelectorModule],
-  standalone: true,
 })
 export class ServiceFilterSelectorDemoPageComponent {}

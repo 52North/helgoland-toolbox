@@ -16,7 +16,6 @@ import { ListEntryComponent } from '../list-entry.component';
 @Component({
   selector: 'n52-trajectory-entry',
   templateUrl: './trajectory-entry.component.html',
-  standalone: true,
   imports: [NgClass, NgStyle],
 })
 export class TrajectoryEntryComponent extends ListEntryComponent {

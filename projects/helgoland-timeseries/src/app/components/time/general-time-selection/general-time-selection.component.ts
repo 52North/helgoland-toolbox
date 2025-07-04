@@ -49,7 +49,6 @@ import { TranslateModule } from '@ngx-translate/core';
     ReactiveFormsModule,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class GeneralTimeSelectionComponent {
   public LASTHOUR = DefinedTimespan.LASTHOUR;

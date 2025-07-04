@@ -85,7 +85,6 @@ class HoveringTestService extends D3SimpleHoveringService {
     MatDialogModule,
     CommonModule,
   ],
-  standalone: true,
 })
 export class GraphLegendComponent {
   public datasetIds = [

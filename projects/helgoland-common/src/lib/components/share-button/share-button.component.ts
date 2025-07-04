@@ -12,7 +12,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   templateUrl: './share-button.component.html',
   styleUrls: ['./share-button.component.scss'],
   imports: [MatIconModule, TranslateModule, MatTooltipModule, MatButtonModule],
-  standalone: true,
 })
 export class ShareButtonComponent {
   @Input() public generatedUrlFunction: (() => string) | undefined;

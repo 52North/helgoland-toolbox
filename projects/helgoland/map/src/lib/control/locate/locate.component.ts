@@ -9,7 +9,6 @@ import { NgClass } from '@angular/common';
   selector: 'n52-locate-control',
   templateUrl: './locate.component.html',
   styleUrls: ['./locate.component.scss'],
-  standalone: true,
   imports: [NgClass],
 })
 export class LocateControlComponent extends MapControlComponent {

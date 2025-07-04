@@ -13,7 +13,6 @@ import {
     PermalinkToClipboardComponent,
     PermalinkNewWindowComponent,
   ],
-  standalone: true,
 })
 export class PermalinkComponent {
   public permalinkUrl = 'test-url';

@@ -4,7 +4,6 @@ import { ClipboardModule } from 'ngx-clipboard';
 @Component({
   selector: 'n52-permalink-to-clipboard',
   templateUrl: './permalink-to-clipboard.component.html',
-  standalone: true,
   imports: [ClipboardModule],
 })
 export class PermalinkToClipboardComponent {

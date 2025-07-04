@@ -27,7 +27,6 @@ import { ConfigurableTimeseriesEntryComponent } from '../configurable-timeseries
   selector: 'n52-first-latest-timeseries-entry',
   templateUrl: './first-latest-timeseries-entry.component.html',
   styleUrls: ['./first-latest-timeseries-entry.component.css'],
-  standalone: true,
   imports: [TzDatePipe],
 })
 export class FirstLatestTimeseriesEntryComponent

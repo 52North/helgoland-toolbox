@@ -19,7 +19,6 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'n52-dataset-permalink-download',
   templateUrl: './dataset-permalink-download.component.html',
   styleUrls: ['./dataset-permalink-download.component.css'],
-  standalone: true,
   imports: [TranslateModule],
 })
 export class DatasetPermalinkDownloadComponent implements OnChanges, OnInit {

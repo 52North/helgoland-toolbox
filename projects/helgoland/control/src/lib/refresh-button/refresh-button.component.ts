@@ -13,7 +13,6 @@ import { Settings, SettingsService } from '@helgoland/core';
 @Component({
   selector: 'n52-refresh-button',
   templateUrl: './refresh-button.component.html',
-  standalone: true,
   imports: [NgClass],
 })
 export class RefreshButtonComponent implements OnChanges, OnInit {

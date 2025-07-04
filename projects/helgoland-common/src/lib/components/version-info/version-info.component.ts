@@ -9,7 +9,6 @@ import { versions } from './../../../../../../versions';
   templateUrl: './version-info.component.html',
   styleUrls: ['./version-info.component.scss'],
   imports: [TranslateModule, HelgolandCoreModule],
-  standalone: true,
 })
 export class VersionInfoComponent {
   public versions = versions;

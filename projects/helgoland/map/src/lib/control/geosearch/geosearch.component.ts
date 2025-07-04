@@ -13,7 +13,6 @@ import { MapControlComponent } from '../map-control-component';
 @Component({
   selector: 'n52-geosearch-control',
   templateUrl: './geosearch.component.html',
-  standalone: true,
   imports: [FormsModule],
 })
 export class GeosearchControlComponent extends MapControlComponent {

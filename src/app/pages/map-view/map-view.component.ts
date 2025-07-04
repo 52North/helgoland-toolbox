@@ -29,7 +29,6 @@ import {
     HelgolandLayerControlModule,
     HelgolandMapViewModule,
   ],
-  standalone: true,
 })
 export class MapViewComponent implements OnInit, AfterViewInit {
   public fitBounds: L.LatLngBoundsExpression = [

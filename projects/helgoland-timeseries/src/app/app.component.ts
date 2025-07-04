@@ -7,7 +7,6 @@ import { RouterModule } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   imports: [CommonModule, RouterModule],
-  standalone: true,
 })
 export class AppComponent {
   title = 'helgoland';

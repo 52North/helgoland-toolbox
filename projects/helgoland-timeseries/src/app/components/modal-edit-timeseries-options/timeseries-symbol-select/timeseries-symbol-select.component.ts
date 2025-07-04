@@ -25,7 +25,6 @@ interface Symbol {
     MatSliderModule,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class TimeseriesSymbolSelectComponent implements OnInit {
   // <<<<<<< HEAD

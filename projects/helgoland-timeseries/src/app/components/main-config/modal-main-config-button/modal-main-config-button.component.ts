@@ -12,7 +12,6 @@ import { ModalMainConfigComponent } from '../modal-main-config/modal-main-config
   templateUrl: './modal-main-config-button.component.html',
   styleUrls: ['./modal-main-config-button.component.scss'],
   imports: [MatTooltipModule, TranslateModule, MatIconModule, MatButtonModule],
-  standalone: true,
 })
 export class ModalMainConfigButtonComponent {
   constructor(private dialog: MatDialog) {}

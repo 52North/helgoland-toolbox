@@ -23,7 +23,6 @@ import { TimeRangeSliderCache } from './time-range-slider.service';
     '../../../../../node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css',
   ],
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [TzDatePipe],
 })
 export class TimeRangeSliderComponent implements OnChanges {

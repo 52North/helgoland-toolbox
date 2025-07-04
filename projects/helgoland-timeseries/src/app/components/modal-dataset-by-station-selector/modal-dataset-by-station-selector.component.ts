@@ -38,7 +38,6 @@ import { TimeseriesService } from './../../services/timeseries-service.service';
     MatProgressBarModule,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class ModalDatasetByStationSelectorComponent extends DatasetByStationSelectorComponent {
   constructor(

@@ -12,7 +12,6 @@ import { TimeseriesService } from './../../services/timeseries-service.service';
   templateUrl: './timeseries-list-selector.component.html',
   styleUrls: ['./timeseries-list-selector.component.scss'],
   imports: [CommonModule, MatListModule],
-  standalone: true,
 })
 export class TimeseriesListSelectorComponent extends MultiServiceFilterSelectorComponent {
   constructor(

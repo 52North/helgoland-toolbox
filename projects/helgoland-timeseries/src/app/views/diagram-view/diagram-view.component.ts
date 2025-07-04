@@ -72,7 +72,6 @@ type MainContentType = 'diagram' | 'table';
     TranslateModule,
     DataTableComponent,
   ],
-  standalone: true,
 })
 export class DiagramViewComponent implements OnInit {
   mobileQuery: MediaQueryList;

@@ -7,7 +7,6 @@ import { AbstractProcess, SensorMLXmlService } from '@helgoland/sensorml';
   templateUrl: './sensorml.component.html',
   styleUrls: ['./sensorml.component.css'],
   imports: [CommonModule],
-  standalone: true,
 })
 export class SensormlComponent {
   public readerResult!: string;

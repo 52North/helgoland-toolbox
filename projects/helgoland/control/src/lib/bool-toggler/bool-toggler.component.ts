@@ -1,10 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgClass } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'n52-bool-toggler',
   templateUrl: './bool-toggler.component.html',
-  standalone: true,
   imports: [NgClass],
 })
 export class BoolTogglerComponent {

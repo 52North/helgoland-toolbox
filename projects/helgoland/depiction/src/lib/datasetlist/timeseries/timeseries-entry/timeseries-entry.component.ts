@@ -35,7 +35,6 @@ export class ReferenceValueColorCache extends IdCache<{
   templateUrl: './timeseries-entry.component.html',
   styleUrls: ['./timeseries-entry.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NgStyle, NgClass, LabelMapperComponent, TzDatePipe],
 })
 export class TimeseriesEntryComponent

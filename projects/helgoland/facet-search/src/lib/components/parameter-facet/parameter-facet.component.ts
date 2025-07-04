@@ -14,7 +14,6 @@ import {
   selector: 'n52-parameter-facet',
   templateUrl: './parameter-facet.component.html',
   styleUrls: ['./parameter-facet.component.scss'],
-  standalone: true,
   imports: [NgStyle, MatchLabelPipe],
 })
 export class ParameterFacetComponent implements OnInit, OnDestroy {

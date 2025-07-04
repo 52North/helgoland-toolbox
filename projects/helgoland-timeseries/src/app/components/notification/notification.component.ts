@@ -12,7 +12,6 @@ import {
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.scss'],
   imports: [CommonModule, MatIconModule, MatButtonModule],
-  standalone: true,
 })
 export class NotificationComponent {
   messages: string[] = [];

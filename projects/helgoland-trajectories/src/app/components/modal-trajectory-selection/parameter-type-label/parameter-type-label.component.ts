@@ -8,7 +8,6 @@ import { ParameterType } from 'helgoland-common';
   templateUrl: './parameter-type-label.component.html',
   styleUrls: ['./parameter-type-label.component.scss'],
   imports: [CommonModule, TranslateModule],
-  standalone: true,
 })
 export class ParameterTypeLabelComponent {
   @Input({ required: true })

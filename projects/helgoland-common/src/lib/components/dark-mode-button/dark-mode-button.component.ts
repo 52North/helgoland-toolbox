@@ -9,7 +9,6 @@ import { LayoutModeService } from '../../services/layout-mode.service';
   templateUrl: './dark-mode-button.component.html',
   styleUrls: ['./dark-mode-button.component.scss'],
   imports: [TranslateModule, MatSlideToggleModule],
-  standalone: true,
 })
 export class DarkModeButtonComponent implements OnInit {
   public darkModeActive: boolean | undefined;

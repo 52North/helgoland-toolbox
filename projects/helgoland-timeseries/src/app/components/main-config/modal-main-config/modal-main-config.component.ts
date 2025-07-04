@@ -24,7 +24,6 @@ import { ConfigurationService } from './../../../services/configuration.service'
     TranslateModule,
     VersionInfoComponent,
   ],
-  standalone: true,
 })
 export class ModalMainConfigComponent {
   public languages = this.config.configuration?.languages;

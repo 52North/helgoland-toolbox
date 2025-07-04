@@ -22,7 +22,6 @@ import { NoDataEntryComponent } from './no-data-entry/no-data-entry.component';
     HelgolandD3Module,
     NoDataEntryComponent,
   ],
-  standalone: true,
 })
 export class DiagramExportComponent implements OnInit {
   public title = 'Exported Diagram';

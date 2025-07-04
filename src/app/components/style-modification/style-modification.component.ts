@@ -15,7 +15,6 @@ import { HelgolandModificationModule } from '@helgoland/modification';
     MatCheckboxModule,
     FormsModule,
   ],
-  standalone: true,
 })
 export class StyleModificationComponent {
   public color: string | undefined;

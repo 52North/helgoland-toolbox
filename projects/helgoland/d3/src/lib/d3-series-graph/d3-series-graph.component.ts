@@ -104,7 +104,6 @@ interface DatasetEventSubscriptions {
   styleUrls: ['./d3-series-graph.component.scss'],
   providers: [D3GraphId],
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [
     D3GraphPanZoomInteractionComponent,
     D3YAxisModifierComponent,

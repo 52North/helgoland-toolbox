@@ -19,7 +19,6 @@ export class SelectableDataset extends HelgolandTimeseries {
   selector: 'n52-dataset-by-station-selector',
   templateUrl: './dataset-by-station-selector.component.html',
   styleUrls: ['./dataset-by-station-selector.component.scss'],
-  standalone: true,
   imports: [NgClass, HelgolandLabelMapperModule, TzDatePipe],
 })
 export class DatasetByStationSelectorComponent implements OnInit {

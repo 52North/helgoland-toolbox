@@ -45,7 +45,6 @@ import { ParameterTypeLabelComponent } from './parameter-type-label/parameter-ty
     ServiceListSelectorComponent,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class ModalTrajectorySelectionComponent implements OnInit {
   public datasetApis: DatasetApi[] =

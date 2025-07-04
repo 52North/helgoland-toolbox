@@ -4,7 +4,6 @@ import { TzDatePipe } from '@helgoland/core';
 @Component({
   selector: 'n52-time-list-selector',
   templateUrl: './time-list-selector.component.html',
-  standalone: true,
   imports: [TzDatePipe],
 })
 export class TimeListSelectorComponent {

@@ -100,7 +100,6 @@ class MarkerSelectorGeneratorImpl implements MarkerSelectorGenerator {
     HelgolandMapSelectorModule,
     HelgolandMapControlModule,
   ],
-  standalone: true,
 })
 export class MapSelectorComponent {
   public providerUrl = 'https://geo.irceline.be/sos/api/v1/';

@@ -14,7 +14,6 @@ import { OSM, TileWMS } from 'ol/source';
   templateUrl: './ol.component.html',
   styleUrls: ['./ol.component.scss'],
   imports: [HelgolandOpenLayersModule, CommonModule],
-  standalone: true,
 })
 export class OlComponent implements OnInit {
   public layers: Layer[] = [];

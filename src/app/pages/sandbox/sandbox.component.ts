@@ -25,7 +25,6 @@ import {
   templateUrl: './sandbox.component.html',
   styleUrls: ['./sandbox.component.scss'],
   imports: [HelgolandMapSelectorModule, HelgolandD3Module],
-  standalone: true,
 })
 export class SandboxComponent implements OnInit {
   public datasets: SeriesGraphDataset[] = [];

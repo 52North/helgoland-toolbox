@@ -20,7 +20,6 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule,
   ],
-  standalone: true,
 })
 export class BasicAuthLoginComponent {
   username: string | undefined;

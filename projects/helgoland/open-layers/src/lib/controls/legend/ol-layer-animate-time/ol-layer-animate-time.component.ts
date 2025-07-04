@@ -9,7 +9,6 @@ import { OlLayerTimeSelectorComponent } from '../ol-layer-time-selector/ol-layer
 @Component({
   selector: 'n52-ol-layer-animate-time',
   templateUrl: './ol-layer-animate-time.component.html',
-  standalone: true,
   imports: [],
 })
 export class OlLayerAnimateTimeComponent

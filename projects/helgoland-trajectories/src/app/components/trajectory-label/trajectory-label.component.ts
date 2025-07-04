@@ -8,7 +8,6 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './trajectory-label.component.html',
   styleUrls: ['./trajectory-label.component.scss'],
   imports: [CommonModule, TranslateModule],
-  standalone: true,
 })
 export class TrajectoryLabelComponent {
   @Input({ required: true })

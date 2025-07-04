@@ -6,7 +6,6 @@ import { HelgolandMapViewModule } from '@helgoland/map';
   templateUrl: './geometry-view.component.html',
   styleUrls: ['./geometry-view.component.scss'],
   imports: [HelgolandMapViewModule],
-  standalone: true,
 })
 export class GeometryViewComponent {
   public mapOptions: L.MapOptions = {

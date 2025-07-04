@@ -21,7 +21,6 @@ import { NotifierService } from '../../../services/notifier.service';
     MatTooltipModule,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class FavoriteToggleButtonComponent implements OnInit {
   @Input({ required: true })

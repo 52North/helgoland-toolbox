@@ -21,7 +21,6 @@ import { ListEntryComponent } from '../list-entry.component';
   selector: 'n52-profile-entry',
   templateUrl: './profile-entry.component.html',
   styleUrls: ['./profile-entry.component.scss'],
-  standalone: true,
   imports: [
     NgClass,
     LabelMapperComponent,

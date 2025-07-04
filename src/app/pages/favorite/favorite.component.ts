@@ -17,7 +17,6 @@ import {
   templateUrl: './favorite.component.html',
   styleUrls: ['./favorite.component.css'],
   imports: [HelgolandD3Module, CommonModule],
-  standalone: true,
 })
 export class FavoriteComponent {
   public favorites: ExtendedSingleFavorite[] = [];

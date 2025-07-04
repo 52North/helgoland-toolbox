@@ -9,7 +9,6 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './local-selector.component.html',
   styleUrls: ['./local-selector.component.scss'],
   imports: [MatRadioModule, CommonModule],
-  standalone: true,
 })
 export class LocalSelectorImplComponent extends LocalSelectorComponent {
   constructor(translate: TranslateService) {

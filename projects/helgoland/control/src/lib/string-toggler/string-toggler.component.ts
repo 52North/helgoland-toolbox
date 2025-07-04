@@ -1,17 +1,16 @@
+import { NgClass } from '@angular/common';
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   Output,
   SimpleChanges,
-  EventEmitter,
 } from '@angular/core';
-import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'n52-string-toggler',
   templateUrl: './string-toggler.component.html',
-  standalone: true,
   imports: [NgClass],
 })
 export class StringTogglerComponent implements OnChanges {

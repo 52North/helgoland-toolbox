@@ -4,7 +4,6 @@ import { ColorPickerModule } from 'ngx-color-picker';
 @Component({
   selector: 'n52-color-selector',
   templateUrl: './color-selector.component.html',
-  standalone: true,
   imports: [ColorPickerModule],
 })
 export class ColorSelectorComponent {

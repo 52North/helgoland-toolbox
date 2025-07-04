@@ -22,7 +22,6 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'n52-service-filter-selector',
   templateUrl: './service-filter-selector.component.html',
-  standalone: true,
   imports: [NgClass, HelgolandLabelMapperModule],
 })
 export class ServiceFilterSelectorComponent

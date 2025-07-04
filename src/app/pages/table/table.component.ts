@@ -7,7 +7,6 @@ import { HelgolandTimeModule } from '@helgoland/time';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
   imports: [HelgolandDatasetTableModule, HelgolandTimeModule],
-  standalone: true,
 })
 export class TableComponent {
   public datasetIds: string[] = [

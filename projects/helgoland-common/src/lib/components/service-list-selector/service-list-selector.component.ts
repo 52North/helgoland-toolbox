@@ -21,6 +21,5 @@ import { TranslateModule } from '@ngx-translate/core';
     MatProgressBarModule,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class ServiceListSelectorComponent extends ServiceSelectorComponent {}

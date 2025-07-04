@@ -15,7 +15,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   templateUrl: './parameter-list-selector.component.html',
   styleUrls: ['./parameter-list-selector.component.scss'],
   imports: [MatListModule, MatProgressBarModule, TranslateModule, CommonModule],
-  standalone: true,
 })
 export class ParameterListSelectorComponent extends MultiServiceFilterSelectorComponent {
   @ViewChild(MatSelectionList) list: MatSelectionList | undefined;

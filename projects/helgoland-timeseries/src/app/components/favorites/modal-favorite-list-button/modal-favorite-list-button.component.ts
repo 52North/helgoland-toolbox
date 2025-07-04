@@ -22,7 +22,6 @@ import { ModalFavoriteListComponent } from './../modal-favorite-list/modal-favor
     TranslateModule,
     CommonModule,
   ],
-  standalone: true,
 })
 export class ModalFavoriteListButtonComponent {
   constructor(

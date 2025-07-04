@@ -31,7 +31,6 @@ import {
 @Component({
   selector: 'n52-list-selector',
   templateUrl: './list-selector.component.html',
-  standalone: true,
   imports: [MultiServiceFilterSelectorComponent],
 })
 export class ListSelectorComponent implements OnChanges {

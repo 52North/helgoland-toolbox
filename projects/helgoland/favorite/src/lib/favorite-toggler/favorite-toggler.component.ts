@@ -8,7 +8,6 @@ import { FavoriteService } from '../service/favorite.service';
 @Component({
   selector: 'n52-favorite-toggler',
   templateUrl: './favorite-toggler.component.html',
-  standalone: true,
   imports: [NgClass],
 })
 export class FavoriteTogglerComponent implements OnChanges {

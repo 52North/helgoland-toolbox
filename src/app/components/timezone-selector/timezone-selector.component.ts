@@ -7,7 +7,6 @@ import { TimezoneService } from '@helgoland/core';
   templateUrl: './timezone-selector.component.html',
   styleUrls: ['./timezone-selector.component.scss'],
   imports: [MatSelectModule],
-  standalone: true,
 })
 export class TimezoneSelectorComponent implements OnInit {
   public timezone: string | undefined;

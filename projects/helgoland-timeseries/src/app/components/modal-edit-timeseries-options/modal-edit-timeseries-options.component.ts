@@ -45,7 +45,6 @@ import { TimeseriesSymbolSelectComponent } from './timeseries-symbol-select/time
     TranslateModule,
   ],
   providers: [ColorPickerService],
-  standalone: true,
 })
 export class ModalEditTimeseriesOptionsComponent implements AfterContentInit {
   public adjustedColor: string | undefined;

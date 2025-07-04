@@ -12,7 +12,6 @@ import {
   selector: 'n52-predefined-timespan-selector',
   templateUrl: './predefined-timespan-selector.component.html',
   styleUrls: ['./predefined-timespan-selector.component.scss'],
-  standalone: true,
   imports: [NgClass],
 })
 export class PredefinedTimespanSelectorComponent implements OnInit {

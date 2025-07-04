@@ -9,6 +9,5 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './language-selector.component.html',
   styleUrls: ['./language-selector.component.scss'],
   imports: [CommonModule, MatSelectModule, TranslateModule],
-  standalone: true,
 })
 export class LanguageSelectorComponent extends LocalSelectorComponent {}

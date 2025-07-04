@@ -63,7 +63,6 @@ interface MapSelectionAppConfig extends AppConfig {
     ParameterListSelectorComponent,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class MapSelectionComponent implements OnInit, AfterViewInit {
   @ViewChild('drawer') drawer: MatDrawer | undefined;

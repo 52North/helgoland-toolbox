@@ -19,7 +19,6 @@ interface DatasetEventSubscriptions {
   selector: 'helgoland-data-table',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss'],
-  standalone: true,
   imports: [MatTableModule, HelgolandCoreModule],
 })
 export class DataTableComponent implements DoCheck {

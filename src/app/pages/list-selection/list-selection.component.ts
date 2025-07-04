@@ -15,7 +15,6 @@ import {
   templateUrl: './list-selection.component.html',
   styleUrls: ['./list-selection.component.scss'],
   imports: [HelgolandSelectorModule],
-  standalone: true,
 })
 export class ListSelectionComponent {
   public categoryParams: ListSelectorParameter[] = [

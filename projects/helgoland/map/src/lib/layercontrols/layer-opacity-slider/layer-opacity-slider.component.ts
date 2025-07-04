@@ -8,7 +8,6 @@ import { FormsModule } from '@angular/forms';
   selector: 'n52-layer-opacity-slider',
   templateUrl: './layer-opacity-slider.component.html',
   styleUrls: ['./layer-opacity-slider.component.css'],
-  standalone: true,
   imports: [FormsModule],
 })
 export class LayerOpacitySliderComponent

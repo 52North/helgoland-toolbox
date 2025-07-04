@@ -44,7 +44,6 @@ import {
     TimeseriesListSelectorComponent,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class ListSelectionComponent implements OnInit {
   public selectedService: HelgolandService | undefined;

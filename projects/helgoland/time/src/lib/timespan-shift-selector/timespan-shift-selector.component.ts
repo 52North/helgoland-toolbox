@@ -4,7 +4,6 @@ import { Time, Timespan, TzDatePipe } from '@helgoland/core';
 @Component({
   selector: 'n52-timespan-shift-selector',
   templateUrl: './timespan-shift-selector.component.html',
-  standalone: true,
   imports: [TzDatePipe],
 })
 export class TimespanShiftSelectorComponent {
