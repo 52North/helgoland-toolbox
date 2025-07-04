@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { HelgolandCoreModule } from '@helgoland/core';
@@ -14,18 +17,14 @@ describe('GeosearchComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      imports: [FormsModule, HelgolandCoreModule, GeosearchControlComponent],
       providers: [
         MapCache,
         {
           provide: GeoSearch,
           useClass: NominatimGeoSearchService,
         },
-      ],
-      imports: [
-        FormsModule,
-        HttpClientModule,
-        HelgolandCoreModule,
-        GeosearchControlComponent,
+        provideHttpClient(withInterceptorsFromDi()),
       ],
     }).compileComponents();
   }));

@@ -1,7 +1,10 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { DarkModeButtonComponent } from './dark-mode-button.component';
 
@@ -11,10 +14,10 @@ describe('DarkModeButtonComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateTestingModule,
-        HttpClientTestingModule,
-        DarkModeButtonComponent,
+      imports: [TranslateTestingModule, DarkModeButtonComponent],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

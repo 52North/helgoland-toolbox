@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { inject, TestBed } from '@angular/core/testing';
 import { SettingsService } from '@helgoland/core';
 
@@ -8,10 +11,11 @@ import { VocabNercLabelMapperService } from './vocab-nerc-label-mapper.service';
 describe('Service: VocabNercLabelMapper', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule],
+      imports: [],
       providers: [
         VocabNercLabelMapperService,
         { provide: SettingsService, useClass: MockedSettingsService },
+        provideHttpClient(withInterceptorsFromDi()),
       ],
     });
   });

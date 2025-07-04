@@ -1,16 +1,19 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
   DatasetApiV1ConnectorProvider,
   HelgolandCoreModule,
 } from '@helgoland/core';
 
-import { MapCache } from '../../base/map-cache.service';
-import { HelgolandMapSelectorModule } from '../module';
-import { LastValuePresentation } from '../services/last-value-label-generator.interface';
 import { DatasetApiInterfaceTesting } from '../../../../../../testing/dataset-api-interface.testing';
 import { SettingsServiceTestingProvider } from '../../../../../../testing/settings.testing';
 import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
+import { MapCache } from '../../base/map-cache.service';
+import { HelgolandMapSelectorModule } from '../module';
+import { LastValuePresentation } from '../services/last-value-label-generator.interface';
 import { LastValueMapSelectorComponent } from './last-value-map-selector.component';
 
 describe('LastValueMapSelectorComponent with external Data', () => {
@@ -20,7 +23,6 @@ describe('LastValueMapSelectorComponent with external Data', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
         HelgolandCoreModule,
         TranslateTestingModule,
         HelgolandMapSelectorModule,
@@ -30,6 +32,7 @@ describe('LastValueMapSelectorComponent with external Data', () => {
         DatasetApiV1ConnectorProvider,
         SettingsServiceTestingProvider,
         MapCache,
+        provideHttpClient(withInterceptorsFromDi()),
       ],
     }).compileComponents();
   }));

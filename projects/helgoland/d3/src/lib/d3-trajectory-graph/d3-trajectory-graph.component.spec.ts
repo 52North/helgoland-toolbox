@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 
@@ -14,12 +17,15 @@ describe('D3TrajectoryGraphComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
         HelgolandCoreModule,
         TranslateTestingModule,
         D3TrajectoryGraphComponent,
       ],
-      providers: [DatasetApiInterfaceTesting, SettingsServiceTestingProvider],
+      providers: [
+        DatasetApiInterfaceTesting,
+        SettingsServiceTestingProvider,
+        provideHttpClient(withInterceptorsFromDi()),
+      ],
     }).compileComponents();
   }));
 

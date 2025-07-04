@@ -1,6 +1,9 @@
-import { TranslateTestingModule } from '../../../../../../../testing/translate.testing.module';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
+import { TranslateTestingModule } from '../../../../../../../testing/translate.testing.module';
 
 import { HttpService } from '../../../dataset-api/http.service';
 import { InternalIdHandler } from '../../../dataset-api/internal-id-handler.service';
@@ -13,12 +16,13 @@ const fluggs = 'https://fluggs.wupperverband.de/sws5/api/';
 describe('StaImplInterfaceService', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, TranslateTestingModule],
+      imports: [TranslateTestingModule],
       providers: [
         HttpService,
         InternalIdHandler,
         SplittedDataDatasetApiInterface,
         StaInterfaceService,
+        provideHttpClient(withInterceptorsFromDi()),
       ],
     }),
   );

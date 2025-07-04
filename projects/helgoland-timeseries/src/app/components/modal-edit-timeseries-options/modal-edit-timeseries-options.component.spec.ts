@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -17,7 +20,6 @@ describe('ModalEditTimeseriesOptionsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         TranslateTestingModule,
-        HttpClientModule,
         MatSliderModule,
         MatSlideToggleModule,
         FormsModule,
@@ -27,6 +29,7 @@ describe('ModalEditTimeseriesOptionsComponent', () => {
       providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} },
+        provideHttpClient(withInterceptorsFromDi()),
       ],
     }).compileComponents();
   });

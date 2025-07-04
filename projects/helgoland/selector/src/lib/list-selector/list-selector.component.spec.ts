@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCachingModule } from '@helgoland/caching';
@@ -17,10 +20,7 @@ import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 
 import { SettingsServiceTestingProvider } from '../../../../../testing/settings.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
-import {
-  MultiServiceFilterEndpoint,
-  MultiServiceFilterSelectorComponent,
-} from '../multi-service-filter-selector/multi-service-filter-selector.component';
+import { MultiServiceFilterSelectorComponent } from '../multi-service-filter-selector/multi-service-filter-selector.component';
 import { ListSelectorComponent } from './list-selector.component';
 import { ListSelectorService } from './list-selector.service';
 
@@ -31,14 +31,17 @@ describe('ListSelectorComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
         TranslateTestingModule,
         ListSelectorComponent,
         MultiServiceFilterSelectorComponent,
       ],
-      providers: [ListSelectorService, SettingsServiceTestingProvider],
+      providers: [
+        ListSelectorService,
+        SettingsServiceTestingProvider,
+        provideHttpClient(withInterceptorsFromDi()),
+      ],
     }).compileComponents();
   }));
 
@@ -61,7 +64,6 @@ describe('ListSelectorComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
         TranslateTestingModule,
@@ -80,6 +82,7 @@ describe('ListSelectorComponent', () => {
         DatasetStaConnectorProvider,
         ListSelectorService,
         SettingsServiceTestingProvider,
+        provideHttpClient(withInterceptorsFromDi()),
       ],
     }).compileComponents();
   }));

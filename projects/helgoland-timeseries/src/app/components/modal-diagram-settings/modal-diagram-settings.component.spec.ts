@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import {
@@ -19,7 +22,6 @@ describe('ModalDiagramSettingsComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         TranslateTestingModule,
-        HttpClientModule,
         MatButtonToggleModule,
         MatSlideToggleModule,
         MatDialogModule,
@@ -28,6 +30,7 @@ describe('ModalDiagramSettingsComponent', () => {
       providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} },
+        provideHttpClient(withInterceptorsFromDi()),
       ],
     }).compileComponents();
   }));

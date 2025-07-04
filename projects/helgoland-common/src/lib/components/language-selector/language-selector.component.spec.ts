@@ -1,8 +1,11 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSelectModule } from '@angular/material/select';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TranslateTestingModule } from './../../../../../testing/translate.testing.module';
 import { LanguageSelectorComponent } from './language-selector.component';
@@ -16,11 +19,11 @@ describe('LanguageSelectorComponent', () => {
       imports: [
         TranslateTestingModule,
         BrowserAnimationsModule,
-        HttpClientModule,
         MatFormFieldModule,
         MatSelectModule,
         LanguageSelectorComponent,
       ],
+      providers: [provideHttpClient(withInterceptorsFromDi())],
     }).compileComponents();
   });
 

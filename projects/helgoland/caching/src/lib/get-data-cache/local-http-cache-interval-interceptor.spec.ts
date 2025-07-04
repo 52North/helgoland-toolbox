@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
 import {
   DatasetImplApiInterface,
@@ -7,9 +7,13 @@ import {
   HttpService,
 } from '@helgoland/core';
 
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
+import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { HelgolandCachingModule } from '../caching.module';
 import { HttpCacheInterval } from '../model';
-import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 import { LocalHttpCacheIntervalInterceptor } from './local-http-cache-interval-interceptor';
 
 describe('LocalHttpCacheIntervalInterceptor', () => {
@@ -19,7 +23,6 @@ describe('LocalHttpCacheIntervalInterceptor', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
         HelgolandCoreModule,
         HelgolandCachingModule,
         TranslateTestingModule,
@@ -29,6 +32,8 @@ describe('LocalHttpCacheIntervalInterceptor', () => {
         DatasetImplApiInterface,
         LocalHttpCacheIntervalInterceptor,
         HttpCacheInterval,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     });
     apiSrvc = TestBed.inject(DatasetImplApiInterface);

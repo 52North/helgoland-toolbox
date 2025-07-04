@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 
@@ -15,7 +18,6 @@ describe('ProfileTrajectoryMapSelectorComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
         HelgolandCoreModule,
         TranslateTestingModule,
         ProfileTrajectoryMapSelectorComponent,
@@ -24,6 +26,7 @@ describe('ProfileTrajectoryMapSelectorComponent', () => {
         DatasetApiInterfaceTesting,
         SettingsServiceTestingProvider,
         MapCache,
+        provideHttpClient(withInterceptorsFromDi()),
       ],
     }).compileComponents();
   }));

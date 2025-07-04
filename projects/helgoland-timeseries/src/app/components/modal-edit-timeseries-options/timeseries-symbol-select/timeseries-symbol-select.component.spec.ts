@@ -1,6 +1,10 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
 import { TimeseriesSymbolSelectComponent } from './timeseries-symbol-select.component';
 
@@ -11,10 +15,10 @@ describe('TimeseriesSymbolSelectComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateTestingModule,
-        HttpClientTestingModule,
-        TimeseriesSymbolSelectComponent,
+      imports: [TranslateTestingModule, TimeseriesSymbolSelectComponent],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

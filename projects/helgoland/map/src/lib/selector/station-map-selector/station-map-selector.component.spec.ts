@@ -1,6 +1,6 @@
 import {
-  HttpClientTestingModule,
   HttpTestingController,
+  provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { Injectable } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
@@ -16,6 +16,10 @@ import {
 } from '@helgoland/core';
 import { Observable, of } from 'rxjs';
 
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { SettingsServiceTestingProvider } from '../../../../../../testing/settings.testing';
 import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
 import { MapCache } from '../../base/map-cache.service';
@@ -59,7 +63,6 @@ describe('StationMapSelectorComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
         HelgolandCoreModule,
         TranslateTestingModule,
         StationMapSelectorComponent,
@@ -71,6 +74,8 @@ describe('StationMapSelectorComponent', () => {
         },
         MapCache,
         SettingsServiceTestingProvider,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

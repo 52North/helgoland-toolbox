@@ -1,8 +1,11 @@
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
 
 import { ShareButtonComponent } from './share-button.component';
@@ -15,12 +18,12 @@ describe('ShareButtonComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         MatSnackBarModule,
-        HttpClientModule,
         MatIconModule,
         MatTooltipModule,
         TranslateTestingModule,
         ShareButtonComponent,
       ],
+      providers: [provideHttpClient(withInterceptorsFromDi())],
     }).compileComponents();
   });
 

@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   MAT_DIALOG_DATA,
@@ -19,7 +22,6 @@ describe('ModalListSettingsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         TranslateTestingModule,
-        HttpClientModule,
         HelgolandCommonModule,
         MatDialogModule,
         HelgolandSelectorModule,
@@ -28,6 +30,7 @@ describe('ModalListSettingsComponent', () => {
       providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} },
+        provideHttpClient(withInterceptorsFromDi()),
       ],
     }).compileComponents();
   });

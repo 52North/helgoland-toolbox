@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { inject, TestBed } from '@angular/core/testing';
 
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
@@ -9,11 +12,12 @@ import { SplittedDataDatasetApiInterface } from './splitted-data-api-interface.s
 describe('SplittedDataDatasetApiInterface', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, TranslateTestingModule],
+      imports: [TranslateTestingModule],
       providers: [
         SplittedDataDatasetApiInterface,
         InternalIdHandler,
         HttpService,
+        provideHttpClient(withInterceptorsFromDi()),
       ],
     });
   });

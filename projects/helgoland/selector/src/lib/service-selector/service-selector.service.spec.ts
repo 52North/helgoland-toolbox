@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { inject, TestBed } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 
@@ -9,8 +12,12 @@ import { ServiceSelectorService } from './service-selector.service';
 describe('ServiceSelectorService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, HelgolandCoreModule, TranslateTestingModule],
-      providers: [ServiceSelectorService, SettingsServiceTestingProvider],
+      imports: [HelgolandCoreModule, TranslateTestingModule],
+      providers: [
+        ServiceSelectorService,
+        SettingsServiceTestingProvider,
+        provideHttpClient(withInterceptorsFromDi()),
+      ],
     });
   });
 

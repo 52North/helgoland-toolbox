@@ -1,6 +1,6 @@
 import {
-  HttpClientTestingModule,
   HttpTestingController,
+  provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
 import { BasicAuthService } from '@helgoland/auth';
@@ -11,6 +11,10 @@ import {
 } from '@helgoland/core';
 import moment from 'moment';
 
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { EventingImplApiInterface } from './eventing-impl-api-interface.service';
 import { EventFilter } from './model/request/events';
 import { NotificationFilter } from './model/request/notifications';
@@ -30,8 +34,13 @@ describe('EventingImplApiInterface', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [EventingImplApiInterface, BasicAuthService],
-      imports: [HttpClientTestingModule, HelgolandCoreModule],
+      imports: [HelgolandCoreModule],
+      providers: [
+        EventingImplApiInterface,
+        BasicAuthService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ],
     });
     httpTestingController = TestBed.inject(HttpTestingController);
   });

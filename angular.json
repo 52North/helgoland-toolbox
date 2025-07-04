@@ -18,12 +18,15 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser-esbuild",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/helgoland-toolbox",
+            "outputPath": {
+              "base": "dist/helgoland-toolbox"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "allowedCommonJsDependencies": [
@@ -40,7 +43,8 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "browser": "src/main.ts"
           },
           "configurations": {
             "production": {
@@ -65,7 +69,6 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
@@ -817,12 +820,15 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser-esbuild",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/helgoland-timeseries",
+            "outputPath": {
+              "base": "dist/helgoland-timeseries"
+            },
             "index": "projects/helgoland-timeseries/src/index.html",
-            "main": "projects/helgoland-timeseries/src/main.ts",
-            "polyfills": "projects/helgoland-timeseries/src/polyfills.ts",
+            "polyfills": [
+              "projects/helgoland-timeseries/src/polyfills.ts"
+            ],
             "tsConfig": "projects/helgoland-timeseries/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "allowedCommonJsDependencies": [
@@ -840,7 +846,8 @@
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/helgoland-timeseries/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "browser": "projects/helgoland-timeseries/src/main.ts"
           },
           "configurations": {
             "production": {
@@ -865,7 +872,6 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
@@ -976,12 +982,15 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser-esbuild",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/helgoland-trajectories",
+            "outputPath": {
+              "base": "dist/helgoland-trajectories"
+            },
             "index": "projects/helgoland-trajectories/src/index.html",
-            "main": "projects/helgoland-trajectories/src/main.ts",
-            "polyfills": "projects/helgoland-trajectories/src/polyfills.ts",
+            "polyfills": [
+              "projects/helgoland-trajectories/src/polyfills.ts"
+            ],
             "tsConfig": "projects/helgoland-trajectories/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -992,7 +1001,8 @@
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/helgoland-trajectories/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "browser": "projects/helgoland-trajectories/src/main.ts"
           },
           "configurations": {
             "production": {
@@ -1017,7 +1027,6 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
