@@ -57,14 +57,17 @@ helgoland-diagram-view {
                 }
             }
 
-            .diagrams {
+            .content {
                 flex: 1;
                 display: flex;
                 flex-direction: column;
+                overflow: hidden;
 
-                .diagram {
+                .diagram,
+                .table {
                     flex: 1;
                     position: relative;
+                    overflow: auto;
                 }
 
                 .overview-diagram {

@@ -97,7 +97,7 @@
     "target": "ES2022",
     "module": "ES2022",
     "lib": [
-      "ES2022",
+      "ES2023",
       "dom"
     ],
     "useDefineForClassFields": false

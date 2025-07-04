@@ -69,6 +69,30 @@
               <mat-icon color="accent">remove_done</mat-icon>
             </button>
           }
+          @if (mainContentType === "diagram") {
+            <button
+              mat-icon-button
+              attr.aria-label="{{
+                'diagram-view.table-button.tooltip' | translate
+              }}"
+              (click)="mainContentType = 'table'"
+              matTooltip="{{ 'diagram-view.table-button.tooltip' | translate }}"
+            >
+              <mat-icon>view_list</mat-icon>
+            </button>
+          }
+          @if (mainContentType === "table") {
+            <button
+              mat-icon-button
+              attr.aria-label="{{
+                'diagram-view.chart-button.tooltip' | translate
+              }}"
+              (click)="mainContentType = 'diagram'"
+              matTooltip="{{ 'diagram-view.chart-button.tooltip' | translate }}"
+            >
+              <mat-icon>show_chart</mat-icon>
+            </button>
+          }
           <div style="flex: 1"></div>
           @if (graphDatasetsSrvc.datasets.length) {
             <button
@@ -132,34 +156,47 @@
         </div>
       </div>
     } @else {
-      <div class="diagrams">
-        <div class="diagram">
-          @if (diagramLoading) {
-            <helgoland-loading-overlay-progress-bar />
+      <div class="content">
+        @switch (mainContentType) {
+          @case ("diagram") {
+            <div class="diagram">
+              @if (dataLoading) {
+                <helgoland-loading-overlay-progress-bar />
+              }
+              <button
+                class="local-settings-button"
+                mat-mini-fab
+                color="none"
+                (click)="openDiagramSettings()"
+                matTooltip="{{
+                  'diagram-view.open-diagram-settings' | translate
+                }}"
+                attr.aria-label="{{
+                  'diagram-view.open-diagram-settings' | translate
+                }}"
+              >
+                <mat-icon>query_stats</mat-icon>
+              </button>
+
+              <n52-d3-series-graph
+                #graph
+                [datasets]="graphDatasetsSrvc.datasets"
+                [timespan]="graphDatasetsSrvc.timespan"
+                [graphOptions]="graphOptions"
+                (timespanChanged)="graphDatasetsSrvc.timespan = $event"
+              >
+              </n52-d3-series-graph>
+            </div>
           }
-
-          <button
-            class="local-settings-button"
-            mat-mini-fab
-            color="none"
-            (click)="openDiagramSettings()"
-            matTooltip="{{ 'diagram-view.open-diagram-settings' | translate }}"
-            attr.aria-label="{{
-              'diagram-view.open-diagram-settings' | translate
-            }}"
-          >
-            <mat-icon>query_stats</mat-icon>
-          </button>
-
-          <n52-d3-series-graph
-            #graph
-            [datasets]="graphDatasetsSrvc.datasets"
-            [timespan]="graphDatasetsSrvc.timespan"
-            [graphOptions]="graphOptions"
-            (timespanChanged)="graphDatasetsSrvc.timespan = $event"
-          >
-          </n52-d3-series-graph>
-        </div>
+          @case ("table") {
+            <div class="table">
+              <helgoland-data-table
+                [datasets]="graphDatasetsSrvc.datasets"
+                [timespan]="graphDatasetsSrvc.timespan"
+              ></helgoland-data-table>
+            </div>
+          }
+        }
 
         <div>
           @if (graphDatasetsSrvc.timespan) {

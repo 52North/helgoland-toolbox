@@ -29,6 +29,7 @@ import {
   ShareButtonComponent,
 } from 'helgoland-common';
 
+import { DataTableComponent } from '../../components/data-table/data-table.component';
 import { DatasetLegendEntryComponent } from '../../components/dataset-legend-entry/dataset-legend-entry.component';
 import { ModalFavoriteListButtonComponent } from '../../components/favorites/modal-favorite-list-button/modal-favorite-list-button.component';
 import {
@@ -44,6 +45,7 @@ import {
 } from './../../services/graph-datasets.service';
 import { DiagramViewInitStateService } from './diagram-view-permalink.service';
 
+type MainContentType = 'diagram' | 'table';
 @Component({
   selector: 'helgoland-diagram-view',
   templateUrl: './diagram-view.component.html',
@@ -68,6 +70,7 @@ import { DiagramViewInitStateService } from './diagram-view-permalink.service';
     ModalMainConfigButtonComponent,
     ShareButtonComponent,
     TranslateModule,
+    DataTableComponent,
   ],
   standalone: true,
 })
@@ -97,7 +100,8 @@ export class DiagramViewComponent implements OnInit {
     overview: true,
   };
 
-  diagramLoading: boolean = false;
+  mainContentType: MainContentType = 'table';
+  dataLoading: boolean = false;
   overviewLoading: boolean = false;
 
   constructor(
@@ -129,7 +133,7 @@ export class DiagramViewComponent implements OnInit {
     });
 
     this.graphDatasetsSrvc.loadingDataChanged.subscribe(
-      (ld) => (this.diagramLoading = ld.size > 0),
+      (ld) => (this.dataLoading = ld.size > 0),
     );
 
     this.graphDatasetsSrvc.loadingOverviewDataChanged.subscribe(
