@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -34,7 +34,6 @@ import { ParameterTypeLabelComponent } from './parameter-type-label/parameter-ty
   templateUrl: './modal-trajectory-selection.component.html',
   styleUrls: ['./modal-trajectory-selection.component.scss'],
   imports: [
-    CommonModule,
     LoadingOverlayProgressBarComponent,
     MatButtonModule,
     MatButtonToggleModule,
@@ -43,8 +42,8 @@ import { ParameterTypeLabelComponent } from './parameter-type-label/parameter-ty
     ParameterListSelectorComponent,
     ParameterTypeLabelComponent,
     ServiceListSelectorComponent,
-    TranslateModule,
-  ],
+    TranslateModule
+],
 })
 export class ModalTrajectorySelectionComponent implements OnInit {
   public datasetApis: DatasetApi[] =

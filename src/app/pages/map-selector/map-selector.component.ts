@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   HelgolandParameterFilter,
@@ -96,7 +95,6 @@ class MarkerSelectorGeneratorImpl implements MarkerSelectorGenerator {
   styleUrls: ['./map-selector.component.css'],
   imports: [
     HelgolandSelectorModule,
-    CommonModule,
     HelgolandMapSelectorModule,
     HelgolandMapControlModule,
   ],

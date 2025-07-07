@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -53,7 +52,6 @@ interface MapSelectionAppConfig extends AppConfig {
   styleUrls: ['./map-selection.component.scss'],
   encapsulation: ViewEncapsulation.None,
   imports: [
-    CommonModule,
     HelgolandMapSelectorModule,
     MatButtonModule,
     MatDialogModule,

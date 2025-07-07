@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,7 +26,6 @@ import { TimeseriesService } from './../../services/timeseries-service.service';
   templateUrl: './modal-dataset-by-station-selector.component.html',
   styleUrls: ['./modal-dataset-by-station-selector.component.scss'],
   imports: [
-    CommonModule,
     HelgolandCoreModule,
     HelgolandLabelMapperModule,
     MatBadgeModule,

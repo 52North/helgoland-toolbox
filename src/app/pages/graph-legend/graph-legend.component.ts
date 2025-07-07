@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -83,7 +82,6 @@ class HoveringTestService extends D3SimpleHoveringService {
     HelgolandDatasetlistModule,
     HelgolandDatasetDownloadModule,
     MatDialogModule,
-    CommonModule,
   ],
 })
 export class GraphLegendComponent {

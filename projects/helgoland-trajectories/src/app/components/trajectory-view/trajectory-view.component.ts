@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -37,7 +37,6 @@ import { TrajectoryLabelComponent } from './../trajectory-label/trajectory-label
   templateUrl: './trajectory-view.component.html',
   styleUrls: ['./trajectory-view.component.scss'],
   imports: [
-    CommonModule,
     HelgolandD3Module,
     HelgolandMapViewModule,
     LegendEntryComponent,
@@ -55,8 +54,8 @@ import { TrajectoryLabelComponent } from './../trajectory-label/trajectory-label
     MatTooltipModule,
     ShareButtonComponent,
     TrajectoryLabelComponent,
-    TranslateModule,
-  ],
+    TranslateModule
+],
 })
 export class TrajectoryViewComponent implements OnInit {
   public trajectory: HelgolandTrajectory | undefined;

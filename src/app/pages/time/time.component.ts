@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   HelgolandCoreModule,
@@ -16,7 +15,6 @@ import moment from 'moment';
     HelgolandCoreModule,
     HelgolandTimeModule,
     HelgolandTimeRangeSliderModule,
-    CommonModule,
   ],
 })
 export class TimeComponent {

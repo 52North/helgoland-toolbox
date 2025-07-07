@@ -1,10 +1,12 @@
-<div *ngFor="let message of messages" class="message-container">
-  <span class="message">{{ message }}</span>
-  <button
-    mat-icon-button
-    (click)="removeMessage(message)"
-    class="small-clear-button"
-  >
-    <mat-icon>close</mat-icon>
-  </button>
-</div>
+@for (message of messages; track message) {
+  <div class="message-container">
+    <span class="message">{{ message }}</span>
+    <button
+      mat-icon-button
+      (click)="removeMessage(message)"
+      class="small-clear-button"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+}

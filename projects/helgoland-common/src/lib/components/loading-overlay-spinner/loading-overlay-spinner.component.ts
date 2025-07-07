@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
@@ -6,7 +5,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   selector: 'helgoland-loading-overlay-spinner',
   templateUrl: './loading-overlay-spinner.component.html',
   styleUrls: ['./loading-overlay-spinner.component.scss'],
-  imports: [MatProgressSpinnerModule, CommonModule],
+  imports: [MatProgressSpinnerModule],
 })
 export class LoadingOverlaySpinnerComponent {
   @Input() loadingHint: string | undefined;

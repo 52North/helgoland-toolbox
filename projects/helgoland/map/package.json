@@ -2,8 +2,8 @@
   "name": "@helgoland/map",
   "version": "17.0.1",
   "dependencies": {
-    "@angular/common": "^19.0.0",
-    "@angular/core": "^19.0.0",
+    "@angular/common": "^20.0.0",
+    "@angular/core": "^20.0.0",
     "tslib": "^2.1.0",
     "@types/geojson": "^7946.0.10",
     "@types/leaflet": "^1.9.3",

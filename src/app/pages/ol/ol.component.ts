@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { HelgolandPlatform } from '@helgoland/core';
 import {
@@ -13,7 +12,7 @@ import { OSM, TileWMS } from 'ol/source';
   selector: 'n52-ol',
   templateUrl: './ol.component.html',
   styleUrls: ['./ol.component.scss'],
-  imports: [HelgolandOpenLayersModule, CommonModule],
+  imports: [HelgolandOpenLayersModule],
 })
 export class OlComponent implements OnInit {
   public layers: Layer[] = [];

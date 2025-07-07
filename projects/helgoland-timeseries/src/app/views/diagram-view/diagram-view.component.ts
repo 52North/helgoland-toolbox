@@ -1,5 +1,5 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import { CommonModule } from '@angular/common';
+
 import {
   ChangeDetectorRef,
   Component,
@@ -52,7 +52,6 @@ type MainContentType = 'diagram' | 'table';
   styleUrls: ['./diagram-view.component.scss'],
   encapsulation: ViewEncapsulation.None,
   imports: [
-    CommonModule,
     DatasetLegendEntryComponent,
     GeneralTimeSelectionComponent,
     HelgolandD3Module,

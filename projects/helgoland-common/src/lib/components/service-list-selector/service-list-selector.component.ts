@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -14,7 +13,6 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './service-list-selector.component.html',
   styleUrls: ['./service-list-selector.component.scss'],
   imports: [
-    CommonModule,
     HelgolandSelectorModule,
     MatIconModule,
     MatListModule,

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import {
@@ -28,7 +27,6 @@ import { StyleModificationComponent } from '../../components/style-modification/
     HelgolandDatasetlistModule,
     HelgolandD3Module,
     HelgolandMapViewModule,
-    CommonModule,
     MatDialogModule,
   ],
 })

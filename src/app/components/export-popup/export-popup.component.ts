@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -23,7 +22,6 @@ import {
     MatDatepickerModule,
     FormsModule,
     HelgolandCoreModule,
-    CommonModule,
   ],
 })
 export class ExportPopupComponent {

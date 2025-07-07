@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -36,7 +35,6 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './general-time-selection.component.html',
   styleUrls: ['./general-time-selection.component.scss'],
   imports: [
-    CommonModule,
     HelgolandCoreModule,
     MatButtonModule,
     MatDatepickerModule,

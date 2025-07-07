@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -21,7 +20,6 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './edit-label.component.html',
   styleUrls: ['./edit-label.component.scss'],
   imports: [
-    CommonModule,
     FormsModule,
     MatButtonModule,
     MatFormFieldModule,

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,7 +10,7 @@ import {
   selector: 'helgoland-notification',
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.scss'],
-  imports: [CommonModule, MatIconModule, MatButtonModule],
+  imports: [MatIconModule, MatButtonModule],
 })
 export class NotificationComponent {
   messages: string[] = [];

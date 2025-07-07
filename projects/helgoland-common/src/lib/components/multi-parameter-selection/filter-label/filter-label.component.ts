@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -8,7 +7,7 @@ import { ParameterType } from '../model';
   selector: 'helgoland-common-parameter-type-label',
   templateUrl: './filter-label.component.html',
   styleUrls: ['./filter-label.component.scss'],
-  imports: [TranslateModule, CommonModule],
+  imports: [TranslateModule],
 })
 export class FilterLabelComponent {
   @Input() filter: ParameterType | undefined;

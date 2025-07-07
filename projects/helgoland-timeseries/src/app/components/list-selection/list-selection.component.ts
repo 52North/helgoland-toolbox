@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -34,7 +33,6 @@ import {
   templateUrl: './list-selection.component.html',
   styleUrls: ['./list-selection.component.scss'],
   imports: [
-    CommonModule,
     FilterLabelComponent,
     MatButtonModule,
     MatButtonToggleModule,

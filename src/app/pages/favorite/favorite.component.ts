@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   DatasetOptions,
@@ -16,7 +15,7 @@ import {
 @Component({
   templateUrl: './favorite.component.html',
   styleUrls: ['./favorite.component.css'],
-  imports: [HelgolandD3Module, CommonModule],
+  imports: [HelgolandD3Module],
 })
 export class FavoriteComponent {
   public favorites: ExtendedSingleFavorite[] = [];

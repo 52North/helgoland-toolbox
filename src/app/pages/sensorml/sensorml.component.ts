@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AbstractProcess, SensorMLXmlService } from '@helgoland/sensorml';
 
@@ -6,7 +5,7 @@ import { AbstractProcess, SensorMLXmlService } from '@helgoland/sensorml';
   selector: 'n52-sensorml',
   templateUrl: './sensorml.component.html',
   styleUrls: ['./sensorml.component.css'],
-  imports: [CommonModule],
+  imports: [],
 })
 export class SensormlComponent {
   public readerResult!: string;
