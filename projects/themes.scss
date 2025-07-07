@@ -1,8 +1,10 @@
+@use "sass:color";
+@use "sass:meta";
 /**
 * Generated theme by Material Theme Generator
 * https://materialtheme.arcsine.dev
 */
-@use '@angular/material' as mat;
+@use '@angular/material'as mat;
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
@@ -11,11 +13,10 @@
 
 // for npm roboto-fontface package (to load local files)
 $roboto-font-path: "roboto-fontface/fonts" !default;
-@import 'node_modules/roboto-fontface/css/roboto/sass/roboto-fontface.scss';
 
 // // for npm material-icons package (to load local files)
 $material-icons-font-path: 'material-icons/iconfont/';
-@import 'material-icons/iconfont/material-icons.scss';
+@include meta.load-css('material-icons/iconfont/material-icons.scss');
 
 $fontConfig: (display-4: mat-typography-level(112px, 112px, 300, 'Roboto', -0.0134em),
     display-3: mat-typography-level(56px, 56px, 400, 'Roboto', -0.0089em),
@@ -88,12 +89,12 @@ $mat-dark-theme-foreground: (base: $light-text,
 // Background config
 // Light bg
 $light-background: #fafafa;
-$light-bg-darker-5: darken($light-background, 5%);
-$light-bg-darker-10: darken($light-background, 10%);
-$light-bg-darker-20: darken($light-background, 20%);
-$light-bg-darker-30: darken($light-background, 30%);
-$light-bg-lighter-5: lighten($light-background, 5%);
-$dark-bg-tooltip: lighten(#2c2c2c, 20%);
+$light-bg-darker-5: color.adjust($light-background, $lightness: -5%);
+$light-bg-darker-10: color.adjust($light-background, $lightness: -10%);
+$light-bg-darker-20: color.adjust($light-background, $lightness: -20%);
+$light-bg-darker-30: color.adjust($light-background, $lightness: -30%);
+$light-bg-lighter-5: color.adjust($light-background, $lightness: 5%);
+$dark-bg-tooltip: color.adjust(#2c2c2c, $lightness: 20%);
 $dark-bg-alpha-4: rgba(#2c2c2c, 0.04);
 $dark-bg-alpha-12: rgba(#2c2c2c, 0.12);
 
@@ -116,10 +117,10 @@ $mat-light-theme-background: (background: $light-background,
 
 // Dark bg
 $dark-background: #2c2c2c;
-$dark-bg-lighter-5: lighten($dark-background, 5%);
-$dark-bg-lighter-10: lighten($dark-background, 10%);
-$dark-bg-lighter-20: lighten($dark-background, 20%);
-$dark-bg-lighter-30: lighten($dark-background, 30%);
+$dark-bg-lighter-5: color.adjust($dark-background, $lightness: 5%);
+$dark-bg-lighter-10: color.adjust($dark-background, $lightness: 10%);
+$dark-bg-lighter-20: color.adjust($dark-background, $lightness: 20%);
+$dark-bg-lighter-30: color.adjust($dark-background, $lightness: 30%);
 $light-bg-alpha-4: rgba(#fafafa, 0.04);
 $light-bg-alpha-12: rgba(#fafafa, 0.12);
 
@@ -203,20 +204,12 @@ $mat-warn: (main: #ff0000,
     ));
 $theme-warn: mat.m2-define-palette($mat-warn, main, lighter, darker);
 
-$theme: mat.m2-define-light-theme((
-    color: (
-        primary: $theme-primary, 
-        accent: $theme-accent, 
-        warn: $theme-warn
-    )
-));
-$altTheme: mat.m2-define-dark-theme((
-    color: (
-        primary: $theme-primary, 
-        accent: $theme-accent, 
-        warn: $theme-warn
-    )
-));
+$theme: mat.m2-define-light-theme((color: (primary: $theme-primary,
+            accent: $theme-accent,
+            warn: $theme-warn)));
+$altTheme: mat.m2-define-dark-theme((color: (primary: $theme-primary,
+            accent: $theme-accent,
+            warn: $theme-warn)));
 
 // Theme Init
 @include mat.all-component-themes($theme);
@@ -287,6 +280,7 @@ button.local-settings-button {
         }
 
     }
+
     button.local-settings-button {
         background-color: $dark-bg-lighter-20;
     }
@@ -294,7 +288,7 @@ button.local-settings-button {
 
 // leaflet adjustments
 .dark-theme {
-    .leaflet-pane.leaflet-marker-pane > div {
+    .leaflet-pane.leaflet-marker-pane>div {
         color: black;
     }
 }

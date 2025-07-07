@@ -1,8 +1,11 @@
+@use "sass:meta";
+@use "variables";
+
 /* You can add global styles to this file, and also import other style files */
 @import 'leaflet/dist/leaflet.css';
 @import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
-@import './variables.scss';
-@import '../../themes.scss';
+@include meta.load-css('variables.scss');
+@include meta.load-css('../../themes.scss');
 
 html,
 body {
@@ -14,13 +17,13 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-@media only screen and (max-width: $mobile-width) {
+@media only screen and (max-width: variables.$mobile-width) {
     .desktop-only {
         display: none !important;
     }
 }
 
-@media only screen and (min-width: $mobile-width) {
+@media only screen and (min-width: variables.$mobile-width) {
     .mobile-only {
         display: none !important;
     }
