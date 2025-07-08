@@ -1,6 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -17,18 +17,16 @@ import { NotifierService } from '../../../services/notifier.service';
   imports: [MatButtonModule, MatIconModule, MatTooltipModule, TranslateModule],
 })
 export class FavoriteToggleButtonComponent implements OnInit {
+  protected favSrvc = inject(FavoriteService);
+  protected translate = inject(TranslateService);
+  protected notifier = inject(NotifierService);
+  protected liveAnnouncer = inject(LiveAnnouncer);
+
   @Input({ required: true })
   dataset!: SeriesGraphDataset;
 
   isFavorite = false;
   canBeFavorite = false;
-
-  constructor(
-    protected favSrvc: FavoriteService,
-    protected translate: TranslateService,
-    protected notifier: NotifierService,
-    protected liveAnnouncer: LiveAnnouncer,
-  ) {}
 
   ngOnInit(): void {
     this.canBeFavorite = this.favSrvc.canBeFavorite(this.dataset?.id);

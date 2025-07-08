@@ -1,5 +1,12 @@
 import { NgClass } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
 import {
   ParsedTimespanPreset,
   Settings,
@@ -15,6 +22,8 @@ import {
   imports: [NgClass],
 })
 export class PredefinedTimespanSelectorComponent implements OnInit {
+  protected settingSrvc = inject<SettingsService<Settings>>(SettingsService);
+
   @Input({ required: true })
   public timespan!: Timespan;
 
@@ -24,8 +33,6 @@ export class PredefinedTimespanSelectorComponent implements OnInit {
     new EventEmitter<Timespan>();
 
   public parsedTimespanPresets: ParsedTimespanPreset[] = [];
-
-  constructor(protected settingSrvc: SettingsService<Settings>) {}
 
   public ngOnInit() {
     const timespanPresets = this.settingSrvc.getSettings().timespanPresets;

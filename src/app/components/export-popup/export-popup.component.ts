@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -25,6 +25,12 @@ import {
   ],
 })
 export class ExportPopupComponent {
+  dialogRef = inject<MatDialogRef<ExportPopupComponent>>(MatDialogRef);
+  data = inject<{
+    id: string;
+    timespan: Timespan;
+  }>(MAT_DIALOG_DATA);
+
   public exportOptions!: ExportOptions;
   public inputId: string;
   public loading = false;
@@ -35,17 +41,12 @@ export class ExportPopupComponent {
   public selectedStart: Date | undefined;
   public selectedEnd: Date | undefined;
 
-  constructor(
-    public dialogRef: MatDialogRef<ExportPopupComponent>,
+  constructor() {
+    this.inputId = this.data.id;
 
-    @Inject(MAT_DIALOG_DATA)
-    public data: { id: string; timespan: Timespan },
-  ) {
-    this.inputId = data.id;
-
-    if (data.timespan) {
-      this.selectedStart = new Date(data.timespan.from);
-      this.selectedEnd = new Date(data.timespan.to);
+    if (this.data.timespan) {
+      this.selectedStart = new Date(this.data.timespan.from);
+      this.selectedEnd = new Date(this.data.timespan.to);
     }
   }
 

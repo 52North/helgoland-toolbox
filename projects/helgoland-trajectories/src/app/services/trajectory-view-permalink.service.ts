@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PermalinkService } from '@helgoland/permalink';
 import { Observable, Observer } from 'rxjs';
@@ -13,12 +13,8 @@ const PARAM_ID = 'id';
 export class TrajectoryViewPermalinkService extends PermalinkService<
   Observable<void>
 > {
-  constructor(
-    private trajectorySrvc: TrajectoriesService,
-    private activatedRoute: ActivatedRoute,
-  ) {
-    super();
-  }
+  private trajectorySrvc = inject(TrajectoriesService);
+  private activatedRoute = inject(ActivatedRoute);
 
   public validatePeramlink(): Observable<void> {
     return new Observable((observer: Observer<void>) => {

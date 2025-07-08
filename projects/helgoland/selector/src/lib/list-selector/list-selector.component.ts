@@ -7,6 +7,7 @@ import {
   OnChanges,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import {
   FilteredProvider,
@@ -34,6 +35,9 @@ import {
   imports: [MultiServiceFilterSelectorComponent],
 })
 export class ListSelectorComponent implements OnChanges {
+  protected listSelectorService = inject(ListSelectorService);
+  protected servicesConnector = inject(HelgolandServicesConnector);
+
   @Input()
   public parameters: ListSelectorParameter[];
 
@@ -52,11 +56,6 @@ export class ListSelectorComponent implements OnChanges {
     new EventEmitter<HelgolandDataset[]>();
 
   public activePanel: string;
-
-  constructor(
-    protected listSelectorService: ListSelectorService,
-    protected servicesConnector: HelgolandServicesConnector,
-  ) {}
 
   public ngOnChanges(changes: SimpleChanges) {
     if (changes['providerList'] && changes['providerList'].currentValue) {

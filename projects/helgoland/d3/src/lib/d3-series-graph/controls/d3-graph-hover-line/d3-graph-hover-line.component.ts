@@ -1,10 +1,7 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { Timespan, TimezoneService } from '@helgoland/core';
+import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
+import { TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
 
-import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
-import { D3GraphId } from '../../../helper/d3-graph-id.service';
-import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { DataEntry } from '../../../model/d3-general';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import {
@@ -37,6 +34,8 @@ export class D3GraphHoverLineComponent
   extends D3SeriesGraphControl
   implements D3GraphObserver
 {
+  protected timezoneSrvc = inject(TimezoneService);
+
   @Input() showLabels = true;
 
   @Input() showTimelLabel = true;
@@ -52,15 +51,6 @@ export class D3GraphHoverLineComponent
   protected labels: Map<string, HoverlineLabel> = new Map();
   protected drawLayer: d3.Selection<SVGGElement, any, any, any> | undefined;
   protected data: Map<string, GraphDataEntry[]> | undefined;
-
-  constructor(
-    protected override graphId: D3GraphId,
-    protected override graphs: D3Graphs,
-    protected override graphHelper: D3GraphHelperService,
-    protected timezoneSrvc: TimezoneService,
-  ) {
-    super(graphId, graphs, graphHelper);
-  }
 
   public graphInitialized(graph: D3GraphInterface) {
     this.d3Graph = graph;

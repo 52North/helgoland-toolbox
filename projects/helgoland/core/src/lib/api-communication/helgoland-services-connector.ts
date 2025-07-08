@@ -1,4 +1,4 @@
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { inject, Injectable, InjectionToken } from '@angular/core';
 import { combineLatest, Observable, Observer } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
@@ -41,24 +41,20 @@ import {
 import { HelgolandPlatform } from './model/internal/platform';
 import { HelgolandService } from './model/internal/service';
 
-export const HELGOLAND_SERVICE_CONNECTOR_HANDLER =
-  new InjectionToken<HelgolandServiceConnector>(
-    'HELGOLAND_SERVICE_CONNECTOR_HANDLER',
-  );
+export const HELGOLAND_SERVICE_CONNECTOR_HANDLER = new InjectionToken<
+  HelgolandServiceConnector[]
+>('HELGOLAND_SERVICE_CONNECTOR_HANDLER');
 
 @Injectable({
   providedIn: 'root',
 })
 export class HelgolandServicesConnector implements HelgolandServiceInterface {
-  private serviceMapping: Map<string, HelgolandServiceConnector> = new Map();
+  protected connectorList =
+    inject(HELGOLAND_SERVICE_CONNECTOR_HANDLER, { optional: true }) ?? [];
+  private internalIdHandler = inject(InternalIdHandler);
+  private settings = inject<SettingsService<Settings>>(SettingsService);
 
-  constructor(
-    @Optional()
-    @Inject(HELGOLAND_SERVICE_CONNECTOR_HANDLER)
-    protected connectorList: HelgolandServiceConnector[] | null = [],
-    private internalIdHandler: InternalIdHandler,
-    private settings: SettingsService<Settings>,
-  ) {}
+  private serviceMapping: Map<string, HelgolandServiceConnector> = new Map();
 
   getServices(
     url: string,

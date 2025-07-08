@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { plainToClass } from 'class-transformer';
 import moment, { duration, MomentInputObject } from 'moment';
 
@@ -11,7 +11,7 @@ import {
 
 @Injectable()
 export class Time {
-  constructor(protected localStorage: LocalStorage) {}
+  protected localStorage = inject(LocalStorage);
 
   public centerTimespan(timespan: Timespan, date: Date): Timespan {
     const halfduration = this.getDuration(timespan).asMilliseconds() / 2;

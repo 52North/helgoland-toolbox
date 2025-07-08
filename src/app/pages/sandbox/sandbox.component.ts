@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { HelgolandMapSelectorModule } from '@helgoland/map';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   ColorService,
   DatasetType,
   DefinedTimespan,
   DefinedTimespanService,
-  FirstLastValue,
   HelgolandServicesConnector,
   HelgolandTimeseries,
   Timespan,
@@ -20,6 +18,7 @@ import {
   LineStyle,
   SeriesGraphDataset,
 } from '@helgoland/d3';
+import { HelgolandMapSelectorModule } from '@helgoland/map';
 
 @Component({
   templateUrl: './sandbox.component.html',
@@ -27,6 +26,10 @@ import {
   imports: [HelgolandMapSelectorModule, HelgolandD3Module],
 })
 export class SandboxComponent implements OnInit {
+  private servicesConnector = inject(HelgolandServicesConnector);
+  private definedTsSrvc = inject(DefinedTimespanService);
+  private colorSrvc = inject(ColorService);
+
   public datasets: SeriesGraphDataset[] = [];
   public timespan: Timespan = this.definedTsSrvc.getInterval(
     DefinedTimespan.TODAY,
@@ -47,12 +50,6 @@ export class SandboxComponent implements OnInit {
     },
     yaxisModifier: true,
   };
-
-  constructor(
-    private servicesConnector: HelgolandServicesConnector,
-    private definedTsSrvc: DefinedTimespanService,
-    private colorSrvc: ColorService,
-  ) {}
 
   public ngOnInit(): void {
     // this.setNewTimespan();

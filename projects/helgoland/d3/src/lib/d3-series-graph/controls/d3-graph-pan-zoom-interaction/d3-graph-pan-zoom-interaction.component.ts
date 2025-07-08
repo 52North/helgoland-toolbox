@@ -2,13 +2,6 @@ import { Component } from '@angular/core';
 import { Timespan } from '@helgoland/core';
 import * as d3 from 'd3';
 
-import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
-import { D3GraphId } from '../../../helper/d3-graph-id.service';
-import { D3Graphs } from '../../../helper/d3-graphs.service';
-import {
-  GraphDataEntry,
-  SeriesGraphDataset,
-} from '../../models/series-graph-dataset';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import {
   AdjustBackgroundOptions,
@@ -16,6 +9,10 @@ import {
   D3GraphObserver,
   D3SeriesGraphControl,
 } from '../../d3-series-graph-control';
+import {
+  GraphDataEntry,
+  SeriesGraphDataset,
+} from '../../models/series-graph-dataset';
 
 @Component({
   selector: 'n52-d3-graph-pan-zoom-interaction',
@@ -51,14 +48,6 @@ export class D3GraphPanZoomInteractionComponent
   protected graph: d3.Selection<SVGGElement, any, any, any> | undefined;
   protected datasets: SeriesGraphDataset[] = [];
   protected data: Map<string, GraphDataEntry[]> | undefined;
-
-  constructor(
-    protected override graphId: D3GraphId,
-    protected override graphs: D3Graphs,
-    protected override graphHelper: D3GraphHelperService,
-  ) {
-    super(graphId, graphs, graphHelper);
-  }
 
   public graphInitialized(graph: D3GraphInterface) {
     this.d3Graph = graph;

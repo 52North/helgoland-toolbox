@@ -1,4 +1,4 @@
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import {
   DefinedTimespan,
@@ -9,10 +9,7 @@ import { Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
 import { NotifierService } from '../../services/notifier.service';
-import {
-  DATASET_STATE_SERVICE_INJECTION,
-  DatasetStateService,
-} from '../../services/service-interfaces';
+import { DATASET_STATE_SERVICE_INJECTION } from '../../services/service-interfaces';
 import { StorageService } from '../../services/storage-service.service';
 import { DatasetsService } from './../../services/graph-datasets.service';
 
@@ -26,16 +23,15 @@ const PARAM_DEFINED_TIME = 'defined_time';
   providedIn: 'root',
 })
 export class DiagramViewInitStateService {
-  constructor(
-    private graphDatasetsSrvc: DatasetsService,
-    private activatedRoute: ActivatedRoute,
-    private definedTimeintervalSrvc: DefinedTimespanService,
-    private storageSrvc: StorageService,
-    protected notifier: NotifierService,
-    @Optional()
-    @Inject(DATASET_STATE_SERVICE_INJECTION)
-    private datasetStateServices: DatasetStateService[] | undefined,
-  ) {
+  private graphDatasetsSrvc = inject(DatasetsService);
+  private activatedRoute = inject(ActivatedRoute);
+  private definedTimeintervalSrvc = inject(DefinedTimespanService);
+  private storageSrvc = inject(StorageService);
+  protected notifier = inject(NotifierService);
+  private datasetStateServices =
+    inject(DATASET_STATE_SERVICE_INJECTION, { optional: true }) ?? [];
+
+  constructor() {
     if (this.datasetStateServices === null) {
       this.datasetStateServices = [];
     }

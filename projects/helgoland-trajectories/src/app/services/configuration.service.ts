@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Settings, SettingsService } from '@helgoland/core';
 import { lastValueFrom, tap } from 'rxjs';
 
@@ -9,13 +9,11 @@ export interface AppConfig extends Settings {}
   providedIn: 'root',
 })
 export class ConfigurationService extends SettingsService<Settings> {
+  private http = inject(HttpClient);
+
   private readonly CONFIGURATION_URL = './assets/app-config.json';
 
   configuration!: AppConfig;
-
-  constructor(private http: HttpClient) {
-    super();
-  }
 
   loadConfiguration(): Promise<AppConfig> {
     return lastValueFrom(

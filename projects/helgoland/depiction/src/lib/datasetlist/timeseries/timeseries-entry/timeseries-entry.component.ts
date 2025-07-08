@@ -4,18 +4,15 @@ import {
   Injectable,
   OnChanges,
   ViewEncapsulation,
+  inject,
 } from '@angular/core';
 import {
   ColorService,
   DatasetOptions,
-  HelgolandServicesConnector,
   IdCache,
-  InternalIdHandler,
   ReferenceValue,
-  Time,
   TzDatePipe,
 } from '@helgoland/core';
-import { TranslateService } from '@ngx-translate/core';
 
 import { LabelMapperComponent } from '../../../label-mapper/label-mapper.component';
 import { FirstLatestTimeseriesEntryComponent } from '../first-latest-timeseries-entry/first-latest-timeseries-entry.component';
@@ -41,19 +38,11 @@ export class TimeseriesEntryComponent
   extends FirstLatestTimeseriesEntryComponent
   implements OnChanges
 {
+  protected color = inject(ColorService);
+  protected refValCache = inject(ReferenceValueColorCache);
+
   public informationVisible = false;
   public referenceValues: ReferenceValue[] = [];
-
-  constructor(
-    protected override servicesConnector: HelgolandServicesConnector,
-    protected override timeSrvc: Time,
-    protected override internalIdHandler: InternalIdHandler,
-    protected color: ColorService,
-    protected refValCache: ReferenceValueColorCache,
-    public override translateSrvc: TranslateService,
-  ) {
-    super(servicesConnector, internalIdHandler, translateSrvc, timeSrvc);
-  }
 
   public toggleInformation() {
     this.informationVisible = !this.informationVisible;

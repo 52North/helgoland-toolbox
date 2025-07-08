@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { View } from 'ol';
 import BaseLayer from 'ol/layer/Base';
 import Layer from 'ol/layer/Layer';
@@ -17,6 +17,9 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
   standalone: true,
 })
 export class OlLayerZoomExtentComponent implements OnInit {
+  private wmsCaps = inject(WmsCapabilitiesService);
+  private mapServices = inject(OlMapService);
+
   @Input({ required: true })
   layer!: BaseLayer;
 
@@ -29,11 +32,6 @@ export class OlLayerZoomExtentComponent implements OnInit {
   private extent: number[] | undefined;
   private crs: string | undefined;
   private view: View | undefined;
-
-  constructor(
-    private wmsCaps: WmsCapabilitiesService,
-    private mapServices: OlMapService,
-  ) {}
 
   ngOnInit() {
     if (this.layer.getExtent()) {

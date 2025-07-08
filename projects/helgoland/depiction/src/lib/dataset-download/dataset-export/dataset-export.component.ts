@@ -2,6 +2,7 @@
 import {
   Component,
   EventEmitter,
+  inject,
   Input,
   OnChanges,
   OnInit,
@@ -42,6 +43,9 @@ export enum DownloadType {
   standalone: true,
 })
 export class DatasetExportComponent implements OnInit, OnChanges {
+  protected servicesConnector = inject(HelgolandServicesConnector);
+  protected timeSrvc = inject(Time);
+
   private dataset: HelgolandTimeseries;
   private fileName = 'timeseries';
   private timespan: Timespan;
@@ -69,11 +73,6 @@ export class DatasetExportComponent implements OnInit, OnChanges {
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() public onLoadingChange: EventEmitter<boolean> = new EventEmitter();
-
-  constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    protected timeSrvc: Time,
-  ) {}
 
   ngOnInit() {
     if (this.inputId) {

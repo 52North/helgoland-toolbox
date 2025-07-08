@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { forkJoin, Observable, Observer } from 'rxjs';
 
 /**
@@ -8,9 +8,9 @@ import { forkJoin, Observable, Observer } from 'rxjs';
  */
 @Injectable()
 export class StatusCheckService {
-  private urls: string[] = [];
+  private httpClient = inject(HttpClient);
 
-  constructor(private httpClient: HttpClient) {}
+  private urls: string[] = [];
 
   /**
    * Checks all internal registered URLs if they are reachable. Gives back every URL, which was not reachable

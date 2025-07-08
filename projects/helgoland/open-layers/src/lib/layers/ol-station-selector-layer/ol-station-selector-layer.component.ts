@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Host, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import {
   HelgolandParameterFilter,
   HelgolandPlatform,
@@ -17,8 +17,6 @@ import VectorSource from 'ol/source/Vector';
 import { Circle, Fill, Stroke, Style, Text } from 'ol/style';
 
 import { OlBaseComponent } from '../../ol-base.component';
-import { OlMapService } from '../../services/map.service';
-import { OlMapId } from '../../services/mapid.service';
 
 /**
  * Component to display station based on the input parameters. The component must be embedded as seen in the example:
@@ -34,6 +32,8 @@ import { OlMapId } from '../../services/mapid.service';
   standalone: true,
 })
 export class OlStationSelectorLayerComponent extends OlBaseComponent {
+  protected servicesConnector = inject(HelgolandServicesConnector);
+
   /**
    * The serviceUrl, where the selection should be loaded.
    */
@@ -83,14 +83,6 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
   private map!: Map;
 
   private layer!: VectorLayer;
-
-  constructor(
-    protected override mapService: OlMapService,
-    @Host() protected override mapidService: OlMapId,
-    protected servicesConnector: HelgolandServicesConnector,
-  ) {
-    super(mapService, mapidService);
-  }
 
   mapInitialized(map: Map) {
     this.map = map;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -28,9 +28,9 @@ interface EditableFavorite extends Favorite {
   ],
 })
 export class ModalFavoriteListComponent implements OnInit {
-  public singles: EditableFavorite[] = [];
+  favoriteSrvc = inject(FavoriteService);
 
-  constructor(public favoriteSrvc: FavoriteService) {}
+  public singles: EditableFavorite[] = [];
 
   ngOnInit(): void {
     this.setFavorites();

@@ -1,7 +1,10 @@
+import { inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 export abstract class LanguageChangNotifier {
-  constructor(protected translate: TranslateService) {
+  protected translate = inject(TranslateService);
+
+  constructor() {
     this.translate.onLangChange.subscribe(() => this.languageChanged());
   }
 

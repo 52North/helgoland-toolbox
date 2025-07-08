@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpService } from '@helgoland/core';
 import { Point } from 'geojson';
 import { Observable } from 'rxjs';
@@ -65,9 +65,9 @@ interface NominatimReverseResult {
 
 @Injectable()
 export class NominatimGeoSearchService implements GeoSearch {
-  protected serviceUrl = 'https://nominatim.openstreetmap.org/';
+  protected http = inject(HttpService);
 
-  constructor(protected http: HttpService) {}
+  protected serviceUrl = 'https://nominatim.openstreetmap.org/';
 
   public searchTerm(
     term: string,

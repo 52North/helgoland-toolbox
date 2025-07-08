@@ -5,6 +5,7 @@ import {
   Component,
   OnInit,
   ViewEncapsulation,
+  inject,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -73,6 +74,14 @@ type MainContentType = 'diagram' | 'table';
   ],
 })
 export class DiagramViewComponent implements OnInit {
+  private changeDetectorRef = inject(ChangeDetectorRef);
+  private media = inject(MediaMatcher);
+  private dialog = inject(MatDialog);
+  protected appRouter = inject(AppRouterService);
+  protected initStateService = inject(DiagramViewInitStateService);
+  private time = inject(Time);
+  protected graphDatasetsSrvc = inject(DatasetsService);
+
   mobileQuery: MediaQueryList;
 
   // private _mobileQueryListener: () => void;
@@ -102,15 +111,7 @@ export class DiagramViewComponent implements OnInit {
   dataLoading: boolean = false;
   overviewLoading: boolean = false;
 
-  constructor(
-    private changeDetectorRef: ChangeDetectorRef,
-    private media: MediaMatcher,
-    private dialog: MatDialog,
-    public appRouter: AppRouterService,
-    public initStateService: DiagramViewInitStateService,
-    private time: Time,
-    public graphDatasetsSrvc: DatasetsService,
-  ) {
+  constructor() {
     this.mobileQuery = this.media.matchMedia('(max-width: 1024px)');
     // this._mobileQueryListener = () => {
     //   debugger;

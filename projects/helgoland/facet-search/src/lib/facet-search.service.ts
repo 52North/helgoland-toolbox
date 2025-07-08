@@ -1,4 +1,4 @@
-import { Injectable, Optional } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Timespan } from '@helgoland/core';
 import { Observable, ReplaySubject } from 'rxjs';
 
@@ -18,6 +18,8 @@ export class FacetSearchConfig {
 
 @Injectable()
 export class FacetSearchServiceImpl implements FacetSearchService {
+  private config = inject(FacetSearchConfig, { optional: true });
+
   protected onResultsChanged: ReplaySubject<FacetSearchElement[]> =
     new ReplaySubject(1);
 
@@ -31,9 +33,9 @@ export class FacetSearchServiceImpl implements FacetSearchService {
 
   protected nullable = false;
 
-  constructor(@Optional() config?: FacetSearchConfig) {
-    if (config && config.showZeroValues) {
-      this.nullable = config.showZeroValues;
+  constructor() {
+    if (this.config && this.config.showZeroValues) {
+      this.nullable = this.config.showZeroValues;
     }
   }
 

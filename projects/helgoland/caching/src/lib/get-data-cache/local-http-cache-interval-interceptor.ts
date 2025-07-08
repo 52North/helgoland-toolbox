@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Inject, Injectable, Optional } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   Data,
   HttpRequestOptions,
@@ -21,14 +21,16 @@ import { CachedIntersection, CachedObject } from './local-http-cache-interval';
 export class LocalHttpCacheIntervalInterceptor
   implements HttpServiceInterceptor
 {
+  protected cache = inject(HttpCacheInterval);
+  protected config = inject<CacheConfig>(CacheConfigService, {
+    optional: true,
+  });
+
   private expirationAtMs = 30000;
 
-  constructor(
-    protected cache: HttpCacheInterval,
-    @Optional() @Inject(CacheConfigService) config: CacheConfig,
-  ) {
-    if (config && config.cachingDurationInMilliseconds) {
-      this.expirationAtMs = config.cachingDurationInMilliseconds;
+  constructor() {
+    if (this.config && this.config.cachingDurationInMilliseconds) {
+      this.expirationAtMs = this.config.cachingDurationInMilliseconds;
     }
   }
 

@@ -1,13 +1,12 @@
 /* eslint-disable @angular-eslint/no-conflicting-lifecycle */
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   DoCheck,
+  inject,
   Input,
   IterableDiffer,
   IterableDiffers,
-  KeyValueDiffers,
   OnChanges,
 } from '@angular/core';
 import {
@@ -28,7 +27,6 @@ import {
 import { forkJoin, Observable, Observer } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
-import { MapCache } from '../../base/map-cache.service';
 import { MapSelectorComponent } from '../map-selector.component';
 import {
   LastValueLabelGenerator,
@@ -48,6 +46,11 @@ export class LastValueMapSelectorComponent
   extends MapSelectorComponent<HelgolandTimeseries>
   implements AfterViewInit, DoCheck, OnChanges
 {
+  protected iDiffers = inject(IterableDiffers);
+  protected servicesConnector = inject(HelgolandServicesConnector);
+  protected lastValueLabelGenerator = inject(LastValueLabelGenerator);
+  protected statusIntervalResolver = inject(StatusIntervalResolverService);
+
   /**
    * The list of internal series IDs, which should be presented with their last values on the map.
    */
@@ -71,16 +74,8 @@ export class LastValueMapSelectorComponent
 
   private markerFeatureGroup: L.FeatureGroup<Marker> = featureGroup();
 
-  constructor(
-    protected override mapCache: MapCache,
-    protected override kvDiffers: KeyValueDiffers,
-    protected iDiffers: IterableDiffers,
-    protected override cd: ChangeDetectorRef,
-    protected servicesConnector: HelgolandServicesConnector,
-    protected lastValueLabelGenerator: LastValueLabelGenerator,
-    protected statusIntervalResolver: StatusIntervalResolverService,
-  ) {
-    super(mapCache, kvDiffers, cd);
+  constructor() {
+    super();
     this._lastValueSeriesIDsDiff = this.iDiffers
       .find(this.lastValueSeriesIDs)
       .create();

@@ -1,11 +1,8 @@
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DatasetDescription, SeriesGraphDataset } from '@helgoland/d3';
 import { BehaviorSubject } from 'rxjs';
 
-import {
-  DATASET_FAVORITE_SERVICE_INJECTION,
-  DatasetFavoriteService,
-} from './service-interfaces';
+import { DATASET_FAVORITE_SERVICE_INJECTION } from './service-interfaces';
 
 export interface Favorite {
   id: string;
@@ -17,16 +14,12 @@ export interface Favorite {
   providedIn: 'root',
 })
 export class FavoriteService {
+  private favoriteServices =
+    inject(DATASET_FAVORITE_SERVICE_INJECTION, { optional: true }) ?? [];
+
   public countChange: BehaviorSubject<number> = new BehaviorSubject(0);
 
-  constructor(
-    @Optional()
-    @Inject(DATASET_FAVORITE_SERVICE_INJECTION)
-    private favoriteServices: DatasetFavoriteService[] | null = [],
-  ) {
-    if (this.favoriteServices === null) {
-      this.favoriteServices = [];
-    }
+  constructor() {
     this.updateFavCount();
   }
 

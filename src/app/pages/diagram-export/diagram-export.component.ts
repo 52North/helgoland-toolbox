@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -24,6 +24,8 @@ import { NoDataEntryComponent } from './no-data-entry/no-data-entry.component';
   ],
 })
 export class DiagramExportComponent implements OnInit {
+  private color = inject(ColorService);
+
   public title = 'Exported Diagram';
   public height = 300;
   public width = 500;
@@ -42,8 +44,6 @@ export class DiagramExportComponent implements OnInit {
   ];
 
   public timespan: Timespan | undefined;
-
-  constructor(private color: ColorService) {}
 
   ngOnInit() {
     this.datasetIds.forEach((entry) => {

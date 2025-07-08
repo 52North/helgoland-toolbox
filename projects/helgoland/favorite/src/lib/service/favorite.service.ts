@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   DatasetOptions,
   HelgolandTimeseries,
@@ -36,13 +36,15 @@ const CACHE_PARAM_FAVORITES_GROUP = 'GroupFavorites';
 
 @Injectable()
 export class FavoriteService {
+  protected localStorage = inject(LocalStorage);
+
   private singleFavs: Map<string, SingleFavorite> = new Map();
   private groupFavs: Map<string, GroupFavorite> = new Map();
   private groupCounter = 0;
 
   private favoriteCountChanged: ReplaySubject<number> = new ReplaySubject();
 
-  constructor(protected localStorage: LocalStorage) {
+  constructor() {
     this.loadFavorites();
   }
 

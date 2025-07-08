@@ -6,12 +6,8 @@ import {
   SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
-import { Timespan } from '@helgoland/core';
 import { BaseType } from 'd3';
 
-import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
-import { D3GraphId } from '../../../helper/d3-graph-id.service';
-import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import {
   AdjustBackgroundOptions,
@@ -20,10 +16,6 @@ import {
   D3SeriesGraphControl,
 } from '../../d3-series-graph-control';
 import { D3Copyright } from '../../models/d3-plot-options';
-import {
-  GraphDataEntry,
-  SeriesGraphDataset,
-} from '../../models/series-graph-dataset';
 
 @Component({
   selector: 'n52-d3-graph-copyright',
@@ -50,14 +42,6 @@ export class D3GraphCopyrightComponent
   protected labelText: d3.Selection<BaseType, any, any, any> | undefined;
   protected background: d3.Selection<SVGGElement, any, any, any> | undefined;
   protected graphExtent: D3GraphExtent | undefined;
-
-  constructor(
-    protected override graphId: D3GraphId,
-    protected override graphs: D3Graphs,
-    protected override graphHelper: D3GraphHelperService,
-  ) {
-    super(graphId, graphs, graphHelper);
-  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['copyright'] && this.copyright) {

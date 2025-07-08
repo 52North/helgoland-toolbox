@@ -8,6 +8,7 @@ import {
   OnInit,
   Output,
   ViewChild,
+  inject,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,6 +30,8 @@ import { MatInputModule } from '@angular/material/input';
   ],
 })
 export class EditLabelComponent implements AfterViewInit, OnInit {
+  private cd = inject(ChangeDetectorRef);
+
   fc = new FormControl('');
 
   @Input() label: string | undefined;
@@ -38,8 +41,6 @@ export class EditLabelComponent implements AfterViewInit, OnInit {
   @ViewChild('input') firstItem!: ElementRef;
 
   editedLabel: string | undefined;
-
-  constructor(private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.editedLabel = this.label;

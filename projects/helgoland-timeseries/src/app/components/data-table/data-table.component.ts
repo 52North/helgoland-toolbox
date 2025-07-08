@@ -4,6 +4,7 @@ import {
   Input,
   IterableDiffer,
   IterableDiffers,
+  inject,
 } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { HelgolandCoreModule, Timespan } from '@helgoland/core';
@@ -22,6 +23,8 @@ interface DatasetEventSubscriptions {
   imports: [MatTableModule, HelgolandCoreModule],
 })
 export class DataTableComponent implements DoCheck {
+  protected iterableDiffers = inject(IterableDiffers);
+
   @Input()
   public datasets: SeriesGraphDataset[] = [];
   private datasetsDiffer: IterableDiffer<SeriesGraphDataset>;
@@ -34,7 +37,7 @@ export class DataTableComponent implements DoCheck {
   displayedColumns: string[] = [];
   dataSource: Table[] = [];
 
-  constructor(protected iterableDiffers: IterableDiffers) {
+  constructor() {
     this.datasetsDiffer = this.iterableDiffers.find([]).create();
   }
 

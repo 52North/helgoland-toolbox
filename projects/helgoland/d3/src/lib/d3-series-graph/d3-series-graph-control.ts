@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, OnDestroy } from '@angular/core';
+import { AfterViewInit, Directive, OnDestroy, inject } from '@angular/core';
 import { Timespan } from '@helgoland/core';
 
 import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
@@ -69,11 +69,9 @@ export interface D3GraphExtent {
 export abstract class D3SeriesGraphControl
   implements AfterViewInit, OnDestroy, D3GraphObserver
 {
-  constructor(
-    protected graphId: D3GraphId,
-    protected graphs: D3Graphs,
-    protected graphHelper: D3GraphHelperService,
-  ) {}
+  protected graphId = inject(D3GraphId);
+  protected graphs = inject(D3Graphs);
+  protected graphHelper = inject(D3GraphHelperService);
 
   public ngAfterViewInit(): void {
     this.graphId.getId().subscribe((graphId) =>

@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BasicAuthInformer, BasicAuthService } from '@helgoland/auth';
@@ -12,12 +12,10 @@ import { BasicAuthLoginComponent } from '../components/basic-auth-login/basic-au
   providedIn: 'root',
 })
 export class BasicAuthInformerImplService implements BasicAuthInformer {
-  constructor(
-    private basicAuthSrvc: BasicAuthService,
-    private dialog: MatDialog,
-    private snackbar: MatSnackBar,
-    private translate: TranslateService,
-  ) {}
+  private basicAuthSrvc = inject(BasicAuthService);
+  private dialog = inject(MatDialog);
+  private snackbar = inject(MatSnackBar);
+  private translate = inject(TranslateService);
 
   public doBasicAuth(url: string): Observable<boolean> {
     return new Observable<boolean>((observer: Observer<boolean>) => {

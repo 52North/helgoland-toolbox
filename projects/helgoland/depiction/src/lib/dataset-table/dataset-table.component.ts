@@ -1,19 +1,15 @@
 import { NgStyle } from '@angular/common';
-import { Component, IterableDiffers, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   DatasetOptions,
   DatasetPresenterComponent,
   DatasetTableData,
   DatasetType,
-  HelgolandServicesConnector,
   HelgolandTimeseries,
   HelgolandTimeseriesData,
-  InternalIdHandler,
-  Time,
-  TimezoneService,
   TzDatePipe,
 } from '@helgoland/core';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   selector: 'n52-dataset-table',
@@ -37,24 +33,6 @@ export class DatasetTableComponent
 
   public timeseriesArray: HelgolandTimeseries[] = new Array();
   private additionalStylesheet!: HTMLElement;
-
-  constructor(
-    protected override iterableDiffers: IterableDiffers,
-    protected override servicesConnector: HelgolandServicesConnector,
-    protected override datasetIdResolver: InternalIdHandler,
-    protected override timeSrvc: Time,
-    protected translateSrvc: TranslateService,
-    protected override timezoneSrvc: TimezoneService,
-  ) {
-    super(
-      iterableDiffers,
-      servicesConnector,
-      datasetIdResolver,
-      timeSrvc,
-      translateSrvc,
-      timezoneSrvc,
-    );
-  }
 
   public ngOnInit() {
     const elem = document.getElementById('selectedIdsStylesheet');

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   MatDatepickerInputEvent,
   MatDatepickerModule,
@@ -33,6 +33,11 @@ import { forkJoin } from 'rxjs';
   providers: [MapCache],
 })
 export class FacetSearchComponent {
+  private servicesConnector = inject(HelgolandServicesConnector);
+  private translate = inject(TranslateService);
+  private apiv3 = inject(ApiV3InterfaceService);
+  facetSearch = inject(FacetSearchService);
+
   public timeseries: Timeseries[] = [];
 
   public categoryType: ParameterFacetType = ParameterFacetType.category;
@@ -56,12 +61,7 @@ export class FacetSearchComponent {
   public selectedStart: Date | undefined;
   public selectedEnd: Date | undefined;
 
-  constructor(
-    private servicesConnector: HelgolandServicesConnector,
-    private translate: TranslateService,
-    private apiv3: ApiV3InterfaceService,
-    public facetSearch: FacetSearchService,
-  ) {
+  constructor() {
     this.translate.onLangChange.subscribe((_) => {
       this.fetchDatasets();
     });

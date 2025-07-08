@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -8,11 +8,11 @@ import { map } from 'rxjs/operators';
  */
 @Injectable()
 export class BasicAuthService {
+  private http = inject(HttpClient);
+
   private basicAuthTokens: Map<string, string> = new Map();
 
   public ongoingRequests: Map<string, Observable<boolean>> = new Map();
-
-  constructor(private http: HttpClient) {}
 
   /**
    * Do the authentication.

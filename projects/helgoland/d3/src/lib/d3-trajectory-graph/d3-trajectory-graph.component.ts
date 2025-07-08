@@ -4,7 +4,6 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  IterableDiffers,
   OnChanges,
   Output,
   SimpleChanges,
@@ -15,14 +14,10 @@ import {
   DatasetOptions,
   DatasetPresenterComponent,
   DatasetType,
-  HelgolandServicesConnector,
   HelgolandTrajectory,
-  InternalIdHandler,
   LocatedTimeValueEntry,
-  Time,
-  TimezoneService,
 } from '@helgoland/core';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent } from '@ngx-translate/core';
 import {
   axisBottom,
   axisLeft,
@@ -155,22 +150,8 @@ export class D3TrajectoryGraphComponent
     groupYAxis: true,
   };
 
-  constructor(
-    protected override iterableDiffers: IterableDiffers,
-    protected override servicesConnector: HelgolandServicesConnector,
-    protected override datasetIdResolver: InternalIdHandler,
-    protected override timeSrvc: Time,
-    protected override translateService: TranslateService,
-    protected override timezoneSrvc: TimezoneService,
-  ) {
-    super(
-      iterableDiffers,
-      servicesConnector,
-      datasetIdResolver,
-      timeSrvc,
-      translateService,
-      timezoneSrvc,
-    );
+  constructor() {
+    super();
     this.presenterOptions = this.defaultGraphOptions;
   }
 

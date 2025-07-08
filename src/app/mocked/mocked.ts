@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   ApiV3Dataset,
   ApiV3InterfaceService,
@@ -36,11 +36,17 @@ export class MockedApiV3InterfaceService extends ApiV3InterfaceService {
   providedIn: 'root',
 })
 export class MockedDatasetApiV3Connector extends DatasetApiV3Connector {
-  constructor(
-    protected http: HttpService,
-    protected api: MockedApiV3InterfaceService,
-  ) {
+  protected http: HttpService;
+  protected api: MockedApiV3InterfaceService;
+
+  constructor() {
+    const http = inject(HttpService);
+    const api = inject(MockedApiV3InterfaceService);
+
     super(http, api);
+
+    this.http = http;
+    this.api = api;
   }
 
   canHandle(url: string): Observable<boolean> {

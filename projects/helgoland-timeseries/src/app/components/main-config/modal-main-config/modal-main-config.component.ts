@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
@@ -26,7 +26,7 @@ import { ConfigurationService } from './../../../services/configuration.service'
   ],
 })
 export class ModalMainConfigComponent {
-  public languages = this.config.configuration?.languages;
+  private config = inject(ConfigurationService);
 
-  constructor(private config: ConfigurationService) {}
+  public languages = this.config.configuration?.languages;
 }

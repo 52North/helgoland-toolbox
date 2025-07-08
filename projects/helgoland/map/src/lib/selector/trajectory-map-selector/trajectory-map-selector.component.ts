@@ -2,14 +2,13 @@ import 'leaflet.markercluster';
 
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
-  KeyValueDiffers,
   OnChanges,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import {
   HelgolandDataset,
@@ -21,7 +20,6 @@ import {
 } from '@helgoland/core';
 import L from 'leaflet';
 
-import { MapCache } from '../../base/map-cache.service';
 import { MapSelectorComponent } from '../map-selector.component';
 import { TrajectoryResult } from '../model/trajectory-result';
 
@@ -35,6 +33,8 @@ export class ProfileTrajectoryMapSelectorComponent
   extends MapSelectorComponent<TrajectoryResult>
   implements OnChanges, AfterViewInit
 {
+  protected servicesConnector = inject(HelgolandServicesConnector);
+
   @Input({ required: true })
   public selectedTimespan!: Timespan;
 
@@ -57,15 +57,6 @@ export class ProfileTrajectoryMapSelectorComponent
     weight: 7,
     opacity: 1,
   };
-
-  constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    protected override mapCache: MapCache,
-    protected override kvDiffers: KeyValueDiffers,
-    protected override cd: ChangeDetectorRef,
-  ) {
-    super(mapCache, kvDiffers, cd);
-  }
 
   public override ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);

@@ -5,6 +5,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  inject,
 } from '@angular/core';
 import { InternalDatasetId, InternalIdHandler } from '@helgoland/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
@@ -18,6 +19,9 @@ import { Subscription } from 'rxjs';
  */
 @Directive()
 export abstract class ListEntryComponent implements OnInit, OnDestroy {
+  protected internalIdHandler = inject(InternalIdHandler);
+  protected translateSrvc = inject(TranslateService);
+
   @Input({ required: true })
   public datasetId!: string;
 
@@ -37,11 +41,6 @@ export abstract class ListEntryComponent implements OnInit, OnDestroy {
   protected internalId: InternalDatasetId | undefined;
 
   private langChangeSubscription: Subscription | undefined;
-
-  constructor(
-    protected internalIdHandler: InternalIdHandler,
-    protected translateSrvc: TranslateService,
-  ) {}
 
   public ngOnInit(): void {
     this.internalId = this.internalIdHandler.resolveInternalId(this.datasetId);

@@ -3,14 +3,14 @@ import {
   Component,
   EventEmitter,
   Input,
-  KeyValueDiffers,
   OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
-import { CachedMapComponent, MapCache } from '@helgoland/map';
-import { geoJSON } from 'leaflet';
+import { CachedMapComponent } from '@helgoland/map';
 import * as L from 'leaflet';
+import { geoJSON } from 'leaflet';
+import 'leaflet.markercluster';
 import { Subscription } from 'rxjs';
 
 import {
@@ -58,13 +58,6 @@ export class ResultMapComponent
 
   private markerFeatureGroup: L.FeatureGroup | undefined;
   private resultsSubs: Subscription | undefined;
-
-  constructor(
-    protected override mapCache: MapCache,
-    protected differs: KeyValueDiffers,
-  ) {
-    super(mapCache, differs);
-  }
 
   override ngOnInit() {
     super.ngOnInit();
@@ -116,8 +109,11 @@ export class ResultMapComponent
           }
         });
         if (features.size === 1 && this.selectSingleStation) {
-          const entry = features.get(features.keys().next().value);
-          this.selectedFeature.emit(entry);
+          const nextKey = features.keys().next().value;
+          if (nextKey) {
+            const entry = features.get(nextKey);
+            this.selectedFeature.emit(entry);
+          }
         }
       } else {
         entries.forEach((e) => {

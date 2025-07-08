@@ -4,6 +4,7 @@ import {
   OnInit,
   ViewChild,
   ViewEncapsulation,
+  inject,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -18,10 +19,7 @@ import {
   Phenomenon,
 } from '@helgoland/core';
 import { HelgolandMapSelectorModule, MapCache } from '@helgoland/map';
-import {
-  MultiServiceFilter,
-  MultiServiceFilterEndpoint,
-} from '@helgoland/selector';
+import { MultiServiceFilter } from '@helgoland/selector';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   ErrorHandlerService,
@@ -63,6 +61,16 @@ interface MapSelectionAppConfig extends AppConfig {
   ],
 })
 export class MapSelectionComponent implements OnInit, AfterViewInit {
+  protected appRouter = inject(AppRouterService);
+  protected graphDatasetsSrvc = inject(DatasetsService);
+  private configSrvc =
+    inject<ConfigurationService<MapSelectionAppConfig>>(ConfigurationService);
+  private serviceConnector = inject(HelgolandServicesConnector);
+  private errorHandler = inject(ErrorHandlerService);
+  private dialog = inject(MatDialog);
+  private mapCache = inject(MapCache);
+  protected state = inject(MapSelectionStateService);
+
   @ViewChild('drawer') drawer: MatDrawer | undefined;
 
   mapId = 'timeseries';
@@ -74,17 +82,6 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
   phenomenonFilter: MultiServiceFilter[] = [];
 
   cluster = true;
-
-  constructor(
-    public appRouter: AppRouterService,
-    public graphDatasetsSrvc: DatasetsService,
-    private configSrvc: ConfigurationService<MapSelectionAppConfig>,
-    private serviceConnector: HelgolandServicesConnector,
-    private errorHandler: ErrorHandlerService,
-    private dialog: MatDialog,
-    private mapCache: MapCache,
-    public state: MapSelectionStateService,
-  ) {}
 
   ngAfterViewInit(): void {
     this.drawer?.openedChange.subscribe((_) => {

@@ -7,7 +7,7 @@
     "tslib": "^2.1.0",
     "@types/geojson": "^7946.0.10",
     "@types/leaflet": "^1.9.3",
-    "@types/leaflet.markercluster": "^1.5.1",
+    "@types/leaflet.markercluster": "^1.5.3",
     "leaflet": "^1.9.4",
     "leaflet.markercluster": "^1.5.3"
   }

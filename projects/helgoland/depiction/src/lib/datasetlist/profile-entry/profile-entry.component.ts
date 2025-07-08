@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import {
   DatasetFilter,
   DatasetType,
@@ -7,12 +7,11 @@ import {
   HelgolandProfile,
   HelgolandServicesConnector,
   InternalDatasetId,
-  InternalIdHandler,
   TimedDatasetOptions,
   Timespan,
   TzDatePipe,
 } from '@helgoland/core';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { LabelMapperComponent } from '../../label-mapper/label-mapper.component';
 import { ListEntryComponent } from '../list-entry.component';
@@ -30,6 +29,8 @@ import { ListEntryComponent } from '../list-entry.component';
   ],
 })
 export class ProfileEntryComponent extends ListEntryComponent {
+  protected servicesConnector = inject(HelgolandServicesConnector);
+
   @Input()
   public datasetOptions: TimedDatasetOptions[] | undefined;
 
@@ -61,14 +62,6 @@ export class ProfileEntryComponent extends ListEntryComponent {
 
   public editableOptions: TimedDatasetOptions | undefined;
   public tempColor: string | undefined;
-
-  constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    protected override internalIdHandler: InternalIdHandler,
-    protected override translateSrvc: TranslateService,
-  ) {
-    super(internalIdHandler, translateSrvc);
-  }
 
   public removeDatasetOptions(options: TimedDatasetOptions) {
     this.onDeleteDatasetOptions.emit(options);

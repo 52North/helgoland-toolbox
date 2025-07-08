@@ -1,13 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   DatasetFilter,
   DatasetType,
   HelgolandServicesConnector,
   HelgolandTimeseries,
   InternalDatasetId,
-  InternalIdHandler,
 } from '@helgoland/core';
-import { TranslateService } from '@ngx-translate/core';
 
 import { ListEntryComponent } from '../../list-entry.component';
 
@@ -24,6 +22,8 @@ import { ListEntryComponent } from '../../list-entry.component';
   standalone: true,
 })
 export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
+  protected servicesConnector = inject(HelgolandServicesConnector);
+
   public dataset: HelgolandTimeseries | undefined;
 
   public platformLabel: string | undefined;
@@ -32,14 +32,6 @@ export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
   public categoryLabel: string | undefined;
   public uom: string | undefined;
   public error: any;
-
-  constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    protected override internalIdHandler: InternalIdHandler,
-    protected override translateSrvc: TranslateService,
-  ) {
-    super(internalIdHandler, translateSrvc);
-  }
 
   protected loadDataset(internalId: InternalDatasetId, locale?: string): void {
     const params: DatasetFilter = {};

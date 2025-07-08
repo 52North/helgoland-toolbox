@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -17,6 +17,9 @@ import { HelgolandModificationModule } from '@helgoland/modification';
   ],
 })
 export class StyleModificationComponent {
+  dialogRef = inject<MatDialogRef<StyleModificationComponent>>(MatDialogRef);
+  option = inject<DatasetOptions>(MAT_DIALOG_DATA);
+
   public color: string | undefined;
   public generalize: boolean | undefined;
   public zeroBasedYAxis: boolean | undefined;
@@ -28,19 +31,15 @@ export class StyleModificationComponent {
 
   public colorList: string[];
 
-  constructor(
-    public dialogRef: MatDialogRef<StyleModificationComponent>,
-    @Inject(MAT_DIALOG_DATA)
-    public option: DatasetOptions,
-  ) {
+  constructor() {
     this.colorList = ['#FF0000', '#00FF00', '#0000FF'];
-    this.generalize = option.generalize;
-    this.zeroBasedYAxis = option.zeroBasedYAxis;
-    this.autoRangeSelection = option.autoRangeSelection;
-    this.pointRadius = option.pointRadius;
-    this.lineWidth = option.lineWidth;
-    this.range = option.yAxisRange;
-    this.separateYAxis = option.separateYAxis;
+    this.generalize = this.option.generalize;
+    this.zeroBasedYAxis = this.option.zeroBasedYAxis;
+    this.autoRangeSelection = this.option.autoRangeSelection;
+    this.pointRadius = this.option.pointRadius;
+    this.lineWidth = this.option.lineWidth;
+    this.range = this.option.yAxisRange;
+    this.separateYAxis = this.option.separateYAxis;
   }
 
   public updateRange(range: MinMaxRange) {

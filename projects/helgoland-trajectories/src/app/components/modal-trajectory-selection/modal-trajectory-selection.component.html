@@ -50,7 +50,7 @@
             @switch (entry.selectedFilter) {
               @case ("offering") {
                 <helgoland-common-parameter-list-selector
-                  [endpoint]="filterEnpoints.offering"
+                  [endpoint]="'offering'"
                   [filterList]="entry.apiFilter"
                   (onItemSelected)="itemSelected(entry, $event)"
                 >
@@ -58,7 +58,7 @@
               }
               @case ("feature") {
                 <helgoland-common-parameter-list-selector
-                  [endpoint]="filterEnpoints.feature"
+                  [endpoint]="'feature'"
                   [filterList]="entry.apiFilter"
                   (onItemSelected)="featureSelected(entry, $event)"
                 >
@@ -66,7 +66,7 @@
               }
               @case ("phenomenon") {
                 <helgoland-common-parameter-list-selector
-                  [endpoint]="filterEnpoints.phenomenon"
+                  [endpoint]="'phenomenon'"
                   [filterList]="entry.apiFilter"
                   (onItemSelected)="itemSelected(entry, $event)"
                 >

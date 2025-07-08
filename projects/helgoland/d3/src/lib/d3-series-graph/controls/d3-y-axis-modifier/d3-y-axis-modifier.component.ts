@@ -1,15 +1,12 @@
 import { Component, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { MinMaxRange } from '@helgoland/core';
 
-import { D3GraphId } from '../../../helper/d3-graph-id.service';
-import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { YAxis } from '../../../model/d3-general';
+import { D3GraphInterface } from '../../d3-graph.interface';
 import {
   D3GraphObserver,
   D3SeriesGraphControl,
 } from '../../d3-series-graph-control';
-import { D3GraphInterface } from '../../d3-graph.interface';
-import { D3GraphHelperService } from './../../../helper/d3-graph-helper.service';
 
 @Component({
   selector: 'n52-d3-y-axis-modifier',
@@ -44,14 +41,6 @@ export class D3YAxisModifierComponent
 
   protected adjustedRanges: Map<string, MinMaxRange> = new Map();
   protected d3Graph: D3GraphInterface | undefined;
-
-  constructor(
-    protected override graphId: D3GraphId,
-    protected override graphs: D3Graphs,
-    protected override graphHelper: D3GraphHelperService,
-  ) {
-    super(graphId, graphs, graphHelper);
-  }
 
   public graphInitialized(graph: D3GraphInterface) {
     this.d3Graph = graph;

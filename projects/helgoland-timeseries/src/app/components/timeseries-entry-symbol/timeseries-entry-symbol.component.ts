@@ -7,6 +7,7 @@ import {
   KeyValueDiffer,
   KeyValueDiffers,
   OnInit,
+  inject,
 } from '@angular/core';
 import { D3GraphHelperService, DatasetStyle } from '@helgoland/d3';
 import * as d3 from 'd3';
@@ -20,18 +21,16 @@ import * as d3 from 'd3';
 export class TimeseriesEntrySymbolComponent
   implements AfterViewInit, DoCheck, OnInit
 {
+  private el = inject(ElementRef);
+  protected keyValueDiffers = inject(KeyValueDiffers);
+  private graphHelper = inject(D3GraphHelperService);
+
   @Input() size: number = 20;
 
   @Input() datasetStyle: DatasetStyle | undefined;
   private optionsDiffer: KeyValueDiffer<any, any> | undefined;
 
   private svg: d3.Selection<SVGGElement, any, HTMLElement, any> | undefined;
-
-  constructor(
-    private el: ElementRef,
-    protected keyValueDiffers: KeyValueDiffers,
-    private graphHelper: D3GraphHelperService,
-  ) {}
 
   ngOnInit(): void {
     this.optionsDiffer = this.keyValueDiffers.find({}).create();

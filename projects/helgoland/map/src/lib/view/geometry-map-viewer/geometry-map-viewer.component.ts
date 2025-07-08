@@ -2,14 +2,12 @@ import {
   AfterViewInit,
   Component,
   Input,
-  KeyValueDiffers,
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
 import * as L from 'leaflet';
 
 import { CachedMapComponent } from '../../base/cached-map-component';
-import { MapCache } from '../../base/map-cache.service';
 
 @Component({
   selector: 'n52-geometry-map-viewer',
@@ -50,13 +48,6 @@ export class GeometryMapViewerComponent
     weight: 10,
     opacity: 1,
   };
-
-  constructor(
-    protected override mapCache: MapCache,
-    protected override kvDiffers: KeyValueDiffers,
-  ) {
-    super(mapCache, kvDiffers);
-  }
 
   public ngAfterViewInit() {
     this.createMap();

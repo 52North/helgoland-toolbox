@@ -1,5 +1,5 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, inject } from '@angular/core';
 import { Time, Timespan, TimezoneService } from '@helgoland/core';
 import { SeriesGraphDataset } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
@@ -23,6 +23,14 @@ export class LoadingDataset {
   providedIn: 'root',
 })
 export class DatasetsService {
+  protected timeSrvc = inject(Time);
+  protected translate = inject(TranslateService);
+  protected la = inject(LiveAnnouncer);
+  protected timezoneSrvc = inject(TimezoneService);
+  protected notifier = inject(NotifierService);
+  protected storageSrvc = inject(StorageService);
+  protected configSrvc = inject(ConfigurationService);
+
   public timespanChanged: EventEmitter<Timespan> = new EventEmitter();
 
   private _datasets: (SeriesGraphDataset | LoadingDataset)[] = [];
@@ -39,16 +47,6 @@ export class DatasetsService {
     new EventEmitter();
 
   private _timespan: Timespan | undefined;
-
-  constructor(
-    protected timeSrvc: Time,
-    protected translate: TranslateService,
-    protected la: LiveAnnouncer,
-    protected timezoneSrvc: TimezoneService,
-    protected notifier: NotifierService,
-    protected storageSrvc: StorageService,
-    protected configSrvc: ConfigurationService,
-  ) {}
 
   get timespan(): Timespan | undefined {
     return this._timespan;

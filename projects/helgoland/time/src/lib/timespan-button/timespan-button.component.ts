@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import {
   DefinedTimespan,
   DefinedTimespanService,
@@ -11,6 +11,8 @@ import {
   standalone: true,
 })
 export class TimespanButtonComponent {
+  protected predefinedSrvc = inject(DefinedTimespanService);
+
   @Input()
   public predefined!: string | DefinedTimespan;
 
@@ -23,8 +25,6 @@ export class TimespanButtonComponent {
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public onTimespanSelected: EventEmitter<Timespan> = new EventEmitter();
-
-  constructor(protected predefinedSrvc: DefinedTimespanService) {}
 
   public clicked() {
     if (this.predefined) {

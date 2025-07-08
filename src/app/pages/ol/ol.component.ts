@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { HelgolandPlatform } from '@helgoland/core';
 import {
   HelgolandOpenLayersModule,
@@ -15,13 +15,15 @@ import { OSM, TileWMS } from 'ol/source';
   imports: [HelgolandOpenLayersModule],
 })
 export class OlComponent implements OnInit {
+  private mapService = inject(OlMapService);
+
   public layers: Layer[] = [];
 
   public overviewMapLayers: Layer[] = [new TileLayer({ source: new OSM() })];
 
   public mapId = 'test-map';
 
-  constructor(private mapService: OlMapService) {}
+  constructor() {}
 
   ngOnInit() {
     this.layers.push(

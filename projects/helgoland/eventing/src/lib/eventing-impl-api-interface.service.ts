@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   HttpRequestOptions,
   HttpService,
@@ -28,9 +28,7 @@ import {
 
 @Injectable()
 export class EventingImplApiInterface extends EventingApiService {
-  constructor(private httpService: HttpService) {
-    super();
-  }
+  private httpService = inject(HttpService);
 
   public getEvents(
     apiUrl: string,

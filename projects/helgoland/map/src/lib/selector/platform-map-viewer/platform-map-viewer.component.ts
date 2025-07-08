@@ -3,7 +3,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  KeyValueDiffers,
   OnChanges,
   Output,
   SimpleChanges,
@@ -13,7 +12,6 @@ import { Feature } from 'geojson';
 import * as L from 'leaflet';
 
 import { CachedMapComponent } from '../../base/cached-map-component';
-import { MapCache } from '../../base/map-cache.service';
 
 @Component({
   selector: 'n52-platform-map-viewer',
@@ -36,13 +34,6 @@ export class PlatformMapViewerComponent
   private geometryOnMap: L.GeoJSON | undefined;
 
   private layer: L.MarkerClusterGroup | undefined;
-
-  constructor(
-    protected override mapCache: MapCache,
-    protected override kvDiffers: KeyValueDiffers,
-  ) {
-    super(mapCache, kvDiffers);
-  }
 
   ngAfterViewInit(): void {
     this.createMap();

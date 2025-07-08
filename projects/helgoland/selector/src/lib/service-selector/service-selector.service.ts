@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   BlacklistedService,
   HelgolandParameterFilter,
@@ -9,7 +9,7 @@ import { Observable, Observer } from 'rxjs';
 
 @Injectable()
 export class ServiceSelectorService {
-  constructor(protected servicesConnector: HelgolandServicesConnector) {}
+  protected servicesConnector = inject(HelgolandServicesConnector);
 
   public fetchServicesOfAPI(
     url: string,

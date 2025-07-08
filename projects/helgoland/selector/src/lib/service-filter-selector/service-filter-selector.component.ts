@@ -6,6 +6,7 @@ import {
   OnChanges,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import {
   HelgolandParameterFilter,
@@ -14,7 +15,6 @@ import {
   Parameter,
 } from '@helgoland/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
-import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Component to select an item out of a list of provider with a given filter combination.
@@ -28,6 +28,8 @@ export class ServiceFilterSelectorComponent
   extends LanguageChangNotifier
   implements OnChanges
 {
+  protected servicesConnector = inject(HelgolandServicesConnector);
+
   @Input({ required: true })
   public endpoint!: string;
 
@@ -57,13 +59,6 @@ export class ServiceFilterSelectorComponent
 
   public loading = false;
   public items: Parameter[] = [];
-
-  constructor(
-    protected override translate: TranslateService,
-    protected servicesConnector: HelgolandServicesConnector,
-  ) {
-    super(translate);
-  }
 
   public ngOnChanges(changes: SimpleChanges) {
     if (changes['endpoint'] || changes['filter'] || changes['serviceUrl']) {

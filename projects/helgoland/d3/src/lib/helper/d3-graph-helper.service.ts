@@ -1,5 +1,5 @@
 import { DatasetOptions } from '@helgoland/core';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { duration, unitOfTime } from 'moment';
 
 import { D3PointSymbolDrawerService } from './d3-point-symbol-drawer.service';
@@ -13,7 +13,7 @@ import {
   providedIn: 'root',
 })
 export class D3GraphHelperService {
-  constructor(protected pointSymbolDrawer: D3PointSymbolDrawerService) {}
+  protected pointSymbolDrawer = inject(D3PointSymbolDrawerService);
 
   /**
    * Function that returns the boundings of a html element.

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -22,13 +22,12 @@ import { MatInputModule } from '@angular/material/input';
   ],
 })
 export class BasicAuthLoginComponent {
+  protected dialogRef =
+    inject<MatDialogRef<BasicAuthLoginComponent>>(MatDialogRef);
+  protected url = inject(MAT_DIALOG_DATA);
+
   username: string | undefined;
   password: string | undefined;
-
-  constructor(
-    public dialogRef: MatDialogRef<BasicAuthLoginComponent>,
-    @Inject(MAT_DIALOG_DATA) public url: string,
-  ) {}
 
   confirm() {
     this.dialogRef.close({

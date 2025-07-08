@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   HelgolandParameterFilter,
   HelgolandPlatform,
@@ -100,6 +100,8 @@ class MarkerSelectorGeneratorImpl implements MarkerSelectorGenerator {
   ],
 })
 export class MapSelectorComponent {
+  private mapCache = inject(MapCache);
+
   public providerUrl = 'https://geo.irceline.be/sos/api/v1/';
   // public providerUrl = 'http://mudak-wrm.dev.52north.org/sos/api/';
 
@@ -129,7 +131,7 @@ export class MapSelectorComponent {
   public markerSelectorGenerator: MarkerSelectorGenerator;
   public mapId = 'mapid';
 
-  constructor(private mapCache: MapCache) {
+  constructor() {
     this.markerSelectorGenerator = new MarkerSelectorGeneratorImpl(
       this.mapCache,
       this.mapId,

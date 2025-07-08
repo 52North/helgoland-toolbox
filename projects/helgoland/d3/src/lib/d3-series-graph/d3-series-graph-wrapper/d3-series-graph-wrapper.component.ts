@@ -1,10 +1,9 @@
 import {
   Component,
   EventEmitter,
+  inject,
   Input,
-  IterableDiffers,
   OnChanges,
-  Optional,
   Output,
   SimpleChanges,
   ViewChild,
@@ -16,17 +15,13 @@ import {
   DatasetPresenterComponent,
   DatasetType,
   HelgolandDataset,
-  HelgolandServicesConnector,
   HelgolandTimeseries,
   HelgolandTimeseriesData,
-  InternalIdHandler,
   SumValuesService,
-  Time,
   Timespan,
   TimeValueTuple,
-  TimezoneService,
 } from '@helgoland/core';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent } from '@ngx-translate/core';
 import { duration, unitOfTime } from 'moment';
 
 import {
@@ -69,6 +64,14 @@ export class D3SeriesGraphWrapperComponent
   extends DatasetPresenterComponent<DatasetOptions, D3PlotOptions>
   implements OnChanges
 {
+  protected sumValues = inject(SumValuesService);
+  protected colorService = inject(ColorService);
+  protected graphHelper = inject(D3GraphHelperService);
+  protected pointSymbolDrawer = inject(D3PointSymbolDrawerService);
+  protected errorHandler =
+    inject(D3SeriesGraphErrorHandler, { optional: true })! ??
+    new D3SeriesSimpleGraphErrorHandler();
+
   @Input() public yaxisModifier: boolean | undefined;
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
@@ -76,7 +79,7 @@ export class D3SeriesGraphWrapperComponent
     new EventEmitter();
 
   @Input() public hoveringService: D3HoveringService =
-    new D3SimpleHoveringService(this.timezoneSrvc, this.pointSymbolDrawer);
+    new D3SimpleHoveringService();
 
   @Input()
   public mainTimeInterval: Timespan | undefined;
@@ -100,28 +103,8 @@ export class D3SeriesGraphWrapperComponent
 
   protected datasetMap: Map<string, HelgolandTimeseries> = new Map();
 
-  constructor(
-    protected override iterableDiffers: IterableDiffers,
-    protected override servicesConnector: HelgolandServicesConnector,
-    protected override datasetIdResolver: InternalIdHandler,
-    protected override timeSrvc: Time,
-    protected override translateService: TranslateService,
-    protected override timezoneSrvc: TimezoneService,
-    protected sumValues: SumValuesService,
-    protected colorService: ColorService,
-    protected graphHelper: D3GraphHelperService,
-    protected pointSymbolDrawer: D3PointSymbolDrawerService,
-    @Optional()
-    protected errorHandler: D3SeriesGraphErrorHandler = new D3SeriesSimpleGraphErrorHandler(),
-  ) {
-    super(
-      iterableDiffers,
-      servicesConnector,
-      datasetIdResolver,
-      timeSrvc,
-      translateService,
-      timezoneSrvc,
-    );
+  constructor() {
+    super();
     if (!this.presenterOptions) {
       this.presenterOptions = {
         hoverStyle: HoveringStyle.none,

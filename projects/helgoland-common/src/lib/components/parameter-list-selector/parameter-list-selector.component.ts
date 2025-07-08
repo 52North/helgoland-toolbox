@@ -5,9 +5,8 @@ import {
   MatSelectionListChange,
 } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { HelgolandServicesConnector } from '@helgoland/core';
 import { MultiServiceFilterSelectorComponent } from '@helgoland/selector';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'helgoland-common-parameter-list-selector',
@@ -17,13 +16,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 })
 export class ParameterListSelectorComponent extends MultiServiceFilterSelectorComponent {
   @ViewChild(MatSelectionList) list: MatSelectionList | undefined;
-
-  constructor(
-    protected override translate: TranslateService,
-    protected override servicesConnector: HelgolandServicesConnector,
-  ) {
-    super(servicesConnector, translate);
-  }
 
   public selectionChanged(selection: MatSelectionListChange) {
     const match = this.items.find((e) => e.id === selection.options[0].value);

@@ -4,6 +4,7 @@ import {
   DoCheck,
   ElementRef,
   EventEmitter,
+  inject,
   Input,
   IterableDiffer,
   IterableDiffers,
@@ -114,6 +115,19 @@ interface DatasetEventSubscriptions {
 export class D3SeriesGraphComponent
   implements OnDestroy, AfterViewInit, DoCheck, OnInit, D3GraphInterface
 {
+  protected iterableDiffers = inject(IterableDiffers);
+  protected keyValueDiffers = inject(KeyValueDiffers);
+  protected timeSrvc = inject(Time);
+  protected timeFormatLocaleService = inject(D3TimeFormatLocaleService);
+  protected translateService = inject(TranslateService);
+  protected timezoneSrvc = inject(TimezoneService);
+  protected rangeCalc = inject(RangeCalculationsService);
+  protected graphHelper = inject(D3GraphHelperService);
+  protected graphService = inject(D3Graphs);
+  protected graphId = inject(D3GraphId);
+  protected pointSymbolDrawer = inject(D3PointSymbolDrawerService);
+  protected zone = inject(NgZone);
+
   @Input()
   public datasets: SeriesGraphDataset[] = [];
   private datasetsDiffer: IterableDiffer<SeriesGraphDataset>;
@@ -123,10 +137,7 @@ export class D3SeriesGraphComponent
   protected oldTimespan: Timespan = { from: 0, to: 0 };
 
   @Input()
-  public hoveringService: D3HoveringService = new D3SimpleHoveringService(
-    this.timezoneSrvc,
-    this.pointSymbolDrawer,
-  );
+  public hoveringService: D3HoveringService = new D3SimpleHoveringService();
 
   /**
    * Event with a list of selected datasets.
@@ -202,20 +213,7 @@ export class D3SeriesGraphComponent
 
   private resizeObserver: ResizeObserver | undefined;
 
-  constructor(
-    protected iterableDiffers: IterableDiffers,
-    protected keyValueDiffers: KeyValueDiffers,
-    protected timeSrvc: Time,
-    protected timeFormatLocaleService: D3TimeFormatLocaleService,
-    protected translateService: TranslateService,
-    protected timezoneSrvc: TimezoneService,
-    protected rangeCalc: RangeCalculationsService,
-    protected graphHelper: D3GraphHelperService,
-    protected graphService: D3Graphs,
-    protected graphId: D3GraphId,
-    protected pointSymbolDrawer: D3PointSymbolDrawerService,
-    protected zone: NgZone,
-  ) {
+  constructor() {
     this.datasetsDiffer = this.iterableDiffers.find([]).create();
     this.graphOptionsDiffer = this.keyValueDiffers.find({}).create();
     this.langChangeSubscription = this.translateService.onLangChange.subscribe(

@@ -4,6 +4,7 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import {
   DatasetApiMapping,
@@ -22,6 +23,10 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [TranslateModule],
 })
 export class DatasetPermalinkDownloadComponent implements OnChanges, OnInit {
+  protected apiMapping = inject(DatasetApiMapping);
+  protected internalIdHandler = inject(InternalIdHandler);
+  protected servicesConnector = inject(HelgolandServicesConnector);
+
   @Input()
   public internalId: InternalDatasetId | string | undefined;
 
@@ -32,12 +37,6 @@ export class DatasetPermalinkDownloadComponent implements OnChanges, OnInit {
   public language: string | undefined;
 
   public downloadLink: string | undefined;
-
-  constructor(
-    protected apiMapping: DatasetApiMapping,
-    protected internalIdHandler: InternalIdHandler,
-    protected servicesConnector: HelgolandServicesConnector,
-  ) {}
 
   ngOnInit(): void {
     if (this.internalId && this.timeInterval) {

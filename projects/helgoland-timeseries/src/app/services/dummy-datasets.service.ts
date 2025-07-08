@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { LocalStorage } from '@helgoland/core';
 import {
   AxisSettings,
@@ -24,10 +24,8 @@ const DUMMY_DATASET_LOCAL_STORAGE_KEY = 'DUMMY_DATASET_LOCAL_STORAGE';
 export class DummyDatasetsService
   implements DatasetStateService, DatasetFavoriteService
 {
-  constructor(
-    protected graphDatasetsSrvc: DatasetsService,
-    protected localStorage: LocalStorage,
-  ) {}
+  protected graphDatasetsSrvc = inject(DatasetsService);
+  protected localStorage = inject(LocalStorage);
 
   private addRandomDataset() {
     const dummyDataset = this.createNewDataset('blue');

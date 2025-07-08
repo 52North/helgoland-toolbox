@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -25,13 +32,11 @@ interface Symbol {
   ],
 })
 export class TimeseriesSymbolSelectComponent implements OnInit {
-  // <<<<<<< HEAD
+  private translate = inject(TranslateService);
+
   @Input({ required: true }) lineStyle: LineStyle | undefined;
 
   @Output() styleChanged: EventEmitter<LineStyle> = new EventEmitter();
-  // =======
-  //   @Input({ required: true }) options!: DatasetOptions;
-  // >>>>>>> 00252b782fb5fc2c23fb8c28596a26f0603e3757
 
   symbols: Symbol[] = [
     {
@@ -70,8 +75,6 @@ export class TimeseriesSymbolSelectComponent implements OnInit {
 
   selectedSymbol: PointSymbolType | 'point' = 'point';
   symbolSize = 1;
-
-  constructor(private translate: TranslateService) {}
 
   ngOnInit() {
     if (this.lineStyle) {

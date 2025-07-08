@@ -1,21 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule, MatSelectionListChange } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import {
-  HelgolandCoreModule,
-  HelgolandServicesConnector,
-  Parameter,
-} from '@helgoland/core';
+import { HelgolandCoreModule, Parameter } from '@helgoland/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 import {
   DatasetByStationSelectorComponent,
   SelectableDataset,
 } from '@helgoland/selector';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { AppRouterService } from '../../services/app-router.service';
 import { DatasetsService } from '../../services/graph-datasets.service';
@@ -38,15 +34,9 @@ import { TimeseriesService } from './../../services/timeseries-service.service';
   ],
 })
 export class ModalDatasetByStationSelectorComponent extends DatasetByStationSelectorComponent {
-  constructor(
-    protected override servicesConnector: HelgolandServicesConnector,
-    public override translateSrvc: TranslateService,
-    public appRouter: AppRouterService,
-    public graphDatasetsSrvc: DatasetsService,
-    public timeseries: TimeseriesService,
-  ) {
-    super(servicesConnector, translateSrvc);
-  }
+  protected appRouter = inject(AppRouterService);
+  protected graphDatasetsSrvc = inject(DatasetsService);
+  protected timeseries = inject(TimeseriesService);
 
   protected override prepareResult(
     result: SelectableDataset,

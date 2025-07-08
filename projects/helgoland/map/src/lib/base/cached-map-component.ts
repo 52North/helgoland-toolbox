@@ -11,6 +11,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import * as L from 'leaflet';
 
@@ -27,6 +28,9 @@ const DEFAULT_BASE_LAYER_ATTRIBUTION =
 export abstract class CachedMapComponent
   implements OnChanges, DoCheck, OnDestroy, OnInit
 {
+  protected mapCache = inject(MapCache);
+  protected kvDiffers = inject(KeyValueDiffers);
+
   /**
    * A map with the given ID is created inside this component. This ID can be used the get the map instance over the map cache service.
    */
@@ -88,10 +92,7 @@ export abstract class CachedMapComponent
   private _differOverlayMaps: KeyValueDiffer<string, LayerOptions>;
   private _differBaseMaps: KeyValueDiffer<string, LayerOptions>;
 
-  constructor(
-    protected mapCache: MapCache,
-    protected kvDiffers: KeyValueDiffers,
-  ) {
+  constructor() {
     this._differOverlayMaps = this.kvDiffers.find({}).create();
     this._differBaseMaps = this.kvDiffers.find({}).create();
   }

@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
 import {
   BlacklistedService,
   DatasetApi,
@@ -7,8 +14,8 @@ import {
 } from '@helgoland/core';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { ServiceSelectorService } from './service-selector.service';
 import { CommonModule } from '@angular/common';
+import { ServiceSelectorService } from './service-selector.service';
 
 interface ExtendedHelgolandService extends HelgolandService {
   protected?: boolean;
@@ -24,6 +31,8 @@ interface ExtendedHelgolandService extends HelgolandService {
   imports: [CommonModule, TranslateModule],
 })
 export class ServiceSelectorComponent implements OnInit {
+  protected serviceSelectorService = inject(ServiceSelectorService);
+
   @Input()
   public datasetApiList: DatasetApi[] = [];
 
@@ -50,8 +59,6 @@ export class ServiceSelectorComponent implements OnInit {
   public services: ExtendedHelgolandService[] = [];
   public unResolvableServices: DatasetApi[] = [];
   public loadingCount = 0;
-
-  constructor(protected serviceSelectorService: ServiceSelectorService) {}
 
   public ngOnInit() {
     if (!this.filter) {

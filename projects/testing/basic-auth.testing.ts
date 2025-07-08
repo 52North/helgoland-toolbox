@@ -1,13 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BasicAuthInformer, BasicAuthService, BasicAuthServiceMaintainer } from '@helgoland/auth';
 import { Observable, Observer } from 'rxjs';
 
 @Injectable()
 export class BasicAuthInformerImplService implements BasicAuthInformer {
+    private basicAuthSrvc = inject(BasicAuthService);
 
-    constructor(
-        private basicAuthSrvc: BasicAuthService
-    ) { }
 
     public doBasicAuth(url: string): Observable<boolean> {
         return new Observable<boolean>((observer: Observer<boolean>) => {

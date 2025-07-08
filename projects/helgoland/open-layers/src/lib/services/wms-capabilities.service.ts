@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpService } from '@helgoland/core';
 import WMSCapabilities from 'ol/format/WMSCapabilities';
 import { Observable } from 'rxjs';
@@ -48,7 +48,7 @@ const WMS_CAPABILITIES_REQUEST_EXPIRATION = 1000 * 60 * 5;
   providedIn: 'root',
 })
 export class WmsCapabilitiesService {
-  constructor(private http: HttpService) {}
+  private http = inject(HttpService);
 
   /**
    * Returns the layer title of the capabilities as observable

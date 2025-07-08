@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import moment from 'moment';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -75,12 +75,10 @@ const DEFAULT_SERVICE_ID = '1';
   providedIn: 'root',
 })
 export class StaApiV1Connector implements HelgolandServiceConnector {
-  name = 'StaApiV1Connector';
+  protected http = inject(HttpService);
+  protected sta = inject(StaInterfaceService);
 
-  constructor(
-    protected http: HttpService,
-    protected sta: StaInterfaceService,
-  ) {}
+  name = 'StaApiV1Connector';
 
   canHandle(url: string): Observable<boolean> {
     return this.http

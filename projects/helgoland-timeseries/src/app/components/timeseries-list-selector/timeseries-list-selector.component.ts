@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatListModule, MatSelectionListChange } from '@angular/material/list';
-import { HelgolandDataset, HelgolandServicesConnector } from '@helgoland/core';
+import { HelgolandDataset } from '@helgoland/core';
 import { MultiServiceFilterSelectorComponent } from '@helgoland/selector';
-import { TranslateService } from '@ngx-translate/core';
 
 import { TimeseriesService } from './../../services/timeseries-service.service';
 
@@ -13,13 +12,7 @@ import { TimeseriesService } from './../../services/timeseries-service.service';
   imports: [MatListModule],
 })
 export class TimeseriesListSelectorComponent extends MultiServiceFilterSelectorComponent {
-  constructor(
-    protected override servicesConnector: HelgolandServicesConnector,
-    protected override translate: TranslateService,
-    public timeseriesSrvc: TimeseriesService,
-  ) {
-    super(servicesConnector, translate);
-  }
+  protected timeseriesSrvc = inject(TimeseriesService);
 
   public selectionChanged(selection: MatSelectionListChange) {
     const ds = selection.options[0].value as HelgolandDataset;

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   ColorService,
   DatasetOptions,
@@ -25,15 +25,15 @@ export interface TrajectoryResult {
   providedIn: 'root',
 })
 export class TrajectoriesService {
+  private colorSrvc = inject(ColorService);
+  private localStorage = inject(LocalStorage);
+  private servicesConnector = inject(HelgolandServicesConnector);
+
   public loading = new ReplaySubject<boolean>();
   public result = new ReplaySubject<TrajectoryResult>();
   private internalId!: string;
 
-  constructor(
-    private colorSrvc: ColorService,
-    private localStorage: LocalStorage,
-    private servicesConnector: HelgolandServicesConnector,
-  ) {
+  constructor() {
     this.loadState();
   }
 

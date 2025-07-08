@@ -1,11 +1,9 @@
-import { Component, ElementRef, Host, Input } from '@angular/core';
+import { Component, ElementRef, Input, inject } from '@angular/core';
 import { Map } from 'ol';
 import { MousePosition } from 'ol/control';
 import { createStringXY } from 'ol/coordinate';
 
 import { OlBaseComponent } from '../../ol-base.component';
-import { OlMapService } from '../../services/map.service';
-import { OlMapId } from '../../services/mapid.service';
 
 /**
  * Control component to show the coordinates at the mouse position
@@ -16,15 +14,9 @@ import { OlMapId } from '../../services/mapid.service';
   standalone: true,
 })
 export class OlMousePositionComponent extends OlBaseComponent {
-  @Input() projection = 'EPSG:3857';
+  private elementRef = inject(ElementRef);
 
-  constructor(
-    protected override mapService: OlMapService,
-    @Host() protected override mapidService: OlMapId,
-    private elementRef: ElementRef,
-  ) {
-    super(mapService, mapidService);
-  }
+  @Input() projection = 'EPSG:3857';
 
   mapInitialized(map: Map) {
     const target = this.elementRef.nativeElement.parentElement

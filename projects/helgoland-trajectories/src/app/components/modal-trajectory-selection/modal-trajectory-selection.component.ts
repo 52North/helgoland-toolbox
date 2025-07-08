@@ -1,5 +1,4 @@
-
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -12,10 +11,7 @@ import {
   HelgolandServicesConnector,
   Parameter,
 } from '@helgoland/core';
-import {
-  MultiServiceFilter,
-  MultiServiceFilterEndpoint,
-} from '@helgoland/selector';
+import { MultiServiceFilter } from '@helgoland/selector';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   LoadingOverlayProgressBarComponent,
@@ -42,10 +38,16 @@ import { ParameterTypeLabelComponent } from './parameter-type-label/parameter-ty
     ParameterListSelectorComponent,
     ParameterTypeLabelComponent,
     ServiceListSelectorComponent,
-    TranslateModule
-],
+    TranslateModule,
+  ],
 })
 export class ModalTrajectorySelectionComponent implements OnInit {
+  protected dialogRef =
+    inject<MatDialogRef<ModalTrajectorySelectionComponent>>(MatDialogRef);
+  private configSrvc = inject(ConfigurationService);
+  private servicesConnector = inject(HelgolandServicesConnector);
+  private trajectorySrvc = inject(TrajectoriesService);
+
   public datasetApis: DatasetApi[] =
     this.configSrvc.configuration?.datasetApis || [];
 
@@ -57,15 +59,6 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     type: DatasetType.Trajectory,
     expanded: true,
   };
-
-  public filterEnpoints = MultiServiceFilterEndpoint;
-
-  constructor(
-    public dialogRef: MatDialogRef<ModalTrajectorySelectionComponent>,
-    private configSrvc: ConfigurationService,
-    private servicesConnector: HelgolandServicesConnector,
-    private trajectorySrvc: TrajectoriesService,
-  ) {}
 
   ngOnInit(): void {
     this.filterList.push({

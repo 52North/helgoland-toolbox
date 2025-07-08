@@ -1,4 +1,3 @@
-
 import { Component, Input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ParameterType } from 'helgoland-common';

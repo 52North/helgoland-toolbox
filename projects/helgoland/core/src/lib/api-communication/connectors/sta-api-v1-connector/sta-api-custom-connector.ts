@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 
-import { HttpService } from '../../../dataset-api/http.service';
 import { InternalDatasetId } from '../../../dataset-api/internal-id-handler.service';
 import { Category } from '../../../model/dataset-api/category';
 import {
@@ -47,7 +46,6 @@ import {
 } from './model/sta-interface';
 import { Thing } from './model/things';
 import { StaApiV1Connector } from './sta-api-v1-connector';
-import { StaInterfaceService } from './sta-interface.service';
 
 const DEFAULT_SERVICE_LABEL = 'OGC SensorThings API';
 const DEFAULT_SERVICE_ID = '1';
@@ -57,13 +55,6 @@ const DEFAULT_SERVICE_ID = '1';
 })
 export class StaApiCustomConnector extends StaApiV1Connector {
   override name = 'StaApiCustomConnector';
-
-  constructor(
-    protected override http: HttpService,
-    protected override sta: StaInterfaceService,
-  ) {
-    super(http, sta);
-  }
 
   override getPlatform(
     id: string,

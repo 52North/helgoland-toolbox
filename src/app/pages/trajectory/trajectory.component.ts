@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import {
   ColorService,
@@ -31,6 +31,11 @@ import { StyleModificationComponent } from '../../components/style-modification/
   ],
 })
 export class TrajectoryComponent implements OnInit {
+  private color = inject(ColorService);
+  private dialog = inject(MatDialog);
+  private internalIdHandler = inject(InternalIdHandler);
+  private servicesConnector = inject(HelgolandServicesConnector);
+
   public geometry!: LineString;
 
   public highlightGeometry!: GeoJsonObject;
@@ -56,13 +61,6 @@ export class TrajectoryComponent implements OnInit {
     axisType: D3AxisType.Distance,
     dotted: true,
   };
-
-  constructor(
-    private color: ColorService,
-    private dialog: MatDialog,
-    private internalIdHandler: InternalIdHandler,
-    private servicesConnector: HelgolandServicesConnector,
-  ) {}
 
   public ngOnInit(): void {
     this.datasetIds.forEach((entry) => {

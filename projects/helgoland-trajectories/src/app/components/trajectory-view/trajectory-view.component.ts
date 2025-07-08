@@ -1,5 +1,4 @@
-
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -54,10 +53,15 @@ import { TrajectoryLabelComponent } from './../trajectory-label/trajectory-label
     MatTooltipModule,
     ShareButtonComponent,
     TrajectoryLabelComponent,
-    TranslateModule
-],
+    TranslateModule,
+  ],
 })
 export class TrajectoryViewComponent implements OnInit {
+  protected trajectorySrvc = inject(TrajectoriesService);
+  protected translateSrvc = inject(TranslateService);
+  protected permalinkSrvc = inject(TrajectoryViewPermalinkService);
+  private dialog = inject(MatDialog);
+
   public trajectory: HelgolandTrajectory | undefined;
 
   public timespan: Timespan | undefined;
@@ -100,13 +104,6 @@ export class TrajectoryViewComponent implements OnInit {
       label: this.translateSrvc.instant('chart-styling.xaxis-option.ticks'),
     },
   ];
-
-  constructor(
-    public trajectorySrvc: TrajectoriesService,
-    public translateSrvc: TranslateService,
-    public permalinkSrvc: TrajectoryViewPermalinkService,
-    private dialog: MatDialog,
-  ) {}
 
   ngOnInit(): void {
     this.permalinkSrvc.validatePeramlink().subscribe((_) => {

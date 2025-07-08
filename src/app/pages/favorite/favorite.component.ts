@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   DatasetOptions,
   DatasetType,
@@ -18,13 +18,13 @@ import {
   imports: [HelgolandD3Module],
 })
 export class FavoriteComponent {
+  private favoriteSrvc = inject(FavoriteService);
+  private jsonExport = inject(JsonFavoriteExporterService);
+  private servicesConnector = inject(HelgolandServicesConnector);
+
   public favorites: ExtendedSingleFavorite[] = [];
 
-  constructor(
-    private favoriteSrvc: FavoriteService,
-    private jsonExport: JsonFavoriteExporterService,
-    private servicesConnector: HelgolandServicesConnector,
-  ) {
+  constructor() {
     this.servicesConnector
       .getDataset(
         { id: '26', url: 'https://fluggs.wupperverband.de/sws5/api/' },

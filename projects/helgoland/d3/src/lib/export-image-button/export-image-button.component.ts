@@ -5,6 +5,7 @@ import {
   EmbeddedViewRef,
   Input,
   ViewContainerRef,
+  inject,
 } from '@angular/core';
 import {
   DatasetOptions,
@@ -31,6 +32,12 @@ const wrapperClassName = 'export-diagram-wrapper';
   imports: [],
 })
 export class ExportImageButtonComponent {
+  private servicesConnector = inject(HelgolandServicesConnector);
+  private applicationRef = inject(ApplicationRef);
+  private viewContainerRef = inject(ViewContainerRef);
+  private timeSrvc = inject(Time);
+  private graphHelper = inject(D3GraphHelperService);
+
   /**
    * List of datasetIds, similiar to the timeseries component
    */
@@ -105,14 +112,6 @@ export class ExportImageButtonComponent {
 
   private internalHeight = this.height;
   private internalWidth = this.width;
-
-  constructor(
-    private servicesConnector: HelgolandServicesConnector,
-    private applicationRef: ApplicationRef,
-    private viewContainerRef: ViewContainerRef,
-    private timeSrvc: Time,
-    private graphHelper: D3GraphHelperService,
-  ) {}
 
   public exportImage() {
     this.createDiagramElem();

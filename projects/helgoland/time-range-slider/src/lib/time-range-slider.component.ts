@@ -8,6 +8,7 @@ import {
   Output,
   SimpleChanges,
   ViewEncapsulation,
+  inject,
 } from '@angular/core';
 import { Timespan, TzDatePipe } from '@helgoland/core';
 // @ts-ignore
@@ -26,6 +27,8 @@ import { TimeRangeSliderCache } from './time-range-slider.service';
   imports: [TzDatePipe],
 })
 export class TimeRangeSliderComponent implements OnChanges {
+  protected cache = inject(TimeRangeSliderCache);
+
   @Input()
   public id = '';
 
@@ -40,8 +43,6 @@ export class TimeRangeSliderComponent implements OnChanges {
   public selectionStart!: number;
   public end!: number;
   public selectionEnd!: number;
-
-  constructor(protected cache: TimeRangeSliderCache) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['timeList'] && this.timeList) {

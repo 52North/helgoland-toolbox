@@ -1,6 +1,6 @@
 import 'moment-timezone';
 
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
 
@@ -8,13 +8,15 @@ import moment from 'moment';
   providedIn: 'root',
 })
 export class TimezoneService {
+  protected translateSrvc = inject(TranslateService);
+
   private currentTimezone: moment.MomentZone | null;
 
   // private offsetToLocale: number; // TODO: check if still needed
 
   public timezoneChange: EventEmitter<string> = new EventEmitter();
 
-  constructor(protected translateSrvc: TranslateService) {
+  constructor() {
     this.currentTimezone = moment.tz.zone(moment.tz.guess());
     this.calcOffset();
   }

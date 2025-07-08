@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { LocalSelectorComponent } from '@helgoland/core';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'n52-lang-selector',
@@ -9,8 +8,4 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./local-selector.component.scss'],
   imports: [MatRadioModule],
 })
-export class LocalSelectorImplComponent extends LocalSelectorComponent {
-  constructor(translate: TranslateService) {
-    super(translate);
-  }
-}
+export class LocalSelectorImplComponent extends LocalSelectorComponent {}

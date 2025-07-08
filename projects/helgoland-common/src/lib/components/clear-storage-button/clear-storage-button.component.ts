@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { LocalStorage } from '@helgoland/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,7 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [TranslateModule, MatButtonModule],
 })
 export class ClearStorageButtonComponent {
-  constructor(public localStorage: LocalStorage) {}
+  localStorage = inject(LocalStorage);
 
   public clearAndReload() {
     this.localStorage.clearStorage();

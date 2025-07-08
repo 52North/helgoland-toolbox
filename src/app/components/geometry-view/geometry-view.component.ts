@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HelgolandMapViewModule } from '@helgoland/map';
 
@@ -8,15 +8,12 @@ import { HelgolandMapViewModule } from '@helgoland/map';
   imports: [HelgolandMapViewModule],
 })
 export class GeometryViewComponent {
+  dialogRef = inject<MatDialogRef<GeometryViewComponent>>(MatDialogRef);
+  geometry = inject<GeoJSON.GeoJsonObject>(MAT_DIALOG_DATA);
+
   public mapOptions: L.MapOptions = {
     maxZoom: 15,
   };
-
-  constructor(
-    public dialogRef: MatDialogRef<GeometryViewComponent>,
-    @Inject(MAT_DIALOG_DATA)
-    public geometry: GeoJSON.GeoJsonObject,
-  ) {}
 
   public onOk() {
     this.dialogRef.close();

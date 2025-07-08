@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
@@ -36,6 +36,11 @@ export interface MapConfig {
   ],
 })
 export class ModalMapSettingsComponent {
+  protected dialogRef =
+    inject<MatDialogRef<ModalMapSettingsComponent>>(MatDialogRef);
+  private configSrvc = inject(ConfigurationService);
+  protected mapConfig = inject<MapConfig>(MAT_DIALOG_DATA);
+
   public datasetApis: DatasetApi[];
   public blacklist: BlacklistedService[];
 
@@ -44,11 +49,7 @@ export class ModalMapSettingsComponent {
     expanded: true,
   };
 
-  constructor(
-    public dialogRef: MatDialogRef<ModalMapSettingsComponent>,
-    private configSrvc: ConfigurationService,
-    @Inject(MAT_DIALOG_DATA) public mapConfig: MapConfig,
-  ) {
+  constructor() {
     this.datasetApis = this.configSrvc.configuration?.datasetApis || [];
     this.blacklist = this.configSrvc.configuration?.providerBlackList || [];
   }

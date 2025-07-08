@@ -1,5 +1,5 @@
 import { HttpEvent, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import {
@@ -13,7 +13,7 @@ import { SettingsService } from '../settings/settings.service';
 
 @Injectable()
 export class CorsProxyInterceptor implements HttpServiceInterceptor {
-  constructor(private settingsSrvc: SettingsService<Settings>) {}
+  private settingsSrvc = inject<SettingsService<Settings>>(SettingsService);
 
   public intercept(
     req: HttpRequest<any>,

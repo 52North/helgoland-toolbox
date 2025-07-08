@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   BasicAuthInformer,
   BasicAuthService,
@@ -8,10 +8,10 @@ import { Observable, Observer } from 'rxjs';
 
 @Injectable()
 export class BasicAuthInformerImplService implements BasicAuthInformer {
-  constructor(
-    private basicAuthSrvc: BasicAuthService,
-    private basicAuthServices: BasicAuthServiceMaintainer,
-  ) {
+  private basicAuthSrvc = inject(BasicAuthService);
+  private basicAuthServices = inject(BasicAuthServiceMaintainer);
+
+  constructor() {
     const providerUrl = '';
     this.basicAuthServices.registerService(providerUrl);
   }

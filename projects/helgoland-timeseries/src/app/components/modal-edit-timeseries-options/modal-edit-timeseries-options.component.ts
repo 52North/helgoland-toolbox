@@ -3,7 +3,7 @@ import {
   AfterContentInit,
   Component,
   EventEmitter,
-  Inject,
+  inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -47,21 +47,21 @@ import { TimeseriesSymbolSelectComponent } from './timeseries-symbol-select/time
   providers: [ColorPickerService],
 })
 export class ModalEditTimeseriesOptionsComponent implements AfterContentInit {
+  protected dialogRef =
+    inject<MatDialogRef<ModalEditTimeseriesOptionsComponent>>(MatDialogRef);
+  protected data = inject<{
+    dataset: SeriesGraphDataset;
+    handler: EventEmitter<void>;
+  }>(MAT_DIALOG_DATA);
+  protected config = inject(ConfigurationService);
+
   public adjustedColor: string | undefined;
 
   private style: DatasetStyle;
   private yaxis: AxisSettings;
   protected loaded = false;
 
-  constructor(
-    public dialogRef: MatDialogRef<ModalEditTimeseriesOptionsComponent>,
-    @Inject(MAT_DIALOG_DATA)
-    public data: {
-      dataset: SeriesGraphDataset;
-      handler: EventEmitter<void>;
-    },
-    public config: ConfigurationService,
-  ) {
+  constructor() {
     this.style = this.data.dataset?.style;
     this.yaxis = this.data.dataset?.yAxis;
   }

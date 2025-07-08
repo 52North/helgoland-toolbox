@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   HelgolandCoreModule,
   NotifierService,
@@ -18,6 +18,8 @@ import moment from 'moment';
   ],
 })
 export class TimeComponent {
+  private notifier = inject(NotifierService);
+
   public selectedTimespan!: Timespan;
 
   public timelist = [
@@ -25,8 +27,6 @@ export class TimeComponent {
     2000000000000, 2100000000000, 2200000000000, 2300000000000, 2400000000000,
     2500000000000,
   ];
-
-  constructor(private notifier: NotifierService) {}
 
   public customTimespanFunc(): Timespan {
     const from = moment().subtract(6, 'days').startOf('day').unix() * 1000;

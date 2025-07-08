@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 
 export enum DatasetApiVersion {
@@ -9,12 +9,12 @@ export enum DatasetApiVersion {
 
 @Injectable()
 export class DatasetApiMapping {
+  protected http = inject(HttpClient);
+
   private cache: Map<string, DatasetApiVersion> = new Map<
     string,
     DatasetApiVersion
   >();
-
-  constructor(protected http: HttpClient) {}
 
   public getApiVersion(apiUrl: string): Observable<DatasetApiVersion> {
     return new Observable<DatasetApiVersion>(

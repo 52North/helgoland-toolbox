@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 
 import {
@@ -9,7 +9,7 @@ import {
 
 @Injectable()
 export class JsonFavoriteExporterService {
-  constructor(protected favoriteSrvc: FavoriteService) {}
+  protected favoriteSrvc = inject(FavoriteService);
 
   public exportFavorites() {
     const filename = 'favorites.json';

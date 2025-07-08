@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
 import {
   GeoCureGeoJSON,
   GeoCureGeoJSONOptions,
@@ -31,6 +31,9 @@ import {
   ],
 })
 export class MapViewComponent implements OnInit, AfterViewInit {
+  private httpClient = inject(HttpClient);
+  private mapCache = inject(MapCache);
+
   public fitBounds: L.LatLngBoundsExpression = [
     [54, 7],
     [48, 14],
@@ -79,11 +82,6 @@ export class MapViewComponent implements OnInit, AfterViewInit {
 
   public zoomLevel: number | undefined;
   public bounds: LatLngBounds | undefined;
-
-  constructor(
-    private httpClient: HttpClient,
-    private mapCache: MapCache,
-  ) {}
 
   public ngAfterViewInit(): void {
     this.mapCache

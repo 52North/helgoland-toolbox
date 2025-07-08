@@ -7,6 +7,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import { Settings, SettingsService } from '@helgoland/core';
 
@@ -16,6 +17,8 @@ import { Settings, SettingsService } from '@helgoland/core';
   imports: [NgClass],
 })
 export class RefreshButtonComponent implements OnChanges, OnInit {
+  protected settings = inject<SettingsService<Settings>>(SettingsService);
+
   @Input()
   public refreshInterval: number | undefined;
 
@@ -26,8 +29,6 @@ export class RefreshButtonComponent implements OnChanges, OnInit {
   public refreshing: EventEmitter<boolean> = new EventEmitter();
 
   private interval: number | undefined;
-
-  constructor(protected settings: SettingsService<Settings>) {}
 
   public ngOnInit(): void {
     if (!this.refreshInterval) {

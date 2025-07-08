@@ -6,6 +6,7 @@ import {
   OnChanges,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import {
   Filter,
@@ -14,7 +15,6 @@ import {
   LanguageChangNotifier,
   Parameter,
 } from '@helgoland/core';
-import { TranslateService } from '@ngx-translate/core';
 
 export interface MultiServiceFilter {
   url: string;
@@ -43,6 +43,8 @@ export class MultiServiceFilterSelectorComponent
   extends LanguageChangNotifier
   implements OnChanges
 {
+  protected servicesConnector = inject(HelgolandServicesConnector);
+
   @Input({ required: true })
   public endpoint!: MultiServiceFilterEndpoint;
 
@@ -59,13 +61,6 @@ export class MultiServiceFilterSelectorComponent
 
   public loading = 0;
   public items: FilteredParameter[] = [];
-
-  constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    protected override translate: TranslateService,
-  ) {
-    super(translate);
-  }
 
   public ngOnChanges(changes: SimpleChanges) {
     if (changes['filterList'] && this.filterList) {

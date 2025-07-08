@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   DatasetApi,
   HelgolandCoreModule,
@@ -14,9 +14,11 @@ import { HelgolandSelectorModule } from '@helgoland/selector';
   imports: [HelgolandCoreModule, HelgolandSelectorModule],
 })
 export class ServiceSelectorComponent {
+  private settings = inject<SettingsService<Settings>>(SettingsService);
+
   public datasetApis: DatasetApi[] | undefined;
 
-  constructor(private settings: SettingsService<Settings>) {
+  constructor() {
     this.datasetApis = this.settings.getSettings().datasetApis;
   }
 

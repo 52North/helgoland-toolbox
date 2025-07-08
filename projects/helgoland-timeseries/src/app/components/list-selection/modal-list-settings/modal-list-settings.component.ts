@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
@@ -27,13 +27,14 @@ export interface ListConfig {
   ],
 })
 export class ModalListSettingsComponent {
+  protected dialogRef =
+    inject<MatDialogRef<ModalListSettingsComponent>>(MatDialogRef);
+  private configSrvc = inject(ConfigurationService);
+  protected listConfig = inject<ListConfig>(MAT_DIALOG_DATA);
+
   public datasetApis: DatasetApi[] = [];
 
-  constructor(
-    public dialogRef: MatDialogRef<ModalListSettingsComponent>,
-    private configSrvc: ConfigurationService,
-    @Inject(MAT_DIALOG_DATA) public listConfig: ListConfig,
-  ) {
+  constructor() {
     if (this.configSrvc.configuration?.datasetApis) {
       this.datasetApis = this.configSrvc.configuration?.datasetApis;
     }

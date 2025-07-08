@@ -6,6 +6,7 @@ import {
   OnChanges,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -43,6 +44,10 @@ import { TimeseriesEntrySymbolComponent } from '../timeseries-entry-symbol/times
   ],
 })
 export class DatasetLegendEntryComponent implements OnChanges {
+  protected translateSrvc = inject(TranslateService);
+  protected timeSrvc = inject(Time);
+  private dialog = inject(MatDialog);
+
   // Remove later:
   error = false;
   // loading = false;
@@ -62,12 +67,6 @@ export class DatasetLegendEntryComponent implements OnChanges {
   @Output() selectDate: EventEmitter<Date> = new EventEmitter();
 
   hasData = true;
-
-  constructor(
-    public translateSrvc: TranslateService,
-    protected timeSrvc: Time,
-    private dialog: MatDialog,
-  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['timeInterval']) {

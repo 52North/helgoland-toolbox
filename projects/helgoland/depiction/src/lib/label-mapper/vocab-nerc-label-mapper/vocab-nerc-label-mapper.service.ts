@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Settings, SettingsService } from '@helgoland/core';
 import { Observable, Observer } from 'rxjs';
 
@@ -9,10 +9,8 @@ import { LabelMapperHandler } from './../label-mapper.service';
   providedIn: 'root',
 })
 export class VocabNercLabelMapperService implements LabelMapperHandler {
-  constructor(
-    protected httpClient: HttpClient,
-    protected settingsSrvc: SettingsService<Settings>,
-  ) {}
+  protected httpClient = inject(HttpClient);
+  protected settingsSrvc = inject<SettingsService<Settings>>(SettingsService);
 
   public canHandle(label: string): boolean {
     return label.startsWith('http://vocab.nerc.ac.uk');

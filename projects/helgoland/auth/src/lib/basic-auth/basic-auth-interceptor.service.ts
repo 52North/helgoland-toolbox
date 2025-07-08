@@ -1,5 +1,5 @@
 import { HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   HttpRequestOptions,
   HttpServiceHandler,
@@ -25,12 +25,10 @@ export abstract class BasicAuthInformer {
  */
 @Injectable()
 export class BasicAuthInterceptorService implements HttpServiceInterceptor {
-  constructor(
-    protected settings: SettingsService<Settings>,
-    protected basicAuthServices: BasicAuthServiceMaintainer,
-    protected basicAuthSrvc: BasicAuthService,
-    protected receptor: BasicAuthInformer,
-  ) {}
+  protected settings = inject<SettingsService<Settings>>(SettingsService);
+  protected basicAuthServices = inject(BasicAuthServiceMaintainer);
+  protected basicAuthSrvc = inject(BasicAuthService);
+  protected receptor = inject(BasicAuthInformer);
 
   intercept(
     req: HttpRequest<any>,

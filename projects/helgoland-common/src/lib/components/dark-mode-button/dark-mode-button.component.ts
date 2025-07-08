@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -11,9 +11,9 @@ import { LayoutModeService } from '../../services/layout-mode.service';
   imports: [TranslateModule, MatSlideToggleModule],
 })
 export class DarkModeButtonComponent implements OnInit {
-  public darkModeActive: boolean | undefined;
+  private layout = inject(LayoutModeService);
 
-  constructor(private layout: LayoutModeService) {}
+  public darkModeActive: boolean | undefined;
 
   ngOnInit() {
     this.darkModeActive = this.layout.isDarkModeActive();

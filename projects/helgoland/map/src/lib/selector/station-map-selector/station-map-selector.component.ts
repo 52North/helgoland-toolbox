@@ -2,10 +2,9 @@ import 'leaflet.markercluster';
 
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
+  inject,
   Input,
-  KeyValueDiffers,
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
@@ -21,7 +20,6 @@ import GeoJSON from 'geojson';
 import L, { Layer } from 'leaflet';
 import { forkJoin, Observable } from 'rxjs';
 
-import { MapCache } from '../../base/map-cache.service';
 import { MapSelectorComponent } from '../map-selector.component';
 
 @Component({
@@ -34,6 +32,9 @@ export class StationMapSelectorComponent
   extends MapSelectorComponent<HelgolandPlatform>
   implements OnChanges, AfterViewInit
 {
+  protected statusIntervalResolver = inject(StatusIntervalResolverService);
+  protected servicesConnector = inject(HelgolandServicesConnector);
+
   @Input()
   public cluster: boolean | undefined;
 
@@ -50,16 +51,6 @@ export class StationMapSelectorComponent
   public ignoreStatusIntervalIfBeforeDuration = Infinity;
 
   protected markerFeatureGroup: L.FeatureGroup | undefined;
-
-  constructor(
-    protected statusIntervalResolver: StatusIntervalResolverService,
-    protected servicesConnector: HelgolandServicesConnector,
-    protected override mapCache: MapCache,
-    protected override kvDiffers: KeyValueDiffers,
-    protected override cd: ChangeDetectorRef,
-  ) {
-    super(mapCache, kvDiffers, cd);
-  }
 
   public override ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);

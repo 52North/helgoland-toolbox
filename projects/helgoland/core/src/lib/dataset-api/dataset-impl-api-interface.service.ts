@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { deserialize, deserializeArray } from 'class-transformer';
 import { Observable, Observer } from 'rxjs';
@@ -31,12 +31,18 @@ import { InternalIdHandler } from './internal-id-handler.service';
 
 @Injectable()
 export class DatasetImplApiInterface extends DatasetApiInterface {
-  constructor(
-    protected httpservice: HttpService,
-    protected internalDatasetId: InternalIdHandler,
-    protected override translate: TranslateService,
-  ) {
+  protected httpservice: HttpService;
+  protected internalDatasetId = inject(InternalIdHandler);
+  protected override translate: TranslateService;
+
+  constructor() {
+    const httpservice = inject(HttpService);
+    const translate = inject(TranslateService);
+
     super(httpservice, translate);
+
+    this.httpservice = httpservice;
+    this.translate = translate;
   }
 
   public getServices(

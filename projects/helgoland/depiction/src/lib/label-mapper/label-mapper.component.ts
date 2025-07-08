@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
 
 import { LabelMapperService } from './label-mapper.service';
 
@@ -9,14 +15,14 @@ import { LabelMapperService } from './label-mapper.service';
   imports: [],
 })
 export class LabelMapperComponent implements OnChanges {
+  protected labelMapperSrvc = inject(LabelMapperService);
+
   @Input()
   public label: string | undefined;
 
   public determinedLabel: string | undefined;
 
   public loading = true;
-
-  constructor(protected labelMapperSrvc: LabelMapperService) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['label'] && this.label) {

@@ -15,10 +15,9 @@ describe('DatasetLegendEntryComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [DatasetLegendEntryComponent],
-      imports: [TranslateTestingModule, HelgolandCoreModule, MatDialogModule],
-      providers: [provideHttpClient(withInterceptorsFromDi())],
-    }).compileComponents();
+    imports: [TranslateTestingModule, HelgolandCoreModule, MatDialogModule, DatasetLegendEntryComponent],
+    providers: [provideHttpClient(withInterceptorsFromDi())],
+}).compileComponents();
   }));
 
   beforeEach(() => {

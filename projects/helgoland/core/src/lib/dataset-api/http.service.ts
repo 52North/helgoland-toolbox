@@ -4,13 +4,14 @@ import {
   HttpHandler,
   HttpRequest,
 } from '@angular/common/http';
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { Injectable, InjectionToken, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { HttpRequestOptions } from '../model/internal/http-requests';
 
-export const HTTP_SERVICE_INTERCEPTORS =
-  new InjectionToken<HttpServiceInterceptor>('HTTP_SERVICE_INTERCEPTORS');
+export const HTTP_SERVICE_INTERCEPTORS = new InjectionToken<
+  HttpServiceInterceptor[]
+>('HTTP_SERVICE_INTERCEPTORS');
 
 export interface HttpServiceHandler {
   handle(
@@ -29,14 +30,14 @@ export interface HttpServiceInterceptor {
 
 @Injectable()
 export class HttpService {
+  protected httpHandler = inject(HttpHandler);
+
   private handler: HttpServiceHandler;
 
-  constructor(
-    protected httpHandler: HttpHandler,
-    @Optional()
-    @Inject(HTTP_SERVICE_INTERCEPTORS)
-    interceptors: HttpServiceInterceptor[] | null,
-  ) {
+  constructor() {
+    const httpHandler = this.httpHandler;
+    const interceptors = inject(HTTP_SERVICE_INTERCEPTORS, { optional: true });
+
     let handler: HttpServiceHandler = {
       handle: (req, options) => httpHandler.handle(req),
     };

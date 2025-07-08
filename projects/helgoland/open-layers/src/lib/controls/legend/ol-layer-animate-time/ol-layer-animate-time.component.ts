@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { WmsCapabilitiesService } from '../../../services/wms-capabilities.service';
 import { OlLayerTimeSelectorComponent } from '../ol-layer-time-selector/ol-layer-time-selector.component';
 
 /**
@@ -21,10 +20,6 @@ export class OlLayerAnimateTimeComponent
   @Input() timeInterval = 2000;
 
   private interval: number | undefined;
-
-  constructor(protected override wmsCaps: WmsCapabilitiesService) {
-    super(wmsCaps);
-  }
 
   public startAnimation() {
     if (this.timeDimensions?.length) {

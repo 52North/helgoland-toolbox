@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DatasetApi, Settings, SettingsService } from '@helgoland/core';
 
 interface BasicAuthDatasetApi extends DatasetApi {
@@ -11,9 +11,10 @@ interface BasicAuthDatasetApi extends DatasetApi {
  */
 @Injectable()
 export class BasicAuthServiceMaintainer {
-  private services: string[] = [];
+  protected settingsService =
+    inject<SettingsService<Settings>>(SettingsService);
 
-  constructor(protected settingsService: SettingsService<Settings>) {}
+  private services: string[] = [];
 
   /**
    * Register an additional service url, which is secured with basic auth.

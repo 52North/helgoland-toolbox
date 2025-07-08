@@ -1,11 +1,10 @@
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
 import { Language, StatusCheckService } from '@helgoland/core';
-import { D3TimeFormatLocaleService } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 
 import { LocalSelectorImplComponent } from './components/local-selector/local-selector.component';
@@ -26,11 +25,10 @@ import { TimezoneSelectorComponent } from './components/timezone-selector/timezo
 export class AppComponent {
   public languageList: Language[];
 
-  constructor(
-    translate: TranslateService,
-    status: StatusCheckService,
-    d3translate: D3TimeFormatLocaleService,
-  ) {
+  constructor() {
+    const translate = inject(TranslateService);
+    const status = inject(StatusCheckService);
+
     translate.setDefaultLang('en');
     translate.use('en');
 

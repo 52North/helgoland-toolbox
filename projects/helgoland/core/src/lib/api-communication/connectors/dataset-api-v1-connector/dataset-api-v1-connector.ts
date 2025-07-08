@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -50,12 +50,10 @@ import { HelgolandService } from '../../model/internal/service';
   providedIn: 'root',
 })
 export class DatasetApiV1Connector implements HelgolandServiceConnector {
-  name = 'DatasetApiV1Connector';
+  protected http = inject(HttpService);
+  protected api = inject(DatasetApiInterface);
 
-  constructor(
-    protected http: HttpService,
-    protected api: DatasetApiInterface,
-  ) {}
+  name = 'DatasetApiV1Connector';
 
   canHandle(url: string): Observable<boolean> {
     return this.http

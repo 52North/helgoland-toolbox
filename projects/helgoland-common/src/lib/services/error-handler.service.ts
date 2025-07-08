@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ErrorHandlerService {
-  constructor(private snackBar: MatSnackBar) {}
+  private snackBar = inject(MatSnackBar);
 
   error(message: any, userDismiss = false, options: MatSnackBarConfig = {}) {
     let errorMessage = '';

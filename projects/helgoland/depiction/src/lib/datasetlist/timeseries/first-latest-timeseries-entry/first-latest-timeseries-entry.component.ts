@@ -5,16 +5,14 @@ import {
   OnChanges,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import {
   FirstLastValue,
-  HelgolandServicesConnector,
-  InternalIdHandler,
   Time,
   TimeInterval,
   TzDatePipe,
 } from '@helgoland/core';
-import { TranslateService } from '@ngx-translate/core';
 
 import { ConfigurableTimeseriesEntryComponent } from '../configurable-timeseries-entry/configurable-timeseries-entry.component';
 
@@ -33,6 +31,8 @@ export class FirstLatestTimeseriesEntryComponent
   extends ConfigurableTimeseriesEntryComponent
   implements OnChanges
 {
+  protected timeSrvc = inject(Time);
+
   @Input()
   public timeInterval: TimeInterval | undefined;
 
@@ -43,15 +43,6 @@ export class FirstLatestTimeseriesEntryComponent
   public firstValue: FirstLastValue | undefined;
   public lastValue: FirstLastValue | undefined;
   public hasData = true;
-
-  constructor(
-    protected override servicesConnector: HelgolandServicesConnector,
-    protected override internalIdHandler: InternalIdHandler,
-    protected override translateSrvc: TranslateService,
-    protected timeSrvc: Time,
-  ) {
-    super(servicesConnector, internalIdHandler, translateSrvc);
-  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['timeInterval']) {

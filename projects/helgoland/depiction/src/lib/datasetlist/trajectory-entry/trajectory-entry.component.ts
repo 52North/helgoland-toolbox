@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import {
   DatasetFilter,
   DatasetOptions,
@@ -7,9 +7,7 @@ import {
   HelgolandServicesConnector,
   HelgolandTrajectory,
   InternalDatasetId,
-  InternalIdHandler,
 } from '@helgoland/core';
-import { TranslateService } from '@ngx-translate/core';
 
 import { ListEntryComponent } from '../list-entry.component';
 
@@ -19,6 +17,8 @@ import { ListEntryComponent } from '../list-entry.component';
   imports: [NgClass, NgStyle],
 })
 export class TrajectoryEntryComponent extends ListEntryComponent {
+  protected servicesConnector = inject(HelgolandServicesConnector);
+
   @Input()
   public datasetOptions: DatasetOptions | undefined;
 
@@ -33,14 +33,6 @@ export class TrajectoryEntryComponent extends ListEntryComponent {
   public dataset: HelgolandTrajectory | undefined;
 
   public tempColor: string | undefined;
-
-  constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    protected override internalIdHandler: InternalIdHandler,
-    protected override translateSrvc: TranslateService,
-  ) {
-    super(internalIdHandler, translateSrvc);
-  }
 
   public toggleVisibility() {
     if (this.datasetOptions) {

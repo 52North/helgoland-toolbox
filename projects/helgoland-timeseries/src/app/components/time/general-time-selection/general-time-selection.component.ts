@@ -4,6 +4,7 @@ import {
   Input,
   Output,
   ViewChild,
+  inject,
 } from '@angular/core';
 import {
   ReactiveFormsModule,
@@ -49,6 +50,9 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
 })
 export class GeneralTimeSelectionComponent {
+  protected timeSrvc = inject(Time);
+  protected definedTimeSrvc = inject(DefinedTimespanService);
+
   public LASTHOUR = DefinedTimespan.LASTHOUR;
   public TODAY = DefinedTimespan.TODAY;
   public YESTERDAY = DefinedTimespan.YESTERDAY;
@@ -70,11 +74,6 @@ export class GeneralTimeSelectionComponent {
   @Input({ required: true }) timespan!: Timespan;
 
   @Output() timespanChanged: EventEmitter<Timespan> = new EventEmitter();
-
-  constructor(
-    protected timeSrvc: Time,
-    protected definedTimeSrvc: DefinedTimespanService,
-  ) {}
 
   back() {
     this.timespanChanged.emit(this.timeSrvc.stepBack(this.timespan!));

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import * as L from 'leaflet';
 
@@ -7,7 +7,6 @@ import {
   GeoSearchOptions,
   GeoSearchResult,
 } from '../../base/geosearch/geosearch';
-import { MapCache } from '../../base/map-cache.service';
 import { MapControlComponent } from '../map-control-component';
 
 @Component({
@@ -16,6 +15,8 @@ import { MapControlComponent } from '../map-control-component';
   imports: [FormsModule],
 })
 export class GeosearchControlComponent extends MapControlComponent {
+  protected geosearch = inject(GeoSearch);
+
   /**
    * Additional search options.
    */
@@ -41,13 +42,6 @@ export class GeosearchControlComponent extends MapControlComponent {
   public searchTerm: string | undefined;
 
   public loading: boolean | undefined;
-
-  constructor(
-    protected override mapCache: MapCache,
-    protected geosearch: GeoSearch,
-  ) {
-    super(mapCache);
-  }
 
   public triggerSearch() {
     this.onSearchTriggered.emit();

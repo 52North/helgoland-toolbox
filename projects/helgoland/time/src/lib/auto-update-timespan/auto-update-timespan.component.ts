@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { Time, Timespan } from '@helgoland/core';
 
 @Component({
@@ -8,6 +8,8 @@ import { Time, Timespan } from '@helgoland/core';
   standalone: true,
 })
 export class AutoUpdateTimespanComponent {
+  protected timeSrvc = inject(Time);
+
   /**
    * optional timeinterval in seconds to be added to current timespan. If not set, the refreshInterval is selected.
    */
@@ -32,8 +34,6 @@ export class AutoUpdateTimespanComponent {
 
   public toggleAutoUpdate = false;
   private timer = false;
-
-  constructor(protected timeSrvc: Time) {}
 
   public toggleUpdateTimeinterval() {
     this.toggleAutoUpdate = !this.toggleAutoUpdate;

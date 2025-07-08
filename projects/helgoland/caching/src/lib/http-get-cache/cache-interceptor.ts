@@ -1,5 +1,5 @@
 import { HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   HttpRequestOptions,
   HttpServiceHandler,
@@ -13,14 +13,16 @@ import { CacheConfig, CacheConfigService } from './../config';
 
 @Injectable()
 export class CachingInterceptor implements HttpServiceInterceptor {
+  protected cache = inject(HttpCache);
+  protected ongoingCache = inject(OnGoingHttpCache);
+  protected config = inject<CacheConfig>(CacheConfigService, {
+    optional: true,
+  });
+
   private logging: boolean;
 
-  constructor(
-    protected cache: HttpCache,
-    protected ongoingCache: OnGoingHttpCache,
-    @Optional() @Inject(CacheConfigService) config: CacheConfig,
-  ) {
-    this.logging = config?.logging || false;
+  constructor() {
+    this.logging = this.config?.logging || false;
   }
 
   public intercept(

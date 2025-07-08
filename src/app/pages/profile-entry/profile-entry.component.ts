@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TimedDatasetOptions } from '@helgoland/core';
 import { HelgolandDatasetlistModule } from '@helgoland/depiction';
@@ -11,6 +11,8 @@ import { StyleModificationComponent } from '../../components/style-modification/
   imports: [HelgolandDatasetlistModule, MatDialogModule],
 })
 export class ProfileEntryComponent {
+  private dialog = inject(MatDialog);
+
   public id =
     'http://nexos.demo.52north.org/52n-sos-nexos-test/api/__quantity-profile_12';
 
@@ -21,7 +23,7 @@ export class ProfileEntryComponent {
 
   public datasetOptions2: TimedDatasetOptions[] = [];
 
-  constructor(private dialog: MatDialog) {
+  constructor() {
     this.datasetOptions.push(
       new TimedDatasetOptions(this.id, '#00FF00', 1491178657000),
     );

@@ -1,6 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Clipboard } from '@angular/cdk/clipboard';
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
@@ -14,6 +14,11 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   imports: [MatIconModule, TranslateModule, MatTooltipModule, MatButtonModule],
 })
 export class ShareButtonComponent {
+  private clipboard = inject(Clipboard);
+  private snackBar = inject(MatSnackBar);
+  private translate = inject(TranslateService);
+  private liveAnnouncer = inject(LiveAnnouncer);
+
   @Input() public generatedUrlFunction: (() => string) | undefined;
 
   private readonly snackBarConfig: MatSnackBarConfig = {
@@ -21,13 +26,6 @@ export class ShareButtonComponent {
     verticalPosition: 'bottom',
     horizontalPosition: 'center',
   };
-
-  constructor(
-    private clipboard: Clipboard,
-    private snackBar: MatSnackBar,
-    private translate: TranslateService,
-    private liveAnnouncer: LiveAnnouncer,
-  ) {}
 
   public shareState() {
     if (this.generatedUrlFunction) {

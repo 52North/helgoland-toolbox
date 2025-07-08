@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { Layer } from 'ol/layer';
 import { TileWMS } from 'ol/source';
 
@@ -13,6 +13,8 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
   standalone: true,
 })
 export class OlLayerLegendUrlComponent {
+  private wmsCaps = inject(WmsCapabilitiesService);
+
   @Input({ required: true })
   layer!: Layer;
 
@@ -20,8 +22,6 @@ export class OlLayerLegendUrlComponent {
    * Returns the legend url
    */
   @Output() legendUrl: EventEmitter<string> = new EventEmitter();
-
-  constructor(private wmsCaps: WmsCapabilitiesService) {}
 
   public deliverLegendUrl() {
     const source = this.layer.getSource();

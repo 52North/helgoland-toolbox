@@ -1,5 +1,5 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Injectable, Optional } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   BarRenderingHints,
   ColorService,
@@ -65,6 +65,19 @@ export abstract class TimeseriesService {
 export class TimeseriesServiceImpl
   implements TimeseriesService, DatasetStateService, DatasetFavoriteService
 {
+  protected servicesConnector = inject(HelgolandServicesConnector);
+  protected localStorage = inject(LocalStorage);
+  protected timeSrvc = inject(Time);
+  protected sumValues = inject(SumValuesService);
+  protected colorService = inject(ColorService);
+  protected translate = inject(TranslateService);
+  protected graphDatasetsSrvc = inject(DatasetsService);
+  protected errorHandler = inject(D3SeriesGraphErrorHandler, {
+    optional: true,
+  })!;
+  protected notifier = inject(NotifierService);
+  protected la = inject(LiveAnnouncer);
+
   private state = new Map<string, SaveState>();
   private favorites: {
     [key: string]: FavoriteSaveState;
@@ -79,25 +92,13 @@ export class TimeseriesServiceImpl
     timespanBufferFactor: 0.2,
   };
 
-  constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    protected localStorage: LocalStorage,
-    protected timeSrvc: Time,
-    protected sumValues: SumValuesService,
-    protected colorService: ColorService,
-    protected translate: TranslateService,
-    protected graphDatasetsSrvc: DatasetsService,
-    @Optional()
-    protected errorHandler: D3SeriesGraphErrorHandler,
-    protected notifier: NotifierService,
-    protected la: LiveAnnouncer,
-  ) {
+  constructor() {
     this.graphDatasetsSrvc.timespanChanged.subscribe(() =>
       this.datasetMap.forEach((dataset) =>
         this.loadDatasetData(dataset.internalId),
       ),
     );
-    if (!errorHandler) {
+    if (!this.errorHandler) {
       this.errorHandler = new D3SeriesSimpleGraphErrorHandler();
     }
     this.loadFavorites();

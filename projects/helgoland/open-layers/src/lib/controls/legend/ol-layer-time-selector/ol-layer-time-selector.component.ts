@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TzDatePipe } from '@helgoland/core';
 import BaseLayer from 'ol/layer/Base';
@@ -16,6 +16,8 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
   imports: [FormsModule, TzDatePipe],
 })
 export class OlLayerTimeSelectorComponent implements OnInit {
+  protected wmsCaps = inject(WmsCapabilitiesService);
+
   @Input({ required: true }) layer!: BaseLayer;
 
   public currentTime: Date | undefined;
@@ -27,8 +29,6 @@ export class OlLayerTimeSelectorComponent implements OnInit {
   protected layerSource: TileWMS | undefined;
   protected layerid: string | undefined;
   protected url: string | undefined;
-
-  constructor(protected wmsCaps: WmsCapabilitiesService) {}
 
   ngOnInit() {
     if (this.layer instanceof Layer) {

@@ -9,6 +9,7 @@ import {
   OnDestroy,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -36,6 +37,13 @@ export abstract class DatasetPresenterComponent<
   extends ResizableComponent
   implements OnChanges, DoCheck, OnDestroy
 {
+  protected iterableDiffers = inject(IterableDiffers);
+  protected servicesConnector = inject(HelgolandServicesConnector);
+  protected datasetIdResolver = inject(InternalIdHandler);
+  protected timeSrvc = inject(Time);
+  protected translateService = inject(TranslateService);
+  protected timezoneSrvc = inject(TimezoneService);
+
   /**
    * List of presented dataset ids.
    */
@@ -113,14 +121,7 @@ export abstract class DatasetPresenterComponent<
   private langChangeSubscription: Subscription;
   private timezoneSubscription: Subscription;
 
-  constructor(
-    protected iterableDiffers: IterableDiffers,
-    protected servicesConnector: HelgolandServicesConnector,
-    protected datasetIdResolver: InternalIdHandler,
-    protected timeSrvc: Time,
-    protected translateService: TranslateService,
-    protected timezoneSrvc: TimezoneService,
-  ) {
+  constructor() {
     super();
     this.datasetIdsDiffer = this.iterableDiffers.find([]).create();
     this.selectedDatasetIdsDiffer = this.iterableDiffers.find([]).create();

@@ -8,9 +8,6 @@ import {
 import { Timespan } from '@helgoland/core';
 import * as d3 from 'd3';
 
-import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
-import { D3GraphId } from '../../../helper/d3-graph-id.service';
-import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import {
   AdjustBackgroundOptions,
@@ -43,14 +40,6 @@ export class D3GraphOverviewSelectionComponent
 
   private previousTimespan: Timespan | undefined;
   private previousGraphExtent: D3GraphExtent | undefined;
-
-  constructor(
-    protected override graphId: D3GraphId,
-    protected override graphs: D3Graphs,
-    protected override graphHelper: D3GraphHelperService,
-  ) {
-    super(graphId, graphs, graphHelper);
-  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['selectionTimeInterval']) {

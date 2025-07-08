@@ -8,6 +8,7 @@ import {
   OnDestroy,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import { DatasetOptions, Time, TimeInterval, Timespan } from '@helgoland/core';
 
@@ -23,6 +24,9 @@ import { D3PlotOptions } from '../models/d3-plot-options';
 export class D3SeriesGraphOverviewWrapperComponent
   implements OnChanges, AfterViewInit, OnDestroy
 {
+  protected timeSrvc = inject(Time);
+  protected cd = inject(ChangeDetectorRef);
+
   @Input({ required: true })
   public datasetIds!: string[];
 
@@ -58,10 +62,7 @@ export class D3SeriesGraphOverviewWrapperComponent
 
   private init = false;
 
-  constructor(
-    protected timeSrvc: Time,
-    protected cd: ChangeDetectorRef,
-  ) {
+  constructor() {
     if (this.presenterOptions) {
       this.presenterOptions.overview = true;
     } else {

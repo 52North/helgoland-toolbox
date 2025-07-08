@@ -1,6 +1,6 @@
 import 'moment-timezone';
 
-import { Injectable } from '@angular/core';
+import { inject } from '@angular/core';
 import { TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
 
@@ -17,13 +17,13 @@ import {
   HoverPosition,
 } from './d3-hovering-service';
 
-@Injectable()
 export class D3SimpleHoveringService extends D3HoveringService {
+  protected timezoneSrvc = inject(TimezoneService);
+  protected pointSymbolDrawer = inject(D3PointSymbolDrawerService);
+  protected graphHelper = inject(D3GraphHelperService);
+
   protected highlightRect: d3.Selection<SVGGElement, any, any, any> | undefined;
   protected highlightText: d3.Selection<SVGGElement, any, any, any> | undefined;
-  protected graphHelper: D3GraphHelperService = new D3GraphHelperService(
-    this.pointSymbolDrawer,
-  );
 
   protected addLineWidth = 2; // value added to linewidth
 
@@ -35,13 +35,6 @@ export class D3SimpleHoveringService extends D3HoveringService {
   // padding to mouseposition
   private textPadding = 15;
   private rectPadding = 2;
-
-  constructor(
-    protected timezoneSrvc: TimezoneService,
-    protected pointSymbolDrawer: D3PointSymbolDrawerService,
-  ) {
-    super();
-  }
 
   public initPointHovering(elem: d3.Selection<SVGGElement, any, any, any>) {
     this.anchorElem = elem;

@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -218,12 +218,8 @@ export interface ApiV3SamplingsFilter {
   providedIn: 'root',
 })
 export class ApiV3InterfaceService extends ApiInterface {
-  constructor(
-    protected httpService: HttpService,
-    protected internalIdHander: InternalIdHandler,
-  ) {
-    super();
-  }
+  protected httpService = inject(HttpService);
+  protected internalIdHander = inject(InternalIdHandler);
 
   public getServices(
     apiUrl: string,

@@ -1,5 +1,12 @@
 import { NgClass } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
 import {
   DatasetType,
   HelgolandDataset,
@@ -22,6 +29,9 @@ export class SelectableDataset extends HelgolandTimeseries {
   imports: [NgClass, HelgolandLabelMapperModule, TzDatePipe],
 })
 export class DatasetByStationSelectorComponent implements OnInit {
+  protected servicesConnector = inject(HelgolandServicesConnector);
+  protected translateSrvc = inject(TranslateService);
+
   @Input({ required: true })
   public station!: HelgolandPlatform;
 
@@ -43,11 +53,6 @@ export class DatasetByStationSelectorComponent implements OnInit {
   public othersList: SelectableDataset[] = [];
 
   public counter = 0;
-
-  constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    public translateSrvc: TranslateService,
-  ) {}
 
   public ngOnInit() {
     this.servicesConnector

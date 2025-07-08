@@ -4,6 +4,7 @@ import {
   Input,
   OnInit,
   ViewEncapsulation,
+  inject,
 } from '@angular/core';
 import { View } from 'ol';
 import { Control } from 'ol/control';
@@ -32,6 +33,9 @@ import { OlMapId } from '../services/mapid.service';
   standalone: true,
 })
 export class OlMapComponent implements OnInit, AfterViewInit {
+  private mapService = inject(OlMapService);
+  private mapid = inject(OlMapId);
+
   /**
    * The map id, to reference this map outside of this component. If no id is given, a unique one is generated
    */
@@ -75,11 +79,6 @@ export class OlMapComponent implements OnInit, AfterViewInit {
   showAttributionControl = true;
 
   private map!: Map;
-
-  constructor(
-    private mapService: OlMapService,
-    private mapid: OlMapId,
-  ) {}
 
   ngOnInit() {
     if (this.mapId === undefined || this.mapId === null) {

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BasicAuthServiceMaintainer } from '@helgoland/auth';
 import {
   EventFilter,
@@ -20,6 +20,9 @@ import {
   imports: [CommonModule],
 })
 export class EventingComponent {
+  private basicAuthServices = inject(BasicAuthServiceMaintainer);
+  private eventingApi = inject(EventingApiService);
+
   private readonly url = '';
 
   public loading: boolean = false;
@@ -34,10 +37,7 @@ export class EventingComponent {
 
   public notificationResults: NotificationResults | undefined;
 
-  constructor(
-    private basicAuthServices: BasicAuthServiceMaintainer,
-    private eventingApi: EventingApiService,
-  ) {
+  constructor() {
     this.basicAuthServices.registerService(this.url);
   }
 

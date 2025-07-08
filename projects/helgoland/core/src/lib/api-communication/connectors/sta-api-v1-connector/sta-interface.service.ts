@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 
 import { UriParameterCoder } from '../../../dataset-api/api-interface';
@@ -64,7 +64,7 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class StaInterfaceService {
-  constructor(protected httpService: HttpService) {}
+  protected httpService = inject(HttpService);
 
   getThings(
     url: string,

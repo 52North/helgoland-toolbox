@@ -1,10 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-  DatasetOptions,
-  HelgolandServicesConnector,
-  InternalIdHandler,
-} from '@helgoland/core';
-import { TranslateService } from '@ngx-translate/core';
+import { DatasetOptions } from '@helgoland/core';
 
 import { SimpleTimeseriesEntryComponent } from '../simple-timeseries-entry/simple-timeseries-entry.component';
 
@@ -38,14 +33,6 @@ export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryC
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public onShowGeometry: EventEmitter<GeoJSON.GeoJsonObject> =
     new EventEmitter();
-
-  constructor(
-    protected override servicesConnector: HelgolandServicesConnector,
-    protected override internalIdHandler: InternalIdHandler,
-    protected override translateSrvc: TranslateService,
-  ) {
-    super(servicesConnector, internalIdHandler, translateSrvc);
-  }
 
   public toggleVisibility() {
     this.datasetOptions.visible = !this.datasetOptions.visible;

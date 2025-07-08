@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import {
   ColorService,
@@ -85,6 +85,16 @@ class HoveringTestService extends D3SimpleHoveringService {
   ],
 })
 export class GraphLegendComponent {
+  private color = inject(ColorService);
+  private cdr = inject(ChangeDetectorRef);
+  private dialog = inject(MatDialog);
+  private time = inject(Time);
+  private definedTime = inject(DefinedTimespanService);
+  internalIdHandler = inject(InternalIdHandler);
+  private http = inject(HttpClient);
+  protected timezoneSrvc = inject(TimezoneService);
+  protected pointSymbolDrawer = inject(D3PointSymbolDrawerService);
+
   public datasetIds = [
     'https://fluggs.wupperverband.de/sws5/api/__26',
     'https://fluggs.wupperverband.de/sws5/api/__49',
@@ -105,10 +115,7 @@ export class GraphLegendComponent {
   public timespan;
   public yaxisModifier = true;
 
-  public hoveringService = new HoveringTestService(
-    this.timezoneSrvc,
-    this.pointSymbolDrawer,
-  );
+  public hoveringService = new HoveringTestService();
 
   public loadings: Set<string> = new Set();
 
@@ -155,17 +162,7 @@ export class GraphLegendComponent {
   public timeIntervalUpdateTimespan = 100000; // milliseconds of time
   public refreshIntervalUpdateTimespan = 2; // seconds to refresh again
 
-  constructor(
-    private color: ColorService,
-    private cdr: ChangeDetectorRef,
-    private dialog: MatDialog,
-    private time: Time,
-    private definedTime: DefinedTimespanService,
-    public internalIdHandler: InternalIdHandler,
-    private http: HttpClient,
-    protected timezoneSrvc: TimezoneService,
-    protected pointSymbolDrawer: D3PointSymbolDrawerService,
-  ) {
+  constructor() {
     this.datasetIds.forEach((entry) => {
       const option = new DatasetOptions(entry, this.color.getColor());
       option.generalize = true;

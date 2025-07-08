@@ -4,16 +4,15 @@ import {
   Directive,
   EventEmitter,
   Input,
-  KeyValueDiffers,
   OnChanges,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import { HelgolandParameterFilter } from '@helgoland/core';
 import * as L from 'leaflet';
 
 import { CachedMapComponent } from '../base/cached-map-component';
-import { MapCache } from '../base/map-cache.service';
 import { MarkerSelectorGenerator } from './model/marker-selector-generator';
 
 @Directive()
@@ -21,6 +20,8 @@ export abstract class MapSelectorComponent<T>
   extends CachedMapComponent
   implements OnChanges, AfterViewInit
 {
+  protected cd = inject(ChangeDetectorRef);
+
   /**
    * @input The serviceUrl, where the selection should be loaded.
    */
@@ -56,14 +57,6 @@ export abstract class MapSelectorComponent<T>
   @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public onNoResultsFound: EventEmitter<boolean> = new EventEmitter();
-
-  constructor(
-    protected override mapCache: MapCache,
-    protected override kvDiffers: KeyValueDiffers,
-    protected cd: ChangeDetectorRef,
-  ) {
-    super(mapCache, kvDiffers);
-  }
 
   public ngAfterViewInit() {
     this.createMap();

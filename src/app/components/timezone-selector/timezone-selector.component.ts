@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { TimezoneService } from '@helgoland/core';
 
@@ -9,9 +9,9 @@ import { TimezoneService } from '@helgoland/core';
   imports: [MatSelectModule],
 })
 export class TimezoneSelectorComponent implements OnInit {
-  public timezone: string | undefined;
+  private timezoneSrvc = inject(TimezoneService);
 
-  constructor(private timezoneSrvc: TimezoneService) {}
+  public timezone: string | undefined;
 
   ngOnInit() {
     this.timezone = this.timezoneSrvc.getTimezoneName();

@@ -29,7 +29,7 @@ import { firstValueFrom, forkJoin, from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AppComponent } from './app/app.component';
-import { TrajectoryViewComponent } from './app/components/trajectory-view/trajectory-view.component';
+
 import {
   AppConfig,
   ConfigurationService,
@@ -87,7 +87,7 @@ bootstrapApplication(AppComponent, {
       {
         path: '**',
         pathMatch: 'full',
-        component: TrajectoryViewComponent,
+        loadComponent: () => import('./app/components/trajectory-view/trajectory-view.component').then(m => m.TrajectoryViewComponent),
       },
     ]),
     provideAnimations(),

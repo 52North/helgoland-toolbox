@@ -1,12 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
 import { Delaunay } from 'd3-delaunay';
 import moment from 'moment';
 
-import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
-import { D3GraphId } from '../../../helper/d3-graph-id.service';
-import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { D3PointSymbolDrawerService } from '../../../helper/d3-point-symbol-drawer.service';
 import { D3HoveringService } from '../../../helper/hovering/d3-hovering-service';
 import { D3SimpleHoveringService } from '../../../helper/hovering/d3-simple-hovering.service';
@@ -49,8 +46,11 @@ export class D3GraphHoverPointComponent
   extends D3SeriesGraphControl
   implements D3GraphObserver
 {
+  protected timezoneSrvc = inject(TimezoneService);
+  protected pointSymbolDrawer = inject(D3PointSymbolDrawerService);
+
   @Input() public hoveringService: D3HoveringService =
-    new D3SimpleHoveringService(this.timezoneSrvc, this.pointSymbolDrawer);
+    new D3SimpleHoveringService();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() public onHighlightChanged: EventEmitter<HighlightOutput> =
@@ -67,16 +67,6 @@ export class D3GraphHoverPointComponent
 
   protected previousBars: BarHoverElement[] = [];
   protected data: Map<string, GraphDataEntry[]> | undefined;
-
-  constructor(
-    protected override graphId: D3GraphId,
-    protected override graphs: D3Graphs,
-    protected override graphHelper: D3GraphHelperService,
-    protected timezoneSrvc: TimezoneService,
-    protected pointSymbolDrawer: D3PointSymbolDrawerService,
-  ) {
-    super(graphId, graphs, graphHelper);
-  }
 
   public graphInitialized(graph: D3GraphInterface) {
     this.d3Graph = graph;
