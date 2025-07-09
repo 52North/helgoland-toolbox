@@ -2,12 +2,11 @@
 // seems to be unused
 import {
   Component,
-  EventEmitter,
   Input,
   OnChanges,
-  Output,
   SimpleChanges,
   inject,
+  output,
 } from '@angular/core';
 import {
   FilteredProvider,
@@ -50,10 +49,8 @@ export class ListSelectorComponent implements OnChanges {
   @Input()
   public selectorId: string;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onDatasetSelection: EventEmitter<HelgolandDataset[]> =
-    new EventEmitter<HelgolandDataset[]>();
+  readonly onDatasetSelection = output<HelgolandDataset[]>();
 
   public activePanel: string;
 

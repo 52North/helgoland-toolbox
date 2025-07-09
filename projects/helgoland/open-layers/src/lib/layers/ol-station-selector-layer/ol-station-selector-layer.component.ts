@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, Input, inject, output } from '@angular/core';
 import {
   HelgolandParameterFilter,
   HelgolandPlatform,
@@ -61,24 +61,20 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
   /**
    * Inform, when a station is selected
    */
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  onSelected: EventEmitter<HelgolandPlatform> =
-    new EventEmitter<HelgolandPlatform>();
+  readonly onSelected = output<HelgolandPlatform>();
 
   /**
    * Inform, while stations are loaded
    */
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  onContentLoading: EventEmitter<boolean> = new EventEmitter();
+  readonly onContentLoading = output<boolean>();
 
   /**
    * Inform, when no stations are found
    */
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  onNoResultsFound: EventEmitter<boolean> = new EventEmitter();
+  readonly onNoResultsFound = output<boolean>();
 
   private map!: Map;
 

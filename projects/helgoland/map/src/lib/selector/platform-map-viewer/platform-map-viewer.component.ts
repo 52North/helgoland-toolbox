@@ -1,11 +1,10 @@
 import {
   AfterViewInit,
   Component,
-  EventEmitter,
   Input,
   OnChanges,
-  Output,
   SimpleChanges,
+  output,
 } from '@angular/core';
 import { HelgolandPlatform } from '@helgoland/core';
 import { Feature } from 'geojson';
@@ -28,8 +27,7 @@ export class PlatformMapViewerComponent
   @Input() public customMarkerIcon: L.Icon | undefined;
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onSelectedPlatform: EventEmitter<HelgolandPlatform> =
-    new EventEmitter();
+  public readonly onSelectedPlatform = output<HelgolandPlatform>();
 
   private geometryOnMap: L.GeoJSON | undefined;
 

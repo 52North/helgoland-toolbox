@@ -1,11 +1,10 @@
 import {
   Component,
-  EventEmitter,
   Input,
   OnChanges,
-  Output,
   SimpleChanges,
   inject,
+  output,
 } from '@angular/core';
 import {
   FirstLastValue,
@@ -36,9 +35,8 @@ export class FirstLatestTimeseriesEntryComponent
   @Input()
   public timeInterval: TimeInterval | undefined;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onSelectDate: EventEmitter<Date> = new EventEmitter();
+  readonly onSelectDate = output<Date>();
 
   public firstValue: FirstLastValue | undefined;
   public lastValue: FirstLastValue | undefined;

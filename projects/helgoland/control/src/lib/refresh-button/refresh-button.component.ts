@@ -1,13 +1,12 @@
 import { NgClass } from '@angular/common';
 import {
   Component,
-  EventEmitter,
   Input,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
   inject,
+  output,
 } from '@angular/core';
 import { Settings, SettingsService } from '@helgoland/core';
 
@@ -25,8 +24,7 @@ export class RefreshButtonComponent implements OnChanges, OnInit {
   @Input()
   public toggled: boolean | undefined;
 
-  @Output()
-  public refreshing: EventEmitter<boolean> = new EventEmitter();
+  public readonly refreshing = output<boolean>();
 
   private interval: number | undefined;
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, Input, inject, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import * as L from 'leaflet';
 
@@ -26,14 +26,13 @@ export class GeosearchControlComponent extends MapControlComponent {
    * Returns the search result.
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onResultChanged: EventEmitter<GeoSearchResult> =
-    new EventEmitter();
+  public readonly onResultChanged = output<GeoSearchResult | undefined>();
 
   /**
    * Informs, when the search is triggered.
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onSearchTriggered: EventEmitter<void> = new EventEmitter();
+  public readonly onSearchTriggered = output<void>();
 
   public result: GeoSearchResult | undefined;
 

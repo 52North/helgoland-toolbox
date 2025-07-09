@@ -1,11 +1,10 @@
 import {
   AfterViewInit,
   Component,
-  EventEmitter,
   Input,
   OnDestroy,
   OnInit,
-  Output,
+  output,
 } from '@angular/core';
 import { CachedMapComponent } from '@helgoland/map';
 import * as L from 'leaflet';
@@ -48,13 +47,12 @@ export class ResultMapComponent
 
   @Input() public nextResultsZoom = true;
 
-  @Output() public selectedFeature: EventEmitter<{
+  public readonly selectedFeature = output<{
     feature: FacetSearchElementFeature;
     url: string;
-  }> = new EventEmitter();
+  }>();
 
-  @Output() public selectedEntry: EventEmitter<FacetSearchElement> =
-    new EventEmitter();
+  public readonly selectedEntry = output<FacetSearchElement>();
 
   private markerFeatureGroup: L.FeatureGroup | undefined;
   private resultsSubs: Subscription | undefined;
@@ -112,7 +110,7 @@ export class ResultMapComponent
           const nextKey = features.keys().next().value;
           if (nextKey) {
             const entry = features.get(nextKey);
-            this.selectedFeature.emit(entry);
+            entry && this.selectedFeature.emit(entry);
           }
         }
       } else {

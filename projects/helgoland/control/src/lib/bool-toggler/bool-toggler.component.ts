@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 
 @Component({
   selector: 'n52-bool-toggler',
@@ -16,9 +16,8 @@ export class BoolTogglerComponent {
   @Input()
   public tooltip: string | undefined;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onToggled: EventEmitter<boolean> = new EventEmitter();
+  public readonly onToggled = output<boolean>();
 
   public toggle() {
     this.onToggled.emit(!this.value);

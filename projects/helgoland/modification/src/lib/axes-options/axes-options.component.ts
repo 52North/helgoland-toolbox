@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, output } from '@angular/core';
 
 @Component({
   selector: 'n52-axes-options',
@@ -6,9 +6,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   standalone: true,
 })
 export class AxesOptionsComponent {
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onChangeYAxesVisibility: EventEmitter<void> = new EventEmitter();
+  readonly onChangeYAxesVisibility = output<void>();
 
   public changeYAxesVisibility() {
     this.onChangeYAxesVisibility.emit();

@@ -2,13 +2,12 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
-  Output,
   SimpleChanges,
   inject,
+  output,
 } from '@angular/core';
 import { DatasetOptions, Time, TimeInterval, Timespan } from '@helgoland/core';
 
@@ -45,17 +44,14 @@ export class D3SeriesGraphOverviewWrapperComponent
   @Input()
   public reloadForDatasets: string[] = [];
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onTimespanChanged: EventEmitter<Timespan> = new EventEmitter();
+  readonly onTimespanChanged = output<Timespan>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onLoading: EventEmitter<boolean> = new EventEmitter();
+  readonly onLoading = output<boolean>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onContentLoading: EventEmitter<boolean> = new EventEmitter();
+  readonly onContentLoading = output<boolean>();
 
   public overviewTimespan: Timespan | undefined;
   public timespan!: Timespan;

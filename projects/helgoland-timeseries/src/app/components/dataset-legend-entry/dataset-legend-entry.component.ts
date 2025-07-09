@@ -1,13 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChanges,
-  inject,
-} from '@angular/core';
+import { Component, effect, inject, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -43,7 +35,7 @@ import { TimeseriesEntrySymbolComponent } from '../timeseries-entry-symbol/times
     TranslateModule,
   ],
 })
-export class DatasetLegendEntryComponent implements OnChanges {
+export class DatasetLegendEntryComponent {
   protected translateSrvc = inject(TranslateService);
   protected timeSrvc = inject(Time);
   private dialog = inject(MatDialog);
@@ -53,25 +45,20 @@ export class DatasetLegendEntryComponent implements OnChanges {
   // loading = false;
   //
 
-  @Input({ required: true })
-  dataset!: SeriesGraphDataset;
+  readonly dataset = input.required<SeriesGraphDataset>();
 
-  @Input({ required: true })
-  selected!: boolean;
+  readonly selected = input.required<boolean>();
 
-  @Input({ required: true })
-  timeInterval!: TimeInterval | undefined;
+  readonly timeInterval = input.required<TimeInterval | undefined>();
 
-  @Output() datasetDeleted: EventEmitter<void> = new EventEmitter();
+  readonly datasetDeleted = output<void>();
 
-  @Output() selectDate: EventEmitter<Date> = new EventEmitter();
+  readonly selectDate = output<Date>();
 
   hasData = true;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['timeInterval']) {
-      this.checkDataInTimespan();
-    }
+  constructor() {
+    effect(() => this.checkDataInTimespan());
   }
 
   removeDataset() {
@@ -79,54 +66,54 @@ export class DatasetLegendEntryComponent implements OnChanges {
   }
 
   toggleSelection() {
-    this.dataset.setSelected(!this.dataset.selected);
+    this.dataset().setSelected(!this.dataset().selected);
   }
 
   toggleVisibility() {
-    this.dataset.setVisible(!this.dataset.visible);
+    this.dataset().setVisible(!this.dataset().visible);
   }
 
   editDatasetOptions() {
     const dialogRef = this.dialog.open(ModalEditTimeseriesOptionsComponent, {
       data: {
-        dataset: this.dataset,
+        dataset: this.dataset(),
       },
     });
   }
 
   toggleSeparateYAxis() {
-    const yAxis = this.dataset.yAxis;
+    const yAxis = this.dataset().yAxis;
     yAxis.separate = !yAxis.separate;
-    this.dataset.setYAxis(yAxis);
+    this.dataset().setYAxis(yAxis);
   }
 
   jumpToFirstTimeStamp() {
-    if (this.dataset.description.firstValue) {
-      this.selectDate.emit(
-        new Date(this.dataset.description.firstValue.timestamp),
-      );
+    const dataset = this.dataset();
+    if (dataset.description.firstValue) {
+      this.selectDate.emit(new Date(dataset.description.firstValue.timestamp));
     }
   }
 
   jumpToLastTimeStamp() {
-    if (this.dataset.description.lastValue) {
-      this.selectDate.emit(
-        new Date(this.dataset.description.lastValue.timestamp),
-      );
+    const dataset = this.dataset();
+    if (dataset.description.lastValue) {
+      this.selectDate.emit(new Date(dataset.description.lastValue.timestamp));
     }
   }
 
   private checkDataInTimespan() {
+    const dataset = this.dataset();
+    const timeInterval = this.timeInterval();
     if (
-      this.timeInterval &&
-      this.dataset.description &&
-      this.dataset.description.firstValue &&
-      this.dataset.description.lastValue
+      timeInterval &&
+      dataset.description &&
+      dataset.description.firstValue &&
+      dataset.description.lastValue
     ) {
       this.hasData = this.timeSrvc.overlaps(
-        this.timeInterval,
-        this.dataset.description.firstValue.timestamp,
-        this.dataset.description.lastValue.timestamp,
+        timeInterval,
+        dataset.description.firstValue.timestamp,
+        dataset.description.lastValue.timestamp,
       );
     }
   }

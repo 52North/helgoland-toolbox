@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 import { DatasetOptions } from '@helgoland/core';
 
 import { SimpleTimeseriesEntryComponent } from '../simple-timeseries-entry/simple-timeseries-entry.component';
@@ -21,18 +21,14 @@ export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryC
   @Input()
   public highlight: boolean | undefined;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onUpdateOptions: EventEmitter<DatasetOptions> = new EventEmitter();
+  readonly onUpdateOptions = output<DatasetOptions>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onEditOptions: EventEmitter<DatasetOptions> = new EventEmitter();
+  readonly onEditOptions = output<DatasetOptions>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onShowGeometry: EventEmitter<GeoJSON.GeoJsonObject> =
-    new EventEmitter();
+  readonly onShowGeometry = output<GeoJSON.GeoJsonObject>();
 
   public toggleVisibility() {
     this.datasetOptions.visible = !this.datasetOptions.visible;
@@ -44,7 +40,7 @@ export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryC
   }
 
   public showGeometry() {
-    if (this.dataset) {
+    if (this.dataset?.platform.geometry) {
       this.onShowGeometry.emit(this.dataset.platform.geometry);
     }
   }

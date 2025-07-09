@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, Input, inject, output } from '@angular/core';
 import { TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
 import { Delaunay } from 'd3-delaunay';
@@ -53,8 +53,7 @@ export class D3GraphHoverPointComponent
     new D3SimpleHoveringService();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onHighlightChanged: EventEmitter<HighlightOutput> =
-    new EventEmitter();
+  public readonly onHighlightChanged = output<HighlightOutput>();
 
   protected d3Graph: D3GraphInterface | undefined;
   protected drawLayer: d3.Selection<SVGGElement, any, any, any> | undefined;

@@ -87,7 +87,10 @@ bootstrapApplication(AppComponent, {
       {
         path: '**',
         pathMatch: 'full',
-        loadComponent: () => import('./app/components/trajectory-view/trajectory-view.component').then(m => m.TrajectoryViewComponent),
+        loadComponent: () =>
+          import(
+            './app/components/trajectory-view/trajectory-view.component'
+          ).then((m) => m.TrajectoryViewComponent),
       },
     ]),
     provideAnimations(),

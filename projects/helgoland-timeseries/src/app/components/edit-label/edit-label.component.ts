@@ -3,12 +3,11 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  EventEmitter,
-  Input,
   OnInit,
-  Output,
   ViewChild,
   inject,
+  input,
+  output,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -34,16 +33,16 @@ export class EditLabelComponent implements AfterViewInit, OnInit {
 
   fc = new FormControl('');
 
-  @Input() label: string | undefined;
+  readonly label = input<string>();
 
-  @Output() labelChanged: EventEmitter<string> = new EventEmitter();
+  readonly labelChanged = output<string>();
 
   @ViewChild('input') firstItem!: ElementRef;
 
   editedLabel: string | undefined;
 
   ngOnInit(): void {
-    this.editedLabel = this.label;
+    this.editedLabel = this.label();
   }
 
   ngAfterViewInit(): void {
@@ -56,10 +55,14 @@ export class EditLabelComponent implements AfterViewInit, OnInit {
   }
 
   public clear() {
-    this.labelChanged.emit(this.label);
+    if (this.label() !== undefined) {
+      this.labelChanged.emit(this.label()!);
+    }
   }
 
   public confirm() {
-    this.labelChanged.emit(this.editedLabel);
+    if (this.editedLabel) {
+      this.labelChanged.emit(this.editedLabel);
+    }
   }
 }

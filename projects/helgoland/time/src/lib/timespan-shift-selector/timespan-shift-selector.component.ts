@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, Input, inject, output } from '@angular/core';
 import { Time, Timespan, TzDatePipe } from '@helgoland/core';
 
 @Component({
@@ -12,14 +12,11 @@ export class TimespanShiftSelectorComponent {
   @Input({ required: true })
   public timespan!: Timespan;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onTimespanChange: EventEmitter<Timespan> =
-    new EventEmitter<Timespan>();
+  readonly onTimespanChange = output<Timespan>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onOpenTimeSettings: EventEmitter<void> = new EventEmitter();
+  readonly onOpenTimeSettings = output<void>();
 
   public back() {
     this.onTimespanChange.emit(this.timeSrvc.stepBack(this.timespan));

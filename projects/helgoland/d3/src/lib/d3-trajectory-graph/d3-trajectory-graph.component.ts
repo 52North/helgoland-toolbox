@@ -2,10 +2,9 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  EventEmitter,
   Input,
   OnChanges,
-  Output,
+  output,
   SimpleChanges,
   ViewChild,
   ViewEncapsulation,
@@ -99,19 +98,14 @@ export class D3TrajectoryGraphComponent
   @Input()
   public selection: D3SelectionRange | undefined;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onSelectionChangedFinished: EventEmitter<D3SelectionRange> =
-    new EventEmitter();
+  readonly onSelectionChangedFinished = output<D3SelectionRange>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onSelectionChanged: EventEmitter<D3SelectionRange> =
-    new EventEmitter();
+  readonly onSelectionChanged = output<D3SelectionRange>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onHoverHighlight: EventEmitter<number> = new EventEmitter();
+  readonly onHoverHighlight = output<number>();
 
   @ViewChild('dthree', { static: true })
   public d3Elem: ElementRef | undefined;
@@ -249,7 +243,7 @@ export class D3TrajectoryGraphComponent
     const datasetConstellation = this.datasetMap.get(dataset.internalId);
     const option = this.datasetOptions?.get(dataset.internalId);
     if (this.timespan && datasetConstellation && option?.visible) {
-      this.onContentLoading.next(true);
+      this.onContentLoading.emit(true);
       const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
       this.servicesConnector
         .getDatasetData(dataset, buffer, { generalize: option.generalize })
@@ -259,13 +253,13 @@ export class D3TrajectoryGraphComponent
             datasetConstellation.data = result.values;
             this.processDataForId(dataset.internalId);
             this.drawLineGraph();
-            this.onContentLoading.next(false);
+            this.onContentLoading.emit(false);
           },
           error: (error) => {
             console.error(
               `Error while loading data for ${dataset.internalId}: ${error}`,
             );
-            this.onContentLoading.next(false);
+            this.onContentLoading.emit(false);
           },
         });
     } else {

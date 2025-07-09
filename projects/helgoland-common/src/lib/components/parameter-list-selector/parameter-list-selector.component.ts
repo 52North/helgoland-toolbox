@@ -19,6 +19,8 @@ export class ParameterListSelectorComponent extends MultiServiceFilterSelectorCo
 
   public selectionChanged(selection: MatSelectionListChange) {
     const match = this.items.find((e) => e.id === selection.options[0].value);
-    this.onItemSelected.emit(match);
+    if (match) {
+      this.onItemSelected.emit(match);
+    }
   }
 }

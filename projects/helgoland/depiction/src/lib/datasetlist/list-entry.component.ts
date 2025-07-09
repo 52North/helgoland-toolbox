@@ -1,11 +1,10 @@
 import {
   Directive,
-  EventEmitter,
   Input,
   OnDestroy,
   OnInit,
-  Output,
   inject,
+  output,
 } from '@angular/core';
 import { InternalDatasetId, InternalIdHandler } from '@helgoland/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
@@ -28,13 +27,11 @@ export abstract class ListEntryComponent implements OnInit, OnDestroy {
   @Input()
   public selected: boolean | undefined;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onDeleteDataset: EventEmitter<boolean> = new EventEmitter();
+  readonly onDeleteDataset = output<boolean>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onSelectDataset: EventEmitter<boolean> = new EventEmitter();
+  readonly onSelectDataset = output<boolean>();
 
   public loading: boolean | undefined;
 

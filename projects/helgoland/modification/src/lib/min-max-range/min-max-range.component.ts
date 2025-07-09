@@ -1,13 +1,12 @@
 import {
   Component,
-  EventEmitter,
   Input,
   OnChanges,
-  Output,
   SimpleChanges,
+  output,
 } from '@angular/core';
-import { MinMaxRange } from '@helgoland/core';
 import { FormsModule } from '@angular/forms';
+import { MinMaxRange } from '@helgoland/core';
 
 @Component({
   selector: 'n52-min-max-range',
@@ -22,9 +21,8 @@ export class MinMaxRangeComponent implements OnChanges {
   @Input()
   public range: MinMaxRange | undefined;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onRangeChange: EventEmitter<MinMaxRange> = new EventEmitter();
+  readonly onRangeChange = output<MinMaxRange | void>();
 
   public ngOnChanges(changes: SimpleChanges) {
     if (changes['range'] && this.range) {

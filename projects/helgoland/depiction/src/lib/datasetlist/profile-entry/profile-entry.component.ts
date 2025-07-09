@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, Input, inject, output } from '@angular/core';
 import {
   DatasetFilter,
   DatasetType,
@@ -34,29 +34,20 @@ export class ProfileEntryComponent extends ListEntryComponent {
   @Input()
   public datasetOptions: TimedDatasetOptions[] | undefined;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onUpdateOptions: EventEmitter<TimedDatasetOptions[]> =
-    new EventEmitter();
+  readonly onUpdateOptions = output<TimedDatasetOptions[]>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onDeleteDatasetOptions: EventEmitter<TimedDatasetOptions> =
-    new EventEmitter();
+  readonly onDeleteDatasetOptions = output<TimedDatasetOptions>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onEditOptions: EventEmitter<TimedDatasetOptions> = new EventEmitter();
+  readonly onEditOptions = output<TimedDatasetOptions>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onOpenInCombiView: EventEmitter<TimedDatasetOptions> =
-    new EventEmitter();
+  readonly onOpenInCombiView = output<TimedDatasetOptions>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onShowGeometry: EventEmitter<GeoJSON.GeoJsonObject> =
-    new EventEmitter();
+  readonly onShowGeometry = output<GeoJSON.GeoJsonObject>();
 
   public dataset: HelgolandProfile | undefined;
 
@@ -73,7 +64,9 @@ export class ProfileEntryComponent extends ListEntryComponent {
 
   public toggleVisibility(options: TimedDatasetOptions) {
     options.visible = !options.visible;
-    this.onUpdateOptions.emit(this.datasetOptions);
+    if (this.datasetOptions) {
+      this.onUpdateOptions.emit(this.datasetOptions);
+    }
   }
 
   public openInCombiView(option: TimedDatasetOptions) {
@@ -97,7 +90,11 @@ export class ProfileEntryComponent extends ListEntryComponent {
     } else if (dataset.parameters.platform) {
       this.servicesConnector
         .getPlatform(dataset.parameters.platform.id, internalId.url)
-        .subscribe((station) => this.onShowGeometry.emit(station.geometry));
+        .subscribe((station) => {
+          if (station.geometry) {
+            this.onShowGeometry.emit(station.geometry);
+          }
+        });
     }
   }
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, Input, inject, output } from '@angular/core';
 import { Layer } from 'ol/layer';
 import { TileWMS } from 'ol/source';
 
@@ -21,7 +21,7 @@ export class OlLayerLegendUrlComponent {
   /**
    * Returns the legend url
    */
-  @Output() legendUrl: EventEmitter<string> = new EventEmitter();
+  readonly legendUrl = output<string>();
 
   public deliverLegendUrl() {
     const source = this.layer.getSource();

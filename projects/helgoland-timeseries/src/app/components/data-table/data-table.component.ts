@@ -1,10 +1,11 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   DoCheck,
-  Input,
   IterableDiffer,
   IterableDiffers,
   inject,
+  input,
 } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { HelgolandCoreModule, Timespan } from '@helgoland/core';
@@ -21,16 +22,15 @@ interface DatasetEventSubscriptions {
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss'],
   imports: [MatTableModule, HelgolandCoreModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataTableComponent implements DoCheck {
   protected iterableDiffers = inject(IterableDiffers);
 
-  @Input()
-  public datasets: SeriesGraphDataset[] = [];
+  readonly datasets = input<SeriesGraphDataset[]>([]);
   private datasetsDiffer: IterableDiffer<SeriesGraphDataset>;
 
-  @Input()
-  timespan: Timespan | undefined;
+  readonly timespan = input<Timespan>();
 
   private subscriptions: Map<string, DatasetEventSubscriptions> = new Map();
 
@@ -39,11 +39,19 @@ export class DataTableComponent implements DoCheck {
 
   constructor() {
     this.datasetsDiffer = this.iterableDiffers.find([]).create();
+
+    // effect(() => {
+    //   // We just have to use the source signals
+    //   // somewhere inside this effect
+    //   const currentCount = this.datasets();
+    //   // const derivedCounter = this.derivedCounter();
+    //   console.log(`current datasets: ${currentCount}`);
+    // });
   }
 
   ngDoCheck(): void {
-    const graphDatasetsChanges = this.datasetsDiffer.diff(this.datasets);
-    if (graphDatasetsChanges && this.datasets) {
+    const graphDatasetsChanges = this.datasetsDiffer.diff(this.datasets());
+    if (graphDatasetsChanges && this.datasets()) {
       graphDatasetsChanges.forEachAddedItem((addedItem) => {
         if (addedItem.item instanceof SeriesGraphDataset) {
           if (addedItem.item.hasData()) {
@@ -62,15 +70,19 @@ export class DataTableComponent implements DoCheck {
   }
 
   private calcData() {
-    if (this.timespan === undefined) return;
-    const data = this.datasets.map((ds) =>
+    const timespan = this.timespan();
+    if (timespan === undefined) return;
+    const data = this.datasets().map((ds) =>
       ds.data.map((d) => ({
         t: d.timestamp,
         v: d.value,
       })),
     );
-    this.displayedColumns = ['timestamp', ...this.datasets.map((ds) => ds.id)];
-    this.dataSource = buildTable(data, this.timespan);
+    this.displayedColumns = [
+      'timestamp',
+      ...this.datasets().map((ds) => ds.id),
+    ];
+    this.dataSource = buildTable(data, timespan);
   }
 
   private subscribeEvents(ds: SeriesGraphDataset) {

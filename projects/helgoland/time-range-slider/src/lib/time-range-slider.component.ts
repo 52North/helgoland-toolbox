@@ -2,13 +2,12 @@ import 'bootstrap-slider';
 
 import {
   Component,
-  EventEmitter,
   Input,
   OnChanges,
-  Output,
   SimpleChanges,
   ViewEncapsulation,
   inject,
+  output,
 } from '@angular/core';
 import { Timespan, TzDatePipe } from '@helgoland/core';
 // @ts-ignore
@@ -35,9 +34,8 @@ export class TimeRangeSliderComponent implements OnChanges {
   @Input({ required: true })
   public timeList!: number[];
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onTimespanSelected: EventEmitter<Timespan> = new EventEmitter();
+  readonly onTimespanSelected = output<Timespan>();
 
   public start!: number;
   public selectionStart!: number;

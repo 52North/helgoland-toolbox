@@ -1,11 +1,10 @@
 import { NgClass } from '@angular/common';
 import {
   Component,
-  EventEmitter,
   Input,
   OnChanges,
-  Output,
   SimpleChanges,
+  output,
 } from '@angular/core';
 
 @Component({
@@ -26,9 +25,8 @@ export class StringTogglerComponent implements OnChanges {
   @Input()
   public tooltip: string | undefined;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onToggled: EventEmitter<string> = new EventEmitter();
+  readonly onToggled = output<string>();
 
   public isToggled: boolean | undefined;
 
@@ -39,6 +37,8 @@ export class StringTogglerComponent implements OnChanges {
   }
 
   public toggle() {
-    this.onToggled.emit(this.option);
+    if (this.option) {
+      this.onToggled.emit(this.option);
+    }
   }
 }

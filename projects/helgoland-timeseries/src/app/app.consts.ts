@@ -1,13 +1,14 @@
 import { Routes } from '@angular/router';
 import { icon, Marker } from 'leaflet';
 
-
-
 export const ROUTES: Routes = [
   {
     path: '**',
     pathMatch: 'full',
-    loadComponent: () => import('./views/diagram-view/diagram-view.component').then(m => m.DiagramViewComponent),
+    loadComponent: () =>
+      import('./views/diagram-view/diagram-view.component').then(
+        (m) => m.DiagramViewComponent,
+      ),
   },
 ];
 

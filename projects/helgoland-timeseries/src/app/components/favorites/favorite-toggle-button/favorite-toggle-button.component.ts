@@ -1,6 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -22,14 +22,13 @@ export class FavoriteToggleButtonComponent implements OnInit {
   protected notifier = inject(NotifierService);
   protected liveAnnouncer = inject(LiveAnnouncer);
 
-  @Input({ required: true })
-  dataset!: SeriesGraphDataset;
+  readonly dataset = input.required<SeriesGraphDataset>();
 
   isFavorite = false;
   canBeFavorite = false;
 
   ngOnInit(): void {
-    this.canBeFavorite = this.favSrvc.canBeFavorite(this.dataset?.id);
+    this.canBeFavorite = this.favSrvc.canBeFavorite(this.dataset()?.id);
     if (this.canBeFavorite) {
       this.checkFavState();
       this.favSrvc.countChange.subscribe((_) => this.checkFavState());
@@ -37,7 +36,7 @@ export class FavoriteToggleButtonComponent implements OnInit {
   }
 
   private checkFavState() {
-    this.isFavorite = this.favSrvc.isFavorite(this.dataset?.id);
+    this.isFavorite = this.favSrvc.isFavorite(this.dataset()?.id);
   }
 
   toggle() {
@@ -45,22 +44,24 @@ export class FavoriteToggleButtonComponent implements OnInit {
   }
 
   protected createFavorite() {
-    this.favSrvc.createFavorite(this.dataset);
+    const dataset = this.dataset();
+    this.favSrvc.createFavorite(dataset);
     this.isFavorite = true;
     this.inform(
       `${this.translate.instant('events.add-favorite')}: ${
-        this.dataset.description.phenomenonLabel
-      } @ ${this.dataset.description.platformLabel}`,
+        dataset.description.phenomenonLabel
+      } @ ${dataset.description.platformLabel}`,
     );
   }
 
   protected removeFavorite() {
-    this.favSrvc.removeFavorite(this.dataset.id);
+    const dataset = this.dataset();
+    this.favSrvc.removeFavorite(dataset.id);
     this.isFavorite = false;
     this.inform(
       `${this.translate.instant('events.remove-favorite')}: ${
-        this.dataset.description.phenomenonLabel
-      } @ ${this.dataset.description.platformLabel}`,
+        dataset.description.phenomenonLabel
+      } @ ${dataset.description.platformLabel}`,
     );
   }
 

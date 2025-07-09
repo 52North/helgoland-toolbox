@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, Input, inject, output } from '@angular/core';
 import {
   DatasetFilter,
   DatasetOptions,
@@ -22,13 +22,11 @@ export class TrajectoryEntryComponent extends ListEntryComponent {
   @Input()
   public datasetOptions: DatasetOptions | undefined;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onUpdateOptions: EventEmitter<DatasetOptions> = new EventEmitter();
+  readonly onUpdateOptions = output<DatasetOptions>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onEditOptions: EventEmitter<DatasetOptions> = new EventEmitter();
+  readonly onEditOptions = output<DatasetOptions>();
 
   public dataset: HelgolandTrajectory | undefined;
 

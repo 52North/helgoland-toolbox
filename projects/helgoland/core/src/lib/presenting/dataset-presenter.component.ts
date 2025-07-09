@@ -1,15 +1,14 @@
 import {
   Directive,
   DoCheck,
-  EventEmitter,
   Input,
   IterableDiffer,
   IterableDiffers,
   OnChanges,
   OnDestroy,
-  Output,
   SimpleChanges,
   inject,
+  output,
 } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -86,33 +85,30 @@ export abstract class DatasetPresenterComponent<
    * Event with a list of selected datasets.
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onDatasetSelected: EventEmitter<string[]> =
-    new EventEmitter();
+  public readonly onDatasetSelected = output<string[]>();
 
   /**
    * Event when the timespan in the presentation is adjusted.
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onTimespanChanged: EventEmitter<Timespan> =
-    new EventEmitter();
+  public readonly onTimespanChanged = output<Timespan>();
 
   /**
    * Event, when there occured a message in the component.
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onMessageThrown: EventEmitter<PresenterMessage> =
-    new EventEmitter();
+  public readonly onMessageThrown = output<PresenterMessage>();
 
   /**
    * Event flag, while there is data loaded in the component.
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onContentLoading: EventEmitter<boolean> = new EventEmitter();
+  public readonly onContentLoading = output<boolean>();
 
   /**
    * Event, which triggers list of datasets where data is currently loaded.
    */
-  @Output() public dataLoaded: EventEmitter<Set<string>> = new EventEmitter();
+  public readonly dataLoaded = output<Set<string>>();
 
   protected timespan: Timespan | undefined;
 

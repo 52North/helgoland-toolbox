@@ -42,8 +42,10 @@ export class StyleModificationComponent {
     this.separateYAxis = this.option.separateYAxis;
   }
 
-  public updateRange(range: MinMaxRange) {
-    this.range = range;
+  public updateRange(range: MinMaxRange | void) {
+    if (range) {
+      this.range = range;
+    }
   }
 
   public onOk() {

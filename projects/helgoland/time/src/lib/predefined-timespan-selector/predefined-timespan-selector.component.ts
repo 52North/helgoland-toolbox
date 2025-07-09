@@ -1,12 +1,5 @@
 import { NgClass } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core';
+import { Component, Input, OnInit, inject, output } from '@angular/core';
 import {
   ParsedTimespanPreset,
   Settings,
@@ -27,10 +20,8 @@ export class PredefinedTimespanSelectorComponent implements OnInit {
   @Input({ required: true })
   public timespan!: Timespan;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onTimespanChange: EventEmitter<Timespan> =
-    new EventEmitter<Timespan>();
+  readonly onTimespanChange = output<Timespan>();
 
   public parsedTimespanPresets: ParsedTimespanPreset[] = [];
 

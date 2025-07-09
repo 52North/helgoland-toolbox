@@ -1,12 +1,5 @@
 import { NgClass } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core';
+import { Component, Input, OnInit, inject, output } from '@angular/core';
 import {
   DatasetType,
   HelgolandDataset,
@@ -44,10 +37,8 @@ export class DatasetByStationSelectorComponent implements OnInit {
   @Input()
   public phenomenonId: string | undefined;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onSelectionChanged: EventEmitter<HelgolandDataset[]> =
-    new EventEmitter<HelgolandDataset[]>();
+  readonly onSelectionChanged = output<HelgolandDataset[]>();
 
   public phenomenonMatchedList: SelectableDataset[] = [];
   public othersList: SelectableDataset[] = [];

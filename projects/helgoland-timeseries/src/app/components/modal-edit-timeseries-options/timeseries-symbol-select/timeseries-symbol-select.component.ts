@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core';
+import { Component, OnInit, inject, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -34,9 +27,9 @@ interface Symbol {
 export class TimeseriesSymbolSelectComponent implements OnInit {
   private translate = inject(TranslateService);
 
-  @Input({ required: true }) lineStyle: LineStyle | undefined;
+  readonly lineStyle = input.required<LineStyle | undefined>();
 
-  @Output() styleChanged: EventEmitter<LineStyle> = new EventEmitter();
+  readonly styleChanged = output<LineStyle>();
 
   symbols: Symbol[] = [
     {
@@ -77,29 +70,31 @@ export class TimeseriesSymbolSelectComponent implements OnInit {
   symbolSize = 1;
 
   ngOnInit() {
-    if (this.lineStyle) {
-      if (this.lineStyle.pointSymbol) {
-        this.selectedSymbol = this.lineStyle.pointSymbol.type;
-        this.symbolSize = this.lineStyle.pointSymbol.size;
+    const lineStyle = this.lineStyle();
+    if (lineStyle) {
+      if (lineStyle.pointSymbol) {
+        this.selectedSymbol = lineStyle.pointSymbol.type;
+        this.symbolSize = lineStyle.pointSymbol.size;
       } else {
         this.selectedSymbol = 'point';
-        this.symbolSize = this.lineStyle.pointRadius;
+        this.symbolSize = lineStyle.pointRadius;
       }
     }
   }
 
   adjustSymbol() {
-    if (this.lineStyle) {
+    const lineStyle = this.lineStyle();
+    if (lineStyle) {
       if (this.selectedSymbol === 'point') {
-        this.lineStyle.pointSymbol = undefined;
-        this.lineStyle.pointRadius = this.symbolSize;
+        lineStyle.pointSymbol = undefined;
+        lineStyle.pointRadius = this.symbolSize;
       } else {
-        this.lineStyle.pointSymbol = {
+        lineStyle.pointSymbol = {
           type: PointSymbolType[this.selectedSymbol],
           size: this.symbolSize,
         };
       }
-      this.styleChanged.emit(this.lineStyle);
+      this.styleChanged.emit(lineStyle);
     }
   }
 }

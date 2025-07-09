@@ -1,13 +1,12 @@
 // @ts-nocheck
 import {
   Component,
-  EventEmitter,
   inject,
   Input,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
+  output,
 } from '@angular/core';
 import {
   DatasetType,
@@ -65,14 +64,13 @@ export class DatasetExportComponent implements OnInit, OnChanges {
    * returns the metadata of the selected dataset to be visualized
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onMetadataChange: EventEmitter<HelgolandTimeseries> =
-    new EventEmitter();
+  public readonly onMetadataChange = output<HelgolandTimeseries>();
 
   /**
    * Output to inform the loading status, while file is created
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onLoadingChange: EventEmitter<boolean> = new EventEmitter();
+  public readonly onLoadingChange = output<boolean>();
 
   ngOnInit() {
     if (this.inputId) {

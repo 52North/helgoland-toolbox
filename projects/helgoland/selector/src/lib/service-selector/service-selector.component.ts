@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core';
+import { Component, Input, OnInit, inject, output } from '@angular/core';
 import {
   BlacklistedService,
   DatasetApi,
@@ -51,10 +44,8 @@ export class ServiceSelectorComponent implements OnInit {
   @Input()
   public showUnresolvableServices: boolean | undefined;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onServiceSelected: EventEmitter<HelgolandService> =
-    new EventEmitter<HelgolandService>();
+  readonly onServiceSelected = output<HelgolandService>();
 
   public services: ExtendedHelgolandService[] = [];
   public unResolvableServices: DatasetApi[] = [];

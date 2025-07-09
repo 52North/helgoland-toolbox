@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, output } from '@angular/core';
 
 @Component({
   selector: 'n52-drag-options',
@@ -6,9 +6,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
   standalone: true,
 })
 export class DragOptionsComponent {
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onTogglePanZoom: EventEmitter<void> = new EventEmitter();
+  readonly onTogglePanZoom = output<void>();
 
   public togglePanZoom() {
     this.onTogglePanZoom.emit();

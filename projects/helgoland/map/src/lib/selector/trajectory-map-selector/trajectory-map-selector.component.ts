@@ -3,12 +3,11 @@ import 'leaflet.markercluster';
 import {
   AfterViewInit,
   Component,
-  EventEmitter,
   Input,
   OnChanges,
-  Output,
   SimpleChanges,
   inject,
+  output,
 } from '@angular/core';
 import {
   HelgolandDataset,
@@ -38,9 +37,8 @@ export class ProfileTrajectoryMapSelectorComponent
   @Input({ required: true })
   public selectedTimespan!: Timespan;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onTimeListDetermined: EventEmitter<number[]> = new EventEmitter();
+  readonly onTimeListDetermined = output<number[]>();
 
   private layer: L.FeatureGroup = this.initLayer();
   private data: LocatedProfileDataEntry[] = [];

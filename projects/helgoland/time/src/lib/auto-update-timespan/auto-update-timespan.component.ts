@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, Input, inject, output } from '@angular/core';
 import { Time, Timespan } from '@helgoland/core';
 
 @Component({
@@ -28,9 +28,8 @@ export class AutoUpdateTimespanComponent {
   @Input({ required: true })
   public refreshInterval!: number;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onChangeTimespan: EventEmitter<Timespan> = new EventEmitter();
+  readonly onChangeTimespan = output<Timespan>();
 
   public toggleAutoUpdate = false;
   private timer = false;

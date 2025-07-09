@@ -1,12 +1,11 @@
 import { NgClass } from '@angular/common';
 import {
   Component,
-  EventEmitter,
   Input,
   OnChanges,
-  Output,
   SimpleChanges,
   inject,
+  output,
 } from '@angular/core';
 import {
   HelgolandParameterFilter,
@@ -42,20 +41,14 @@ export class ServiceFilterSelectorComponent
   @Input()
   public selectionId: string | undefined;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onItemSelected: EventEmitter<Parameter> =
-    new EventEmitter<Parameter>();
+  readonly onItemSelected = output<Parameter>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onItemsFound: EventEmitter<Parameter[]> = new EventEmitter<
-    Parameter[]
-  >();
+  readonly onItemsFound = output<Parameter[]>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onLoading: EventEmitter<boolean> = new EventEmitter<boolean>();
+  readonly onLoading = output<boolean>();
 
   public loading = false;
   public items: Parameter[] = [];

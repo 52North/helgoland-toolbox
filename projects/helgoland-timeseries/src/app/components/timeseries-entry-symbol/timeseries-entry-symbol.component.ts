@@ -3,11 +3,11 @@ import {
   Component,
   DoCheck,
   ElementRef,
-  Input,
   KeyValueDiffer,
   KeyValueDiffers,
   OnInit,
   inject,
+  input,
 } from '@angular/core';
 import { D3GraphHelperService, DatasetStyle } from '@helgoland/d3';
 import * as d3 from 'd3';
@@ -25,9 +25,9 @@ export class TimeseriesEntrySymbolComponent
   protected keyValueDiffers = inject(KeyValueDiffers);
   private graphHelper = inject(D3GraphHelperService);
 
-  @Input() size: number = 20;
+  readonly size = input<number>(20);
 
-  @Input() datasetStyle: DatasetStyle | undefined;
+  readonly datasetStyle = input<DatasetStyle>();
   private optionsDiffer: KeyValueDiffer<any, any> | undefined;
 
   private svg: d3.Selection<SVGGElement, any, HTMLElement, any> | undefined;
@@ -42,7 +42,8 @@ export class TimeseriesEntrySymbolComponent
   }
 
   ngDoCheck(): void {
-    if (this.datasetStyle && this.optionsDiffer?.diff(this.datasetStyle)) {
+    const datasetStyle = this.datasetStyle();
+    if (datasetStyle && this.optionsDiffer?.diff(datasetStyle)) {
       this.drawSymbol();
     }
   }
@@ -52,18 +53,19 @@ export class TimeseriesEntrySymbolComponent
       .select<SVGSVGElement, any>(this.el.nativeElement)
       .append<SVGGElement>('svg')
       .attr('transform', 'scale(1.5)')
-      .attr('width', this.size)
-      .attr('height', this.size);
+      .attr('width', this.size())
+      .attr('height', this.size());
   }
 
   private drawSymbol() {
-    if (this.svg && this.datasetStyle) {
+    const datasetStyle = this.datasetStyle();
+    if (this.svg && datasetStyle) {
       this.svg.selectAll('*').remove();
       this.graphHelper.drawDatasetSign(
         this.svg,
-        this.datasetStyle,
-        this.size / 4,
-        this.size / 4,
+        datasetStyle,
+        this.size() / 4,
+        this.size() / 4,
         false,
       );
     }

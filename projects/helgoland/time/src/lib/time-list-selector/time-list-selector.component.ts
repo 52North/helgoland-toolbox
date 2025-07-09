@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 import { TzDatePipe } from '@helgoland/core';
 
 @Component({
@@ -10,9 +10,8 @@ export class TimeListSelectorComponent {
   @Input({ required: true })
   public timeList!: number[];
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onTimeSelected: EventEmitter<number> = new EventEmitter();
+  readonly onTimeSelected = output<number>();
 
   public selectTime(timestamp: number) {
     this.onTimeSelected.emit(timestamp);

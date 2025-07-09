@@ -2,16 +2,15 @@
 import {
   Directive,
   DoCheck,
-  EventEmitter,
   Input,
   KeyValueDiffer,
   KeyValueDiffers,
   OnChanges,
   OnDestroy,
   OnInit,
-  Output,
   SimpleChanges,
   inject,
+  output,
 } from '@angular/core';
 import * as L from 'leaflet';
 
@@ -76,8 +75,7 @@ export abstract class CachedMapComponent
   /**
    * Informs when initialization is done with map id.
    */
-  @Output()
-  public mapInitialized: EventEmitter<string> = new EventEmitter();
+  public readonly mapInitialized = output<string>();
 
   /**
    * The map object.

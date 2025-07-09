@@ -1,32 +1,32 @@
 <mat-expansion-panel
-  [ngStyle]="{ 'border-color': dataset.style.baseColor }"
+  [ngStyle]="{ 'border-color': dataset().style.baseColor }"
   [expanded]="true"
 >
   <mat-expansion-panel-header>
     <mat-panel-title>
       @if (!error) {
         <div class="title" [ngClass]="{ noData: !hasData }">
-          @if (dataset.description.phenomenonLabel) {
+          @if (dataset().description.phenomenonLabel) {
             <n52-label-mapper
-              label="{{ dataset.description.phenomenonLabel }}"
+              label="{{ dataset().description.phenomenonLabel }}"
             ></n52-label-mapper>
           }
-          @if (dataset.description.uom) {
+          @if (dataset().description.uom) {
             <span>
               [
               <n52-label-mapper
-                label="{{ dataset.description.uom }}"
+                label="{{ dataset().description.uom }}"
               ></n52-label-mapper>
               ]
             </span>
           }
-          @if (dataset.description.platformLabel) {
-            <div>{{ dataset.description.platformLabel }}</div>
+          @if (dataset().description.platformLabel) {
+            <div>{{ dataset().description.platformLabel }}</div>
           }
         </div>
       } @else {
         <div class="title error">
-          Error occured, while loading {{ dataset.id }}
+          Error occured, while loading {{ dataset().id }}
         </div>
       }
       <div style="flex: 1"></div>
@@ -44,17 +44,20 @@
       </button>
     </mat-panel-title>
   </mat-expansion-panel-header>
-  @if (!error && dataset) {
+  @if (!error && dataset()) {
     <div>
       @if (
-        dataset.description.procedureLabel || dataset.description.categoryLabel
+        dataset().description.procedureLabel ||
+        dataset().description.categoryLabel
       ) {
         <div class="small-label">
           <n52-label-mapper
-            label="{{ dataset.description.procedureLabel }}"
+            label="{{ dataset().description.procedureLabel }}"
           ></n52-label-mapper>
-          @if (dataset.description.categoryLabel) {
-            <span> ({{ dataset.description.categoryLabel.join(", ") }})</span>
+          @if (dataset().description.categoryLabel) {
+            <span>
+              ({{ dataset().description.categoryLabel!.join(", ") }})</span
+            >
           }
         </div>
       }
@@ -69,7 +72,7 @@
             'legend-entry.toggle-selection-button.tooltip' | translate
           }}"
         >
-          @if (dataset.selected) {
+          @if (dataset().selected) {
             <mat-icon>check_box</mat-icon>
           } @else {
             <mat-icon>check_box_outline_blank</mat-icon>
@@ -86,7 +89,7 @@
           }}"
         >
           <mat-icon>{{
-            dataset.visible ? "visibility" : "visibility_off"
+            dataset().visible ? "visibility" : "visibility_off"
           }}</mat-icon>
         </button>
         <button
@@ -100,7 +103,7 @@
           }}"
         >
           <helgoland-timeseries-entry-symbol
-            [datasetStyle]="dataset.style"
+            [datasetStyle]="dataset().style"
             [size]="48"
           >
           </helgoland-timeseries-entry-symbol>
@@ -114,14 +117,14 @@
           matTooltip="{{ 'legend-entry.separateYAxis.tooltip' | translate }}"
         >
           <mat-icon>{{
-            dataset.yAxis.separate ? "unfold_less" : "unfold_more"
+            dataset().yAxis.separate ? "unfold_less" : "unfold_more"
           }}</mat-icon>
         </button>
         <helgoland-favorite-toggle-button
-          [dataset]="dataset"
+          [dataset]="dataset()"
         ></helgoland-favorite-toggle-button>
       </div>
-      @if (dataset.description.firstValue) {
+      @if (dataset().description.firstValue) {
         <div
           class="entry-line clickable"
           (click)="jumpToFirstTimeStamp(); $event.stopPropagation()"
@@ -136,18 +139,18 @@
               {{ "diagram-view.legend.entry.first-value-at" | translate }}:
             </span>
             <span>
-              {{ dataset.description.firstValue.timestamp | tzDate }}
+              {{ dataset().description.firstValue!.timestamp | tzDate }}
             </span>
-            @if (dataset.description.firstValue.value) {
+            @if (dataset().description.firstValue!.value) {
               <span>
-                ({{ dataset.description.firstValue.value }}
-                {{ dataset.description.uom }})
+                ({{ dataset().description.firstValue!.value }}
+                {{ dataset().description.uom }})
               </span>
             }
           </div>
         </div>
       }
-      @if (dataset.description.lastValue) {
+      @if (dataset().description.lastValue) {
         <div
           class="entry-line clickable"
           (click)="jumpToLastTimeStamp(); $event.stopPropagation()"
@@ -162,20 +165,20 @@
               {{ "diagram-view.legend.entry.last-value-at" | translate }}:
             </span>
             <span>
-              {{ dataset.description.lastValue.timestamp | tzDate }}
+              {{ dataset().description.lastValue!.timestamp | tzDate }}
             </span>
-            @if (dataset.description.lastValue.value) {
+            @if (dataset().description.lastValue!.value) {
               <span>
-                ({{ dataset.description.lastValue.value }}
-                {{ dataset.description.uom }})
+                ({{ dataset().description.lastValue!.value }}
+                {{ dataset().description.uom }})
               </span>
             }
           </div>
         </div>
       }
-      @if (dataset.children.length > 0) {
+      @if (dataset().children.length > 0) {
         <div>{{ "diagram-view.legend-reference-values" | translate }}:</div>
-        @for (child of dataset.children; track child) {
+        @for (child of dataset().children; track child) {
           <div>
             <mat-slide-toggle
               [checked]="child.visible"
@@ -189,7 +192,7 @@
       }
     </div>
   }
-  @if (dataset.dataLoading) {
+  @if (dataset().dataLoading) {
     <helgoland-loading-overlay-progress-bar></helgoland-loading-overlay-progress-bar>
   }
 </mat-expansion-panel>

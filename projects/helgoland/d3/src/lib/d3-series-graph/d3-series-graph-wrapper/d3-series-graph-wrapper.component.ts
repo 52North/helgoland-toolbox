@@ -1,12 +1,11 @@
 import {
   Component,
-  EventEmitter,
   inject,
   Input,
   OnChanges,
-  Output,
   SimpleChanges,
   ViewChild,
+  output,
 } from '@angular/core';
 import {
   ColorService,
@@ -75,8 +74,7 @@ export class D3SeriesGraphWrapperComponent
   @Input() public yaxisModifier: boolean | undefined;
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onHighlightChanged: EventEmitter<HighlightOutput> =
-    new EventEmitter();
+  public readonly onHighlightChanged = output<HighlightOutput>();
 
   @Input() public hoveringService: D3HoveringService =
     new D3SimpleHoveringService();

@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-  inject,
-} from '@angular/core';
+import { Component, ViewChild, inject, input, output } from '@angular/core';
 import {
   ReactiveFormsModule,
   UntypedFormControl,
@@ -71,16 +64,16 @@ export class GeneralTimeSelectionComponent {
 
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger | undefined;
 
-  @Input({ required: true }) timespan!: Timespan;
+  readonly timespan = input.required<Timespan>();
 
-  @Output() timespanChanged: EventEmitter<Timespan> = new EventEmitter();
+  readonly timespanChanged = output<Timespan>();
 
   back() {
-    this.timespanChanged.emit(this.timeSrvc.stepBack(this.timespan!));
+    this.timespanChanged.emit(this.timeSrvc.stepBack(this.timespan()!));
   }
 
   forward() {
-    this.timespanChanged.emit(this.timeSrvc.stepForward(this.timespan!));
+    this.timespanChanged.emit(this.timeSrvc.stepForward(this.timespan()!));
   }
 
   predefinedRange(defined: DefinedTimespan) {
@@ -92,8 +85,8 @@ export class GeneralTimeSelectionComponent {
 
   onMenuOpen(picker: MatDateRangePicker<Date>) {
     this.range.setValue({
-      start: new Date(this.timespan!.from),
-      end: new Date(this.timespan!.to),
+      start: new Date(this.timespan()!.from),
+      end: new Date(this.timespan()!.to),
     });
     picker.closedStream.subscribe((res) => {
       const ts = new Timespan(

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, Input, inject, output } from '@angular/core';
 import {
   DefinedTimespan,
   DefinedTimespanService,
@@ -22,9 +22,8 @@ export class TimespanButtonComponent {
   @Input()
   public timespanFunc!: () => Timespan;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onTimespanSelected: EventEmitter<Timespan> = new EventEmitter();
+  readonly onTimespanSelected = output<Timespan>();
 
   public clicked() {
     if (this.predefined) {
@@ -37,6 +36,5 @@ export class TimespanButtonComponent {
       this.onTimespanSelected.emit(this.timespanFunc());
       return;
     }
-    this.onTimespanSelected.emit();
   }
 }

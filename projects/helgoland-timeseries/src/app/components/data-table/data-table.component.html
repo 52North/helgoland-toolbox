@@ -4,7 +4,7 @@
     <td mat-cell *matCellDef="let element">{{ element[0] | tzDate }}</td>
   </ng-container>
 
-  @for (item of datasets; track $index) {
+  @for (item of datasets(); track $index) {
     <ng-container [matColumnDef]="item.id">
       <th mat-header-cell *matHeaderCellDef sticky>
         <div>{{ item.description.phenomenonLabel }}</div>

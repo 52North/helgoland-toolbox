@@ -3,7 +3,6 @@ import {
   Component,
   DoCheck,
   ElementRef,
-  EventEmitter,
   inject,
   Input,
   IterableDiffer,
@@ -13,7 +12,7 @@ import {
   NgZone,
   OnDestroy,
   OnInit,
-  Output,
+  output,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
@@ -142,15 +141,12 @@ export class D3SeriesGraphComponent
   /**
    * Event with a list of selected datasets.
    */
-  @Output()
-  public datasetsSelected: EventEmitter<string[]> = new EventEmitter();
+  public readonly datasetsSelected = output<string[]>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onHighlightChanged: EventEmitter<HighlightOutput> =
-    new EventEmitter();
+  public readonly onHighlightChanged = output<HighlightOutput>();
 
-  @Output()
-  public timespanChanged: EventEmitter<Timespan> = new EventEmitter();
+  public readonly timespanChanged = output<Timespan>();
 
   @ViewChild('d3timeseries')
   public d3Elem: ElementRef | undefined;

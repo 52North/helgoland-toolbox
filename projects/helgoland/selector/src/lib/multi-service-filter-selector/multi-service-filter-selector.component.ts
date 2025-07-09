@@ -1,12 +1,11 @@
 import { NgStyle } from '@angular/common';
 import {
   Component,
-  EventEmitter,
   Input,
   OnChanges,
-  Output,
   SimpleChanges,
   inject,
+  output,
 } from '@angular/core';
 import {
   Filter,
@@ -54,10 +53,8 @@ export class MultiServiceFilterSelectorComponent
   @Input()
   public selected: string | undefined;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onItemSelected: EventEmitter<FilteredParameter> =
-    new EventEmitter<FilteredParameter>();
+  readonly onItemSelected = output<FilteredParameter>();
 
   public loading = 0;
   public items: FilteredParameter[] = [];

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 import { ClipboardModule } from 'ngx-clipboard';
 
 @Component({
@@ -10,7 +10,6 @@ export class PermalinkToClipboardComponent {
   @Input({ required: true })
   public url!: string;
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onTriggered: EventEmitter<void> = new EventEmitter<void>();
+  readonly onTriggered = output<void>();
 }

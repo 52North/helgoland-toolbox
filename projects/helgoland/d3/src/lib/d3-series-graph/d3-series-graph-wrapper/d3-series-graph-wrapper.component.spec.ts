@@ -11,8 +11,12 @@ describe('D3SeriesGraphWrapperComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [HelgolandCoreModule, TranslateTestingModule, D3SeriesGraphWrapperComponent],
-}).compileComponents();
+      imports: [
+        HelgolandCoreModule,
+        TranslateTestingModule,
+        D3SeriesGraphWrapperComponent,
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
