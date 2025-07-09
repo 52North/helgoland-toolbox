@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ViewEncapsulation, inject, input } from '@angular/core';
 import { TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
 
@@ -36,9 +36,9 @@ export class D3GraphHoverLineComponent
 {
   protected timezoneSrvc = inject(TimezoneService);
 
-  @Input() showLabels = true;
+  readonly showLabels = input(true);
 
-  @Input() showTimelLabel = true;
+  readonly showTimelLabel = input(true);
 
   protected d3Graph: D3GraphInterface | undefined;
   protected background: d3.Selection<SVGGElement, any, any, any> | undefined;
@@ -155,7 +155,7 @@ export class D3GraphHoverLineComponent
       if (this.lastDraw + this.drawLatency < time) {
         const mouse = d3.pointer(event);
         this.drawLineIndicator(mouse);
-        if (this.showLabels) {
+        if (this.showLabels()) {
           this.datasets.forEach((entry, entryIdx) => {
             const idx = this.getItemForX(
               mouse[0] + this.graphExtent!.leftOffset,
@@ -185,7 +185,7 @@ export class D3GraphHoverLineComponent
   }
 
   protected drawTimeLabel(xPos: number) {
-    if (this.drawLayer && this.showTimelLabel && this.graphExtent) {
+    if (this.drawLayer && this.showTimelLabel() && this.graphExtent) {
       const time = this.graphExtent.xScale.invert(xPos);
 
       // draw label

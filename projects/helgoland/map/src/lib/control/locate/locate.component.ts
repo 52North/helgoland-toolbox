@@ -18,9 +18,9 @@ export class LocateControlComponent extends MapControlComponent {
   public locateUser() {
     this.isToggled = !this.isToggled;
     if (this.isToggled) {
-      this.locateService.startLocate(this.mapId);
+      this.locateService.startLocate(this.mapId());
     } else {
-      this.locateService.stopLocate(this.mapId);
+      this.locateService.stopLocate(this.mapId());
     }
   }
 }

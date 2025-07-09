@@ -1,10 +1,10 @@
 import { NgClass } from '@angular/common';
 import {
   Component,
-  Input,
   OnChanges,
   SimpleChanges,
   output,
+  input,
 } from '@angular/core';
 
 @Component({
@@ -13,17 +13,13 @@ import {
   imports: [NgClass],
 })
 export class StringTogglerComponent implements OnChanges {
-  @Input()
-  public value: string | undefined;
+  public readonly value = input<string>();
 
-  @Input()
-  public option: string | undefined;
+  public readonly option = input<string>();
 
-  @Input()
-  public icon: string | undefined;
+  public readonly icon = input<string>();
 
-  @Input()
-  public tooltip: string | undefined;
+  public readonly tooltip = input<string>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onToggled = output<string>();
@@ -32,13 +28,14 @@ export class StringTogglerComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges) {
     if (changes['value']) {
-      this.isToggled = this.option === this.value;
+      this.isToggled = this.option() === this.value();
     }
   }
 
   public toggle() {
-    if (this.option) {
-      this.onToggled.emit(this.option);
+    const option = this.option();
+    if (option) {
+      this.onToggled.emit(option);
     }
   }
 }

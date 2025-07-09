@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, input } from '@angular/core';
 import { View } from 'ol';
 import BaseLayer from 'ol/layer/Base';
 import Layer from 'ol/layer/Layer';
@@ -20,28 +20,27 @@ export class OlLayerZoomExtentComponent implements OnInit {
   private wmsCaps = inject(WmsCapabilitiesService);
   private mapServices = inject(OlMapService);
 
-  @Input({ required: true })
-  layer!: BaseLayer;
+  readonly layer = input.required<BaseLayer>();
 
   /**
    * corresponding map id
    */
-  @Input({ required: true })
-  mapId!: string;
+  readonly mapId = input.required<string>();
 
   private extent: number[] | undefined;
   private crs: string | undefined;
   private view: View | undefined;
 
   ngOnInit() {
-    if (this.layer.getExtent()) {
-      this.extent = this.layer.getExtent();
-    } else if (this.layer instanceof Layer) {
-      const source = this.layer.getSource();
-      this.layer.getExtent();
+    const layer = this.layer();
+    if (layer.getExtent()) {
+      this.extent = layer.getExtent();
+    } else if (layer instanceof Layer) {
+      const source = layer.getSource();
+      layer.getExtent();
       if (source instanceof TileWMS && source.getUrls()?.length) {
         const url = source.getUrls()![0];
-        this.mapServices.getMap(this.mapId).subscribe((map) => {
+        this.mapServices.getMap(this.mapId()).subscribe((map) => {
           this.view = map.getView();
           const epsgCode = this.view.getProjection().getCode();
           const layerid =

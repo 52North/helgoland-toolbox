@@ -1,4 +1,4 @@
-import { Component, Input, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { ColorPickerModule } from 'ngx-color-picker';
 
 @Component({
@@ -7,11 +7,9 @@ import { ColorPickerModule } from 'ngx-color-picker';
   imports: [ColorPickerModule],
 })
 export class ColorSelectorComponent {
-  @Input({ required: true })
-  public color!: string;
+  public readonly color = input.required<string>();
 
-  @Input({ required: true })
-  public colorList!: string[];
+  public readonly colorList = input.required<string[]>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onColorChange = output<string>();

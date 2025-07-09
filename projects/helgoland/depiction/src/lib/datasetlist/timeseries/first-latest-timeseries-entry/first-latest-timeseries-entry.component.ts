@@ -1,10 +1,10 @@
 import {
   Component,
-  Input,
   OnChanges,
   SimpleChanges,
   inject,
   output,
+  input,
 } from '@angular/core';
 import {
   FirstLastValue,
@@ -32,8 +32,7 @@ export class FirstLatestTimeseriesEntryComponent
 {
   protected timeSrvc = inject(Time);
 
-  @Input()
-  public timeInterval: TimeInterval | undefined;
+  public readonly timeInterval = input<TimeInterval>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onSelectDate = output<Date>();
@@ -70,14 +69,15 @@ export class FirstLatestTimeseriesEntryComponent
   }
 
   private checkDataInTimespan() {
+    const timeInterval = this.timeInterval();
     if (
-      this.timeInterval &&
+      timeInterval &&
       this.dataset &&
       this.dataset.firstValue &&
       this.dataset.lastValue
     ) {
       this.hasData = this.timeSrvc.overlaps(
-        this.timeInterval,
+        timeInterval,
         this.dataset.firstValue.timestamp,
         this.dataset.lastValue.timestamp,
       );

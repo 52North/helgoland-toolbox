@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, inject } from '@angular/core';
+import { Component, ElementRef, inject, input } from '@angular/core';
 import { Map } from 'ol';
 import { MousePosition } from 'ol/control';
 import { createStringXY } from 'ol/coordinate';
@@ -16,7 +16,7 @@ import { OlBaseComponent } from '../../ol-base.component';
 export class OlMousePositionComponent extends OlBaseComponent {
   private elementRef = inject(ElementRef);
 
-  @Input() projection = 'EPSG:3857';
+  readonly projection = input('EPSG:3857');
 
   mapInitialized(map: Map) {
     const target = this.elementRef.nativeElement.parentElement
@@ -24,7 +24,7 @@ export class OlMousePositionComponent extends OlBaseComponent {
       : null;
     const ctrl = new MousePosition({
       coordinateFormat: createStringXY(4),
-      projection: this.projection,
+      projection: this.projection(),
       undefinedHTML: '&nbsp;',
       target: target,
     });

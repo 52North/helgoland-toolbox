@@ -1,9 +1,9 @@
 import {
   Component,
-  Input,
   OnChanges,
   SimpleChanges,
   ViewEncapsulation,
+  input,
 } from '@angular/core';
 import { Timespan } from '@helgoland/core';
 import * as d3 from 'd3';
@@ -28,8 +28,7 @@ export class D3GraphOverviewSelectionComponent
   implements OnChanges, D3GraphObserver
 {
   // difference to timespan/timeInterval --> if brush, then this is the timespan of the main-diagram
-  @Input({ required: true })
-  public selectionTimeInterval!: Timespan;
+  public readonly selectionTimeInterval = input.required<Timespan>();
 
   protected mousedownBrush: boolean = false;
   protected graphComp: D3GraphInterface | undefined;
@@ -85,7 +84,7 @@ export class D3GraphOverviewSelectionComponent
 
   protected drawOverviewSelection() {
     if (
-      !this.selectionTimeInterval ||
+      !this.selectionTimeInterval() ||
       !this.completeTimespan ||
       !this.graphExtent ||
       !this.drawLayer
@@ -190,8 +189,8 @@ export class D3GraphOverviewSelectionComponent
 
     const minOverviewTimeInterval = timespan.from;
     const maxOverviewTimeInterval = timespan.to;
-    const minDiagramTimestamp = this.selectionTimeInterval.from;
-    const maxDiagramTimestamp = this.selectionTimeInterval.to;
+    const minDiagramTimestamp = this.selectionTimeInterval().from;
+    const maxDiagramTimestamp = this.selectionTimeInterval().to;
 
     const diffOverviewTimeInterval =
       maxOverviewTimeInterval - minOverviewTimeInterval;

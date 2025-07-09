@@ -1,13 +1,13 @@
 import {
   Directive,
   DoCheck,
-  Input,
   IterableDiffer,
   IterableDiffers,
   OnChanges,
   OnDestroy,
   SimpleChanges,
   inject,
+  input,
   output,
 } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
@@ -46,40 +46,34 @@ export abstract class DatasetPresenterComponent<
   /**
    * List of presented dataset ids.
    */
-  @Input()
-  public datasetIds: string[] = [];
+  public readonly datasetIds = input<string[]>([]);
 
   /**
    * List of presented selected dataset ids.
    */
-  @Input()
-  public selectedDatasetIds: string[] = [];
+  public readonly selectedDatasetIds = input<string[]>([]);
 
   /**
    * The time interval in which the data should presented.
    */
-  @Input()
-  public timeInterval: TimeInterval | undefined;
+  public readonly timeInterval = input<TimeInterval>();
 
   /**
    * The corresponding dataset options.
    */
-  @Input()
-  public datasetOptions: Map<string, T> | undefined;
+  public readonly datasetOptions = input<Map<string, T>>();
   protected oldDatasetOptions: Map<string, T> = new Map();
 
   /**
    * Options for general presentation of the data.
    */
-  @Input()
-  public presenterOptions: U | undefined;
+  public readonly presenterOptions = input<U>();
   protected oldPresenterOptions: U | undefined;
 
   /**
    * List of datasets for which a reload should be triggered, when the Array is set to new value.
    */
-  @Input()
-  public reloadForDatasets: string[] = [];
+  public readonly reloadForDatasets = input<string[]>([]);
 
   /**
    * Event with a list of selected datasets.
@@ -132,28 +126,31 @@ export abstract class DatasetPresenterComponent<
 
   // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['timeInterval'] && this.timeInterval) {
-      this.timespan = this.timeSrvc.createTimespanOfInterval(this.timeInterval);
+    const timeInterval = this.timeInterval();
+    if (changes['timeInterval'] && timeInterval) {
+      this.timespan = this.timeSrvc.createTimespanOfInterval(timeInterval);
       this.timeIntervalChanges();
     }
+    const reloadForDatasets = this.reloadForDatasets();
     if (
       changes['reloadForDatasets'] &&
-      this.reloadForDatasets &&
+      reloadForDatasets &&
       this.reloadDataForDatasets.length > 0
     ) {
-      this.reloadDataForDatasets(this.reloadForDatasets);
+      this.reloadDataForDatasets(reloadForDatasets);
     }
   }
 
   // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
   public ngDoCheck(): void {
-    if (!this.deepEqual(this.oldPresenterOptions, this.presenterOptions)) {
-      this.oldPresenterOptions = Object.assign({}, this.presenterOptions);
-      const options = Object.assign({}, this.presenterOptions);
+    const presenterOptions = this.presenterOptions();
+    if (!this.deepEqual(this.oldPresenterOptions, presenterOptions)) {
+      this.oldPresenterOptions = Object.assign({}, presenterOptions);
+      const options = Object.assign({}, presenterOptions);
       this.presenterOptionsChanged(options);
     }
 
-    const datasetIdsChanges = this.datasetIdsDiffer.diff(this.datasetIds);
+    const datasetIdsChanges = this.datasetIdsDiffer.diff(this.datasetIds());
     if (datasetIdsChanges) {
       datasetIdsChanges.forEachAddedItem((addedItem) => {
         this.addDatasetByInternalId(addedItem.item);
@@ -164,7 +161,7 @@ export abstract class DatasetPresenterComponent<
     }
 
     const selectedDatasetIdsChanges = this.selectedDatasetIdsDiffer.diff(
-      this.selectedDatasetIds,
+      this.selectedDatasetIds(),
     );
     if (selectedDatasetIdsChanges) {
       selectedDatasetIdsChanges.forEachAddedItem((addedItem) => {
@@ -175,16 +172,17 @@ export abstract class DatasetPresenterComponent<
       });
     }
 
-    if (this.datasetOptions) {
+    const datasetOptions = this.datasetOptions();
+    if (datasetOptions) {
       const firstChange = this.oldDatasetOptions === undefined;
       if (firstChange) {
         this.oldDatasetOptions = new Map();
       }
-      this.datasetOptions.forEach((value, key) => {
+      datasetOptions.forEach((value, key) => {
         if (!this.deepEqual(value, this.oldDatasetOptions.get(key))) {
           this.oldDatasetOptions.set(
             key,
-            Object.assign({}, this.datasetOptions!.get(key)),
+            Object.assign({}, this.datasetOptions()!.get(key)),
           );
           this.datasetOptionsChanged(key, value, firstChange);
         }

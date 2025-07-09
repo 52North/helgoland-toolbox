@@ -50,7 +50,7 @@ export class TimeseriesEntryComponent
 
   public toggleReferenceValue(refValue: ReferenceValue) {
     const options = JSON.parse(
-      JSON.stringify(this.datasetOptions),
+      JSON.stringify(this.datasetOptions()),
     ) as DatasetOptions;
     const idx = options.showReferenceValues.findIndex(
       (entry) => entry.id === refValue.referenceValueId,
@@ -77,7 +77,7 @@ export class TimeseriesEntryComponent
     if (this.dataset?.referenceValues) {
       this.dataset.referenceValues.forEach((e) => {
         const refValId = this.createRefValId(e.referenceValueId);
-        const refValOption = this.datasetOptions.showReferenceValues.find(
+        const refValOption = this.datasetOptions().showReferenceValues.find(
           (o) => o.id === e.referenceValueId,
         );
         if (refValOption) {

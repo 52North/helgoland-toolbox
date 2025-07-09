@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, Input, OnInit, inject, output } from '@angular/core';
+import { Component, OnInit, inject, input, output } from '@angular/core';
 import {
   ParsedTimespanPreset,
   Settings,
@@ -17,8 +17,7 @@ import {
 export class PredefinedTimespanSelectorComponent implements OnInit {
   protected settingSrvc = inject<SettingsService<Settings>>(SettingsService);
 
-  @Input({ required: true })
-  public timespan!: Timespan;
+  public readonly timespan = input.required<Timespan>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onTimespanChange = output<Timespan>();
@@ -94,9 +93,7 @@ export class PredefinedTimespanSelectorComponent implements OnInit {
   }
 
   public timespanChanged(preset: ParsedTimespanPreset) {
-    // construct new Timespan
-    this.timespan = new Timespan(preset.timespan.from, preset.timespan.to);
-    // publicise new timespan
-    this.onTimespanChange.emit(this.timespan);
+    const timespan = new Timespan(preset.timespan.from, preset.timespan.to);
+    this.onTimespanChange.emit(timespan);
   }
 }

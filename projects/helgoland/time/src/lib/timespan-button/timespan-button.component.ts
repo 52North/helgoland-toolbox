@@ -1,4 +1,4 @@
-import { Component, Input, inject, output } from '@angular/core';
+import { Component, inject, output, input } from '@angular/core';
 import {
   DefinedTimespan,
   DefinedTimespanService,
@@ -13,27 +13,26 @@ import {
 export class TimespanButtonComponent {
   protected predefinedSrvc = inject(DefinedTimespanService);
 
-  @Input()
-  public predefined!: string | DefinedTimespan;
+  public readonly predefined = input.required<string | DefinedTimespan>();
 
-  @Input({ required: true })
-  public label!: string;
+  public readonly label = input.required<string>();
 
-  @Input()
-  public timespanFunc!: () => Timespan;
+  public readonly timespanFunc = input.required<() => Timespan>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onTimespanSelected = output<Timespan>();
 
   public clicked() {
-    if (this.predefined) {
+    const predefined = this.predefined();
+    if (predefined) {
       this.onTimespanSelected.emit(
-        this.predefinedSrvc.getInterval(this.predefined as DefinedTimespan),
+        this.predefinedSrvc.getInterval(predefined as DefinedTimespan),
       );
       return;
     }
-    if (this.timespanFunc) {
-      this.onTimespanSelected.emit(this.timespanFunc());
+    const timespanFunc = this.timespanFunc();
+    if (timespanFunc) {
+      this.onTimespanSelected.emit(timespanFunc());
       return;
     }
   }

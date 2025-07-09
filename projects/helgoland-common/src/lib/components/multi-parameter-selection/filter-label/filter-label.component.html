@@ -1,5 +1,5 @@
 <span>
-  @switch (filter) {
+  @switch (filter()) {
     @case ("category") {
       <span>
         {{ "list-selection.filter.category" | translate }}
@@ -32,7 +32,7 @@
     }
     @default {
       <span>
-        {{ filter }}
+        {{ filter() }}
       </span>
     }
   }

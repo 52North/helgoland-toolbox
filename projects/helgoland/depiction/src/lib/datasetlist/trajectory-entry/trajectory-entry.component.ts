@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, Input, inject, output } from '@angular/core';
+import { Component, inject, output, input } from '@angular/core';
 import {
   DatasetFilter,
   DatasetOptions,
@@ -19,8 +19,7 @@ import { ListEntryComponent } from '../list-entry.component';
 export class TrajectoryEntryComponent extends ListEntryComponent {
   protected servicesConnector = inject(HelgolandServicesConnector);
 
-  @Input()
-  public datasetOptions: DatasetOptions | undefined;
+  public readonly datasetOptions = input<DatasetOptions>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onUpdateOptions = output<DatasetOptions>();
@@ -33,9 +32,10 @@ export class TrajectoryEntryComponent extends ListEntryComponent {
   public tempColor: string | undefined;
 
   public toggleVisibility() {
-    if (this.datasetOptions) {
-      this.datasetOptions.visible = !this.datasetOptions.visible;
-      this.onUpdateOptions.emit(this.datasetOptions);
+    const datasetOptions = this.datasetOptions();
+    if (datasetOptions) {
+      datasetOptions.visible = !datasetOptions.visible;
+      this.onUpdateOptions.emit(datasetOptions);
     }
   }
 

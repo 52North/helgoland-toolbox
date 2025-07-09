@@ -4,10 +4,10 @@ import {
   Component,
   DoCheck,
   inject,
-  Input,
   IterableDiffer,
   IterableDiffers,
   OnChanges,
+  input,
 } from '@angular/core';
 import {
   DatasetType,
@@ -54,21 +54,19 @@ export class LastValueMapSelectorComponent
   /**
    * The list of internal series IDs, which should be presented with their last values on the map.
    */
-  @Input()
-  public lastValueSeriesIDs: string[] = [];
+  public readonly lastValueSeriesIDs = input<string[]>([]);
 
   /**
    * Presentation type how to display the series.
    */
-  @Input()
-  public lastValuePresentation: LastValuePresentation =
-    LastValuePresentation.Colorized;
+  public readonly lastValuePresentation = input<LastValuePresentation>(
+    LastValuePresentation.Colorized,
+  );
 
   /**
    * Ignores all Statusintervals where the timestamp is before a given duration in milliseconds and draws instead the default marker.
    */
-  @Input()
-  public ignoreStatusIntervalIfBeforeDuration = Infinity;
+  public readonly ignoreStatusIntervalIfBeforeDuration = input(Infinity);
 
   private _lastValueSeriesIDsDiff: IterableDiffer<string>;
 
@@ -77,13 +75,15 @@ export class LastValueMapSelectorComponent
   constructor() {
     super();
     this._lastValueSeriesIDsDiff = this.iDiffers
-      .find(this.lastValueSeriesIDs)
+      .find(this.lastValueSeriesIDs())
       .create();
   }
 
   public override ngDoCheck() {
     super.ngDoCheck();
-    const changes = this._lastValueSeriesIDsDiff.diff(this.lastValueSeriesIDs);
+    const changes = this._lastValueSeriesIDsDiff.diff(
+      this.lastValueSeriesIDs(),
+    );
 
     if (changes && this.map) {
       const ids: string[] = [];
@@ -100,8 +100,9 @@ export class LastValueMapSelectorComponent
 
   protected drawGeometries(map: Map, serviceUrl: string): void {
     this.onContentLoading.emit(true);
-    if (this.lastValueSeriesIDs && this.lastValueSeriesIDs.length) {
-      this.createMarkersBySeriesIDs(this.lastValueSeriesIDs, map);
+    const lastValueSeriesIDs = this.lastValueSeriesIDs();
+    if (lastValueSeriesIDs && lastValueSeriesIDs.length) {
+      this.createMarkersBySeriesIDs(lastValueSeriesIDs, map);
     }
   }
 
@@ -128,7 +129,7 @@ export class LastValueMapSelectorComponent
   }
 
   private createMarker(ts: HelgolandTimeseries): Observable<Layer> {
-    switch (this.lastValuePresentation) {
+    switch (this.lastValuePresentation()) {
       case LastValuePresentation.Colorized:
         return this.createColorizedMarker(ts);
       case LastValuePresentation.Textual:
@@ -156,7 +157,7 @@ export class LastValueMapSelectorComponent
             ts.lastValue &&
             ts.lastValue.value &&
             ts.lastValue.timestamp >
-              new Date().getTime() - this.ignoreStatusIntervalIfBeforeDuration
+              new Date().getTime() - this.ignoreStatusIntervalIfBeforeDuration()
           ) {
             const interval = this.statusIntervalResolver.getMatchingInterval(
               ts.lastValue.value,

@@ -1,12 +1,10 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, input } from '@angular/core';
 
 import { LayerOptions } from '../base/map-options';
 
 @Directive()
 export abstract class LayerControlComponent {
-  @Input({ required: true })
-  public layeroptions!: LayerOptions;
+  public readonly layeroptions = input.required<LayerOptions>();
 
-  @Input({ required: true })
-  public mapId!: string;
+  public readonly mapId = input.required<string>();
 }

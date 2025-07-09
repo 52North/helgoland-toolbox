@@ -1,7 +1,7 @@
 import {
   AfterViewInit,
   Component,
-  Input,
+  input,
   OnDestroy,
   OnInit,
   output,
@@ -35,17 +35,19 @@ export class ResultMapComponent
   extends CachedMapComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
-  @Input({ required: true }) public facetSearchService!: FacetSearchService;
+  public readonly facetSearchService = input.required<FacetSearchService>();
 
-  @Input() public cluster = true;
+  public readonly cluster = input(true);
 
-  @Input() public aggregateToStations = false;
+  public readonly aggregateToStations = input(false);
 
-  @Input() public selectSingleStation = false;
+  public readonly selectSingleStation = input(false);
 
-  @Input() public autoZoomToResults = true;
+  public readonly autoZoomToResults = input(true);
 
-  @Input() public nextResultsZoom = true;
+  public readonly nextResultsZoom = input(true);
+
+  private resultZoomed = this.nextResultsZoom();
 
   public readonly selectedFeature = output<{
     feature: FacetSearchElementFeature;
@@ -57,9 +59,8 @@ export class ResultMapComponent
   private markerFeatureGroup: L.FeatureGroup | undefined;
   private resultsSubs: Subscription | undefined;
 
-  override ngOnInit() {
-    super.ngOnInit();
-    this.resultsSubs = this.facetSearchService
+  ngOnInit() {
+    this.resultsSubs = this.facetSearchService()
       .getResults()
       .subscribe((ts) => this.fetchResults(ts));
   }
@@ -71,7 +72,7 @@ export class ResultMapComponent
 
   ngAfterViewInit(): void {
     this.createMap();
-    const res = this.facetSearchService.getFilteredResults();
+    const res = this.facetSearchService().getFilteredResults();
     if (res) {
       this.fetchResults(res);
     }
@@ -82,12 +83,12 @@ export class ResultMapComponent
       if (this.markerFeatureGroup) {
         this.map.removeLayer(this.markerFeatureGroup);
       }
-      if (this.cluster) {
+      if (this.cluster()) {
         this.markerFeatureGroup = L.markerClusterGroup({ animate: true });
       } else {
         this.markerFeatureGroup = L.featureGroup();
       }
-      if (this.aggregateToStations) {
+      if (this.aggregateToStations()) {
         const features = new Map<
           string,
           { feature: FacetSearchElementFeature; url: string }
@@ -106,7 +107,7 @@ export class ResultMapComponent
             this.markerFeatureGroup!.addLayer(geom);
           }
         });
-        if (features.size === 1 && this.selectSingleStation) {
+        if (features.size === 1 && this.selectSingleStation()) {
           const nextKey = features.keys().next().value;
           if (nextKey) {
             const entry = features.get(nextKey);
@@ -126,13 +127,10 @@ export class ResultMapComponent
       this.markerFeatureGroup.addTo(this.map);
 
       const bounds = this.markerFeatureGroup.getBounds();
-      if (
-        bounds.isValid() &&
-        (this.autoZoomToResults || this.nextResultsZoom)
-      ) {
+      if (bounds.isValid() && (this.autoZoomToResults() || this.resultZoomed)) {
         this.map.fitBounds(bounds);
         this.map.invalidateSize();
-        this.nextResultsZoom = false;
+        this.resultZoomed = false;
       }
     }
   }

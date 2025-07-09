@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ParameterType } from 'helgoland-common';
 
@@ -9,6 +9,5 @@ import { ParameterType } from 'helgoland-common';
   imports: [TranslateModule],
 })
 export class ParameterTypeLabelComponent {
-  @Input({ required: true })
-  parameterType!: ParameterType;
+  readonly parameterType = input.required<ParameterType>();
 }

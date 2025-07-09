@@ -1,4 +1,4 @@
-import { Component, Input, inject, output } from '@angular/core';
+import { Component, inject, output, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import * as L from 'leaflet';
 
@@ -20,7 +20,7 @@ export class GeosearchControlComponent extends MapControlComponent {
   /**
    * Additional search options.
    */
-  @Input() public options: GeoSearchOptions | undefined;
+  public readonly options = input<GeoSearchOptions>();
 
   /**
    * Returns the search result.
@@ -49,7 +49,7 @@ export class GeosearchControlComponent extends MapControlComponent {
     }
     if (this.searchTerm) {
       this.loading = true;
-      this.geosearch.searchTerm(this.searchTerm, this.options).subscribe({
+      this.geosearch.searchTerm(this.searchTerm, this.options()).subscribe({
         next: (result) => {
           if (!result) {
             this.searchTerm = '';
@@ -57,15 +57,16 @@ export class GeosearchControlComponent extends MapControlComponent {
             return;
           }
           this.result = result;
-          if (this.mapId && this.mapCache.getMap(this.mapId)) {
+          const mapId = this.mapId();
+          if (mapId && this.mapCache.getMap(mapId)) {
             this.resultGeometry = L.geoJSON(result.geometry).addTo(
-              this.mapCache.getMap(this.mapId),
+              this.mapCache.getMap(mapId),
             );
             if (result.bounds) {
-              this.mapCache.getMap(this.mapId).fitBounds(result.bounds);
+              this.mapCache.getMap(mapId).fitBounds(result.bounds);
             } else {
               this.mapCache
-                .getMap(this.mapId)
+                .getMap(mapId)
                 .fitBounds(this.resultGeometry.getBounds());
             }
           }

@@ -121,7 +121,7 @@ describe('ListSelectorComponent', () => {
       },
     ];
     component.ngOnChanges({
-      providerList: new SimpleChange(null, component.providerList, true),
+      providerList: new SimpleChange(null, component.providerList(), true),
     });
     component.onDatasetSelection.subscribe((datasets) => console.log(datasets));
     fixtureInterval = window.setInterval(

@@ -1,10 +1,10 @@
 import {
   Component,
-  Input,
   OnChanges,
   OnInit,
   SimpleChanges,
   inject,
+  input,
 } from '@angular/core';
 import {
   DatasetApiMapping,
@@ -27,27 +27,28 @@ export class DatasetPermalinkDownloadComponent implements OnChanges, OnInit {
   protected internalIdHandler = inject(InternalIdHandler);
   protected servicesConnector = inject(HelgolandServicesConnector);
 
-  @Input()
-  public internalId: InternalDatasetId | string | undefined;
+  public readonly internalId = input<InternalDatasetId | string>();
 
-  @Input()
-  public timeInterval: Timespan | undefined;
+  public readonly timeInterval = input<Timespan>();
 
-  @Input()
-  public language: string | undefined;
+  public readonly language = input<string>();
 
   public downloadLink: string | undefined;
 
   ngOnInit(): void {
-    if (this.internalId && this.timeInterval) {
-      this.createLink(this.internalId, this.timeInterval);
+    const internalId = this.internalId();
+    const timeInterval = this.timeInterval();
+    if (internalId && timeInterval) {
+      this.createLink(internalId, timeInterval);
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['timeInterval']) {
-      if (this.internalId && this.timeInterval) {
-        this.createLink(this.internalId, this.timeInterval);
+      const internalId = this.internalId();
+      const timeInterval = this.timeInterval();
+      if (internalId && timeInterval) {
+        this.createLink(internalId, timeInterval);
       }
     }
   }
@@ -61,7 +62,8 @@ export class DatasetPermalinkDownloadComponent implements OnChanges, OnInit {
       generalize: true,
       timespan,
     };
-    params.lang = this.language && this.language !== '' ? this.language : 'en';
+    const language = this.language();
+    params.lang = language && language !== '' ? language : 'en';
     this.servicesConnector
       .createCsvDataExportLink(internalId, params)
       .subscribe((link) => (this.downloadLink = link));

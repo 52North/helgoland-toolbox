@@ -1,10 +1,9 @@
 import {
   AfterViewInit,
   Component,
-  Input,
-  OnInit,
   ViewEncapsulation,
   inject,
+  input,
 } from '@angular/core';
 import { View } from 'ol';
 import { Control } from 'ol/control';
@@ -23,7 +22,7 @@ import { OlMapId } from '../services/mapid.service';
  */
 @Component({
   selector: 'n52-ol-map',
-  template: '<div class="map" [attr.id]="mapId"></div>',
+  template: '<div class="map" [attr.id]="mapId()"></div>',
   encapsulation: ViewEncapsulation.None,
   styleUrls: [
     '../../../../../../node_modules/ol/ol.css',
@@ -32,82 +31,70 @@ import { OlMapId } from '../services/mapid.service';
   providers: [OlMapId],
   standalone: true,
 })
-export class OlMapComponent implements OnInit, AfterViewInit {
+export class OlMapComponent implements AfterViewInit {
   private mapService = inject(OlMapService);
   private mapid = inject(OlMapId);
 
   /**
    * The map id, to reference this map outside of this component. If no id is given, a unique one is generated
    */
-  @Input()
-  mapId!: string;
+  readonly mapId = input.required<string>();
 
   /**
    * Longitude to center the map
    */
-  @Input()
-  lon = 0;
+  readonly lon = input(0);
 
   /**
    * Latitude to center the map
    */
-  @Input()
-  lat = 0;
+  readonly lat = input(0);
 
   /**
    * Zoom level of the map
    */
-  @Input()
-  zoom = 1;
+  readonly zoom = input(1);
 
   /**
    * Projection of the map
    */
-  @Input()
-  projection = 'EPSG:3857';
+  readonly projection = input('EPSG:3857');
 
   /**
    * Should the zoom controls be visible on the map
    */
-  @Input()
-  showZoomControl = true;
+  readonly showZoomControl = input(true);
 
   /**
    * Should the attribution label be visible on the map
    */
-  @Input()
-  showAttributionControl = true;
+  readonly showAttributionControl = input(true);
 
   private map!: Map;
 
-  ngOnInit() {
-    if (this.mapId === undefined || this.mapId === null) {
-      this.mapId = this.generateUUID();
-    }
-  }
-
   ngAfterViewInit(): void {
     const controls: Control[] = [];
-    if (this.showZoomControl) {
+    if (this.showZoomControl()) {
       controls.push(new Zoom());
     }
-    if (this.showAttributionControl) {
+    if (this.showAttributionControl()) {
       controls.push(new Attribution());
     }
 
-    const center = fromLonLat([this.lon, this.lat]);
+    const center = fromLonLat([this.lon(), this.lat()]);
     this.map = new Map({
       layers: [new TileLayer({ source: new OSM() })],
       controls: controls,
-      target: this.mapId,
+      target: this.mapId(),
       view: new View({
-        projection: this.projection,
+        projection: this.projection(),
         center: center,
-        zoom: this.zoom,
+        zoom: this.zoom(),
       }),
     });
-    this.mapService.setMap(this.mapId, this.map);
-    this.mapid.setId(this.mapId);
+    const mapId = this.mapId();
+    this.mapService.setMap(mapId, this.map);
+    this.mapid.setId(mapId);
   }
 
   private generateUUID(): string {

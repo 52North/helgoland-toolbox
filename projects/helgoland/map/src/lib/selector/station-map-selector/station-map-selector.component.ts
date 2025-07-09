@@ -4,9 +4,9 @@ import {
   AfterViewInit,
   Component,
   inject,
-  Input,
   OnChanges,
   SimpleChanges,
+  input,
 } from '@angular/core';
 import {
   DatasetType,
@@ -35,27 +35,24 @@ export class StationMapSelectorComponent
   protected statusIntervalResolver = inject(StatusIntervalResolverService);
   protected servicesConnector = inject(HelgolandServicesConnector);
 
-  @Input()
-  public cluster: boolean | undefined;
+  public readonly cluster = input<boolean>();
 
-  @Input()
-  public clusterConfig: L.MarkerClusterGroupOptions | undefined;
+  public readonly clusterConfig = input<L.MarkerClusterGroupOptions>();
 
-  @Input()
-  public statusIntervals: boolean | undefined;
+  public readonly statusIntervals = input<boolean>();
 
   /**
    * Ignores all Statusintervals where the timestamp is before a given duration in milliseconds and draws instead the default marker.
    */
-  @Input()
-  public ignoreStatusIntervalIfBeforeDuration = Infinity;
+  public readonly ignoreStatusIntervalIfBeforeDuration = input(Infinity);
 
   protected markerFeatureGroup: L.FeatureGroup | undefined;
 
   public override ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
-    if (this.map && this.serviceUrl && changes['statusIntervals']) {
-      this.drawGeometries(this.map, this.serviceUrl);
+    const serviceUrl = this.serviceUrl();
+    if (this.map && serviceUrl && changes['statusIntervals']) {
+      this.drawGeometries(this.map, serviceUrl);
     }
   }
 
@@ -64,7 +61,8 @@ export class StationMapSelectorComponent
     if (this.markerFeatureGroup) {
       map.removeLayer(this.markerFeatureGroup);
     }
-    if (this.statusIntervals && this.filter && this.filter.phenomenon) {
+    const filter = this.filter();
+    if (this.statusIntervals() && filter && filter.phenomenon) {
       this.createValuedMarkers(serviceUrl, map);
     } else {
       this.createStationGeometries(serviceUrl, map);
@@ -74,7 +72,7 @@ export class StationMapSelectorComponent
   protected createValuedMarkers(serviceUrl: string, map: L.Map) {
     this.servicesConnector
       .getDatasets(serviceUrl, {
-        phenomenon: this.filter?.phenomenon,
+        phenomenon: this.filter()?.phenomenon,
         expanded: true,
         type: DatasetType.Timeseries,
       })
@@ -93,7 +91,7 @@ export class StationMapSelectorComponent
                   ts.lastValue.value &&
                   ts.lastValue.timestamp >
                     new Date().getTime() -
-                      this.ignoreStatusIntervalIfBeforeDuration
+                      this.ignoreStatusIntervalIfBeforeDuration()
                 ) {
                   const interval =
                     this.statusIntervalResolver.getMatchingInterval(
@@ -134,21 +132,20 @@ export class StationMapSelectorComponent
     station: HelgolandPlatform,
     color: string,
   ): Layer {
-    if (
-      this.markerSelectorGenerator &&
-      this.markerSelectorGenerator.createFilledMarker
-    ) {
-      return this.markerSelectorGenerator.createFilledMarker(station, color);
+    const markerSelectorGenerator = this.markerSelectorGenerator();
+    if (markerSelectorGenerator && markerSelectorGenerator.createFilledMarker) {
+      return markerSelectorGenerator.createFilledMarker(station, color);
     }
     return this.createFilledMarker(station, color, 10);
   }
 
   protected createDefaultColoredMarker(station: HelgolandPlatform): Layer {
+    const markerSelectorGenerator = this.markerSelectorGenerator();
     if (
-      this.markerSelectorGenerator &&
-      this.markerSelectorGenerator.createDefaultFilledMarker
+      markerSelectorGenerator &&
+      markerSelectorGenerator.createDefaultFilledMarker
     ) {
-      return this.markerSelectorGenerator.createDefaultFilledMarker(station);
+      return markerSelectorGenerator.createDefaultFilledMarker(station);
     }
     return this.createFilledMarker(station, '#000', 10);
   }
@@ -186,12 +183,12 @@ export class StationMapSelectorComponent
   }
 
   protected createStationGeometries(serviceUrl: string, map: L.Map) {
-    this.servicesConnector.getPlatforms(serviceUrl, this.filter).subscribe({
+    this.servicesConnector.getPlatforms(serviceUrl, this.filter()).subscribe({
       next: (res) => {
-        if (this.cluster) {
+        if (this.cluster()) {
           this.markerFeatureGroup = L.markerClusterGroup({
             animate: true,
-            ...this.clusterConfig,
+            ...this.clusterConfig(),
           });
         } else {
           this.markerFeatureGroup = L.featureGroup();
@@ -223,11 +220,12 @@ export class StationMapSelectorComponent
     station: HelgolandPlatform,
   ): Layer | undefined {
     let layer: Layer | undefined = undefined;
+    const markerSelectorGenerator = this.markerSelectorGenerator();
     if (
-      this.markerSelectorGenerator &&
-      this.markerSelectorGenerator.createDefaultGeometry
+      markerSelectorGenerator &&
+      markerSelectorGenerator.createDefaultGeometry
     ) {
-      layer = this.markerSelectorGenerator.createDefaultGeometry(station);
+      layer = markerSelectorGenerator.createDefaultGeometry(station);
     } else if (station.geometry) {
       layer = L.geoJSON(station.geometry);
     } else {

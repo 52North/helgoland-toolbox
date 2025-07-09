@@ -1,4 +1,4 @@
-import { Component, Input, inject, output } from '@angular/core';
+import { Component, inject, output, input } from '@angular/core';
 import {
   HelgolandParameterFilter,
   HelgolandPlatform,
@@ -37,26 +37,22 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
   /**
    * The serviceUrl, where the selection should be loaded.
    */
-  @Input({ required: true })
-  serviceUrl!: string;
+  readonly serviceUrl = input.required<string>();
 
   /**
    * The filter which should be used, while fetching the selection.
    */
-  @Input()
-  filter: HelgolandParameterFilter | undefined;
+  readonly filter = input<HelgolandParameterFilter>();
 
   /**
    * Zoom to the stations after collected and displayed
    */
-  @Input()
-  zoomToResult = true;
+  readonly zoomToResult = input(true);
 
   /**
    * Cluster stations
    */
-  @Input()
-  cluster = true;
+  readonly cluster = input(true);
 
   /**
    * Inform, when a station is selected
@@ -93,7 +89,7 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
 
   private createStationGeometries() {
     this.servicesConnector
-      .getPlatforms(this.serviceUrl, this.filter)
+      .getPlatforms(this.serviceUrl(), this.filter())
       .subscribe((stations) => {
         const features: Feature[] = this.createFeatureList(stations);
 
@@ -103,14 +99,14 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
 
         this.createClickInteraction();
 
-        if (this.zoomToResult) {
+        if (this.zoomToResult()) {
           this.zoomToFeatures(features);
         }
       });
   }
 
   private createLayer(features: Feature[]) {
-    if (this.cluster) {
+    if (this.cluster()) {
       this.layer = new VectorLayer({
         source: new Cluster({
           distance: 100,
@@ -147,7 +143,7 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
   }
 
   private createHoverInteraction() {
-    if (this.cluster) {
+    if (this.cluster()) {
       const hoverSelect = new Select({
         condition: pointerMove,
         style: (feature) => this.styleClusterLayer(feature),
@@ -169,7 +165,7 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
     const clickSelect = new Select({
       condition: click,
       style: (feature) =>
-        this.cluster
+        this.cluster()
           ? this.styleClusterLayer(feature)
           : this.createMarkerStyle(),
       layers: [this.layer],

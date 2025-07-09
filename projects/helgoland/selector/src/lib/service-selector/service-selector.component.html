@@ -45,7 +45,7 @@
       }
     </div>
   }
-  @if (showUnresolvableServices) {
+  @if (showUnresolvableServices()) {
     <div>
       @for (item of unResolvableServices; track item) {
         <div style="color: red">{{ item.name }} is currently not reachable</div>

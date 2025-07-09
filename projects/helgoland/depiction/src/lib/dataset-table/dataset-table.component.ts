@@ -99,7 +99,7 @@ export class DatasetTableComponent
 
   protected getIndexFromInternalId(internalId: string) {
     // helper method
-    return this.datasetIds.indexOf(internalId);
+    return this.datasetIds().indexOf(internalId);
   }
 
   protected setSelectedId(internalId: string) {
@@ -192,7 +192,7 @@ export class DatasetTableComponent
             this.prepareData(
               timeseries,
               result.values.map((e) => {
-                const a = new Array(this.datasetIds.length).fill(undefined);
+                const a = new Array(this.datasetIds().length).fill(undefined);
                 a[index] = e[1];
                 return { datetime: e[0], values: a };
               }),
@@ -209,7 +209,7 @@ export class DatasetTableComponent
     const index = this.getIndexFromInternalId(timeseries.internalId);
 
     // if datasetOptions are provided, use their color to style the header's "color band" (i.e. the 7px border-bottom of th)
-    const option = this.datasetOptions?.get(timeseries.internalId);
+    const option = this.datasetOptions()?.get(timeseries.internalId);
     if (option) {
       this.preparedColors[index] = option.color;
     } else {
@@ -217,7 +217,7 @@ export class DatasetTableComponent
       this.preparedColors[index] = 'rgba(0,0,0,0)';
     }
 
-    if (this.selectedDatasetIds.indexOf(timeseries.internalId) !== -1) {
+    if (this.selectedDatasetIds().indexOf(timeseries.internalId) !== -1) {
       this.setSelectedId(timeseries.internalId);
     }
 

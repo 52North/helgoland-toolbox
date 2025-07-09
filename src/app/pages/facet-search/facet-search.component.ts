@@ -61,6 +61,8 @@ export class FacetSearchComponent {
   public selectedStart: Date | undefined;
   public selectedEnd: Date | undefined;
 
+  public mapId = 'facet-search-map';
+
   constructor() {
     this.translate.onLangChange.subscribe((_) => {
       this.fetchDatasets();

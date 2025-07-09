@@ -1,9 +1,9 @@
 import {
   Component,
-  Input,
   OnChanges,
   SimpleChanges,
   output,
+  input,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MinMaxRange } from '@helgoland/core';
@@ -18,16 +18,16 @@ export class MinMaxRangeComponent implements OnChanges {
   public rangeMin: number | undefined;
   public rangeMax: number | undefined;
 
-  @Input()
-  public range: MinMaxRange | undefined;
+  public readonly range = input<MinMaxRange>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onRangeChange = output<MinMaxRange | void>();
 
   public ngOnChanges(changes: SimpleChanges) {
-    if (changes['range'] && this.range) {
-      this.rangeMin = this.range.min;
-      this.rangeMax = this.range.max;
+    const range = this.range();
+    if (changes['range'] && range) {
+      this.rangeMin = range.min;
+      this.rangeMax = range.max;
     }
   }
 

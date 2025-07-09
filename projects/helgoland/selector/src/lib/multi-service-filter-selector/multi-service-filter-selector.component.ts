@@ -1,11 +1,11 @@
 import { NgStyle } from '@angular/common';
 import {
   Component,
-  Input,
   OnChanges,
   SimpleChanges,
   inject,
   output,
+  input,
 } from '@angular/core';
 import {
   Filter,
@@ -44,14 +44,11 @@ export class MultiServiceFilterSelectorComponent
 {
   protected servicesConnector = inject(HelgolandServicesConnector);
 
-  @Input({ required: true })
-  public endpoint!: MultiServiceFilterEndpoint;
+  public readonly endpoint = input.required<MultiServiceFilterEndpoint>();
 
-  @Input()
-  public filterList: MultiServiceFilter[] = [];
+  public readonly filterList = input<MultiServiceFilter[]>([]);
 
-  @Input()
-  public selected: string | undefined;
+  public readonly selected = input<string>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onItemSelected = output<FilteredParameter>();
@@ -60,7 +57,7 @@ export class MultiServiceFilterSelectorComponent
   public items: FilteredParameter[] = [];
 
   public ngOnChanges(changes: SimpleChanges) {
-    if (changes['filterList'] && this.filterList) {
+    if (changes['filterList'] && this.filterList()) {
       this.loadItems();
     }
   }
@@ -77,10 +74,11 @@ export class MultiServiceFilterSelectorComponent
 
   protected loadItems() {
     this.items = [];
-    this.filterList.forEach((entry) => {
+    this.filterList().forEach((entry) => {
       const filter = entry.filter || {};
       this.loading++;
-      switch (this.endpoint) {
+      const endpoint = this.endpoint();
+      switch (endpoint) {
         case 'offering':
           this.servicesConnector.getOfferings(entry.url, filter).subscribe({
             next: (res) =>
@@ -131,7 +129,7 @@ export class MultiServiceFilterSelectorComponent
           });
           break;
         default:
-          console.error('Wrong endpoint: ' + this.endpoint);
+          console.error('Wrong endpoint: ' + endpoint);
           this.loading--;
       }
     });
@@ -149,7 +147,7 @@ export class MultiServiceFilterSelectorComponent
   ): void {
     this.loading--;
     res.forEach((entry) => {
-      entry.selected = this.selected === entry.label;
+      entry.selected = this.selected() === entry.label;
       const filter: Filter = {
         filter: prevfilter,
         itemId: entry.id,

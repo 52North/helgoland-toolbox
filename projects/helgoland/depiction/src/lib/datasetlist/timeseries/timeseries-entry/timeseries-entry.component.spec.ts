@@ -38,7 +38,7 @@ describe('TimeseriesEntryComponent', () => {
     component = fixture.componentInstance;
     component.datasetId = 'temp__temp';
     component.datasetOptions = new DatasetOptions(
-      component.datasetId,
+      component.datasetId(),
       '#123456',
     );
     fixture.detectChanges();

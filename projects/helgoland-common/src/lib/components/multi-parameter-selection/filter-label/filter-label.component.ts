@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { ParameterType } from '../model';
@@ -10,5 +10,5 @@ import { ParameterType } from '../model';
   imports: [TranslateModule],
 })
 export class FilterLabelComponent {
-  @Input() filter: ParameterType | undefined;
+  readonly filter = input<ParameterType>();
 }

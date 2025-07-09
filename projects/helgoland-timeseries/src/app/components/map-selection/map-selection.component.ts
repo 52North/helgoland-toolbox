@@ -126,10 +126,15 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
       const dialogRef = this.dialog.open(
         ModalDatasetByStationSelectorComponent,
       );
-      dialogRef.componentInstance.station = station;
-      dialogRef.componentInstance.url = this.state.selectedService.apiUrl;
-      dialogRef.componentInstance.phenomenonId =
-        this.state.selectedPhenomenonId;
+      dialogRef.componentRef?.setInput('station', station);
+      dialogRef.componentRef?.setInput(
+        'url',
+        this.state.selectedService.apiUrl,
+      );
+      dialogRef.componentRef?.setInput(
+        'phenomenonId',
+        this.state.selectedPhenomenonId,
+      );
 
       dialogRef.afterClosed().subscribe((newConf: MapConfig) => {
         if (newConf) {

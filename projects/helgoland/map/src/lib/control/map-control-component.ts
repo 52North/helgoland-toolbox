@@ -1,4 +1,4 @@
-import { Directive, Input, inject } from '@angular/core';
+import { Directive, inject, input } from '@angular/core';
 
 import { MapCache } from '../base/map-cache.service';
 
@@ -9,5 +9,5 @@ export abstract class MapControlComponent {
   /**
    * Connect map id.
    */
-  @Input({ required: true }) public mapId!: string;
+  public readonly mapId = input.required<string>();
 }

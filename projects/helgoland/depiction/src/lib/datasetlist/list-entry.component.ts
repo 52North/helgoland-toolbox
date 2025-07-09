@@ -1,9 +1,9 @@
 import {
   Directive,
-  Input,
   OnDestroy,
   OnInit,
   inject,
+  input,
   output,
 } from '@angular/core';
 import { InternalDatasetId, InternalIdHandler } from '@helgoland/core';
@@ -21,11 +21,9 @@ export abstract class ListEntryComponent implements OnInit, OnDestroy {
   protected internalIdHandler = inject(InternalIdHandler);
   protected translateSrvc = inject(TranslateService);
 
-  @Input({ required: true })
-  public datasetId!: string;
+  public readonly datasetId = input.required<string>();
 
-  @Input()
-  public selected: boolean | undefined;
+  public readonly selected = input<boolean>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onDeleteDataset = output<boolean>();
@@ -40,7 +38,9 @@ export abstract class ListEntryComponent implements OnInit, OnDestroy {
   private langChangeSubscription: Subscription | undefined;
 
   public ngOnInit(): void {
-    this.internalId = this.internalIdHandler.resolveInternalId(this.datasetId);
+    this.internalId = this.internalIdHandler.resolveInternalId(
+      this.datasetId(),
+    );
     this.loadDataset(this.internalId, this.translateSrvc.currentLang);
     this.langChangeSubscription = this.translateSrvc.onLangChange.subscribe(
       (langChangeEvent: LangChangeEvent) =>
@@ -57,8 +57,7 @@ export abstract class ListEntryComponent implements OnInit, OnDestroy {
   }
 
   public toggleSelection() {
-    this.selected = !this.selected;
-    this.onSelectDataset.emit(this.selected);
+    this.onSelectDataset.emit(!this.selected());
   }
 
   protected onLanguageChanged(langChangeEvent: LangChangeEvent): void {

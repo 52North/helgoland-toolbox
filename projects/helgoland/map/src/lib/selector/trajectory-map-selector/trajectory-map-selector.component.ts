@@ -3,11 +3,11 @@ import 'leaflet.markercluster';
 import {
   AfterViewInit,
   Component,
-  Input,
   OnChanges,
   SimpleChanges,
   inject,
   output,
+  input,
 } from '@angular/core';
 import {
   HelgolandDataset,
@@ -34,8 +34,7 @@ export class ProfileTrajectoryMapSelectorComponent
 {
   protected servicesConnector = inject(HelgolandServicesConnector);
 
-  @Input({ required: true })
-  public selectedTimespan!: Timespan;
+  public readonly selectedTimespan = input.required<Timespan>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onTimeListDetermined = output<number[]>();
@@ -58,13 +57,13 @@ export class ProfileTrajectoryMapSelectorComponent
 
   public override ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
-    if (changes['selectedTimespan'] && this.selectedTimespan && this.map) {
+    if (changes['selectedTimespan'] && this.selectedTimespan() && this.map) {
       this.clearMap(this.map);
       this.data.forEach((entry) => {
         if (
           this.dataset &&
-          this.selectedTimespan.from <= entry.timestamp &&
-          entry.timestamp <= this.selectedTimespan.to
+          this.selectedTimespan().from <= entry.timestamp &&
+          entry.timestamp <= this.selectedTimespan().to
         ) {
           this.layer.addLayer(this.createGeoJson(entry, this.dataset));
         }
@@ -79,7 +78,7 @@ export class ProfileTrajectoryMapSelectorComponent
       return;
     }
     this.servicesConnector
-      .getDatasets(serviceUrl, { ...this.filter, expanded: true })
+      .getDatasets(serviceUrl, { ...this.filter(), expanded: true })
       .subscribe((datasets) => {
         datasets.forEach((dataset) => {
           if (

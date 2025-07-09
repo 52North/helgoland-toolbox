@@ -2,12 +2,12 @@ import 'bootstrap-slider';
 
 import {
   Component,
-  Input,
   OnChanges,
   SimpleChanges,
   ViewEncapsulation,
   inject,
   output,
+  input,
 } from '@angular/core';
 import { Timespan, TzDatePipe } from '@helgoland/core';
 // @ts-ignore
@@ -28,11 +28,9 @@ import { TimeRangeSliderCache } from './time-range-slider.service';
 export class TimeRangeSliderComponent implements OnChanges {
   protected cache = inject(TimeRangeSliderCache);
 
-  @Input()
-  public id = '';
+  public readonly id = input('');
 
-  @Input({ required: true })
-  public timeList!: number[];
+  public readonly timeList = input.required<number[]>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onTimespanSelected = output<Timespan>();
@@ -43,13 +41,14 @@ export class TimeRangeSliderComponent implements OnChanges {
   public selectionEnd!: number;
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['timeList'] && this.timeList) {
+    const timeList = this.timeList();
+    if (changes['timeList'] && timeList) {
       let min;
       let max;
-      this.start = min = this.timeList[0];
-      this.end = max = this.timeList[this.timeList.length - 1];
-      const cache = this.cache.get(this.id);
-      if (this.id && cache) {
+      this.start = min = timeList[0];
+      this.end = max = timeList[timeList.length - 1];
+      const cache = this.cache.get(this.id());
+      if (this.id() && cache) {
         this.selectionStart = cache.from;
         this.selectionEnd = cache.to;
       } else {
@@ -68,7 +67,7 @@ export class TimeRangeSliderComponent implements OnChanges {
             event.value[0],
             event.value[1],
           );
-          this.cache.set(this.id, timespan);
+          this.cache.set(this.id(), timespan);
           this.onTimespanSelected.emit(timespan);
         })
         .on('slide', (event: any) => {

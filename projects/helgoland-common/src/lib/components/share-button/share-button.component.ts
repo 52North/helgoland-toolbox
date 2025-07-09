@@ -1,6 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Clipboard } from '@angular/cdk/clipboard';
-import { Component, Input, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
@@ -19,7 +19,7 @@ export class ShareButtonComponent {
   private translate = inject(TranslateService);
   private liveAnnouncer = inject(LiveAnnouncer);
 
-  @Input() public generatedUrlFunction: (() => string) | undefined;
+  public readonly generatedUrlFunction = input<() => string>();
 
   private readonly snackBarConfig: MatSnackBarConfig = {
     duration: 2000,
@@ -28,8 +28,9 @@ export class ShareButtonComponent {
   };
 
   public shareState() {
-    if (this.generatedUrlFunction) {
-      const url = this.generatedUrlFunction();
+    const generatedUrlFunction = this.generatedUrlFunction();
+    if (generatedUrlFunction) {
+      const url = generatedUrlFunction();
       if (this.clipboard.copy(url)) {
         this.inform(this.translate.instant('permalink.copy-to-clipboard'));
       } else {

@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, Input, inject, output } from '@angular/core';
+import { Component, inject, output, input } from '@angular/core';
 import {
   DatasetFilter,
   DatasetType,
@@ -31,8 +31,7 @@ import { ListEntryComponent } from '../list-entry.component';
 export class ProfileEntryComponent extends ListEntryComponent {
   protected servicesConnector = inject(HelgolandServicesConnector);
 
-  @Input()
-  public datasetOptions: TimedDatasetOptions[] | undefined;
+  public readonly datasetOptions = input<TimedDatasetOptions[]>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onUpdateOptions = output<TimedDatasetOptions[]>();
@@ -64,8 +63,9 @@ export class ProfileEntryComponent extends ListEntryComponent {
 
   public toggleVisibility(options: TimedDatasetOptions) {
     options.visible = !options.visible;
-    if (this.datasetOptions) {
-      this.onUpdateOptions.emit(this.datasetOptions);
+    const datasetOptions = this.datasetOptions();
+    if (datasetOptions) {
+      this.onUpdateOptions.emit(datasetOptions);
     }
   }
 
@@ -74,7 +74,9 @@ export class ProfileEntryComponent extends ListEntryComponent {
   }
 
   public showGeometry(dataset: HelgolandProfile, option: TimedDatasetOptions) {
-    const internalId = this.internalIdHandler.resolveInternalId(this.datasetId);
+    const internalId = this.internalIdHandler.resolveInternalId(
+      this.datasetId(),
+    );
     if (dataset.isMobile) {
       const timespan = new Timespan(option.timestamp);
       this.servicesConnector

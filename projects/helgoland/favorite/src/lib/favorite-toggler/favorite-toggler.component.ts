@@ -1,10 +1,10 @@
 import { NgClass } from '@angular/common';
 import {
   Component,
-  Input,
   OnChanges,
   SimpleChanges,
   inject,
+  input,
 } from '@angular/core';
 import { DatasetOptions, HelgolandTimeseries } from '@helgoland/core';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,17 +20,16 @@ export class FavoriteTogglerComponent implements OnChanges {
   protected favSrvc = inject(FavoriteService);
   protected translate = inject(TranslateService);
 
-  @Input({ required: true })
-  public dataset!: HelgolandTimeseries;
+  public readonly dataset = input.required<HelgolandTimeseries>();
 
-  @Input({ required: true })
-  public options!: DatasetOptions;
+  public readonly options = input.required<DatasetOptions>();
 
   public isFavorite: boolean = false;
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['dataset'] && this.dataset) {
-      this.isFavorite = this.favSrvc.hasFavorite(this.dataset);
+    const dataset = this.dataset();
+    if (changes['dataset'] && dataset) {
+      this.isFavorite = this.favSrvc.hasFavorite(dataset);
     }
   }
 
@@ -44,11 +43,11 @@ export class FavoriteTogglerComponent implements OnChanges {
 
   protected addFavorite() {
     this.isFavorite = true;
-    this.favSrvc.addFavorite(this.dataset, this.options);
+    this.favSrvc.addFavorite(this.dataset(), this.options());
   }
 
   protected removeFavorite() {
     this.isFavorite = false;
-    this.favSrvc.removeFavorite(this.dataset.internalId);
+    this.favSrvc.removeFavorite(this.dataset().internalId);
   }
 }

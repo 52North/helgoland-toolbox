@@ -1,5 +1,5 @@
 import { NgStyle } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, input } from '@angular/core';
 import { MatchLabelPipe } from '@helgoland/core';
 import { Subscription } from 'rxjs';
 
@@ -17,13 +17,15 @@ import {
   imports: [NgStyle, MatchLabelPipe],
 })
 export class ParameterFacetComponent implements OnInit, OnDestroy {
-  @Input({ required: true }) public facetSearchService!: FacetSearchService;
+  public readonly facetSearchService = input.required<FacetSearchService>();
 
-  @Input({ required: true }) public type!: ParameterFacetType;
+  public readonly type = input.required<ParameterFacetType>();
 
-  @Input() public sort: ParameterFacetSort = ParameterFacetSort.descCount;
+  public readonly sort = input<ParameterFacetSort>(
+    ParameterFacetSort.descCount,
+  );
 
-  @Input() public textualFilter: string | undefined;
+  public readonly textualFilter = input<string>();
 
   public parameterList: FacetParameter[] = [];
 
@@ -32,7 +34,7 @@ export class ParameterFacetComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit() {
-    this.resultSubs = this.facetSearchService
+    this.resultSubs = this.facetSearchService()
       .getResults()
       .subscribe(() => this.fetchFacetParameter());
   }
@@ -43,13 +45,13 @@ export class ParameterFacetComponent implements OnInit, OnDestroy {
 
   public toggleFacet(parameter: FacetParameter) {
     parameter.selected = !parameter.selected;
-    this.facetSearchService.selectParameter(this.type, parameter);
+    this.facetSearchService().selectParameter(this.type(), parameter);
   }
 
   private fetchFacetParameter() {
-    this.parameterList = this.facetSearchService.getParameterList(
-      this.type,
-      this.sort,
+    this.parameterList = this.facetSearchService().getParameterList(
+      this.type(),
+      this.sort(),
     );
   }
 }

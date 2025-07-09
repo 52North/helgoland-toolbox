@@ -1,11 +1,11 @@
 import { NgClass } from '@angular/common';
 import {
   Component,
-  Input,
   OnChanges,
   SimpleChanges,
   inject,
   output,
+  input,
 } from '@angular/core';
 import {
   HelgolandParameterFilter,
@@ -29,17 +29,13 @@ export class ServiceFilterSelectorComponent
 {
   protected servicesConnector = inject(HelgolandServicesConnector);
 
-  @Input({ required: true })
-  public endpoint!: string;
+  public readonly endpoint = input.required<string>();
 
-  @Input({ required: true })
-  public serviceUrl!: string;
+  public readonly serviceUrl = input.required<string>();
 
-  @Input()
-  public filter: HelgolandParameterFilter | undefined;
+  public readonly filter = input<HelgolandParameterFilter>();
 
-  @Input()
-  public selectionId: string | undefined;
+  public readonly selectionId = input<string>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onItemSelected = output<Parameter>();
@@ -70,10 +66,11 @@ export class ServiceFilterSelectorComponent
   private loadItems() {
     this.loading = true;
     this.onLoading.emit(true);
-    switch (this.endpoint) {
+    const endpoint = this.endpoint();
+    switch (endpoint) {
       case 'offering':
         this.servicesConnector
-          .getOfferings(this.serviceUrl, this.filter)
+          .getOfferings(this.serviceUrl(), this.filter())
           .subscribe({
             next: (res) => this.setItems(res),
             error: () => this.errorOnLoading,
@@ -81,7 +78,7 @@ export class ServiceFilterSelectorComponent
         break;
       case 'phenomenon':
         this.servicesConnector
-          .getPhenomena(this.serviceUrl, this.filter)
+          .getPhenomena(this.serviceUrl(), this.filter())
           .subscribe({
             next: (res) => this.setItems(res),
             error: () => this.errorOnLoading,
@@ -89,7 +86,7 @@ export class ServiceFilterSelectorComponent
         break;
       case 'procedure':
         this.servicesConnector
-          .getProcedures(this.serviceUrl, this.filter)
+          .getProcedures(this.serviceUrl(), this.filter())
           .subscribe({
             next: (res) => this.setItems(res),
             error: () => this.errorOnLoading,
@@ -97,7 +94,7 @@ export class ServiceFilterSelectorComponent
         break;
       case 'category':
         this.servicesConnector
-          .getCategories(this.serviceUrl, this.filter)
+          .getCategories(this.serviceUrl(), this.filter())
           .subscribe({
             next: (res) => this.setItems(res),
             error: () => this.errorOnLoading,
@@ -105,14 +102,14 @@ export class ServiceFilterSelectorComponent
         break;
       case 'feature':
         this.servicesConnector
-          .getFeatures(this.serviceUrl, this.filter)
+          .getFeatures(this.serviceUrl(), this.filter())
           .subscribe({
             next: (res) => this.setItems(res),
             error: () => this.errorOnLoading,
           });
         break;
       default:
-        console.error('Wrong endpoint: ' + this.endpoint);
+        console.error('Wrong endpoint: ' + endpoint);
     }
   }
 

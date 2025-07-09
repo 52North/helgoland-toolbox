@@ -1,18 +1,18 @@
 <div>
   <mat-checkbox
-    [checked]="datasetOptions?.visible"
+    [checked]="datasetOptions()?.visible"
     (change)="toggleVisibility()"
   >
     {{ dataset?.parameters?.phenomenon?.label }}</mat-checkbox
   >
 </div>
 <div style="flex: 1"></div>
-@if (datasetOptions?.color) {
+@if (datasetOptions()?.color) {
   <div>
     <button
       mat-icon-button
-      [colorPicker]="datasetOptions!.color"
-      [ngStyle]="{ color: datasetOptions!.color }"
+      [colorPicker]="datasetOptions()!.color"
+      [ngStyle]="{ color: datasetOptions()!.color }"
       [cpOKButton]="true"
       (colorPickerSelect)="confirmColor($event)"
       [cpUseRootViewContainer]="false"

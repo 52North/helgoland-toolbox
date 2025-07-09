@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, Input, OnInit, inject, output } from '@angular/core';
+import { Component, OnInit, inject, input, output } from '@angular/core';
 import {
   DatasetType,
   HelgolandDataset,
@@ -25,17 +25,13 @@ export class DatasetByStationSelectorComponent implements OnInit {
   protected servicesConnector = inject(HelgolandServicesConnector);
   protected translateSrvc = inject(TranslateService);
 
-  @Input({ required: true })
-  public station!: HelgolandPlatform;
+  public readonly station = input.required<HelgolandPlatform>();
 
-  @Input({ required: true })
-  public url!: string;
+  public readonly url = input.required<string>();
 
-  @Input()
-  public defaultSelected = false;
+  public readonly defaultSelected = input(false);
 
-  @Input()
-  public phenomenonId: string | undefined;
+  public readonly phenomenonId = input<string>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onSelectionChanged = output<HelgolandDataset[]>();
@@ -47,22 +43,24 @@ export class DatasetByStationSelectorComponent implements OnInit {
 
   public ngOnInit() {
     this.servicesConnector
-      .getPlatform(this.station.id, this.url, { type: DatasetType.Timeseries })
+      .getPlatform(this.station().id, this.url(), {
+        type: DatasetType.Timeseries,
+      })
       .subscribe((station) => {
-        this.station = station;
+        // this.station = station;
         this.counter = 0;
-        this.station.datasetIds.forEach((id) => {
+        station.datasetIds.forEach((id) => {
           this.counter++;
           this.servicesConnector
             .getDataset(
-              { id: id, url: this.url },
+              { id: id, url: this.url() },
               { type: DatasetType.Timeseries },
             )
             .subscribe({
               next: (result) =>
                 this.prepareResult(
                   result as SelectableDataset,
-                  this.defaultSelected,
+                  this.defaultSelected(),
                 ),
               error: (error) => console.error(error),
               complete: () => this.counter--,
@@ -78,8 +76,9 @@ export class DatasetByStationSelectorComponent implements OnInit {
 
   protected prepareResult(result: SelectableDataset, selection: boolean) {
     result.selected = selection;
-    if (this.phenomenonId) {
-      if (result.parameters.phenomenon?.id === this.phenomenonId) {
+    const phenomenonId = this.phenomenonId();
+    if (phenomenonId) {
+      if (result.parameters.phenomenon?.id === phenomenonId) {
         this.phenomenonMatchedList.push(result);
       } else {
         this.othersList.push(result);

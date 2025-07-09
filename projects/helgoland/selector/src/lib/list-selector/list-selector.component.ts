@@ -2,11 +2,11 @@
 // seems to be unused
 import {
   Component,
-  Input,
   OnChanges,
   SimpleChanges,
   inject,
   output,
+  input,
 } from '@angular/core';
 import {
   FilteredProvider,
@@ -37,17 +37,13 @@ export class ListSelectorComponent implements OnChanges {
   protected listSelectorService = inject(ListSelectorService);
   protected servicesConnector = inject(HelgolandServicesConnector);
 
-  @Input()
-  public parameters: ListSelectorParameter[];
+  public readonly parameters = input<ListSelectorParameter[]>();
 
-  @Input()
-  public filter: HelgolandParameterFilter = {};
+  public readonly filter = input<HelgolandParameterFilter>({});
 
-  @Input()
-  public providerList: FilteredProvider[];
+  public readonly providerList = input<FilteredProvider[]>();
 
-  @Input()
-  public selectorId: string;
+  public readonly selectorId = input<string>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onDatasetSelection = output<HelgolandDataset[]>();
@@ -56,78 +52,82 @@ export class ListSelectorComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges) {
     if (changes['providerList'] && changes['providerList'].currentValue) {
+      const selectorId = this.selectorId();
+      const providerList = this.providerList();
       if (
-        this.selectorId &&
-        this.listSelectorService.cache.has(this.selectorId) &&
-        this.isEqual(this.providerList, this.listSelectorService.providerList)
+        selectorId &&
+        this.listSelectorService.cache.has(selectorId) &&
+        this.isEqual(providerList, this.listSelectorService.providerList)
       ) {
-        this.parameters = this.listSelectorService.cache.get(this.selectorId);
-        let idx = this.parameters.findIndex((entry) => entry.isDisabled);
+        this.parameters = this.listSelectorService.cache.get(selectorId);
+        let idx = this.parameters().findIndex((entry) => entry.isDisabled);
         if (idx === -1) {
-          idx = this.parameters.length;
+          idx = this.parameters().length;
         }
-        this.activePanel = this.selectorId + '-' + (idx - 1);
-        this.parameters[idx - 1].filterList.forEach(
-          (e) => delete e.filter[this.parameters[idx - 1].type],
+        this.activePanel = selectorId + '-' + (idx - 1);
+        this.parameters()[idx - 1].filterList.forEach(
+          (e) => delete e.filter[this.parameters()[idx - 1].type],
         );
       } else {
-        if (this.selectorId) {
-          this.listSelectorService.cache.set(this.selectorId, this.parameters);
+        const parameters = this.parameters();
+        if (selectorId) {
+          this.listSelectorService.cache.set(selectorId, parameters);
         }
         // create filterlist for first parameter entry
-        this.parameters[0].headerAddition = '';
-        this.parameters[0].selected = '';
-        this.parameters[0].filterList = this.providerList.map((entry) => {
+        parameters[0].headerAddition = '';
+        parameters[0].selected = '';
+        parameters[0].filterList = providerList.map((entry) => {
           const filter: HelgolandParameterFilter = {};
           if (entry.id) {
             filter.service = entry.id;
           }
-          if (this.filter.type) {
-            filter.type = this.filter.type;
+          const filterValue = this.filter();
+          if (filterValue.type) {
+            filter.type = filterValue.type;
           }
           return {
             url: entry.url,
             filter,
           };
         }) as MultiServiceFilter[];
-        this.listSelectorService.providerList = this.providerList;
+        this.listSelectorService.providerList = providerList;
         // open first tab
-        this.activePanel = this.selectorId + '-0';
-        this.parameters[0].isDisabled = false;
+        this.activePanel = selectorId + '-0';
+        parameters[0].isDisabled = false;
         // disable parameterList
-        for (let i = 1; i < this.parameters.length; i++) {
-          this.parameters[i].isDisabled = true;
-          this.parameters[i].headerAddition = '';
+        for (let i = 1; i < parameters.length; i++) {
+          parameters[i].isDisabled = true;
+          parameters[i].headerAddition = '';
         }
       }
     }
   }
 
   public itemSelected(item: FilteredParameter, index: number) {
-    if (index < this.parameters.length - 1) {
-      this.parameters[index].headerAddition = item.label;
-      this.parameters[index].selected = item.label;
-      this.activePanel = this.selectorId + '-' + (index + 1);
-      this.parameters[index + 1].isDisabled = false;
+    if (index < this.parameters().length - 1) {
+      parameters[index].headerAddition = item.label;
+      parameters[index].selected = item.label;
+      this.activePanel = this.selectorId() + '-' + (index + 1);
+      parameters[index + 1].isDisabled = false;
       // copy filter to new item
-      this.parameters[index + 1].filterList = JSON.parse(
+      parameters[index + 1].filterList = JSON.parse(
         JSON.stringify(item.filterList),
       );
       // add filter for selected item to next
-      this.parameters[index + 1].filterList.forEach(
-        (entry) => (entry.filter[this.parameters[index].type] = entry.itemId),
+      parameters[index + 1].filterList.forEach(
+        (entry) => (entry.filter[this.parameters()[index].type] = entry.itemId),
       );
-      for (let i = index + 2; i < this.parameters.length; i++) {
-        this.parameters[i].isDisabled = true;
-        this.parameters[i].filterList = [];
+      for (let i = index + 2; i < parameters.length; i++) {
+        parameters[i].isDisabled = true;
+        parameters[i].filterList = [];
       }
-      for (let j = index + 1; j < this.parameters.length; j++) {
-        this.parameters[j].headerAddition = '';
-        this.parameters[j].selected = '';
+      for (let j = index + 1; j < parameters.length; j++) {
+        parameters[j].headerAddition = '';
+        parameters[j].selected = '';
       }
     } else {
       item.filterList.forEach((entry) => {
-        entry.filter[this.parameters[index].type] = entry.itemId;
+        entry.filter[this.parameters()[index].type] = entry.itemId;
         this.openDataset(entry.url, entry.filter);
       });
     }

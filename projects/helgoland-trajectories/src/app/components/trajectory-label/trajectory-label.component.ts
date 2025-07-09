@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { HelgolandTrajectory } from '@helgoland/core';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -9,6 +9,5 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [TranslateModule],
 })
 export class TrajectoryLabelComponent {
-  @Input({ required: true })
-  trajectory!: HelgolandTrajectory;
+  readonly trajectory = input.required<HelgolandTrajectory>();
 }

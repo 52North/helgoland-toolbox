@@ -1,11 +1,11 @@
 import { NgClass } from '@angular/common';
 import {
   Component,
-  Input,
   OnChanges,
   OnInit,
   SimpleChanges,
   inject,
+  input,
   output,
 } from '@angular/core';
 import { Settings, SettingsService } from '@helgoland/core';
@@ -18,21 +18,19 @@ import { Settings, SettingsService } from '@helgoland/core';
 export class RefreshButtonComponent implements OnChanges, OnInit {
   protected settings = inject<SettingsService<Settings>>(SettingsService);
 
-  @Input()
-  public refreshInterval: number | undefined;
+  public readonly refreshInterval = input<number>();
 
-  @Input()
-  public toggled: boolean | undefined;
+  public readonly toggled = input<boolean>();
 
   public readonly refreshing = output<boolean>();
 
   private interval: number | undefined;
 
   public ngOnInit(): void {
-    if (!this.refreshInterval) {
+    if (!this.refreshInterval()) {
       const refreshDataInterval =
         this.settings.getSettings().refreshDataInterval;
-      this.refreshInterval = refreshDataInterval ? refreshDataInterval : 60;
+      // this.refreshInterval = refreshDataInterval ? refreshDataInterval : 60;
     }
     this.evaluteRefreshing();
   }
@@ -44,15 +42,15 @@ export class RefreshButtonComponent implements OnChanges, OnInit {
   }
 
   public toggle() {
-    this.toggled = !this.toggled;
-    if (this.toggled) {
+    const toggled = !this.toggled();
+    if (toggled) {
       this.refresh();
     }
     this.evaluteRefreshing();
   }
 
   private evaluteRefreshing() {
-    if (this.toggled) {
+    if (this.toggled()) {
       this.startRefreshInterval();
     } else {
       this.stopRefreshInterval();
@@ -62,7 +60,7 @@ export class RefreshButtonComponent implements OnChanges, OnInit {
   private startRefreshInterval() {
     this.interval = window.setInterval(
       () => this.refresh(),
-      this.refreshInterval! * 1000,
+      this.refreshInterval()! * 1000,
     );
   }
 

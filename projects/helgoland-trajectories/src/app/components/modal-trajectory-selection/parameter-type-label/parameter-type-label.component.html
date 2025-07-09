@@ -1,5 +1,5 @@
 <span>
-  @switch (parameterType) {
+  @switch (parameterType()) {
     @case ("provider") {
       <span>
         {{ "list-selection.parameter-type.provider" | translate }}
@@ -21,7 +21,7 @@
       </span>
     }
     @default {
-      <span> '{{ parameterType }}' not implemented </span>
+      <span> '{{ parameterType() }}' not implemented </span>
     }
   }
 </span>

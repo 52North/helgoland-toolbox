@@ -1,10 +1,10 @@
 import {
   AfterViewInit,
   Component,
-  Input,
   OnChanges,
   SimpleChanges,
   output,
+  input,
 } from '@angular/core';
 import { HelgolandPlatform } from '@helgoland/core';
 import { Feature } from 'geojson';
@@ -22,9 +22,9 @@ export class PlatformMapViewerComponent
   extends CachedMapComponent
   implements AfterViewInit, OnChanges
 {
-  @Input() public platforms: HelgolandPlatform[] | undefined;
+  public readonly platforms = input<HelgolandPlatform[]>();
 
-  @Input() public customMarkerIcon: L.Icon | undefined;
+  public readonly customMarkerIcon = input<L.Icon>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public readonly onSelectedPlatform = output<HelgolandPlatform>();
@@ -48,7 +48,8 @@ export class PlatformMapViewerComponent
   }
 
   private drawPlatforms(map: L.Map) {
-    if (this.platforms) {
+    const platforms = this.platforms();
+    if (platforms) {
       if (this.layer) {
         map.removeLayer(this.layer);
       }
@@ -56,8 +57,9 @@ export class PlatformMapViewerComponent
 
       this.geometryOnMap = L.geoJSON(undefined, {
         pointToLayer: (feature, latlng) => {
-          if (this.customMarkerIcon) {
-            return L.marker(latlng, { icon: this.customMarkerIcon });
+          const customMarkerIcon = this.customMarkerIcon();
+          if (customMarkerIcon) {
+            return L.marker(latlng, { icon: customMarkerIcon });
           } else {
             return L.marker(latlng);
           }
@@ -73,7 +75,7 @@ export class PlatformMapViewerComponent
         },
       });
 
-      this.platforms.forEach((e) => {
+      platforms.forEach((e) => {
         if (e.geometry) {
           const feature: Feature = {
             geometry: e.geometry,

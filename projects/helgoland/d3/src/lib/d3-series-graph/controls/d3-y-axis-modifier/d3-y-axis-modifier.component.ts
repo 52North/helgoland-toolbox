@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, ViewEncapsulation, input } from '@angular/core';
 import { MinMaxRange } from '@helgoland/core';
 
 import { YAxis } from '../../../model/d3-general';
@@ -22,22 +22,22 @@ export class D3YAxisModifierComponent
   /**
    * Enables shift buttons for every y axis in the corresponding timeseries graph component.
    */
-  @Input() shift = true;
+  readonly shift = input(true);
 
   /**
    * Enables zoom buttons for every y axis in the corresponding timeseries graph component.
    */
-  @Input() zoom = true;
+  readonly zoom = input(true);
 
   /**
    * The factor, which is used to zoom in or out on the y axis range.
    */
-  @Input() zoomFactor = 0.05;
+  readonly zoomFactor = input(0.05);
 
   /**
    * The factor, which is used to shift up or down on the y axis range.
    */
-  @Input() shiftFactor = 0.1;
+  readonly shiftFactor = input(0.1);
 
   protected adjustedRanges: Map<string, MinMaxRange> = new Map();
   protected d3Graph: D3GraphInterface | undefined;
@@ -54,7 +54,7 @@ export class D3YAxisModifierComponent
 
   override adjustYAxis(axis: YAxis) {
     const range = this.adjustedRanges.get(this.generateKey(axis));
-    if ((this.shift || this.zoom) && range) {
+    if ((this.shift() || this.zoom()) && range) {
       axis.range = range;
     }
   }
@@ -77,13 +77,13 @@ export class D3YAxisModifierComponent
   protected drawZoomButtons(yaxis: YAxis, buttonSize: number, xAlign: number) {
     if (
       this.d3Graph &&
-      this.zoom &&
+      this.zoom() &&
       yaxis.range.max !== undefined &&
       yaxis.range.min !== undefined
     ) {
       const diff = yaxis.range.max - yaxis.range.min;
-      const step = diff * this.zoomFactor;
-      const buffer = this.shift ? 7.5 : 0;
+      const step = diff * this.zoomFactor();
+      const buffer = this.shift() ? 7.5 : 0;
       // zoom in horizontal line
       this.d3Graph
         .getGraphElem()
@@ -202,12 +202,12 @@ export class D3YAxisModifierComponent
   protected drawShiftButtons(yaxis: YAxis, buttonSize: number, xAlign: number) {
     if (
       this.d3Graph &&
-      this.shift &&
+      this.shift() &&
       yaxis.range.max !== undefined &&
       yaxis.range.min !== undefined
     ) {
       const diff = yaxis.range.max - yaxis.range.min;
-      const step = diff * this.shiftFactor;
+      const step = diff * this.shiftFactor();
       const shiftToCenter = 0.5 * buttonSize;
       // add buffer of +/- 1 to fit element into transparent/hover circle
       // draw up button left line

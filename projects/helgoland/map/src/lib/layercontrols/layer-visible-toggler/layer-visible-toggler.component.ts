@@ -13,6 +13,6 @@ export class LayerVisibleTogglerComponent extends LayerControlComponent {
   private mapHandler = inject(MapHandlerService);
 
   public toggle() {
-    this.mapHandler.toggleOverlayLayer(this.layeroptions, this.mapId);
+    this.mapHandler.toggleOverlayLayer(this.layeroptions(), this.mapId());
   }
 }

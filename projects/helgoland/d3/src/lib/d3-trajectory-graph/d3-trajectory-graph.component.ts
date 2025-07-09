@@ -2,7 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  Input,
+  input,
   OnChanges,
   output,
   SimpleChanges,
@@ -95,8 +95,7 @@ export class D3TrajectoryGraphComponent
   extends DatasetPresenterComponent<DatasetOptions, D3GraphOptions>
   implements AfterViewInit, OnChanges
 {
-  @Input()
-  public selection: D3SelectionRange | undefined;
+  public readonly selection = input<D3SelectionRange>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onSelectionChangedFinished = output<D3SelectionRange>();
@@ -106,6 +105,14 @@ export class D3TrajectoryGraphComponent
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onHoverHighlight = output<number>();
+
+  public override readonly presenterOptions = input<D3GraphOptions | undefined>(
+    {
+      axisType: D3AxisType.Distance,
+      dotted: false,
+      groupYAxis: true,
+    },
+  );
 
   @ViewChild('dthree', { static: true })
   public d3Elem: ElementRef | undefined;
@@ -138,20 +145,9 @@ export class D3TrajectoryGraphComponent
   protected bufferSum: number = 0;
   protected dataLength: number = 0;
 
-  protected defaultGraphOptions: D3GraphOptions = {
-    axisType: D3AxisType.Distance,
-    dotted: false,
-    groupYAxis: true,
-  };
-
-  constructor() {
-    super();
-    this.presenterOptions = this.defaultGraphOptions;
-  }
-
   public override ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
-    if (changes['selection'] && this.selection) {
+    if (changes['selection'] && this.selection()) {
       this.processAllData();
       this.drawLineGraph();
     }
@@ -241,7 +237,7 @@ export class D3TrajectoryGraphComponent
 
   protected loadData(dataset: HelgolandTrajectory) {
     const datasetConstellation = this.datasetMap.get(dataset.internalId);
-    const option = this.datasetOptions?.get(dataset.internalId);
+    const option = this.datasetOptions()?.get(dataset.internalId);
     if (this.timespan && datasetConstellation && option?.visible) {
       this.onContentLoading.emit(true);
       const buffer = this.timeSrvc.getBufferedTimespan(this.timespan, 0.2);
@@ -269,12 +265,12 @@ export class D3TrajectoryGraphComponent
 
   protected processAllData() {
     this.baseValues = [];
-    this.datasetIds.forEach((id) => this.processDataForId(id));
+    this.datasetIds().forEach((id) => this.processDataForId(id));
   }
 
   protected processDataForId(internalId: string) {
     const dataset = this.datasetMap.get(internalId);
-    const options = this.datasetOptions?.get(internalId);
+    const options = this.datasetOptions()?.get(internalId);
     if (options?.visible && dataset?.data && dataset.data.length > 0) {
       const firstEntry = this.baseValues.length === 0;
       let previous: DataEntry;
@@ -282,8 +278,9 @@ export class D3TrajectoryGraphComponent
         dataset.data.forEach((elem, idx) => {
           if (firstEntry) {
             const entry = this.createDataEntry(internalId, elem, previous, idx);
-            if (this.selection) {
-              if (idx >= this.selection.from && idx <= this.selection.to) {
+            const selection = this.selection();
+            if (selection) {
+              if (idx >= selection.from && idx <= selection.to) {
                 this.baseValues.push(entry);
               }
             } else {
@@ -291,10 +288,11 @@ export class D3TrajectoryGraphComponent
             }
             previous = entry;
           } else {
-            if (this.selection) {
-              if (idx >= this.selection.from && idx <= this.selection.to) {
-                if (this.baseValues[idx - this.selection.from]) {
-                  this.baseValues[idx - this.selection.from][internalId] =
+            const selection = this.selection();
+            if (selection) {
+              if (idx >= selection.from && idx <= selection.to) {
+                if (this.baseValues[idx - selection.from]) {
+                  this.baseValues[idx - selection.from][internalId] =
                     elem.value;
                 }
               }
@@ -389,7 +387,7 @@ export class D3TrajectoryGraphComponent
   }
 
   protected getXValue(data: DataEntry) {
-    switch (this.presenterOptions!.axisType) {
+    switch (this.presenterOptions()!.axisType) {
       case D3AxisType.Distance:
         return data.dist;
       case D3AxisType.Time:
@@ -443,7 +441,7 @@ export class D3TrajectoryGraphComponent
     yScale: d3.ScaleLinear<number, number>,
     options: DrawOptions,
   ) {
-    if (this.presenterOptions!.dotted) {
+    if (this.presenterOptions()!.dotted) {
       this.drawDots(this.baseValues, yScale, options);
     } else {
       this.drawValueLine(this.baseValues, yScale, options);
@@ -480,7 +478,7 @@ export class D3TrajectoryGraphComponent
     this.drawXAxis(this.bufferSum);
 
     this.datasetMap.forEach((entry, id) => {
-      const options = this.datasetOptions?.get(id);
+      const options = this.datasetOptions()?.get(id);
       if (
         options?.visible &&
         entry.data &&
@@ -518,7 +516,7 @@ export class D3TrajectoryGraphComponent
       .style('stroke-width', '1px');
 
     this.datasetMap.forEach((entry, id) => {
-      const options = this.datasetOptions?.get(id);
+      const options = this.datasetOptions()?.get(id);
       if (options?.visible && entry.data) {
         entry.focusLabelRect = this.focusG
           .append('svg:rect')
@@ -680,7 +678,7 @@ export class D3TrajectoryGraphComponent
 
   protected showLabelValues(item: DataEntry, onLeftSide: boolean) {
     this.datasetMap.forEach((entry, id) => {
-      const options = this.datasetOptions?.get(id);
+      const options = this.datasetOptions()?.get(id);
       if (options?.visible) {
         if (entry.focusLabel && entry.yScale && item[id] && item.xDiagCoord) {
           entry.focusLabel.text(
@@ -724,10 +722,11 @@ export class D3TrajectoryGraphComponent
   }
 
   protected showBottomIndicatorLabel(item: DataEntry, onLeftSide: boolean) {
-    if (this.presenterOptions!.axisType === D3AxisType.Distance) {
+    const presenterOptions = this.presenterOptions();
+    if (presenterOptions!.axisType === D3AxisType.Distance) {
       this.focuslabelY.text(item.dist + ' km');
     }
-    if (this.presenterOptions!.axisType === D3AxisType.Ticks) {
+    if (presenterOptions!.axisType === D3AxisType.Ticks) {
       this.focuslabelY.text('Measurement: ' + item.tick);
     }
     if (item.xDiagCoord) {
@@ -762,7 +761,7 @@ export class D3TrajectoryGraphComponent
     if (this.xScaleBase) {
       const index = this.xScaleBase.invert(x);
       const bisectDate = bisector((d: DataEntry) => {
-        switch (this.presenterOptions!.axisType) {
+        switch (this.presenterOptions()!.axisType) {
           case D3AxisType.Distance:
             return d.dist;
           case D3AxisType.Time:
@@ -780,7 +779,7 @@ export class D3TrajectoryGraphComponent
   protected createYAxis() {
     const yaxisConfig: YAxisConfig[] = [];
     this.datasetMap.forEach((datasetEntry, id) => {
-      const options = this.datasetOptions?.get(id);
+      const options = this.datasetOptions()?.get(id);
       if (
         datasetEntry.data &&
         datasetEntry.data?.length > 0 &&
@@ -793,7 +792,7 @@ export class D3TrajectoryGraphComponent
           first: this.yScaleBase === null,
           offset: this.bufferSum,
         };
-        if (this.presenterOptions!.groupYAxis) {
+        if (this.presenterOptions()!.groupYAxis) {
           const match = yaxisConfig.find(
             (e) => e.uom === datasetEntry.dataset.uom,
           );
@@ -897,7 +896,7 @@ export class D3TrajectoryGraphComponent
       });
 
       // draw the y grid lines when there is only one dataset
-      if (this.datasetIds.length === 1) {
+      if (this.datasetIds().length === 1) {
         this.graph
           .append('svg:g')
           .attr('class', 'grid')
@@ -922,7 +921,7 @@ export class D3TrajectoryGraphComponent
 
     const xAxisGen = axisBottom(this.xScaleBase).ticks(5);
 
-    if (this.presenterOptions!.axisType === D3AxisType.Time) {
+    if (this.presenterOptions()!.axisType === D3AxisType.Time) {
       xAxisGen.tickFormat((d) => {
         return timeFormat('%d.%m.%Y %H:%M:%S')(new Date(d.valueOf()));
       });
@@ -963,7 +962,7 @@ export class D3TrajectoryGraphComponent
   }
 
   protected getXDomain(values: DataEntry[]) {
-    switch (this.presenterOptions!.axisType) {
+    switch (this.presenterOptions()!.axisType) {
       case D3AxisType.Distance:
         return [values[0].dist, values[values.length - 1].dist];
       case D3AxisType.Time:
@@ -974,7 +973,7 @@ export class D3TrajectoryGraphComponent
   }
 
   protected getXAxisLabel() {
-    switch (this.presenterOptions!.axisType) {
+    switch (this.presenterOptions()!.axisType) {
       case D3AxisType.Distance:
         return 'Distance';
       case D3AxisType.Time:

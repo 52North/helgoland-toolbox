@@ -2,8 +2,8 @@
   type="button"
   class="btn"
   (click)="toggle()"
-  [ngClass]="value ? 'btn-primary' : 'btn-light'"
-  title="{{ tooltip }}"
+  [ngClass]="value() ? 'btn-primary' : 'btn-light'"
+  title="{{ tooltip() }}"
 >
-  <i class="fa fa-{{ icon }}" aria-hidden="true"></i>
+  <i class="fa fa-{{ icon() }}" aria-hidden="true"></i>
 </button>

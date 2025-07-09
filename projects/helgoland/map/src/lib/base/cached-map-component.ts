@@ -2,14 +2,13 @@
 import {
   Directive,
   DoCheck,
-  Input,
   KeyValueDiffer,
   KeyValueDiffers,
   OnChanges,
   OnDestroy,
-  OnInit,
   SimpleChanges,
   inject,
+  input,
   output,
 } from '@angular/core';
 import * as L from 'leaflet';
@@ -25,7 +24,7 @@ const DEFAULT_BASE_LAYER_ATTRIBUTION =
 
 @Directive()
 export abstract class CachedMapComponent
-  implements OnChanges, DoCheck, OnDestroy, OnInit
+  implements OnChanges, DoCheck, OnDestroy
 {
   protected mapCache = inject(MapCache);
   protected kvDiffers = inject(KeyValueDiffers);
@@ -33,44 +32,37 @@ export abstract class CachedMapComponent
   /**
    * A map with the given ID is created inside this component. This ID can be used the get the map instance over the map cache service.
    */
-  @Input()
-  public mapId!: string;
+  public readonly mapId = input.required<string>();
 
   /**
    * The corresponding leaflet map options (see: https://leafletjs.com/reference-1.3.4.html#map-option)
    */
-  @Input()
-  public mapOptions: L.MapOptions | undefined;
+  public readonly mapOptions = input<L.MapOptions>({ zoomControl: false });
 
   /**
    * Bounds for the map
    */
-  @Input()
-  public fitBounds: L.LatLngBoundsExpression | undefined;
+  public readonly fitBounds = input<L.LatLngBoundsExpression>();
 
   /**
    * Map, which holds all overlay map layer (see: https://leafletjs.com/reference-1.3.4.html#layer)
    */
-  @Input()
-  public overlayMaps: LayerMap | undefined;
+  public readonly overlayMaps = input<LayerMap>();
 
   /**
    * Map, which holds all base map layer (see: https://leafletjs.com/reference-1.3.4.html#layer)
    */
-  @Input()
-  public baseMaps: LayerMap | undefined;
+  public readonly baseMaps = input<LayerMap>();
 
   /**
    * Describes the the zoom options (see: https://leafletjs.com/reference-1.3.4.html#control-layers)
    */
-  @Input()
-  public layerControlOptions: L.Control.LayersOptions | undefined;
+  public readonly layerControlOptions = input<L.Control.LayersOptions>();
 
   /**
    * Describes the the zoom control options (see: https://leafletjs.com/reference-1.3.4.html#control-zoom)
    */
-  @Input()
-  public zoomControlOptions: L.Control.ZoomOptions | undefined;
+  public readonly zoomControlOptions = input<L.Control.ZoomOptions>();
 
   /**
    * Informs when initialization is done with map id.
@@ -95,16 +87,11 @@ export abstract class CachedMapComponent
     this._differBaseMaps = this.kvDiffers.find({}).create();
   }
 
-  public ngOnInit(): void {
-    if (this.mapId === undefined || this.mapId === null) {
-      this.mapId = this.generateUUID();
-    }
-  }
-
   public ngOnChanges(changes: SimpleChanges): void {
     if (this.map) {
-      if (changes['fitBounds'] && this.fitBounds) {
-        this.map.fitBounds(this.fitBounds);
+      const fitBounds = this.fitBounds();
+      if (changes['fitBounds'] && fitBounds) {
+        this.map.fitBounds(fitBounds);
       }
       if (changes['zoomControlOptions']) {
         this.updateZoomControl();
@@ -113,8 +100,9 @@ export abstract class CachedMapComponent
   }
 
   public ngDoCheck(): void {
-    if (this._differOverlayMaps && this.overlayMaps) {
-      const changes = this._differOverlayMaps.diff(this.overlayMaps);
+    const overlayMaps = this.overlayMaps();
+    if (this._differOverlayMaps && overlayMaps) {
+      const changes = this._differOverlayMaps.diff(overlayMaps);
       if (changes) {
         changes.forEachRemovedItem((e) =>
           this.removeOverlayMap(e.previousValue),
@@ -123,8 +111,9 @@ export abstract class CachedMapComponent
         this.updateLayerControl();
       }
     }
-    if (this._differBaseMaps && this.baseMaps) {
-      const changes = this._differBaseMaps.diff(this.baseMaps);
+    const baseMaps = this.baseMaps();
+    if (this._differBaseMaps && baseMaps) {
+      const changes = this._differBaseMaps.diff(baseMaps);
       if (changes) {
         changes.forEachRemovedItem((e) => this.removeBaseMap(e.previousValue));
         changes.forEachAddedItem((e) => this.addBaseMap(e.currentValue));
@@ -137,29 +126,30 @@ export abstract class CachedMapComponent
     if (this.map) {
       this.map.remove();
       this.map = undefined;
-      this.mapCache.deleteMap(this.mapId);
+      this.mapCache.deleteMap(this.mapId());
     }
   }
 
   protected createMap(): void {
-    if (!this.mapOptions || this.zoomControlOptions) {
-      this.mapOptions = { zoomControl: false };
-    }
-    this.map = L.map(this.mapId, this.mapOptions);
-    this.mapCache.setMap(this.mapId, this.map);
-    this.mapInitialized.emit(this.mapId);
-    if (this.baseMaps && this.baseMaps.size > 0) {
-      this.baseMaps.forEach((entry, key) => this.addBaseMap(entry));
+    this.map = L.map(this.mapId(), this.mapOptions());
+    const mapId = this.mapId();
+    this.mapCache.setMap(mapId, this.map);
+    this.mapInitialized.emit(mapId);
+    const baseMaps = this.baseMaps();
+    if (baseMaps && baseMaps.size > 0) {
+      baseMaps.forEach((entry, key) => this.addBaseMap(entry));
     } else {
       this.addBaseMap();
     }
-    if (this.overlayMaps) {
-      this.overlayMaps.forEach((entry, key) => this.addOverlayMap(entry));
+    const overlayMaps = this.overlayMaps();
+    if (overlayMaps) {
+      overlayMaps.forEach((entry, key) => this.addOverlayMap(entry));
     }
     this.updateZoomControl();
     this.updateLayerControl();
-    if (this.fitBounds) {
-      this.map.fitBounds(this.fitBounds);
+    const fitBounds = this.fitBounds();
+    if (fitBounds) {
+      this.map.fitBounds(fitBounds);
     }
   }
 
@@ -209,7 +199,8 @@ export abstract class CachedMapComponent
 
   private addBaseMap(layerOptions?: LayerOptions | null) {
     if (this.map) {
-      if (!this.baseMaps || this.baseMaps.size === 0) {
+      const baseMaps = this.baseMaps();
+      if (!baseMaps || baseMaps.size === 0) {
         layerOptions = {
           label: DEFAULT_BASE_LAYER_NAME,
           visible: true,
@@ -246,17 +237,14 @@ export abstract class CachedMapComponent
       if (this.layerControl) {
         this.map.removeControl(this.layerControl);
       }
+      const layerControlOptions = this.layerControlOptions();
       if (
-        this.layerControlOptions &&
+        layerControlOptions &&
         (Object.keys(this.oldBaseLayer).length > 1 ||
           Object.keys(this.oldOverlayLayer).length > 0)
       ) {
         this.layerControl = L.control
-          .layers(
-            this.oldBaseLayer,
-            this.oldOverlayLayer,
-            this.layerControlOptions,
-          )
+          .layers(this.oldBaseLayer, this.oldOverlayLayer, layerControlOptions)
           .addTo(this.map);
       }
     }
@@ -267,10 +255,9 @@ export abstract class CachedMapComponent
       if (this.zoomControl) {
         this.map.removeControl(this.zoomControl);
       }
-      if (this.zoomControlOptions) {
-        this.zoomControl = L.control
-          .zoom(this.zoomControlOptions)
-          .addTo(this.map);
+      const zoomControlOptions = this.zoomControlOptions();
+      if (zoomControlOptions) {
+        this.zoomControl = L.control.zoom(zoomControlOptions).addTo(this.map);
       }
     }
   }

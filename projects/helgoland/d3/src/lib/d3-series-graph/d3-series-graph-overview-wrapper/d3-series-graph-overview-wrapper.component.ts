@@ -2,11 +2,11 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
-  Input,
   OnChanges,
   OnDestroy,
   SimpleChanges,
   inject,
+  input,
   output,
 } from '@angular/core';
 import { DatasetOptions, Time, TimeInterval, Timespan } from '@helgoland/core';
@@ -26,23 +26,32 @@ export class D3SeriesGraphOverviewWrapperComponent
   protected timeSrvc = inject(Time);
   protected cd = inject(ChangeDetectorRef);
 
-  @Input({ required: true })
-  public datasetIds!: string[];
+  public readonly datasetIds = input.required<string[]>();
 
-  @Input()
-  public datasetOptions: Map<string, DatasetOptions> | undefined;
+  public readonly datasetOptions = input<Map<string, DatasetOptions>>();
 
-  @Input()
-  public presenterOptions: D3PlotOptions | undefined;
+  public readonly presenterOptions = input<D3PlotOptions, D3PlotOptions>(
+    {
+      overview: true,
+      yaxis: false,
+    },
+    {
+      transform: (value: D3PlotOptions) => {
+        debugger;
+        return {
+          ...value,
+          overview: true,
+          yaxis: false,
+        };
+      },
+    },
+  );
 
-  @Input({ required: true })
-  public timeInterval!: TimeInterval;
+  public readonly timeInterval = input.required<TimeInterval>();
 
-  @Input()
-  public rangefactor: number = 1;
+  public readonly rangefactor = input<number>(1);
 
-  @Input()
-  public reloadForDatasets: string[] = [];
+  public readonly reloadForDatasets = input<string[]>([]);
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onTimespanChanged = output<Timespan>();
@@ -57,17 +66,6 @@ export class D3SeriesGraphOverviewWrapperComponent
   public timespan!: Timespan;
 
   private init = false;
-
-  constructor() {
-    if (this.presenterOptions) {
-      this.presenterOptions.overview = true;
-    } else {
-      this.presenterOptions = {
-        overview: true,
-        yaxis: false,
-      };
-    }
-  }
 
   public ngAfterViewInit(): void {
     this.calculateOverviewRange();
@@ -94,12 +92,14 @@ export class D3SeriesGraphOverviewWrapperComponent
   }
 
   private calculateOverviewRange() {
-    const timespan = this.timeSrvc.createTimespanOfInterval(this.timeInterval);
+    const timespan = this.timeSrvc.createTimespanOfInterval(
+      this.timeInterval(),
+    );
     this.timespan = timespan;
     if (this.timespan) {
       this.overviewTimespan = this.timeSrvc.getBufferedTimespan(
         timespan,
-        this.rangefactor,
+        this.rangefactor(),
       );
     }
   }

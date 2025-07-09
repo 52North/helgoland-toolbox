@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, input } from '@angular/core';
 
 import { OlLayerTimeSelectorComponent } from '../ol-layer-time-selector/ol-layer-time-selector.component';
 
@@ -17,7 +17,7 @@ export class OlLayerAnimateTimeComponent
   /**
    * Interval of the animation
    */
-  @Input() timeInterval = 2000;
+  readonly timeInterval = input(2000);
 
   private interval: number | undefined;
 
@@ -36,7 +36,7 @@ export class OlLayerAnimateTimeComponent
           idx = 0;
         }
         this.setTime(this.timeDimensions![idx]);
-      }, this.timeInterval);
+      }, this.timeInterval());
     }
   }
 

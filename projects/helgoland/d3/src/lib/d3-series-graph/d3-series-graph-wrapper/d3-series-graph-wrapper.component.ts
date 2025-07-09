@@ -1,11 +1,11 @@
 import {
   Component,
   inject,
-  Input,
+  input,
   OnChanges,
+  output,
   SimpleChanges,
   ViewChild,
-  output,
 } from '@angular/core';
 import {
   ColorService,
@@ -71,16 +71,20 @@ export class D3SeriesGraphWrapperComponent
     inject(D3SeriesGraphErrorHandler, { optional: true })! ??
     new D3SeriesSimpleGraphErrorHandler();
 
-  @Input() public yaxisModifier: boolean | undefined;
+  public readonly yaxisModifier = input<boolean>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public readonly onHighlightChanged = output<HighlightOutput>();
 
-  @Input() public hoveringService: D3HoveringService =
-    new D3SimpleHoveringService();
+  public readonly hoveringService = input<D3HoveringService>(
+    new D3SimpleHoveringService(),
+  );
 
-  @Input()
-  public mainTimeInterval: Timespan | undefined;
+  public readonly mainTimeInterval = input<Timespan>();
+
+  public override readonly presenterOptions = input<D3PlotOptions | undefined>({
+    hoverStyle: HoveringStyle.none,
+  });
 
   public datasets: SeriesGraphDataset[] = [];
   public override timespan: Timespan | undefined;
@@ -101,21 +105,13 @@ export class D3SeriesGraphWrapperComponent
 
   protected datasetMap: Map<string, HelgolandTimeseries> = new Map();
 
-  constructor() {
-    super();
-    if (!this.presenterOptions) {
-      this.presenterOptions = {
-        hoverStyle: HoveringStyle.none,
-      };
-    }
-  }
-
   public override ngOnChanges(changes: SimpleChanges): void {
     super.ngOnChanges(changes);
     if (changes['yaxisModifier']) {
+      const yaxisModifier = this.yaxisModifier();
       this.graphOptions.yaxisModifier =
-        this.yaxisModifier !== undefined
-          ? this.yaxisModifier
+        yaxisModifier !== undefined
+          ? yaxisModifier
           : this.graphOptions.yaxisModifier;
       this.drawGraph();
     }
@@ -210,18 +206,20 @@ export class D3SeriesGraphWrapperComponent
         : this.graphOptions.togglePanZoom;
     this.graphOptions.yaxis =
       options.yaxis !== undefined ? options.yaxis : this.graphOptions.yaxis;
+    const yaxisModifier = this.yaxisModifier();
     this.graphOptions.yaxisModifier =
-      this.yaxisModifier !== undefined
-        ? this.yaxisModifier
+      yaxisModifier !== undefined
+        ? yaxisModifier
         : this.graphOptions.yaxisModifier;
-    if (this.presenterOptions) {
-      this.presenterOptions.timespanBufferFactor =
-        this.presenterOptions.timespanBufferFactor !== undefined
-          ? this.presenterOptions.timespanBufferFactor
+    const presenterOptions = this.presenterOptions();
+    if (presenterOptions) {
+      presenterOptions.timespanBufferFactor =
+        presenterOptions.timespanBufferFactor !== undefined
+          ? presenterOptions.timespanBufferFactor
           : 0.2;
-      this.presenterOptions.requestBeforeAfterValues =
-        this.presenterOptions.requestBeforeAfterValues !== undefined
-          ? this.presenterOptions.requestBeforeAfterValues
+      presenterOptions.requestBeforeAfterValues =
+        presenterOptions.requestBeforeAfterValues !== undefined
+          ? presenterOptions.requestBeforeAfterValues
           : false;
     }
     this.drawGraph();
@@ -259,12 +257,12 @@ export class D3SeriesGraphWrapperComponent
   private loadAddedDataset(dataset: HelgolandDataset): void {
     if (dataset instanceof HelgolandTimeseries) {
       let dsEntry = this.datasets.find((e) => e.id === dataset.internalId);
-      const options = this.datasetOptions?.get(dataset.internalId);
+      const options = this.datasetOptions()?.get(dataset.internalId);
       if (dsEntry === undefined && options) {
         const style = this.getGraphStyle(options);
         const yaxis = this.getAxisSettings(options);
         const selected =
-          this.selectedDatasetIds.indexOf(dataset.internalId) >= 0;
+          this.selectedDatasetIds().indexOf(dataset.internalId) >= 0;
         const description: DatasetDescription = {
           categoryLabel: dataset.parameters.category?.map((e) => e.label),
           phenomenonLabel: dataset.parameters.phenomenon?.label,
@@ -307,15 +305,16 @@ export class D3SeriesGraphWrapperComponent
   }
 
   private loadDatasetData(id: string) {
-    const datasetOptions = this.datasetOptions?.get(id);
+    const datasetOptions = this.datasetOptions()?.get(id);
     const dataset = this.datasetMap.get(id);
     if (dataset && this.timespan) {
       const dsEntry = this.datasets.find((e) => e.id === dataset.internalId);
       if (dsEntry) {
         dsEntry.setDataLoading(true);
         this.informDatasetLoading(this.getLoadedDatasets());
+        const presenterOptions = this.presenterOptions();
         if (
-          this.presenterOptions?.sendDataRequestOnlyIfDatasetTimespanCovered &&
+          presenterOptions?.sendDataRequestOnlyIfDatasetTimespanCovered &&
           dataset.firstValue &&
           dataset.lastValue &&
           !this.timeSrvc.overlaps(
@@ -326,10 +325,10 @@ export class D3SeriesGraphWrapperComponent
         ) {
           this.prepareData(dsEntry, new HelgolandTimeseriesData([]));
           this.onCompleteLoadingData(dsEntry);
-        } else if (this.presenterOptions?.timespanBufferFactor) {
+        } else if (presenterOptions?.timespanBufferFactor) {
           const buffer = this.timeSrvc.getBufferedTimespan(
             this.timespan,
-            this.presenterOptions.timespanBufferFactor,
+            presenterOptions.timespanBufferFactor,
             duration(1, 'day').asMilliseconds(),
           );
           this.onContentLoading.emit(true);
@@ -340,10 +339,10 @@ export class D3SeriesGraphWrapperComponent
           const request = this.servicesConnector
             .getDatasetData(dataset, buffer, {
               expanded:
-                this.presenterOptions?.showReferenceValues ||
-                this.presenterOptions?.requestBeforeAfterValues,
+                presenterOptions?.showReferenceValues ||
+                presenterOptions?.requestBeforeAfterValues,
               generalize:
-                this.presenterOptions?.generalizeAllways ||
+                presenterOptions?.generalizeAllways ||
                 datasetOptions?.generalize,
             })
             .subscribe({
@@ -406,7 +405,7 @@ export class D3SeriesGraphWrapperComponent
       // const data = this.generalizer.generalizeData(rawdata, this.width, this.timespan); // TODO: eher in graph componente
 
       const datasetIdx = this.datasets.findIndex((e) => e.id === dsEntry.id);
-      const options = this.datasetOptions?.get(dsEntry.id);
+      const options = this.datasetOptions()?.get(dsEntry.id);
 
       // sum values for bar chart visualization
       if (options && options.type === 'bar') {

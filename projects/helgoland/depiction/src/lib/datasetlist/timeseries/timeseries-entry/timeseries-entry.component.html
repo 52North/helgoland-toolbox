@@ -1,21 +1,24 @@
 <div
   class="legendItem"
   style="position: relative"
-  [ngStyle]="{ 'border-color': datasetOptions.color }"
-  [ngClass]="{ selected: selected }"
+  [ngStyle]="{ 'border-color': datasetOptions().color }"
+  [ngClass]="{ selected: selected() }"
   (click)="toggleSelection()"
 >
   @if (loading) {
     <div
       class="loading-overlay"
-      [ngStyle]="{ 'background-color': datasetOptions.color }"
+      [ngStyle]="{ 'background-color': datasetOptions().color }"
     >
       <div class="fa fa-refresh fa-spin fa-3x fa-fw"></div>
     </div>
   }
   <div>
-    <div class="legendItemheader" [ngClass]="{ highlight: highlight }">
-      <div class="legendItemLabel" [ngStyle]="{ color: datasetOptions.color }">
+    <div class="legendItemheader" [ngClass]="{ highlight: highlight() }">
+      <div
+        class="legendItemLabel"
+        [ngStyle]="{ color: datasetOptions().color }"
+      >
         <n52-label-mapper label="{{ platformLabel }}"></n52-label-mapper>
         <!-- <n52-favorite-toggler [dataset]="dataset"></n52-favorite-toggler> -->
       </div>
@@ -65,7 +68,7 @@
       </button>
       <button
         (click)="editDatasetOptions(); $event.stopPropagation()"
-        [ngStyle]="{ color: datasetOptions.color }"
+        [ngStyle]="{ color: datasetOptions().color }"
       >
         edit
       </button>

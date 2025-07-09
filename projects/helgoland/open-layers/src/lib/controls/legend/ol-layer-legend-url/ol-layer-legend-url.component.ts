@@ -1,4 +1,4 @@
-import { Component, Input, inject, output } from '@angular/core';
+import { Component, inject, output, input } from '@angular/core';
 import { Layer } from 'ol/layer';
 import { TileWMS } from 'ol/source';
 
@@ -15,8 +15,7 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
 export class OlLayerLegendUrlComponent {
   private wmsCaps = inject(WmsCapabilitiesService);
 
-  @Input({ required: true })
-  layer!: Layer;
+  readonly layer = input.required<Layer>();
 
   /**
    * Returns the legend url
@@ -24,8 +23,8 @@ export class OlLayerLegendUrlComponent {
   readonly legendUrl = output<string>();
 
   public deliverLegendUrl() {
-    const source = this.layer.getSource();
-    this.layer.getExtent();
+    const source = this.layer().getSource();
+    this.layer().getExtent();
     if (source instanceof TileWMS && source.getUrls()?.length) {
       const url = source.getUrls()![0];
       const layerid =

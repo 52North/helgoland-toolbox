@@ -1,4 +1,4 @@
-import { Component, Input, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { DatasetOptions } from '@helgoland/core';
 
 import { SimpleTimeseriesEntryComponent } from '../simple-timeseries-entry/simple-timeseries-entry.component';
@@ -15,11 +15,9 @@ import { SimpleTimeseriesEntryComponent } from '../simple-timeseries-entry/simpl
   standalone: true,
 })
 export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryComponent {
-  @Input({ required: true })
-  public datasetOptions!: DatasetOptions;
+  public readonly datasetOptions = input.required<DatasetOptions>();
 
-  @Input()
-  public highlight: boolean | undefined;
+  public readonly highlight = input<boolean>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onUpdateOptions = output<DatasetOptions>();
@@ -31,12 +29,13 @@ export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryC
   readonly onShowGeometry = output<GeoJSON.GeoJsonObject>();
 
   public toggleVisibility() {
-    this.datasetOptions.visible = !this.datasetOptions.visible;
-    this.onUpdateOptions.emit(this.datasetOptions);
+    const datasetOptions = this.datasetOptions();
+    datasetOptions.visible = !datasetOptions.visible;
+    this.onUpdateOptions.emit(datasetOptions);
   }
 
   public editDatasetOptions() {
-    this.onEditOptions.emit(this.datasetOptions);
+    this.onEditOptions.emit(this.datasetOptions());
   }
 
   public showGeometry() {

@@ -1,4 +1,4 @@
-import { Component, Input, inject, output } from '@angular/core';
+import { Component, inject, output, input } from '@angular/core';
 import { TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
 import { Delaunay } from 'd3-delaunay';
@@ -49,8 +49,9 @@ export class D3GraphHoverPointComponent
   protected timezoneSrvc = inject(TimezoneService);
   protected pointSymbolDrawer = inject(D3PointSymbolDrawerService);
 
-  @Input() public hoveringService: D3HoveringService =
-    new D3SimpleHoveringService();
+  public readonly hoveringService = input<D3HoveringService>(
+    new D3SimpleHoveringService(),
+  );
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   public readonly onHighlightChanged = output<HighlightOutput>();
@@ -75,8 +76,9 @@ export class D3GraphHoverPointComponent
   adjustBackground(options: AdjustBackgroundOptions) {
     if (!this.drawLayer && this.d3Graph) {
       this.drawLayer = this.d3Graph.getDrawingLayer('hovering-point-layer');
-      if (this.hoveringService) {
-        this.hoveringService.initPointHovering(this.drawLayer);
+      const hoveringService = this.hoveringService();
+      if (hoveringService) {
+        hoveringService.initPointHovering(this.drawLayer);
       }
     }
     this.background = options.background;
@@ -136,7 +138,7 @@ export class D3GraphHoverPointComponent
 
   protected highlightPoint(nearestPoint: HoveredElement) {
     this.previousPoint = nearestPoint;
-    this.hoveringService.showPointHovering(
+    this.hoveringService().showPointHovering(
       this.previousPoint.dataEntry,
       this.previousPoint.dataset,
       nearestPoint.selection,
@@ -145,7 +147,7 @@ export class D3GraphHoverPointComponent
       this.previousPoint.dataEntry.xDiagCoord &&
       this.previousPoint.dataEntry.yDiagCoord
     ) {
-      this.hoveringService.positioningPointHovering(
+      this.hoveringService().positioningPointHovering(
         this.previousPoint.dataEntry.xDiagCoord,
         this.previousPoint.dataEntry.yDiagCoord,
         this.previousPoint.dataset.style.baseColor,
@@ -193,7 +195,7 @@ export class D3GraphHoverPointComponent
     });
     const pos = this.getCurrentMousePosition(event);
     if (pos) {
-      this.hoveringService.showTooltip(elements, {
+      this.hoveringService().showTooltip(elements, {
         x: pos.x,
         y: pos.y,
         background: this.background,
@@ -203,7 +205,7 @@ export class D3GraphHoverPointComponent
 
   protected unhighlight() {
     if (this.previousPoint) {
-      this.hoveringService.hidePointHovering(
+      this.hoveringService().hidePointHovering(
         this.previousPoint.dataEntry,
         this.previousPoint.dataset,
         this.previousPoint.selection,
@@ -213,7 +215,7 @@ export class D3GraphHoverPointComponent
     if (this.previousBars.length) {
       for (let i = this.previousBars.length - 1; i >= 0; i--) {
         const bar = this.previousBars[i];
-        this.hoveringService.hidePointHovering(
+        this.hoveringService().hidePointHovering(
           bar.dataEntry,
           bar.dataset,
           bar.selection,
@@ -224,7 +226,7 @@ export class D3GraphHoverPointComponent
         this.previousBars.splice(i, 1);
       }
     }
-    this.hoveringService.removeTooltip();
+    this.hoveringService().removeTooltip();
   }
 
   protected findNearestPoint(x: number, y: number): HoveredElement | undefined {

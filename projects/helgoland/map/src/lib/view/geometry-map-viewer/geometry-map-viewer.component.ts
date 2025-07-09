@@ -1,9 +1,9 @@
 import {
   AfterViewInit,
   Component,
-  Input,
   OnChanges,
   SimpleChanges,
+  input,
 } from '@angular/core';
 import * as L from 'leaflet';
 
@@ -19,20 +19,15 @@ export class GeometryMapViewerComponent
   extends CachedMapComponent
   implements AfterViewInit, OnChanges
 {
-  @Input()
-  public highlight: GeoJSON.GeoJsonObject | undefined;
+  public readonly highlight = input<GeoJSON.GeoJsonObject>();
 
-  @Input()
-  public geometry: GeoJSON.GeoJsonObject | undefined;
+  public readonly geometry = input<GeoJSON.GeoJsonObject>();
 
-  @Input()
-  public zoomTo: GeoJSON.GeoJsonObject | undefined;
+  public readonly zoomTo = input<GeoJSON.GeoJsonObject>();
 
-  @Input()
-  public avoidZoomToGeometry: boolean | undefined;
+  public readonly avoidZoomToGeometry = input<boolean>();
 
-  @Input()
-  public customMarkerIcon: L.Icon | undefined;
+  public readonly customMarkerIcon = input<L.Icon>();
 
   private highlightGeometryOnMap: L.GeoJSON | undefined;
   private geometryOnMap: L.GeoJSON | undefined;
@@ -74,7 +69,7 @@ export class GeometryMapViewerComponent
 
   private zoomToGeometry(map: L.Map) {
     try {
-      const geometry = L.geoJSON(this.zoomTo);
+      const geometry = L.geoJSON(this.zoomTo());
       map.fitBounds(geometry.getBounds());
     } catch (err) {
       console.error(err);
@@ -86,7 +81,7 @@ export class GeometryMapViewerComponent
     if (this.highlightGeometryOnMap) {
       map.removeLayer(this.highlightGeometryOnMap);
     }
-    this.highlightGeometryOnMap = L.geoJSON(this.highlight, {
+    this.highlightGeometryOnMap = L.geoJSON(this.highlight(), {
       pointToLayer: (feature, latlng) => {
         return L.circleMarker(latlng, this.highlightStyle);
       },
@@ -96,14 +91,16 @@ export class GeometryMapViewerComponent
   }
 
   private drawGeometry(map: L.Map) {
-    if (this.geometry) {
+    const geometry = this.geometry();
+    if (geometry) {
       if (this.geometryOnMap) {
         map.removeLayer(this.geometryOnMap);
       }
-      this.geometryOnMap = L.geoJSON(this.geometry, {
+      this.geometryOnMap = L.geoJSON(geometry, {
         pointToLayer: (feature, latlng) => {
-          if (this.customMarkerIcon) {
-            return L.marker(latlng, { icon: this.customMarkerIcon });
+          const customMarkerIcon = this.customMarkerIcon();
+          if (customMarkerIcon) {
+            return L.marker(latlng, { icon: customMarkerIcon });
           } else {
             return L.circleMarker(latlng, this.defaultStyle);
           }
@@ -113,7 +110,7 @@ export class GeometryMapViewerComponent
       this.geometryOnMap.setStyle(this.defaultStyle);
       this.geometryOnMap.addTo(map);
 
-      if (!this.avoidZoomToGeometry) {
+      if (!this.avoidZoomToGeometry()) {
         map.fitBounds(this.geometryOnMap.getBounds());
       }
     }

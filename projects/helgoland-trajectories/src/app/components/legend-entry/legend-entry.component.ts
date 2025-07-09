@@ -20,9 +20,10 @@ import { ColorPickerModule } from 'ngx-color-picker';
 })
 export class LegendEntryComponent extends TrajectoryEntryComponent {
   confirmColor(color: string) {
-    if (this.datasetOptions) {
-      this.datasetOptions.color = color;
-      this.onUpdateOptions.emit(this.datasetOptions);
+    const datasetOptions = this.datasetOptions();
+    if (datasetOptions) {
+      datasetOptions.color = color;
+      this.onUpdateOptions.emit(datasetOptions);
     }
   }
 }

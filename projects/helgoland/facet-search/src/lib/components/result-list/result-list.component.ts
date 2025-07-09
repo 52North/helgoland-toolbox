@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, output } from '@angular/core';
+import { Component, OnDestroy, OnInit, output, input } from '@angular/core';
 import { TzDatePipe } from '@helgoland/core';
 import { Subscription } from 'rxjs';
 
@@ -14,7 +14,7 @@ import {
   imports: [TzDatePipe],
 })
 export class ResultListComponent implements OnInit, OnDestroy {
-  @Input({ required: true }) public facetSearchService!: FacetSearchService;
+  public readonly facetSearchService = input.required<FacetSearchService>();
 
   public readonly selected = output<FacetSearchElement>();
 
@@ -25,10 +25,10 @@ export class ResultListComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit() {
-    this.resultSubs = this.facetSearchService
+    this.resultSubs = this.facetSearchService()
       .getResults()
       .subscribe((ts) => (this.entries = ts));
-    this.entries = this.facetSearchService.getFilteredResults();
+    this.entries = this.facetSearchService().getFilteredResults();
   }
 
   ngOnDestroy(): void {

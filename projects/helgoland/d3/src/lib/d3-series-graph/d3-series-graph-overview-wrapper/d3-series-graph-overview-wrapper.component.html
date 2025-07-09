@@ -1,10 +1,10 @@
 <n52-d3-series-graph-wrapper
-  [datasetIds]="datasetIds"
-  [datasetOptions]="datasetOptions"
-  [reloadForDatasets]="reloadForDatasets"
+  [datasetIds]="datasetIds()"
+  [datasetOptions]="datasetOptions()"
+  [reloadForDatasets]="reloadForDatasets()"
   [timeInterval]="overviewTimespan"
   [mainTimeInterval]="timespan"
-  [presenterOptions]="presenterOptions"
+  [presenterOptions]="presenterOptions()"
   (onTimespanChanged)="timeSpanChanged($event)"
   (onContentLoading)="onGraphLoading($event)"
 >

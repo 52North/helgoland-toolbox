@@ -2,10 +2,10 @@
   type="button"
   class="btn"
   (click)="toggle()"
-  [ngClass]="toggled ? 'btn-primary' : 'btn-light'"
+  [ngClass]="toggled() ? 'btn-primary' : 'btn-light'"
 >
   <i class="fa fa-refresh" aria-hidden="true"></i>
-  @if (toggled) {
+  @if (toggled()) {
     <span>active</span>
   }
 </button>

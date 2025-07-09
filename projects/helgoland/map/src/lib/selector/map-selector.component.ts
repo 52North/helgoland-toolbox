@@ -2,11 +2,11 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Directive,
-  Input,
   OnChanges,
   SimpleChanges,
   inject,
   output,
+  input,
 } from '@angular/core';
 import { HelgolandParameterFilter } from '@helgoland/core';
 import * as L from 'leaflet';
@@ -24,20 +24,16 @@ export abstract class MapSelectorComponent<T>
   /**
    * @input The serviceUrl, where the selection should be loaded.
    */
-  @Input()
-  public serviceUrl: string | undefined;
+  public readonly serviceUrl = input<string>();
 
   /**
    * @input The filter which should be used, while fetching the selection.
    */
-  @Input()
-  public filter: HelgolandParameterFilter | undefined;
+  public readonly filter = input<HelgolandParameterFilter>();
 
-  @Input()
-  public avoidZoomToSelection: boolean | undefined;
+  public readonly avoidZoomToSelection = input<boolean>();
 
-  @Input()
-  public markerSelectorGenerator: MarkerSelectorGenerator | undefined;
+  public readonly markerSelectorGenerator = input<MarkerSelectorGenerator>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onSelected = output<T>();
@@ -48,8 +44,7 @@ export abstract class MapSelectorComponent<T>
   /**
    * @input Additional configuration for the marker zooming (https://leafletjs.com/reference-1.3.4.html#fitbounds-options)
    */
-  @Input()
-  public fitBoundsMarkerOptions: L.FitBoundsOptions | undefined;
+  public readonly fitBoundsMarkerOptions = input<L.FitBoundsOptions>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onNoResultsFound = output<boolean>();
@@ -57,8 +52,8 @@ export abstract class MapSelectorComponent<T>
   public ngAfterViewInit() {
     this.createMap();
     setTimeout(() => {
-      if (this.map && this.serviceUrl)
-        this.drawGeometries(this.map, this.serviceUrl);
+      const serviceUrl = this.serviceUrl();
+      if (this.map && serviceUrl) this.drawGeometries(this.map, serviceUrl);
       this.cd.detectChanges();
     }, 10);
   }
@@ -66,8 +61,8 @@ export abstract class MapSelectorComponent<T>
   public override ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
     if (changes['serviceUrl'] || changes['filter'] || changes['cluster']) {
-      if (this.map && this.serviceUrl)
-        this.drawGeometries(this.map, this.serviceUrl);
+      const serviceUrl = this.serviceUrl();
+      if (this.map && serviceUrl) this.drawGeometries(this.map, serviceUrl);
     }
   }
 
@@ -86,8 +81,8 @@ export abstract class MapSelectorComponent<T>
    * @param bounds where to zoom
    */
   protected zoomToMarkerBounds(bounds: L.LatLngBoundsExpression, map: L.Map) {
-    if (!this.avoidZoomToSelection && map) {
-      map.fitBounds(bounds, this.fitBoundsMarkerOptions || {});
+    if (!this.avoidZoomToSelection() && map) {
+      map.fitBounds(bounds, this.fitBoundsMarkerOptions() || {});
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject, output } from '@angular/core';
+import { Component, OnInit, inject, input, output } from '@angular/core';
 import {
   BlacklistedService,
   DatasetApi,
@@ -26,23 +26,17 @@ interface ExtendedHelgolandService extends HelgolandService {
 export class ServiceSelectorComponent implements OnInit {
   protected serviceSelectorService = inject(ServiceSelectorService);
 
-  @Input()
-  public datasetApiList: DatasetApi[] = [];
+  public readonly datasetApiList = input<DatasetApi[]>([]);
 
-  @Input()
-  public providerBlacklist: BlacklistedService[] = [];
+  public readonly providerBlacklist = input<BlacklistedService[]>([]);
 
-  @Input()
-  public supportStations: boolean | undefined; // TODO: needed???
+  public readonly supportStations = input<boolean>(); // TODO: needed???
 
-  @Input()
-  public selectedService: HelgolandService | undefined;
+  public readonly selectedService = input<HelgolandService>();
 
-  @Input()
-  public filter: HelgolandParameterFilter = {};
+  public readonly filter = input<HelgolandParameterFilter>({});
 
-  @Input()
-  public showUnresolvableServices: boolean | undefined;
+  public readonly showUnresolvableServices = input<boolean>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onServiceSelected = output<HelgolandService>();
@@ -52,27 +46,23 @@ export class ServiceSelectorComponent implements OnInit {
   public loadingCount = 0;
 
   public ngOnInit() {
-    if (!this.filter) {
-      this.filter = {};
-    }
-    if (!this.providerBlacklist) {
-      this.providerBlacklist = [];
-    }
-    if (this.datasetApiList) {
-      this.loadingCount = this.datasetApiList.length;
+    const datasetApiList = this.datasetApiList();
+    if (datasetApiList) {
+      this.loadingCount = datasetApiList.length;
       this.services = [];
       this.unResolvableServices = [];
-      this.datasetApiList.forEach((api) => {
+      datasetApiList.forEach((api) => {
         this.serviceSelectorService
-          .fetchServicesOfAPI(api.url, this.providerBlacklist, this.filter)
+          .fetchServicesOfAPI(api.url, this.providerBlacklist(), this.filter())
           .subscribe({
             next: (res) => {
               this.loadingCount--;
               if (res && res instanceof Array) {
                 res.forEach((entry) => {
+                  const filter = this.filter();
                   if (
                     entry.quantities?.datasets ||
-                    (this.filter && !this.filter.expanded)
+                    (filter && !filter.expanded)
                   ) {
                     this.services.push(entry);
                   }
@@ -99,12 +89,13 @@ export class ServiceSelectorComponent implements OnInit {
   }
 
   public isSelected(service: HelgolandService) {
-    if (!this.selectedService) {
+    const selectedService = this.selectedService();
+    if (!selectedService) {
       return false;
     }
     return (
-      this.selectedService.id === service.id &&
-      this.selectedService.apiUrl === service.apiUrl
+      selectedService.id === service.id &&
+      selectedService.apiUrl === service.apiUrl
     );
   }
 
