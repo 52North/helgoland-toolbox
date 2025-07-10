@@ -4,10 +4,10 @@ import {
   Component,
   ElementRef,
   OnInit,
-  ViewChild,
   inject,
   input,
   output,
+  viewChild,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,7 +37,7 @@ export class EditLabelComponent implements AfterViewInit, OnInit {
 
   readonly labelChanged = output<string>();
 
-  @ViewChild('input') firstItem!: ElementRef;
+  readonly firstItem = viewChild.required<ElementRef>('input');
 
   editedLabel: string | undefined;
 
@@ -46,7 +46,7 @@ export class EditLabelComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.firstItem.nativeElement.focus();
+    this.firstItem().nativeElement.focus();
     this.cd.detectChanges();
   }
 

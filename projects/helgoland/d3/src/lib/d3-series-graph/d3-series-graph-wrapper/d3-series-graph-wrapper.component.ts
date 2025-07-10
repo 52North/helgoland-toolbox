@@ -5,7 +5,7 @@ import {
   OnChanges,
   output,
   SimpleChanges,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import {
   ColorService,
@@ -100,8 +100,7 @@ export class D3SeriesGraphWrapperComponent
     yaxisModifier: true,
   };
 
-  @ViewChild(D3SeriesGraphComponent)
-  private d3Graph!: D3SeriesGraphComponent;
+  private readonly d3Graph = viewChild.required(D3SeriesGraphComponent);
 
   protected datasetMap: Map<string, HelgolandTimeseries> = new Map();
 
@@ -473,8 +472,9 @@ export class D3SeriesGraphWrapperComponent
   }
 
   private drawGraph() {
-    if (this.d3Graph) {
-      this.d3Graph.redrawCompleteGraph();
+    const d3Graph = this.d3Graph();
+    if (d3Graph) {
+      d3Graph.redrawCompleteGraph();
     }
   }
 }

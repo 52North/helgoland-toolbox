@@ -1,4 +1,4 @@
-import { Component, ViewChild, inject, input, output } from '@angular/core';
+import { Component, inject, input, output, viewChild } from '@angular/core';
 import {
   ReactiveFormsModule,
   UntypedFormControl,
@@ -62,7 +62,7 @@ export class GeneralTimeSelectionComponent {
     end: new UntypedFormControl(),
   });
 
-  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger | undefined;
+  readonly trigger = viewChild(MatMenuTrigger);
 
   readonly timespan = input.required<Timespan>();
 
@@ -94,7 +94,7 @@ export class GeneralTimeSelectionComponent {
         this.range.value.end.toDate(),
       );
       this.timespanChanged.emit(ts);
-      this.trigger!.closeMenu();
+      this.trigger()!.closeMenu();
     });
   }
 }

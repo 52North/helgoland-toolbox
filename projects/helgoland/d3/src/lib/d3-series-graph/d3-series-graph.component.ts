@@ -13,8 +13,8 @@ import {
   OnDestroy,
   OnInit,
   output,
-  ViewChild,
   ViewEncapsulation,
+  viewChild,
 } from '@angular/core';
 import {
   filterUndefined,
@@ -147,8 +147,7 @@ export class D3SeriesGraphComponent
 
   public readonly timespanChanged = output<Timespan>();
 
-  @ViewChild('d3timeseries')
-  public d3Elem: ElementRef | undefined;
+  public readonly d3Elem = viewChild<ElementRef>('d3timeseries');
 
   // DOM elements
   protected rawSvg!: d3.Selection<SVGSVGElement, any, any, any>;
@@ -288,7 +287,7 @@ export class D3SeriesGraphComponent
     this.graphService.setGraph(this.ID, this);
 
     this.rawSvg = d3
-      .select<SVGSVGElement, any>(this.d3Elem?.nativeElement)
+      .select<SVGSVGElement, any>(this.d3Elem()?.nativeElement)
       .append<SVGSVGElement>('svg')
       .style('width', '100%')
       .style('height', '100%')
@@ -326,13 +325,13 @@ export class D3SeriesGraphComponent
     this.resizeObserver = new ResizeObserver((entries) =>
       this.zone.run(() => this.redrawCompleteGraph()),
     );
-    this.resizeObserver.observe(this.d3Elem?.nativeElement);
+    this.resizeObserver.observe(this.d3Elem()?.nativeElement);
   }
 
   public ngOnDestroy() {
     this.langChangeSubscription.unsubscribe();
     this.timezoneSubscription.unsubscribe();
-    this.resizeObserver?.unobserve(this.d3Elem?.nativeElement);
+    this.resizeObserver?.unobserve(this.d3Elem()?.nativeElement);
     if (this.ID) {
       this.graphService.removeGraph(this.ID);
     }
@@ -486,7 +485,7 @@ export class D3SeriesGraphComponent
    */
   private calculateHeight(): number {
     return (
-      (this.d3Elem?.nativeElement as HTMLElement).clientHeight -
+      (this.d3Elem()?.nativeElement as HTMLElement).clientHeight -
       this.margin.top -
       this.margin.bottom +
       (this.plotOptions.showTimeLabel ||

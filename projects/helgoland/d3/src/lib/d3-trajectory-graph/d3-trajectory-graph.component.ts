@@ -6,8 +6,8 @@ import {
   OnChanges,
   output,
   SimpleChanges,
-  ViewChild,
   ViewEncapsulation,
+  viewChild,
 } from '@angular/core';
 import {
   DatasetOptions,
@@ -114,8 +114,7 @@ export class D3TrajectoryGraphComponent
     },
   );
 
-  @ViewChild('dthree', { static: true })
-  public d3Elem: ElementRef | undefined;
+  public readonly d3Elem = viewChild<ElementRef>('dthree');
 
   protected datasetMap: Map<string, DatasetConstellation> = new Map();
   protected rawSvg: any;
@@ -154,7 +153,7 @@ export class D3TrajectoryGraphComponent
   }
 
   public ngAfterViewInit(): void {
-    this.rawSvg = select(this.d3Elem?.nativeElement)
+    this.rawSvg = select(this.d3Elem()?.nativeElement)
       .append('svg')
       .attr('width', '100%')
       .attr('height', '100%');
@@ -371,7 +370,7 @@ export class D3TrajectoryGraphComponent
 
   protected calculateHeight(): number {
     return (
-      (this.d3Elem?.nativeElement as HTMLElement).clientHeight -
+      (this.d3Elem()?.nativeElement as HTMLElement).clientHeight -
       this.margin.top -
       this.margin.bottom
     );
@@ -379,7 +378,7 @@ export class D3TrajectoryGraphComponent
 
   protected calculateWidth(): number {
     return (
-      (this.d3Elem?.nativeElement as HTMLElement).clientWidth -
+      (this.d3Elem()?.nativeElement as HTMLElement).clientWidth -
       this.margin.left -
       this.margin.right -
       this.maxLabelwidth

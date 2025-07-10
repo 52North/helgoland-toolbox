@@ -2,9 +2,9 @@ import {
   AfterViewInit,
   Component,
   OnInit,
-  ViewChild,
   ViewEncapsulation,
   inject,
+  viewChild,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -71,7 +71,7 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
   private mapCache = inject(MapCache);
   protected state = inject(MapSelectionStateService);
 
-  @ViewChild('drawer') drawer: MatDrawer | undefined;
+  readonly drawer = viewChild<MatDrawer>('drawer');
 
   mapId = 'timeseries';
 
@@ -84,7 +84,7 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
   cluster = true;
 
   ngAfterViewInit(): void {
-    this.drawer?.openedChange.subscribe((_) => {
+    this.drawer()?.openedChange.subscribe((_) => {
       const map = this.mapCache.getMap(this.mapId);
       if (map) {
         map.invalidateSize();
@@ -118,7 +118,7 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
   }
 
   phenomenonToggled() {
-    this.drawer?.toggle();
+    this.drawer()?.toggle();
   }
 
   onStationSelected(station: HelgolandPlatform) {

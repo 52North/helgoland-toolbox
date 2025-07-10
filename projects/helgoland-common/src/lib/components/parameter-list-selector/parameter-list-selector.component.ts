@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import {
   MatListModule,
   MatSelectionList,
@@ -15,7 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [MatListModule, MatProgressBarModule, TranslateModule],
 })
 export class ParameterListSelectorComponent extends MultiServiceFilterSelectorComponent {
-  @ViewChild(MatSelectionList) list: MatSelectionList | undefined;
+  readonly list = viewChild(MatSelectionList);
 
   public selectionChanged(selection: MatSelectionListChange) {
     const match = this.items.find((e) => e.id === selection.options[0].value);
