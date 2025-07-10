@@ -4,7 +4,7 @@
     {{ "dataset-by-station.hint" | translate }}
   </p>
   @if (counter) {
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar mode="indeterminate" />
   }
   <div class="full-height">
     <mat-selection-list (selectionChange)="adjustSelection($event)">
