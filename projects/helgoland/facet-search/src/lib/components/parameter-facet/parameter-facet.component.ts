@@ -17,17 +17,15 @@ import {
   imports: [NgStyle, MatchLabelPipe],
 })
 export class ParameterFacetComponent implements OnInit, OnDestroy {
-  public readonly facetSearchService = input.required<FacetSearchService>();
+  readonly facetSearchService = input.required<FacetSearchService>();
 
-  public readonly type = input.required<ParameterFacetType>();
+  readonly type = input.required<ParameterFacetType>();
 
-  public readonly sort = input<ParameterFacetSort>(
-    ParameterFacetSort.descCount,
-  );
+  readonly sort = input<ParameterFacetSort>(ParameterFacetSort.descCount);
 
-  public readonly textualFilter = input<string>();
+  readonly textualFilter = input<string>();
 
-  public parameterList: FacetParameter[] = [];
+  parameterList: FacetParameter[] = [];
 
   private resultSubs: Subscription | undefined;
 
@@ -43,7 +41,7 @@ export class ParameterFacetComponent implements OnInit, OnDestroy {
     this.resultSubs?.unsubscribe();
   }
 
-  public toggleFacet(parameter: FacetParameter) {
+  toggleFacet(parameter: FacetParameter) {
     parameter.selected = !parameter.selected;
     this.facetSearchService().selectParameter(this.type(), parameter);
   }

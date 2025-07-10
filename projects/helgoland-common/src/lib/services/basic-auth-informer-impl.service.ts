@@ -17,7 +17,7 @@ export class BasicAuthInformerImplService implements BasicAuthInformer {
   private snackbar = inject(MatSnackBar);
   private translate = inject(TranslateService);
 
-  public doBasicAuth(url: string): Observable<boolean> {
+  doBasicAuth(url: string): Observable<boolean> {
     return new Observable<boolean>((observer: Observer<boolean>) => {
       const dialogRef = this.dialog.open(BasicAuthLoginComponent, {
         width: '400px',

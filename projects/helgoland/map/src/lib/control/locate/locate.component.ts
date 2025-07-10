@@ -13,9 +13,9 @@ import { LocateService } from './locate.service';
 export class LocateControlComponent extends MapControlComponent {
   protected locateService = inject(LocateService);
 
-  public isToggled = false;
+  isToggled = false;
 
-  public locateUser() {
+  locateUser() {
     this.isToggled = !this.isToggled;
     if (this.isToggled) {
       this.locateService.startLocate(this.mapId());

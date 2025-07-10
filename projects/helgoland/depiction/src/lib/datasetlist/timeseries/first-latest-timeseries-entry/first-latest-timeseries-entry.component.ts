@@ -3,8 +3,8 @@ import {
   OnChanges,
   SimpleChanges,
   inject,
-  output,
   input,
+  output,
 } from '@angular/core';
 import {
   FirstLastValue,
@@ -32,28 +32,28 @@ export class FirstLatestTimeseriesEntryComponent
 {
   protected timeSrvc = inject(Time);
 
-  public readonly timeInterval = input<TimeInterval>();
+  readonly timeInterval = input<TimeInterval>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onSelectDate = output<Date>();
 
-  public firstValue: FirstLastValue | undefined;
-  public lastValue: FirstLastValue | undefined;
-  public hasData = true;
+  firstValue: FirstLastValue | undefined;
+  lastValue: FirstLastValue | undefined;
+  hasData = true;
 
-  public ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['timeInterval']) {
       this.checkDataInTimespan();
     }
   }
 
-  public jumpToFirstTimeStamp() {
+  jumpToFirstTimeStamp() {
     if (this.dataset?.firstValue) {
       this.onSelectDate.emit(new Date(this.dataset.firstValue.timestamp));
     }
   }
 
-  public jumpToLastTimeStamp() {
+  jumpToLastTimeStamp() {
     if (this.dataset?.lastValue) {
       this.onSelectDate.emit(new Date(this.dataset.lastValue.timestamp));
     }

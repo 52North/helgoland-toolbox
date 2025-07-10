@@ -15,7 +15,7 @@ import { FeatureProperty } from '../../model/sml';
 import { NAMESPACES } from './Namespaces';
 
 export class GmlEncoder {
-  public encodeTime(object: AbstractTime, document: Document): Element {
+  encodeTime(object: AbstractTime, document: Document): Element {
     let node: Element;
     if (object instanceof TimeInstant) {
       node = this.encodeTimeInstant(object, document);
@@ -29,10 +29,7 @@ export class GmlEncoder {
     return node;
   }
 
-  public encodeTimeInstant(
-    timeInstant: TimeInstant,
-    document: Document,
-  ): Element {
+  encodeTimeInstant(timeInstant: TimeInstant, document: Document): Element {
     const node = document.createElementNS(NAMESPACES.GML, 'gml:TimeInstant');
 
     const timePostionNode = document.createElementNS(
@@ -45,7 +42,7 @@ export class GmlEncoder {
     return node;
   }
 
-  public encodeTimePeriod(timePeriod: TimePeriod, document: Document): Element {
+  encodeTimePeriod(timePeriod: TimePeriod, document: Document): Element {
     const node = document.createElementNS(NAMESPACES.GML, 'gml:TimePeriod');
 
     const beginNode = document.createElementNS(
@@ -62,7 +59,7 @@ export class GmlEncoder {
     return node;
   }
 
-  public encodeAbstractGML(
+  encodeAbstractGML(
     node: Element,
     object: AbstractGML,
     document: Document,
@@ -100,7 +97,7 @@ export class GmlEncoder {
     }
   }
 
-  public encodeAssociationAttributeGroup(
+  encodeAssociationAttributeGroup(
     node: Element,
     object: AssociationAttributeGroup,
   ): Node {
@@ -113,19 +110,19 @@ export class GmlEncoder {
     return node;
   }
 
-  public encodeIdentifier(object: CodeType, document: Document): Node {
+  encodeIdentifier(object: CodeType, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.GML, 'gml:identifier');
     this.encodeCodeType(node, object, document);
     return node;
   }
 
-  public encodeName(object: CodeType, document: Document): Node {
+  encodeName(object: CodeType, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.GML, 'gml:name');
     this.encodeCodeType(node, object, document);
     return node;
   }
 
-  public encodeCodeType(node: Element, object: CodeType, document: Document) {
+  encodeCodeType(node: Element, object: CodeType, document: Document) {
     if (object.codeSpace) {
       node.setAttribute('codeSpace', object.codeSpace);
     }
@@ -134,7 +131,7 @@ export class GmlEncoder {
     }
   }
 
-  public encodeFeature(
+  encodeFeature(
     node: Element,
     object: FeatureProperty,
     document: Document,
@@ -143,21 +140,21 @@ export class GmlEncoder {
     return node;
   }
 
-  public encodePoint(object: Point, document: Document): Node {
+  encodePoint(object: Point, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.GML, 'gml:Point');
     this.encodeReferenced(node, object, document);
     node.appendChild(this.encodePos([[object.x, object.y]], document));
     return node;
   }
 
-  public encodePos(object: [number, number][], document: Document): Node {
+  encodePos(object: [number, number][], document: Document): Node {
     const node = document.createElementNS(NAMESPACES.GML, 'gml:pos');
     node.setAttribute('count', object.length.toString());
     node.textContent = object.map((x) => x.join(' ')).join(' ');
     return node;
   }
 
-  public encodeAbstractFeature(
+  encodeAbstractFeature(
     node: Element,
     object: AbstractFeature,
     document: Document,
@@ -176,7 +173,7 @@ export class GmlEncoder {
     }
   }
 
-  public encodeEnvelope(object: Envelope, document: Document): Node {
+  encodeEnvelope(object: Envelope, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.GML, 'gml:Envelope');
     const lowerCornerNode = document.createElementNS(
       NAMESPACES.GML,
@@ -197,7 +194,7 @@ export class GmlEncoder {
     return node;
   }
 
-  public encodeReferenced(
+  encodeReferenced(
     node: Element,
     object: Referenced,
     document: Document,

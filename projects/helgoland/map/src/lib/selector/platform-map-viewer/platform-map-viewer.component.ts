@@ -3,8 +3,8 @@ import {
   Component,
   OnChanges,
   SimpleChanges,
-  output,
   input,
+  output,
 } from '@angular/core';
 import { HelgolandPlatform } from '@helgoland/core';
 import { Feature } from 'geojson';
@@ -22,12 +22,12 @@ export class PlatformMapViewerComponent
   extends CachedMapComponent
   implements AfterViewInit, OnChanges
 {
-  public readonly platforms = input<HelgolandPlatform[]>();
+  readonly platforms = input<HelgolandPlatform[]>();
 
-  public readonly customMarkerIcon = input<L.Icon>();
+  readonly customMarkerIcon = input<L.Icon>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public readonly onSelectedPlatform = output<HelgolandPlatform>();
+  readonly onSelectedPlatform = output<HelgolandPlatform>();
 
   private geometryOnMap: L.GeoJSON | undefined;
 
@@ -38,7 +38,7 @@ export class PlatformMapViewerComponent
     if (this.map) this.drawPlatforms(this.map);
   }
 
-  public override ngOnChanges(changes: SimpleChanges) {
+  override ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
     if (this.map) {
       if (changes['platforms']) {

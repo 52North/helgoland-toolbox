@@ -34,13 +34,13 @@ export class OlLayerComponent
 
   private map!: Map;
 
-  public ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes && this.layer()) {
       this.addLayer();
     }
   }
 
-  public mapInitialized(map: Map) {
+  mapInitialized(map: Map) {
     this.map = map;
     this.addLayer();
   }

@@ -1,4 +1,4 @@
-import { Component, inject, output, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
 import { Delaunay } from 'd3-delaunay';
@@ -49,12 +49,12 @@ export class D3GraphHoverPointComponent
   protected timezoneSrvc = inject(TimezoneService);
   protected pointSymbolDrawer = inject(D3PointSymbolDrawerService);
 
-  public readonly hoveringService = input<D3HoveringService>(
+  readonly hoveringService = input<D3HoveringService>(
     new D3SimpleHoveringService(),
   );
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public readonly onHighlightChanged = output<HighlightOutput>();
+  readonly onHighlightChanged = output<HighlightOutput>();
 
   protected d3Graph: D3GraphInterface | undefined;
   protected drawLayer: d3.Selection<SVGGElement, any, any, any> | undefined;
@@ -68,7 +68,7 @@ export class D3GraphHoverPointComponent
   protected previousBars: BarHoverElement[] = [];
   protected data: Map<string, GraphDataEntry[]> | undefined;
 
-  public graphInitialized(graph: D3GraphInterface) {
+  graphInitialized(graph: D3GraphInterface) {
     this.d3Graph = graph;
     this.d3Graph.redrawCompleteGraph();
   }
@@ -88,31 +88,31 @@ export class D3GraphHoverPointComponent
     this.data = options.preparedData;
   }
 
-  public mousemoveBackground(event: MouseEvent) {
+  mousemoveBackground(event: MouseEvent) {
     if (!this.disableHovering) {
       this.mouseMoved(event);
     }
   }
 
-  public mouseoutBackground() {
+  mouseoutBackground() {
     this.unhighlight();
   }
 
-  public dragStartBackground() {
-    this.unhighlight();
-    this.disableHovering = true;
-  }
-
-  public zoomStartBackground() {
+  dragStartBackground() {
     this.unhighlight();
     this.disableHovering = true;
   }
 
-  public dragEndBackground() {
+  zoomStartBackground() {
+    this.unhighlight();
+    this.disableHovering = true;
+  }
+
+  dragEndBackground() {
     this.disableHovering = false;
   }
 
-  public zoomEndBackground() {
+  zoomEndBackground() {
     this.disableHovering = false;
   }
 

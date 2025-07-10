@@ -13,7 +13,7 @@ import BaseLayer from 'ol/layer/Base';
 export class OlLayerOpacitiySliderComponent implements OnInit, DoCheck {
   readonly layer = input.required<BaseLayer>();
 
-  public opacity: number | undefined;
+  opacity: number | undefined;
 
   constructor() {}
 

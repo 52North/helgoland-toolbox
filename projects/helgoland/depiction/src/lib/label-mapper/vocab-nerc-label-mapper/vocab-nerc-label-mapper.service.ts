@@ -12,11 +12,11 @@ export class VocabNercLabelMapperService implements LabelMapperHandler {
   protected httpClient = inject(HttpClient);
   protected settingsSrvc = inject<SettingsService<Settings>>(SettingsService);
 
-  public canHandle(label: string): boolean {
+  canHandle(label: string): boolean {
     return label.startsWith('http://vocab.nerc.ac.uk');
   }
 
-  public getMappedLabel(label: string): Observable<string> {
+  getMappedLabel(label: string): Observable<string> {
     return new Observable<string>((observer: Observer<string>) => {
       const url = this.findUrl(label);
       if (url) {

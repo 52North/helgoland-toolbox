@@ -16,7 +16,7 @@ export class DatasetApiMapping {
     DatasetApiVersion
   >();
 
-  public getApiVersion(apiUrl: string): Observable<DatasetApiVersion> {
+  getApiVersion(apiUrl: string): Observable<DatasetApiVersion> {
     return new Observable<DatasetApiVersion>(
       (observer: Observer<DatasetApiVersion>) => {
         if (this.cache.has(apiUrl)) {

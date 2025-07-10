@@ -21,7 +21,7 @@ export class OlLayerAnimateTimeComponent
 
   private interval: number | undefined;
 
-  public startAnimation() {
+  startAnimation() {
     if (this.timeDimensions?.length) {
       // get current time parameter
       this.determineCurrentTimeParameter();
@@ -40,11 +40,11 @@ export class OlLayerAnimateTimeComponent
     }
   }
 
-  public stopAnimation() {
+  stopAnimation() {
     clearInterval(this.interval);
   }
 
-  public resetAnimation() {
+  resetAnimation() {
     if (this.layerid && this.url) {
       this.wmsCaps
         .getDefaultTimeDimension(this.layerid, this.url)

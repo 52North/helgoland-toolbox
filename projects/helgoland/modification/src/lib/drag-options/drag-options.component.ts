@@ -9,7 +9,7 @@ export class DragOptionsComponent {
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onTogglePanZoom = output<void>();
 
-  public togglePanZoom() {
+  togglePanZoom() {
     this.onTogglePanZoom.emit();
   }
 }

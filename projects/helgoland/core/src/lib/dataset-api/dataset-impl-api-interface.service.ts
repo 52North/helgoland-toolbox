@@ -45,7 +45,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     this.translate = translate;
   }
 
-  public getServices(
+  getServices(
     apiUrl: string,
     params?: ParameterFilter,
     options?: HttpRequestOptions,
@@ -64,7 +64,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     );
   }
 
-  public getService(
+  getService(
     id: string,
     apiUrl: string,
     params?: ParameterFilter,
@@ -79,7 +79,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     );
   }
 
-  public getStations(
+  getStations(
     apiUrl: string,
     params?: ParameterFilter,
     options?: HttpRequestOptions,
@@ -88,7 +88,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     return this.requestApi<Station[]>(url, params, options);
   }
 
-  public getStation(
+  getStation(
     id: string,
     apiUrl: string,
     params?: ParameterFilter,
@@ -98,7 +98,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     return this.requestApi<Station>(url, params, options);
   }
 
-  public getTimeseries(
+  getTimeseries(
     apiUrl: string,
     params?: ParameterFilter,
     options?: HttpRequestOptions,
@@ -126,7 +126,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     });
   }
 
-  public getTimeseriesData(
+  getTimeseriesData(
     apiUrl: string,
     ids: string[],
     timespan: Timespan,
@@ -163,7 +163,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     );
   }
 
-  public getSingleTimeseries(
+  getSingleTimeseries(
     id: string,
     apiUrl: string,
     params?: ParameterFilter,
@@ -179,7 +179,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     );
   }
 
-  public getSingleTimeseriesByInternalId(
+  getSingleTimeseriesByInternalId(
     internalId: string,
     params?: ParameterFilter,
   ): Observable<Timeseries> {
@@ -187,7 +187,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     return this.getSingleTimeseries(resolvedId.id, resolvedId.url, params);
   }
 
-  public getTimeseriesExtras(
+  getTimeseriesExtras(
     id: string,
     apiUrl: string,
   ): Observable<TimeseriesExtras> {
@@ -195,7 +195,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     return this.requestApi<TimeseriesExtras>(url + '/extras');
   }
 
-  public getTsData<T extends IDataEntry>(
+  getTsData<T extends IDataEntry>(
     id: string,
     apiUrl: string,
     timespan: Timespan,
@@ -214,7 +214,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     );
   }
 
-  public getCategories(
+  getCategories(
     apiUrl: string,
     params?: ParameterFilter,
     options?: HttpRequestOptions,
@@ -223,7 +223,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     return this.requestApi<Category[]>(url, params, options);
   }
 
-  public getCategory(
+  getCategory(
     id: string,
     apiUrl: string,
     params?: ParameterFilter,
@@ -232,7 +232,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     return this.requestApi(url, params);
   }
 
-  public getPhenomena(
+  getPhenomena(
     apiUrl: string,
     params?: ParameterFilter,
     options?: HttpRequestOptions,
@@ -241,7 +241,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     return this.requestApi<Phenomenon[]>(url, params, options);
   }
 
-  public getPhenomenon(
+  getPhenomenon(
     id: string,
     apiUrl: string,
     params?: ParameterFilter,
@@ -251,7 +251,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     return this.requestApi<Phenomenon>(url, params, options);
   }
 
-  public getOfferings(
+  getOfferings(
     apiUrl: string,
     params?: ParameterFilter,
     options?: HttpRequestOptions,
@@ -260,7 +260,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     return this.requestApi<Offering[]>(url, params, options);
   }
 
-  public getOffering(
+  getOffering(
     id: string,
     apiUrl: string,
     params?: ParameterFilter,
@@ -270,7 +270,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     return this.requestApi<Offering>(url, params, options);
   }
 
-  public getFeatures(
+  getFeatures(
     apiUrl: string,
     params?: ParameterFilter,
     options?: HttpRequestOptions,
@@ -279,7 +279,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     return this.requestApi<Feature[]>(url, params, options);
   }
 
-  public getFeature(
+  getFeature(
     id: string,
     apiUrl: string,
     params?: ParameterFilter,
@@ -289,7 +289,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     return this.requestApi<Feature>(url, params, options);
   }
 
-  public getProcedures(
+  getProcedures(
     apiUrl: string,
     params?: ParameterFilter,
     options?: HttpRequestOptions,
@@ -298,7 +298,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     return this.requestApi<Procedure[]>(url, params, options);
   }
 
-  public getProcedure(
+  getProcedure(
     id: string,
     apiUrl: string,
     params?: ParameterFilter,
@@ -308,7 +308,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     return this.requestApi<Procedure>(url, params, options);
   }
 
-  public getPlatforms(
+  getPlatforms(
     apiUrl: string,
     params?: ParameterFilter,
     options?: HttpRequestOptions,
@@ -317,7 +317,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     return this.requestApi<Platform[]>(url, params, options);
   }
 
-  public getPlatform(
+  getPlatform(
     id: string,
     apiUrl: string,
     params?: ParameterFilter,
@@ -327,7 +327,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     return this.requestApi<Platform>(url, params, options);
   }
 
-  public getDatasets(
+  getDatasets(
     apiUrl: string,
     params?: ParameterFilter,
     options?: HttpRequestOptions,
@@ -342,7 +342,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     );
   }
 
-  public getDataset(
+  getDataset(
     id: string,
     apiUrl: string,
     params?: ParameterFilter,
@@ -354,7 +354,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     );
   }
 
-  public getDatasetByInternalId(
+  getDatasetByInternalId(
     internalId: string,
     params?: ParameterFilter,
     options?: HttpRequestOptions,
@@ -363,7 +363,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     return this.getDataset(resolvedId.id, resolvedId.url, params, options);
   }
 
-  public getData<T extends IDataEntry>(
+  getData<T extends IDataEntry>(
     id: string,
     apiUrl: string,
     timespan: Timespan,
@@ -375,7 +375,7 @@ export class DatasetImplApiInterface extends DatasetApiInterface {
     return this.requestApi<Data<T>>(url, params, options);
   }
 
-  // public getGeometries(id: string, apiUrl: string, params?): Observable<> {
+  // getGeometries(id: string, apiUrl: string, params?): Observable<> {
   //     throw new Error('Not implemented');
   // }
 

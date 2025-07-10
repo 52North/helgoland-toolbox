@@ -1,8 +1,8 @@
 import { Component, OnChanges, SimpleChanges } from '@angular/core';
 import { TileLayer } from 'leaflet';
 
-import { LayerControlComponent } from '../layer-control-component';
 import { FormsModule } from '@angular/forms';
+import { LayerControlComponent } from '../layer-control-component';
 
 @Component({
   selector: 'n52-layer-opacity-slider',
@@ -14,7 +14,7 @@ export class LayerOpacitySliderComponent
   extends LayerControlComponent
   implements OnChanges
 {
-  public opacity: number | undefined;
+  opacity: number | undefined;
 
   constructor() {
     super();

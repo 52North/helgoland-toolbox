@@ -40,7 +40,7 @@ export class LocalHttpCacheIntervalInterceptor
    * @param metadata {HttpRequestOptions} further specification of the original request
    * @param next {HttpServiceHandler} forward to further functions
    */
-  public intercept(
+  intercept(
     req: HttpRequest<any>,
     metadata: HttpRequestOptions,
     next: HttpServiceHandler,

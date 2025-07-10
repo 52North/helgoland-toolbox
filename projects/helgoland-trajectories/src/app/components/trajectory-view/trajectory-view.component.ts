@@ -62,35 +62,35 @@ export class TrajectoryViewComponent implements OnInit {
   protected permalinkSrvc = inject(TrajectoryViewPermalinkService);
   private dialog = inject(MatDialog);
 
-  public trajectory: HelgolandTrajectory | undefined;
+  trajectory: HelgolandTrajectory | undefined;
 
-  public timespan: Timespan | undefined;
+  timespan: Timespan | undefined;
 
-  public selectedTimespan: Timespan | undefined;
+  selectedTimespan: Timespan | undefined;
 
-  public geometry: GeoJSON.LineString | undefined;
+  geometry: GeoJSON.LineString | undefined;
 
-  public highlightGeometry: GeoJSON.GeoJsonObject | undefined;
+  highlightGeometry: GeoJSON.GeoJsonObject | undefined;
 
-  public zoomToGeometry: GeoJSON.LineString | undefined;
+  zoomToGeometry: GeoJSON.LineString | undefined;
 
-  public loading: boolean = false;
+  loading: boolean = false;
 
-  public datasetIds: string[] = [];
+  datasetIds: string[] = [];
 
-  public options: Map<string, DatasetOptions> = new Map();
+  options: Map<string, DatasetOptions> = new Map();
 
-  public selection: D3SelectionRange | undefined;
+  selection: D3SelectionRange | undefined;
 
-  public graphOptions: D3GraphOptions = {
+  graphOptions: D3GraphOptions = {
     axisType: D3AxisType.Time,
     dotted: false,
     groupYAxis: true,
   };
 
-  public trajectoryGraphLoading: boolean = false;
+  trajectoryGraphLoading: boolean = false;
 
-  public axisTypes = [
+  axisTypes = [
     {
       type: D3AxisType.Distance,
       label: this.translateSrvc.instant('chart-styling.xaxis-option.distance'),
@@ -128,7 +128,7 @@ export class TrajectoryViewComponent implements OnInit {
     }
   }
 
-  public onChartSelectionChanged(range: D3SelectionRange) {
+  onChartSelectionChanged(range: D3SelectionRange) {
     if (this.geometry) {
       this.highlightGeometry = {
         type: 'LineString',
@@ -137,7 +137,7 @@ export class TrajectoryViewComponent implements OnInit {
     }
   }
 
-  public onChartSelectionChangedFinished(range: D3SelectionRange) {
+  onChartSelectionChangedFinished(range: D3SelectionRange) {
     if (this.geometry) {
       this.selection = range;
       this.zoomToGeometry = {
@@ -147,7 +147,7 @@ export class TrajectoryViewComponent implements OnInit {
     }
   }
 
-  public onChartHighlightChanged(idx: number) {
+  onChartHighlightChanged(idx: number) {
     if (this.geometry) {
       this.highlightGeometry = {
         type: 'Point',
@@ -156,30 +156,30 @@ export class TrajectoryViewComponent implements OnInit {
     }
   }
 
-  public setXaxisType(axisType: D3AxisType) {
+  setXaxisType(axisType: D3AxisType) {
     this.graphOptions.axisType = axisType;
   }
 
-  public isXaxisTypeSelected(axisType: D3AxisType): boolean {
+  isXaxisTypeSelected(axisType: D3AxisType): boolean {
     return this.graphOptions.axisType === axisType;
   }
 
-  public toggleDotted() {
+  toggleDotted() {
     this.graphOptions.dotted = !this.graphOptions.dotted;
   }
 
-  public openSelection(disableClose = false) {
+  openSelection(disableClose = false) {
     this.dialog.open(ModalTrajectorySelectionComponent, {
       disableClose,
       autoFocus: false,
     });
   }
 
-  public openMainConfig() {
+  openMainConfig() {
     this.dialog.open(ModalMainConfigComponent);
   }
 
-  public setGraphLoading(loading: boolean) {
+  setGraphLoading(loading: boolean) {
     setTimeout(() => (this.trajectoryGraphLoading = loading));
   }
 }

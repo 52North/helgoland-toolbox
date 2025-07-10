@@ -20,13 +20,13 @@ export class IsoDecoder {
 
   private _profileIDMap: BidiMap;
 
-  public get profileIDMap() {
+  get profileIDMap() {
     return this._profileIDMap;
   }
-  public set profileIDMap(profileIDMap: BidiMap) {
+  set profileIDMap(profileIDMap: BidiMap) {
     this._profileIDMap = profileIDMap;
   }
-  public decodeContact(elem: Element): Contact {
+  decodeContact(elem: Element): Contact {
     const contactElem = this.utils.getElement(
       elem,
       'CI_Contact',
@@ -128,7 +128,7 @@ export class IsoDecoder {
     return undefined;
   }
 
-  public decodePhone(elem: Element): Phone {
+  decodePhone(elem: Element): Phone {
     const phoneElem = this.utils.getElement(
       elem,
       'CI_Telephone',
@@ -164,7 +164,7 @@ export class IsoDecoder {
     return undefined;
   }
 
-  public decodeOnlineResource(elem: Element): ReturnObject<OnlineResource> {
+  decodeOnlineResource(elem: Element): ReturnObject<OnlineResource> {
     const onlineResourceElem = this.utils.getElement(
       elem,
       'CI_OnlineResource',
@@ -291,7 +291,7 @@ export class IsoDecoder {
     return undefined;
   }
 
-  public decodeAddress(elem: Element): Address {
+  decodeAddress(elem: Element): Address {
     const addressElem = this.utils.getElement(
       elem,
       'CI_Address',
@@ -404,7 +404,7 @@ export class IsoDecoder {
     return undefined;
   }
 
-  public decodeResponsibleParty(elem: Element): ReturnObject<ResponsibleParty> {
+  decodeResponsibleParty(elem: Element): ReturnObject<ResponsibleParty> {
     const respPartyElem = this.utils.getElement(
       elem,
       'CI_ResponsibleParty',
@@ -512,7 +512,7 @@ export class IsoDecoder {
     return undefined;
   }
 
-  public decodeRole(elem: Element): Role {
+  decodeRole(elem: Element): Role {
     const roleElem = this.utils.getElement(elem, 'CI_RoleCode', NAMESPACES.GMD);
 
     if (roleElem != null) {
@@ -551,7 +551,7 @@ export class IsoDecoder {
     return undefined;
   }
 
-  public decodeOnlineFunction(elem: Element): OnlineFunction {
+  decodeOnlineFunction(elem: Element): OnlineFunction {
     const onlineFunctionElem = this.utils.getElement(
       elem,
       'CI_OnLineFunctionCode',
@@ -579,7 +579,7 @@ export class IsoDecoder {
     return undefined;
   }
 
-  public decodeRestriction(elem: Element): ReturnObject<Restriction> {
+  decodeRestriction(elem: Element): ReturnObject<Restriction> {
     const restrictionElem = this.utils.getElement(
       elem,
       'MD_RestrictionCode',
@@ -622,7 +622,7 @@ export class IsoDecoder {
     return undefined;
   }
 
-  public decodeLegalConstraints(elem: Element): ReturnObject<LegalConstraints> {
+  decodeLegalConstraints(elem: Element): ReturnObject<LegalConstraints> {
     const legalConstraintsElem = this.utils.getElement(
       elem,
       'MD_LegalConstraints',

@@ -3,8 +3,8 @@ import {
   Component,
   OnChanges,
   SimpleChanges,
-  output,
   input,
+  output,
 } from '@angular/core';
 
 @Component({
@@ -13,26 +13,26 @@ import {
   imports: [NgClass],
 })
 export class StringTogglerComponent implements OnChanges {
-  public readonly value = input<string>();
+  readonly value = input<string>();
 
-  public readonly option = input<string>();
+  readonly option = input<string>();
 
-  public readonly icon = input<string>();
+  readonly icon = input<string>();
 
-  public readonly tooltip = input<string>();
+  readonly tooltip = input<string>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onToggled = output<string>();
 
-  public isToggled: boolean | undefined;
+  isToggled: boolean | undefined;
 
-  public ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges) {
     if (changes['value']) {
       this.isToggled = this.option() === this.value();
     }
   }
 
-  public toggle() {
+  toggle() {
     const option = this.option();
     if (option) {
       this.onToggled.emit(option);

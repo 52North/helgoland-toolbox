@@ -36,11 +36,11 @@ export class D3SimpleHoveringService extends D3HoveringService {
   private textPadding = 15;
   private rectPadding = 2;
 
-  public initPointHovering(elem: d3.Selection<SVGGElement, any, any, any>) {
+  initPointHovering(elem: d3.Selection<SVGGElement, any, any, any>) {
     this.anchorElem = elem;
   }
 
-  public hidePointHovering(
+  hidePointHovering(
     d: DataEntry,
     entry: SeriesGraphDataset<LineStyle>,
     pointElem: d3.Selection<d3.BaseType, any, any, any>,
@@ -54,7 +54,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
     }
   }
 
-  public showPointHovering(
+  showPointHovering(
     d: DataEntry,
     entry: SeriesGraphDataset<LineStyle>,
     pointElem: d3.Selection<d3.BaseType, any, any, any>,
@@ -77,7 +77,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
     }
   }
 
-  public positioningPointHovering(
+  positioningPointHovering(
     x: number,
     y: number,
     color: string,
@@ -101,7 +101,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
     }
   }
 
-  public showTooltip(elements: HoveringElement[], position: HoverPosition) {
+  showTooltip(elements: HoveringElement[], position: HoverPosition) {
     if (this.anchorElem) {
       this.tooltipContainer = this.anchorElem.append('g');
       this.positionTooltipContainer(position.x, position.y);
@@ -148,7 +148,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
       .attr('transform', `translate(${rectX}, ${rectY})`);
   }
 
-  public removeTooltip() {
+  removeTooltip() {
     if (this.tooltipContainer) {
       this.tooltipContainer.remove();
     }

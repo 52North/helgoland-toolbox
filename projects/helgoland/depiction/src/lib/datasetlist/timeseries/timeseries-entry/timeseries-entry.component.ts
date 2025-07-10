@@ -41,14 +41,14 @@ export class TimeseriesEntryComponent
   protected color = inject(ColorService);
   protected refValCache = inject(ReferenceValueColorCache);
 
-  public informationVisible = false;
-  public referenceValues: ReferenceValue[] = [];
+  informationVisible = false;
+  referenceValues: ReferenceValue[] = [];
 
-  public toggleInformation() {
+  toggleInformation() {
     this.informationVisible = !this.informationVisible;
   }
 
-  public toggleReferenceValue(refValue: ReferenceValue) {
+  toggleReferenceValue(refValue: ReferenceValue) {
     const options = JSON.parse(
       JSON.stringify(this.datasetOptions()),
     ) as DatasetOptions;

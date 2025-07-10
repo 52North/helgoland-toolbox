@@ -19,7 +19,7 @@ export class BasicAuthServiceMaintainer {
   /**
    * Register an additional service url, which is secured with basic auth.
    */
-  public registerService(url: string) {
+  registerService(url: string) {
     if (this.services.indexOf(url) === -1) {
       this.services.push(url);
     }
@@ -28,7 +28,7 @@ export class BasicAuthServiceMaintainer {
   /**
    * Checks if a given url is registered as secured with basic auth.
    */
-  public getCorrespondingService(url: string): string | undefined {
+  getCorrespondingService(url: string): string | undefined {
     const matchedUrl = this.services.find((e) => url.startsWith(e));
     if (matchedUrl) {
       return matchedUrl;

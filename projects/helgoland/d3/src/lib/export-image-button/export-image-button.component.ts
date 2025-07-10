@@ -97,12 +97,12 @@ export class ExportImageButtonComponent {
     grid: true,
   });
 
-  public loading: boolean = false;
+  loading: boolean = false;
 
   private internalHeight = this.height();
   private internalWidth = this.width();
 
-  public exportImage() {
+  exportImage() {
     this.createDiagramElem();
   }
 

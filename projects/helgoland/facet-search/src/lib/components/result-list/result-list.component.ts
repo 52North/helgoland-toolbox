@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, output, input } from '@angular/core';
+import { Component, input, OnDestroy, OnInit, output } from '@angular/core';
 import { TzDatePipe } from '@helgoland/core';
 import { Subscription } from 'rxjs';
 
@@ -14,11 +14,11 @@ import {
   imports: [TzDatePipe],
 })
 export class ResultListComponent implements OnInit, OnDestroy {
-  public readonly facetSearchService = input.required<FacetSearchService>();
+  readonly facetSearchService = input.required<FacetSearchService>();
 
-  public readonly selected = output<FacetSearchElement>();
+  readonly selected = output<FacetSearchElement>();
 
-  public entries: FacetSearchElement[] = [];
+  entries: FacetSearchElement[] = [];
 
   private resultSubs: Subscription | undefined;
 
@@ -35,7 +35,7 @@ export class ResultListComponent implements OnInit, OnDestroy {
     this.resultSubs?.unsubscribe();
   }
 
-  public timeseriesSelected(ts: FacetSearchElement) {
+  timeseriesSelected(ts: FacetSearchElement) {
     this.selected.emit(ts);
   }
 }

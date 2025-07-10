@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, inject, output, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import {
   DatasetFilter,
   DatasetOptions,
@@ -19,7 +19,7 @@ import { ListEntryComponent } from '../list-entry.component';
 export class TrajectoryEntryComponent extends ListEntryComponent {
   protected servicesConnector = inject(HelgolandServicesConnector);
 
-  public readonly datasetOptions = input<DatasetOptions>();
+  readonly datasetOptions = input<DatasetOptions>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onUpdateOptions = output<DatasetOptions>();
@@ -27,11 +27,11 @@ export class TrajectoryEntryComponent extends ListEntryComponent {
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onEditOptions = output<DatasetOptions>();
 
-  public dataset: HelgolandTrajectory | undefined;
+  dataset: HelgolandTrajectory | undefined;
 
-  public tempColor: string | undefined;
+  tempColor: string | undefined;
 
-  public toggleVisibility() {
+  toggleVisibility() {
     const datasetOptions = this.datasetOptions();
     if (datasetOptions) {
       datasetOptions.visible = !datasetOptions.visible;
@@ -39,7 +39,7 @@ export class TrajectoryEntryComponent extends ListEntryComponent {
     }
   }
 
-  public editDatasetOptions(options: DatasetOptions) {
+  editDatasetOptions(options: DatasetOptions) {
     this.onEditOptions.emit(options);
   }
 

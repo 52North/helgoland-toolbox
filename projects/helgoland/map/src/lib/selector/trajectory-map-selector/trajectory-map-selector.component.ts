@@ -6,8 +6,8 @@ import {
   OnChanges,
   SimpleChanges,
   inject,
-  output,
   input,
+  output,
 } from '@angular/core';
 import {
   HelgolandDataset,
@@ -34,7 +34,7 @@ export class ProfileTrajectoryMapSelectorComponent
 {
   protected servicesConnector = inject(HelgolandServicesConnector);
 
-  public readonly selectedTimespan = input.required<Timespan>();
+  readonly selectedTimespan = input.required<Timespan>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onTimeListDetermined = output<number[]>();
@@ -55,7 +55,7 @@ export class ProfileTrajectoryMapSelectorComponent
     opacity: 1,
   };
 
-  public override ngOnChanges(changes: SimpleChanges) {
+  override ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
     if (changes['selectedTimespan'] && this.selectedTimespan() && this.map) {
       this.clearMap(this.map);

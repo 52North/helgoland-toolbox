@@ -21,15 +21,15 @@ export class GmlDecoder {
 
   private _profileIDMap: BidiMap;
 
-  public get profileIDMap() {
+  get profileIDMap() {
     return this._profileIDMap;
   }
 
-  public set profileIDMap(profileIDMap: BidiMap) {
+  set profileIDMap(profileIDMap: BidiMap) {
     this._profileIDMap = profileIDMap;
   }
 
-  public decodeTime(elem: Element): ReturnObject<AbstractTime> {
+  decodeTime(elem: Element): ReturnObject<AbstractTime> {
     const timeInstant = this.decodeTimeInstant(elem);
     if (timeInstant != null) {
       return timeInstant;
@@ -42,7 +42,7 @@ export class GmlDecoder {
     return undefined;
   }
 
-  public decodeTimeInstant(elem: Element): ReturnObject<AbstractTime> {
+  decodeTimeInstant(elem: Element): ReturnObject<AbstractTime> {
     const timeElem = this.utils.getElement(elem, 'TimeInstant', NAMESPACES.GML);
     if (timeElem != null) {
       const instant = new TimeInstant();
@@ -73,7 +73,7 @@ export class GmlDecoder {
     return undefined;
   }
 
-  public decodeTimePeriod(elem: Element): ReturnObject<AbstractTime> {
+  decodeTimePeriod(elem: Element): ReturnObject<AbstractTime> {
     const timeElem = this.utils.getElement(elem, 'TimePeriod', NAMESPACES.GML);
     if (timeElem != null) {
       const period = new TimePeriod();
@@ -119,7 +119,7 @@ export class GmlDecoder {
     return undefined;
   }
 
-  public decodeAssociationAttributeGroup(
+  decodeAssociationAttributeGroup(
     elem: Element,
     object: AssociationAttributeGroup,
   ): void {
@@ -144,7 +144,7 @@ export class GmlDecoder {
     }
   }
 
-  public decodeAbstractGML(elem: Element, object: AbstractGML): void {
+  decodeAbstractGML(elem: Element, object: AbstractGML): void {
     if (elem.hasAttributeNS(NAMESPACES.GML, 'id')) {
       object.gmlId = elem.getAttributeNS(NAMESPACES.GML, 'id');
       this._profileIDMap = this.utils.processProfileID(
@@ -212,7 +212,7 @@ export class GmlDecoder {
     );
   }
 
-  public decodeCodeType(elem: Element): ReturnObject<CodeType> {
+  decodeCodeType(elem: Element): ReturnObject<CodeType> {
     let codeSpace = null;
     if (elem.hasAttribute('codeSpace')) {
       codeSpace = elem.getAttribute('codeSpace');
@@ -231,7 +231,7 @@ export class GmlDecoder {
     return new ReturnObject(codeType, elem);
   }
 
-  public decodePoint(elem: Element): ReturnObject<Point> {
+  decodePoint(elem: Element): ReturnObject<Point> {
     const pointElem = this.utils.getElement(elem, 'Point', NAMESPACES.GML);
     if (pointElem != null) {
       const point = new Point();
@@ -248,7 +248,7 @@ export class GmlDecoder {
     return undefined;
   }
 
-  public decodePos(elem: Element, point: Point) {
+  decodePos(elem: Element, point: Point) {
     const posElem = this.utils.getElement(elem, 'pos', NAMESPACES.GML);
     if (posElem != null) {
       const content = posElem.textContent.split(' ');
@@ -273,10 +273,7 @@ export class GmlDecoder {
     }
   }
 
-  public decodeAbstractFeature(
-    elem: Element,
-    abstractFeature: AbstractFeature,
-  ): void {
+  decodeAbstractFeature(elem: Element, abstractFeature: AbstractFeature): void {
     this.decodeAbstractGML(elem, abstractFeature);
     const boundedByElem = this.utils.getElement(
       elem,
@@ -294,7 +291,7 @@ export class GmlDecoder {
     }
   }
 
-  public decodeEnvelope(elem: Element): Envelope {
+  decodeEnvelope(elem: Element): Envelope {
     const envelopeElem = this.utils.getElement(
       elem,
       'Envelope',
@@ -351,7 +348,7 @@ export class GmlDecoder {
     return undefined;
   }
 
-  public decodeReferenced(elem: Element, referenced: Referenced): void {
+  decodeReferenced(elem: Element, referenced: Referenced): void {
     if (elem.hasAttribute('srsName')) {
       referenced.srsName = elem.getAttribute('srsName');
       this._profileIDMap = this.utils.processProfileID(

@@ -18,7 +18,7 @@ export class D3Graphs {
    * @param graphId
    * @param graphComp
    */
-  public setGraph(graphId: string, graphComp: D3GraphInterface) {
+  setGraph(graphId: string, graphComp: D3GraphInterface) {
     if (this.graphs[graphId] instanceof Subject) {
       const subject = this.graphs[graphId] as Subject<D3GraphInterface>;
       subject.next(graphComp);
@@ -33,7 +33,7 @@ export class D3Graphs {
    * @param graphId
    * @returns the graph as observable
    */
-  public getGraph(graphId: string): Observable<D3GraphInterface> {
+  getGraph(graphId: string): Observable<D3GraphInterface> {
     if (this.graphs[graphId]) {
       if (this.graphs[graphId] instanceof Subject) {
         return this.graphs[graphId];
@@ -51,7 +51,7 @@ export class D3Graphs {
    *
    * @param id
    */
-  public removeGraph(id: string): void {
+  removeGraph(id: string): void {
     if (this.graphs[id]) {
       delete this.graphs[id];
     }

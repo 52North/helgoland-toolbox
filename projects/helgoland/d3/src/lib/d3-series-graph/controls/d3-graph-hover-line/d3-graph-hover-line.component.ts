@@ -52,7 +52,7 @@ export class D3GraphHoverLineComponent
   protected drawLayer: d3.Selection<SVGGElement, any, any, any> | undefined;
   protected data: Map<string, GraphDataEntry[]> | undefined;
 
-  public graphInitialized(graph: D3GraphInterface) {
+  graphInitialized(graph: D3GraphInterface) {
     this.d3Graph = graph;
     this.d3Graph.redrawCompleteGraph();
   }
@@ -69,44 +69,44 @@ export class D3GraphHoverLineComponent
     this.data = options.preparedData;
   }
 
-  public override cleanUp() {
+  override cleanUp() {
     if (this.drawLayer) {
       this.drawLayer.remove();
       this.drawLayer = undefined;
     }
   }
 
-  public mousemoveBackground(event: MouseEvent) {
+  mousemoveBackground(event: MouseEvent) {
     if (!this.disableHovering) {
       this.moveHoverLineIndicator(event);
       this.showHoverLineIndicator();
     }
   }
 
-  public mouseoutBackground(event: MouseEvent) {
+  mouseoutBackground(event: MouseEvent) {
     if (!this.disableHovering) {
       this.hideHoverLineIndicator();
       this.hideLabels();
     }
   }
 
-  public dragStartBackground() {
+  dragStartBackground() {
     this.hideHoverLineIndicator();
     this.hideLabels();
     this.disableHovering = true;
   }
 
-  public zoomStartBackground() {
+  zoomStartBackground() {
     this.hideHoverLineIndicator();
     this.hideLabels();
     this.disableHovering = true;
   }
 
-  public dragEndBackground() {
+  dragEndBackground() {
     this.disableHovering = false;
   }
 
-  public zoomEndBackground() {
+  zoomEndBackground() {
     this.disableHovering = false;
   }
 

@@ -1,4 +1,4 @@
-import { Component, inject, output, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import * as L from 'leaflet';
 
@@ -20,29 +20,29 @@ export class GeosearchControlComponent extends MapControlComponent {
   /**
    * Additional search options.
    */
-  public readonly options = input<GeoSearchOptions>();
+  readonly options = input<GeoSearchOptions>();
 
   /**
    * Returns the search result.
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public readonly onResultChanged = output<GeoSearchResult | undefined>();
+  readonly onResultChanged = output<GeoSearchResult | undefined>();
 
   /**
    * Informs, when the search is triggered.
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public readonly onSearchTriggered = output<void>();
+  readonly onSearchTriggered = output<void>();
 
-  public result: GeoSearchResult | undefined;
+  result: GeoSearchResult | undefined;
 
-  public resultGeometry: L.GeoJSON | undefined;
+  resultGeometry: L.GeoJSON | undefined;
 
-  public searchTerm: string | undefined;
+  searchTerm: string | undefined;
 
-  public loading: boolean | undefined;
+  loading: boolean | undefined;
 
-  public triggerSearch() {
+  triggerSearch() {
     this.onSearchTriggered.emit();
     if (this.resultGeometry) {
       this.resultGeometry.remove();
@@ -81,7 +81,7 @@ export class GeosearchControlComponent extends MapControlComponent {
     }
   }
 
-  public clearSearch() {
+  clearSearch() {
     this.searchTerm = '';
     this.onResultChanged.emit(undefined);
     this.removeOldGeometry();

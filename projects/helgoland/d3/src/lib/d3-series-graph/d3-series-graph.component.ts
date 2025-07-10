@@ -13,8 +13,8 @@ import {
   OnDestroy,
   OnInit,
   output,
-  ViewEncapsulation,
   viewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {
   filterUndefined,
@@ -127,27 +127,27 @@ export class D3SeriesGraphComponent
   protected pointSymbolDrawer = inject(D3PointSymbolDrawerService);
   protected zone = inject(NgZone);
 
-  public readonly datasets = input<SeriesGraphDataset[]>([]);
+  readonly datasets = input<SeriesGraphDataset[]>([]);
   private datasetsDiffer: IterableDiffer<SeriesGraphDataset>;
 
-  public readonly timespan = input<Timespan>();
+  readonly timespan = input<Timespan>();
   protected oldTimespan: Timespan = { from: 0, to: 0 };
 
-  public readonly hoveringService = input<D3HoveringService>(
+  readonly hoveringService = input<D3HoveringService>(
     new D3SimpleHoveringService(),
   );
 
   /**
    * Event with a list of selected datasets.
    */
-  public readonly datasetsSelected = output<string[]>();
+  readonly datasetsSelected = output<string[]>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public readonly onHighlightChanged = output<HighlightOutput>();
+  readonly onHighlightChanged = output<HighlightOutput>();
 
-  public readonly timespanChanged = output<Timespan>();
+  readonly timespanChanged = output<Timespan>();
 
-  public readonly d3Elem = viewChild<ElementRef>('d3timeseries');
+  readonly d3Elem = viewChild<ElementRef>('d3timeseries');
 
   // DOM elements
   protected rawSvg!: d3.Selection<SVGSVGElement, any, any, any>;
@@ -181,11 +181,11 @@ export class D3SeriesGraphComponent
 
   private observer: Set<D3GraphObserver> = new Set();
 
-  public readonly graphOptions = input<D3SeriesGraphOptions>({});
+  readonly graphOptions = input<D3SeriesGraphOptions>({});
   protected graphOptionsDiffer: KeyValueDiffer<any, any>;
 
   // default plot options
-  public plotOptions: D3SeriesGraphOptions = {
+  plotOptions: D3SeriesGraphOptions = {
     hoverStyle: HoveringStyle.point,
     grid: true,
     yaxis: true,
@@ -280,7 +280,7 @@ export class D3SeriesGraphComponent
     }
   }
 
-  public ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     this.ID = this.uuidv4();
 
     this.graphId.setId(this.ID);
@@ -328,7 +328,7 @@ export class D3SeriesGraphComponent
     this.resizeObserver.observe(this.d3Elem()?.nativeElement);
   }
 
-  public ngOnDestroy() {
+  ngOnDestroy() {
     this.langChangeSubscription.unsubscribe();
     this.timezoneSubscription.unsubscribe();
     this.resizeObserver?.unobserve(this.d3Elem()?.nativeElement);
@@ -337,15 +337,15 @@ export class D3SeriesGraphComponent
     }
   }
 
-  public registerObserver(obs: D3GraphObserver) {
+  registerObserver(obs: D3GraphObserver) {
     this.observer.add(obs);
   }
 
-  public unregisterObserver(obs: D3GraphObserver) {
+  unregisterObserver(obs: D3GraphObserver) {
     this.observer.delete(obs);
   }
 
-  public getGraphElem(): d3.Selection<SVGGElement, any, any, any> {
+  getGraphElem(): d3.Selection<SVGGElement, any, any, any> {
     return this.graph;
   }
 
@@ -357,7 +357,7 @@ export class D3SeriesGraphComponent
     this.redrawGraph();
   }
 
-  public centerTime(timestamp: number): void {
+  centerTime(timestamp: number): void {
     const timespan = this.timespan();
     if (timespan) {
       const centeredTimespan = this.timeSrvc.centerTimespan(
@@ -368,7 +368,7 @@ export class D3SeriesGraphComponent
     }
   }
 
-  public changeTime(from: number, to: number): void {
+  changeTime(from: number, to: number): void {
     this.timespanChanged.emit(new Timespan(from, to));
   }
 
@@ -510,12 +510,12 @@ export class D3SeriesGraphComponent
   /**
    * Just sets the timespan, which is used for the diagram visualisation
    */
-  public setTimespan(timespan: Timespan) {
+  setTimespan(timespan: Timespan) {
     debugger;
     // this.timespan = timespan;
   }
 
-  public drawBaseGraph(): void {
+  drawBaseGraph(): void {
     this.drawYGridLines();
     this.drawXaxis(this.leftOffset);
     this.drawAllCharts();
@@ -545,7 +545,7 @@ export class D3SeriesGraphComponent
     }
   }
 
-  public getDrawingLayer(
+  getDrawingLayer(
     id: string,
     front?: boolean,
   ): d3.Selection<SVGGElement, any, any, any> {
@@ -574,7 +574,7 @@ export class D3SeriesGraphComponent
     }
   }
 
-  public redrawCompleteGraph() {
+  redrawCompleteGraph() {
     this.prepareDatasets();
     this.redrawGraph();
   }

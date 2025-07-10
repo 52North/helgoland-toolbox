@@ -14,14 +14,14 @@ export class TimezoneService {
 
   // private offsetToLocale: number; // TODO: check if still needed
 
-  public timezoneChange: EventEmitter<string> = new EventEmitter();
+  timezoneChange: EventEmitter<string> = new EventEmitter();
 
   constructor() {
     this.currentTimezone = moment.tz.zone(moment.tz.guess());
     this.calcOffset();
   }
 
-  public setTimezone(tzStr: string = '') {
+  setTimezone(tzStr: string = '') {
     const tz = moment.tz.zone(tzStr);
     if (tz) {
       this.currentTimezone = tz;
@@ -45,11 +45,11 @@ export class TimezoneService {
     //   this.offsetToLocale = -1 * guess.utcOffset(date) + this.currentTimezone.utcOffset(date);
   }
 
-  public getTimezoneName(): string {
+  getTimezoneName(): string {
     return this.currentTimezone?.name ? this.currentTimezone?.name : '';
   }
 
-  public formatTzDate(
+  formatTzDate(
     date: moment.Moment | Date | number | string,
     format?: string,
   ): string {
@@ -71,15 +71,15 @@ export class TimezoneService {
     return date.tz(this.getTimezoneName()).format(format);
   }
 
-  public createTzDate(m: moment.MomentInput): moment.Moment {
+  createTzDate(m: moment.MomentInput): moment.Moment {
     return moment(m).tz(this.getTimezoneName());
   }
 
-  // public getOffsetToLocaleInMs() {
+  // getOffsetToLocaleInMs() {
   //   return this.offsetToLocale * 1000 * 60;
   // }
 
-  // public getOffsetToLocaleInHours() {
+  // getOffsetToLocaleInHours() {
   //   return this.offsetToLocale / 60;
   // }
 }

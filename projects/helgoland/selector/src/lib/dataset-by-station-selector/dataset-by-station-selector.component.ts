@@ -12,7 +12,7 @@ import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 import { TranslateService } from '@ngx-translate/core';
 
 export class SelectableDataset extends HelgolandTimeseries {
-  public selected = false;
+  selected = false;
 }
 
 @Component({
@@ -25,23 +25,23 @@ export class DatasetByStationSelectorComponent implements OnInit {
   protected servicesConnector = inject(HelgolandServicesConnector);
   protected translateSrvc = inject(TranslateService);
 
-  public readonly station = input.required<HelgolandPlatform>();
+  readonly station = input.required<HelgolandPlatform>();
 
-  public readonly url = input.required<string>();
+  readonly url = input.required<string>();
 
-  public readonly defaultSelected = input(false);
+  readonly defaultSelected = input(false);
 
-  public readonly phenomenonId = input<string>();
+  readonly phenomenonId = input<string>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onSelectionChanged = output<HelgolandDataset[]>();
 
-  public phenomenonMatchedList: SelectableDataset[] = [];
-  public othersList: SelectableDataset[] = [];
+  phenomenonMatchedList: SelectableDataset[] = [];
+  othersList: SelectableDataset[] = [];
 
-  public counter = 0;
+  counter = 0;
 
-  public ngOnInit() {
+  ngOnInit() {
     this.servicesConnector
       .getPlatform(this.station().id, this.url(), {
         type: DatasetType.Timeseries,
@@ -69,7 +69,7 @@ export class DatasetByStationSelectorComponent implements OnInit {
       });
   }
 
-  public toggle(timeseries: SelectableDataset) {
+  toggle(timeseries: SelectableDataset) {
     timeseries.selected = !timeseries.selected;
     this.updateSelection();
   }

@@ -6,8 +6,8 @@ import {
   SimpleChanges,
   ViewEncapsulation,
   inject,
-  output,
   input,
+  output,
 } from '@angular/core';
 import { Timespan, TzDatePipe } from '@helgoland/core';
 // @ts-ignore
@@ -28,19 +28,19 @@ import { TimeRangeSliderCache } from './time-range-slider.service';
 export class TimeRangeSliderComponent implements OnChanges {
   protected cache = inject(TimeRangeSliderCache);
 
-  public readonly id = input('');
+  readonly id = input('');
 
-  public readonly timeList = input.required<number[]>();
+  readonly timeList = input.required<number[]>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onTimespanSelected = output<Timespan>();
 
-  public start!: number;
-  public selectionStart!: number;
-  public end!: number;
-  public selectionEnd!: number;
+  start!: number;
+  selectionStart!: number;
+  end!: number;
+  selectionEnd!: number;
 
-  public ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     const timeList = this.timeList();
     if (changes['timeList'] && timeList) {
       let min;

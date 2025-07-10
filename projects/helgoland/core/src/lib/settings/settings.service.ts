@@ -8,7 +8,7 @@ export abstract class SettingsService<T extends Settings> {
     this.settings = {} as T;
   }
 
-  public getSettings() {
+  getSettings() {
     return this.settings;
   }
 

@@ -30,7 +30,7 @@ export class LocalHttpCache extends HttpCache {
     }
   }
 
-  public get(
+  get(
     req: HttpRequest<any>,
     expirationAtMs?: number,
   ): HttpResponse<any> | null {
@@ -58,11 +58,7 @@ export class LocalHttpCache extends HttpCache {
     return null;
   }
 
-  public put(
-    req: HttpRequest<any>,
-    resp: HttpResponse<any>,
-    expirationAtMs?: number,
-  ) {
+  put(req: HttpRequest<any>, resp: HttpResponse<any>, expirationAtMs?: number) {
     this.cache[req.urlWithParams] = {
       expirationAtMs:
         expirationAtMs || new Date().getTime() + this.cachingDuration,

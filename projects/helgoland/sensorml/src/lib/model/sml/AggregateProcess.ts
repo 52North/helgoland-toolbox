@@ -1,8 +1,8 @@
+import { DisplayName } from '../../common/decorators/DisplayName';
 import { AbstractProcess } from './AbstractProcess';
 import { AggregatingProcess } from './AggregatingProcess';
 import { ComponentList } from './ComponentList';
 import { ConnectionList } from './ConnectionList';
-import { DisplayName } from '../../common/decorators/DisplayName';
 
 /**
  * A process that consist of a collection of linked component processes
@@ -19,13 +19,13 @@ export class AggregateProcess
   connections: ConnectionList = new ConnectionList();
 
   // getter
-  public static SCHEMA(): string {
+  static SCHEMA(): string {
     const schema =
       'http://schemas.opengis.net/sensorML/2.0/aggregate_process.xsd';
     return schema;
   }
 
-  public static NAME(): string {
+  static NAME(): string {
     return 'AggregateProcess';
   }
 

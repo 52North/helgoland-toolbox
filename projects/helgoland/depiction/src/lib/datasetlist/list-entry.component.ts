@@ -21,9 +21,9 @@ export abstract class ListEntryComponent implements OnInit, OnDestroy {
   protected internalIdHandler = inject(InternalIdHandler);
   protected translateSrvc = inject(TranslateService);
 
-  public readonly datasetId = input.required<string>();
+  readonly datasetId = input.required<string>();
 
-  public readonly selected = input<boolean>();
+  readonly selected = input<boolean>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onDeleteDataset = output<boolean>();
@@ -31,13 +31,13 @@ export abstract class ListEntryComponent implements OnInit, OnDestroy {
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onSelectDataset = output<boolean>();
 
-  public loading: boolean | undefined;
+  loading: boolean | undefined;
 
   protected internalId: InternalDatasetId | undefined;
 
   private langChangeSubscription: Subscription | undefined;
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.internalId = this.internalIdHandler.resolveInternalId(
       this.datasetId(),
     );
@@ -48,15 +48,15 @@ export abstract class ListEntryComponent implements OnInit, OnDestroy {
     );
   }
 
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.langChangeSubscription?.unsubscribe();
   }
 
-  public removeDataset() {
+  removeDataset() {
     this.onDeleteDataset.emit(true);
   }
 
-  public toggleSelection() {
+  toggleSelection() {
     this.onSelectDataset.emit(!this.selected());
   }
 

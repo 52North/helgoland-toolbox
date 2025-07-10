@@ -20,11 +20,11 @@ export class OlLayerTimeSelectorComponent implements OnInit {
 
   readonly layer = input.required<BaseLayer>();
 
-  public currentTime: Date | undefined;
+  currentTime: Date | undefined;
 
-  public timeDimensions: Date[] | undefined;
+  timeDimensions: Date[] | undefined;
 
-  public loading: boolean | undefined;
+  loading: boolean | undefined;
 
   protected layerSource: TileWMS | undefined;
   protected layerid: string | undefined;
@@ -52,11 +52,11 @@ export class OlLayerTimeSelectorComponent implements OnInit {
     }
   }
 
-  public onSelect(time: Date) {
+  onSelect(time: Date) {
     this.setTime(time);
   }
 
-  public compareFn(option1: Date, option2: Date) {
+  compareFn(option1: Date, option2: Date) {
     return option1 && option2 && option1.getTime() === option2.getTime();
   }
 

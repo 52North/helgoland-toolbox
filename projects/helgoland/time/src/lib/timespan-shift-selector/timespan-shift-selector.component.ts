@@ -1,4 +1,4 @@
-import { Component, inject, output, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { Time, Timespan, TzDatePipe } from '@helgoland/core';
 
 @Component({
@@ -9,7 +9,7 @@ import { Time, Timespan, TzDatePipe } from '@helgoland/core';
 export class TimespanShiftSelectorComponent {
   protected timeSrvc = inject(Time);
 
-  public readonly timespan = input.required<Timespan>();
+  readonly timespan = input.required<Timespan>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onTimespanChange = output<Timespan>();
@@ -17,15 +17,15 @@ export class TimespanShiftSelectorComponent {
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onOpenTimeSettings = output<void>();
 
-  public back() {
+  back() {
     this.onTimespanChange.emit(this.timeSrvc.stepBack(this.timespan()));
   }
 
-  public forward() {
+  forward() {
     this.onTimespanChange.emit(this.timeSrvc.stepForward(this.timespan()));
   }
 
-  public open() {
+  open() {
     this.onOpenTimeSettings.emit();
   }
 }

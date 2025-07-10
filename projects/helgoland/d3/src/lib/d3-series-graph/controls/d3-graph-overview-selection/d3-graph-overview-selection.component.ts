@@ -28,7 +28,7 @@ export class D3GraphOverviewSelectionComponent
   implements OnChanges, D3GraphObserver
 {
   // difference to timespan/timeInterval --> if brush, then this is the timespan of the main-diagram
-  public readonly selectionTimeInterval = input.required<Timespan>();
+  readonly selectionTimeInterval = input.required<Timespan>();
 
   protected mousedownBrush: boolean = false;
   protected graphComp: D3GraphInterface | undefined;
@@ -46,7 +46,7 @@ export class D3GraphOverviewSelectionComponent
     }
   }
 
-  public graphInitialized(graph: D3GraphInterface) {
+  graphInitialized(graph: D3GraphInterface) {
     this.graphComp = graph;
   }
 

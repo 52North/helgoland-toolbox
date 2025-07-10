@@ -27,13 +27,13 @@ export class DatasetPermalinkDownloadComponent implements OnChanges, OnInit {
   protected internalIdHandler = inject(InternalIdHandler);
   protected servicesConnector = inject(HelgolandServicesConnector);
 
-  public readonly internalId = input<InternalDatasetId | string>();
+  readonly internalId = input<InternalDatasetId | string>();
 
-  public readonly timeInterval = input<Timespan>();
+  readonly timeInterval = input<Timespan>();
 
-  public readonly language = input<string>();
+  readonly language = input<string>();
 
-  public downloadLink: string | undefined;
+  downloadLink: string | undefined;
 
   ngOnInit(): void {
     const internalId = this.internalId();

@@ -1,4 +1,4 @@
-import { Component, output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'n52-permalink-in-mail',
@@ -6,12 +6,12 @@ import { Component, output, input } from '@angular/core';
   standalone: true,
 })
 export class PermalinkInMailComponent {
-  public readonly url = input.required<string>();
+  readonly url = input.required<string>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onTriggered = output<void>();
 
-  public openInMail() {
+  openInMail() {
     window.location.href = 'mailto:?body=' + encodeURIComponent(this.url());
     this.onTriggered.emit();
   }

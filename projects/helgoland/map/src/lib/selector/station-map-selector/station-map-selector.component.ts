@@ -4,9 +4,9 @@ import {
   AfterViewInit,
   Component,
   inject,
+  input,
   OnChanges,
   SimpleChanges,
-  input,
 } from '@angular/core';
 import {
   DatasetType,
@@ -35,20 +35,20 @@ export class StationMapSelectorComponent
   protected statusIntervalResolver = inject(StatusIntervalResolverService);
   protected servicesConnector = inject(HelgolandServicesConnector);
 
-  public readonly cluster = input<boolean>();
+  readonly cluster = input<boolean>();
 
-  public readonly clusterConfig = input<L.MarkerClusterGroupOptions>();
+  readonly clusterConfig = input<L.MarkerClusterGroupOptions>();
 
-  public readonly statusIntervals = input<boolean>();
+  readonly statusIntervals = input<boolean>();
 
   /**
    * Ignores all Statusintervals where the timestamp is before a given duration in milliseconds and draws instead the default marker.
    */
-  public readonly ignoreStatusIntervalIfBeforeDuration = input(Infinity);
+  readonly ignoreStatusIntervalIfBeforeDuration = input(Infinity);
 
   protected markerFeatureGroup: L.FeatureGroup | undefined;
 
-  public override ngOnChanges(changes: SimpleChanges) {
+  override ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
     const serviceUrl = this.serviceUrl();
     if (this.map && serviceUrl && changes['statusIntervals']) {

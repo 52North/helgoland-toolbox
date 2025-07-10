@@ -26,26 +26,26 @@ interface ExtendedHelgolandService extends HelgolandService {
 export class ServiceSelectorComponent implements OnInit {
   protected serviceSelectorService = inject(ServiceSelectorService);
 
-  public readonly datasetApiList = input<DatasetApi[]>([]);
+  readonly datasetApiList = input<DatasetApi[]>([]);
 
-  public readonly providerBlacklist = input<BlacklistedService[]>([]);
+  readonly providerBlacklist = input<BlacklistedService[]>([]);
 
-  public readonly supportStations = input<boolean>(); // TODO: needed???
+  readonly supportStations = input<boolean>(); // TODO: needed???
 
-  public readonly selectedService = input<HelgolandService>();
+  readonly selectedService = input<HelgolandService>();
 
-  public readonly filter = input<HelgolandParameterFilter>({});
+  readonly filter = input<HelgolandParameterFilter>({});
 
-  public readonly showUnresolvableServices = input<boolean>();
+  readonly showUnresolvableServices = input<boolean>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onServiceSelected = output<HelgolandService>();
 
-  public services: ExtendedHelgolandService[] = [];
-  public unResolvableServices: DatasetApi[] = [];
-  public loadingCount = 0;
+  services: ExtendedHelgolandService[] = [];
+  unResolvableServices: DatasetApi[] = [];
+  loadingCount = 0;
 
-  public ngOnInit() {
+  ngOnInit() {
     const datasetApiList = this.datasetApiList();
     if (datasetApiList) {
       this.loadingCount = datasetApiList.length;
@@ -88,7 +88,7 @@ export class ServiceSelectorComponent implements OnInit {
     }
   }
 
-  public isSelected(service: HelgolandService) {
+  isSelected(service: HelgolandService) {
     const selectedService = this.selectedService();
     if (!selectedService) {
       return false;
@@ -99,7 +99,7 @@ export class ServiceSelectorComponent implements OnInit {
     );
   }
 
-  public selectService(service: HelgolandService) {
+  selectService(service: HelgolandService) {
     this.onServiceSelected.emit(service);
   }
 }

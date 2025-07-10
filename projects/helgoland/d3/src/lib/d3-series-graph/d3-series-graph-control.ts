@@ -5,11 +5,11 @@ import { D3GraphHelperService } from '../helper/d3-graph-helper.service';
 import { D3GraphId } from '../helper/d3-graph-id.service';
 import { D3Graphs } from '../helper/d3-graphs.service';
 import { YAxis } from '../model/d3-general';
+import { D3GraphInterface } from './d3-graph.interface';
 import {
   GraphDataEntry,
   SeriesGraphDataset,
 } from './models/series-graph-dataset';
-import { D3GraphInterface } from './d3-graph.interface';
 
 export interface AdjustBackgroundOptions {
   background: d3.Selection<SVGGElement, any, any, any>;
@@ -73,7 +73,7 @@ export abstract class D3SeriesGraphControl
   protected graphs = inject(D3Graphs);
   protected graphHelper = inject(D3GraphHelperService);
 
-  public ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     this.graphId.getId().subscribe((graphId) =>
       this.graphs.getGraph(graphId).subscribe((graph) => {
         // needs to be registered first, to react then on the callbacks
@@ -83,7 +83,7 @@ export abstract class D3SeriesGraphControl
     );
   }
 
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.graphId
       .getId()
       .subscribe((graphId) =>
@@ -96,9 +96,9 @@ export abstract class D3SeriesGraphControl
     }
   }
 
-  public abstract graphInitialized(graph: D3GraphInterface): void;
+  abstract graphInitialized(graph: D3GraphInterface): void;
 
-  public adjustYAxis?(axis: YAxis): void;
+  adjustYAxis?(axis: YAxis): void;
 
-  public cleanUp?(): void;
+  cleanUp?(): void;
 }

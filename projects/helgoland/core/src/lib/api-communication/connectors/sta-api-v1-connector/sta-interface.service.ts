@@ -561,7 +561,7 @@ export class StaInterfaceService {
       );
   }
 
-  public aggregatePaging<T extends StaObject>(
+  aggregatePaging<T extends StaObject>(
     request: Observable<StaValueListResponse<T>>,
   ): Observable<StaValueListResponse<T>> {
     return new Observable((observer: Observer<StaValueListResponse<T>>) => {

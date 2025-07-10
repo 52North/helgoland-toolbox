@@ -15,7 +15,5 @@ export abstract class LastValueLabelGenerator {
   /**
    * Creates an icon label based on a given timeseries.
    */
-  public abstract createIconLabel(
-    ts: HelgolandTimeseries,
-  ): L.DivIcon | undefined;
+  abstract createIconLabel(ts: HelgolandTimeseries): L.DivIcon | undefined;
 }

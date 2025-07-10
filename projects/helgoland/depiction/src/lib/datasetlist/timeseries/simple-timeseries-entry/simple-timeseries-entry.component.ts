@@ -24,14 +24,14 @@ import { ListEntryComponent } from '../../list-entry.component';
 export class SimpleTimeseriesEntryComponent extends ListEntryComponent {
   protected servicesConnector = inject(HelgolandServicesConnector);
 
-  public dataset: HelgolandTimeseries | undefined;
+  dataset: HelgolandTimeseries | undefined;
 
-  public platformLabel: string | undefined;
-  public phenomenonLabel: string | undefined;
-  public procedureLabel: string | undefined;
-  public categoryLabel: string | undefined;
-  public uom: string | undefined;
-  public error: any;
+  platformLabel: string | undefined;
+  phenomenonLabel: string | undefined;
+  procedureLabel: string | undefined;
+  categoryLabel: string | undefined;
+  uom: string | undefined;
+  error: any;
 
   protected loadDataset(internalId: InternalDatasetId, locale?: string): void {
     const params: DatasetFilter = {};

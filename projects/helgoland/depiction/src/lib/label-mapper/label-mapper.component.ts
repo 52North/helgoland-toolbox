@@ -17,13 +17,13 @@ import { LabelMapperService } from './label-mapper.service';
 export class LabelMapperComponent implements OnChanges {
   protected labelMapperSrvc = inject(LabelMapperService);
 
-  public readonly label = input<string>();
+  readonly label = input<string>();
 
-  public determinedLabel: string | undefined;
+  determinedLabel: string | undefined;
 
-  public loading = true;
+  loading = true;
 
-  public ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     const labelValue = this.label();
     if (changes['label'] && labelValue) {
       this.labelMapperSrvc.getMappedLabel(labelValue).subscribe((label) => {

@@ -26,11 +26,11 @@ export class D3SeriesGraphOverviewWrapperComponent
   protected timeSrvc = inject(Time);
   protected cd = inject(ChangeDetectorRef);
 
-  public readonly datasetIds = input.required<string[]>();
+  readonly datasetIds = input.required<string[]>();
 
-  public readonly datasetOptions = input<Map<string, DatasetOptions>>();
+  readonly datasetOptions = input<Map<string, DatasetOptions>>();
 
-  public readonly presenterOptions = input<D3PlotOptions, D3PlotOptions>(
+  readonly presenterOptions = input<D3PlotOptions, D3PlotOptions>(
     {
       overview: true,
       yaxis: false,
@@ -47,11 +47,11 @@ export class D3SeriesGraphOverviewWrapperComponent
     },
   );
 
-  public readonly timeInterval = input.required<TimeInterval>();
+  readonly timeInterval = input.required<TimeInterval>();
 
-  public readonly rangefactor = input<number>(1);
+  readonly rangefactor = input<number>(1);
 
-  public readonly reloadForDatasets = input<string[]>([]);
+  readonly reloadForDatasets = input<string[]>([]);
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onTimespanChanged = output<Timespan>();
@@ -62,32 +62,32 @@ export class D3SeriesGraphOverviewWrapperComponent
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onContentLoading = output<boolean>();
 
-  public overviewTimespan: Timespan | undefined;
-  public timespan!: Timespan;
+  overviewTimespan: Timespan | undefined;
+  timespan!: Timespan;
 
   private init = false;
 
-  public ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     this.calculateOverviewRange();
     this.init = true;
     this.cd.detectChanges();
   }
 
-  public ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges) {
     if (changes['timeInterval'] && this.init) {
       this.calculateOverviewRange();
     }
   }
 
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.cd.detach();
   }
 
-  public timeSpanChanged(timespan: Timespan) {
+  timeSpanChanged(timespan: Timespan) {
     this.onTimespanChanged.emit(timespan);
   }
 
-  public onGraphLoading(loading: boolean) {
+  onGraphLoading(loading: boolean) {
     this.onContentLoading.emit(loading);
   }
 

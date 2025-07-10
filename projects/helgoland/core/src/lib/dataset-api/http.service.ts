@@ -52,7 +52,7 @@ export class HttpService {
     this.handler = handler;
   }
 
-  public client(options: HttpRequestOptions = {}): HttpClient {
+  client(options: HttpRequestOptions = {}): HttpClient {
     return new HttpClient({
       handle: (req) => this.handler.handle(req, options),
     });

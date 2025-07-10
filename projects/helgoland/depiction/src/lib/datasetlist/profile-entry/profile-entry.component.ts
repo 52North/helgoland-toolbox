@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, inject, output, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import {
   DatasetFilter,
   DatasetType,
@@ -31,7 +31,7 @@ import { ListEntryComponent } from '../list-entry.component';
 export class ProfileEntryComponent extends ListEntryComponent {
   protected servicesConnector = inject(HelgolandServicesConnector);
 
-  public readonly datasetOptions = input<TimedDatasetOptions[]>();
+  readonly datasetOptions = input<TimedDatasetOptions[]>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onUpdateOptions = output<TimedDatasetOptions[]>();
@@ -48,20 +48,20 @@ export class ProfileEntryComponent extends ListEntryComponent {
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onShowGeometry = output<GeoJSON.GeoJsonObject>();
 
-  public dataset: HelgolandProfile | undefined;
+  dataset: HelgolandProfile | undefined;
 
-  public editableOptions: TimedDatasetOptions | undefined;
-  public tempColor: string | undefined;
+  editableOptions: TimedDatasetOptions | undefined;
+  tempColor: string | undefined;
 
-  public removeDatasetOptions(options: TimedDatasetOptions) {
+  removeDatasetOptions(options: TimedDatasetOptions) {
     this.onDeleteDatasetOptions.emit(options);
   }
 
-  public editDatasetOptions(options: TimedDatasetOptions) {
+  editDatasetOptions(options: TimedDatasetOptions) {
     this.onEditOptions.emit(options);
   }
 
-  public toggleVisibility(options: TimedDatasetOptions) {
+  toggleVisibility(options: TimedDatasetOptions) {
     options.visible = !options.visible;
     const datasetOptions = this.datasetOptions();
     if (datasetOptions) {
@@ -69,11 +69,11 @@ export class ProfileEntryComponent extends ListEntryComponent {
     }
   }
 
-  public openInCombiView(option: TimedDatasetOptions) {
+  openInCombiView(option: TimedDatasetOptions) {
     this.onOpenInCombiView.emit(option);
   }
 
-  public showGeometry(dataset: HelgolandProfile, option: TimedDatasetOptions) {
+  showGeometry(dataset: HelgolandProfile, option: TimedDatasetOptions) {
     const internalId = this.internalIdHandler.resolveInternalId(
       this.datasetId(),
     );

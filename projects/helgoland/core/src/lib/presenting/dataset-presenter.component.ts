@@ -46,63 +46,63 @@ export abstract class DatasetPresenterComponent<
   /**
    * List of presented dataset ids.
    */
-  public readonly datasetIds = input<string[]>([]);
+  readonly datasetIds = input<string[]>([]);
 
   /**
    * List of presented selected dataset ids.
    */
-  public readonly selectedDatasetIds = input<string[]>([]);
+  readonly selectedDatasetIds = input<string[]>([]);
 
   /**
    * The time interval in which the data should presented.
    */
-  public readonly timeInterval = input<TimeInterval>();
+  readonly timeInterval = input<TimeInterval>();
 
   /**
    * The corresponding dataset options.
    */
-  public readonly datasetOptions = input<Map<string, T>>();
+  readonly datasetOptions = input<Map<string, T>>();
   protected oldDatasetOptions: Map<string, T> = new Map();
 
   /**
    * Options for general presentation of the data.
    */
-  public readonly presenterOptions = input<U>();
+  readonly presenterOptions = input<U>();
   protected oldPresenterOptions: U | undefined;
 
   /**
    * List of datasets for which a reload should be triggered, when the Array is set to new value.
    */
-  public readonly reloadForDatasets = input<string[]>([]);
+  readonly reloadForDatasets = input<string[]>([]);
 
   /**
    * Event with a list of selected datasets.
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public readonly onDatasetSelected = output<string[]>();
+  readonly onDatasetSelected = output<string[]>();
 
   /**
    * Event when the timespan in the presentation is adjusted.
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public readonly onTimespanChanged = output<Timespan>();
+  readonly onTimespanChanged = output<Timespan>();
 
   /**
    * Event, when there occured a message in the component.
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public readonly onMessageThrown = output<PresenterMessage>();
+  readonly onMessageThrown = output<PresenterMessage>();
 
   /**
    * Event flag, while there is data loaded in the component.
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public readonly onContentLoading = output<boolean>();
+  readonly onContentLoading = output<boolean>();
 
   /**
    * Event, which triggers list of datasets where data is currently loaded.
    */
-  public readonly dataLoaded = output<Set<string>>();
+  readonly dataLoaded = output<Set<string>>();
 
   protected timespan: Timespan | undefined;
 
@@ -125,7 +125,7 @@ export abstract class DatasetPresenterComponent<
   }
 
   // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
-  public ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     const timeInterval = this.timeInterval();
     if (changes['timeInterval'] && timeInterval) {
       this.timespan = this.timeSrvc.createTimespanOfInterval(timeInterval);
@@ -142,7 +142,7 @@ export abstract class DatasetPresenterComponent<
   }
 
   // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
-  public ngDoCheck(): void {
+  ngDoCheck(): void {
     const presenterOptions = this.presenterOptions();
     if (!this.deepEqual(this.oldPresenterOptions, presenterOptions)) {
       this.oldPresenterOptions = Object.assign({}, presenterOptions);
@@ -191,7 +191,7 @@ export abstract class DatasetPresenterComponent<
   }
 
   // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.langChangeSubscription.unsubscribe();
     this.timezoneSubscription.unsubscribe();
   }
@@ -223,7 +223,7 @@ export abstract class DatasetPresenterComponent<
     return obj !== Object(obj);
   }
 
-  public abstract reloadDataForDatasets(datasets: string[]): void;
+  abstract reloadDataForDatasets(datasets: string[]): void;
 
   protected addDatasetByInternalId(internalId: string) {
     const internalIdObj = this.datasetIdResolver.resolveInternalId(internalId);

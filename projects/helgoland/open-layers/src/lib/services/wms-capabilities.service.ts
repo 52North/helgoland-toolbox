@@ -57,7 +57,7 @@ export class WmsCapabilitiesService {
    * @param wmsurl
    * @returns layer title as string observable
    */
-  public getTitle(layerName: string, wmsurl: string): Observable<string> {
+  getTitle(layerName: string, wmsurl: string): Observable<string> {
     return this.getLayerInfo(layerName, wmsurl).pipe(
       map((layer) => (layer?.Title ? layer.Title : 'no layer title')),
     );
@@ -70,7 +70,7 @@ export class WmsCapabilitiesService {
    * @param wmsurl
    * @returns layer abstract as string observable
    */
-  public getAbstract(layerName: string, wmsurl: string): Observable<string> {
+  getAbstract(layerName: string, wmsurl: string): Observable<string> {
     return this.getLayerInfo(layerName, wmsurl).pipe(
       map((layer) => (layer?.Abstract ? layer.Abstract : 'no layer abstract')),
     );
@@ -83,10 +83,7 @@ export class WmsCapabilitiesService {
    * @param wmsurl
    * @returns
    */
-  public getTimeDimensionArray(
-    layerName: string,
-    wmsurl: string,
-  ): Observable<Date[]> {
+  getTimeDimensionArray(layerName: string, wmsurl: string): Observable<Date[]> {
     return this.getLayerInfo(layerName, wmsurl).pipe(
       map((layer) => {
         if (layer) {
@@ -107,7 +104,7 @@ export class WmsCapabilitiesService {
    * @param wmsurl
    * @returns
    */
-  public getLegendUrl(layerName: string, wmsurl: string): Observable<string> {
+  getLegendUrl(layerName: string, wmsurl: string): Observable<string> {
     return this.getLayerInfo(layerName, wmsurl).pipe(
       map((layer) => {
         let legendUrl = '';
@@ -127,7 +124,7 @@ export class WmsCapabilitiesService {
    * @param wmsurl
    * @returns
    */
-  public getDefaultTimeDimension(
+  getDefaultTimeDimension(
     layerName: string,
     wmsurl: string,
   ): Observable<Date | undefined> {
@@ -157,7 +154,7 @@ export class WmsCapabilitiesService {
    * @param epsgCode
    * @returns
    */
-  public getExtent(
+  getExtent(
     layerName: string,
     wmsurl: string,
     epsgCode: string,
@@ -182,7 +179,7 @@ export class WmsCapabilitiesService {
     );
   }
 
-  public getLayerTree(wmsurl: string): Observable<WMSLayer> {
+  getLayerTree(wmsurl: string): Observable<WMSLayer> {
     return this.getCapabilities(wmsurl).pipe(
       map((res) => this.createLayer(res.Capability.Layer)),
     );
@@ -191,7 +188,7 @@ export class WmsCapabilitiesService {
   /**
    * Removes every request parameter of the url an returns this cleand url.
    */
-  public cleanUpWMSUrl(url: string): string {
+  cleanUpWMSUrl(url: string): string {
     let wmsRequesturl = url;
     if (wmsRequesturl.indexOf('?') !== -1) {
       wmsRequesturl = wmsRequesturl.substring(0, wmsRequesturl.indexOf('?'));

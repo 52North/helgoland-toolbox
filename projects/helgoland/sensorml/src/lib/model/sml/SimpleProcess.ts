@@ -1,8 +1,8 @@
 // @ts-nocheck
-import { ProcessMethodProcess } from './ProcessMethodProcess';
-import { ProcessMethod } from './ProcessMethod';
-import { AbstractProcess } from './AbstractProcess';
 import { DisplayName } from '../../common/decorators/DisplayName';
+import { AbstractProcess } from './AbstractProcess';
+import { ProcessMethod } from './ProcessMethod';
+import { ProcessMethodProcess } from './ProcessMethodProcess';
 
 export class SimpleProcess
   extends AbstractProcess
@@ -12,11 +12,11 @@ export class SimpleProcess
   method: ProcessMethod;
 
   // getter
-  public static SCHEMA(): string {
+  static SCHEMA(): string {
     return 'http://schemas.opengis.net/sensorML/2.0/simple_process.xsd';
   }
 
-  public static NAME(): string {
+  static NAME(): string {
     return 'SimpleProcess';
   }
 

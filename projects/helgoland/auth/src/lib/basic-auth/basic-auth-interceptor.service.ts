@@ -17,7 +17,7 @@ import { BasicAuthService } from './basic-auth.service';
  * Needs to be implemented to do the authentication for the given url.
  */
 export abstract class BasicAuthInformer {
-  public abstract doBasicAuth(url: string): Observable<boolean>;
+  abstract doBasicAuth(url: string): Observable<boolean>;
 }
 
 /**

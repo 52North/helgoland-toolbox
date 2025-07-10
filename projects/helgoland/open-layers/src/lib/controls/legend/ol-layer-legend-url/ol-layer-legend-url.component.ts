@@ -1,4 +1,4 @@
-import { Component, inject, output, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { Layer } from 'ol/layer';
 import { TileWMS } from 'ol/source';
 
@@ -22,7 +22,7 @@ export class OlLayerLegendUrlComponent {
    */
   readonly legendUrl = output<string>();
 
-  public deliverLegendUrl() {
+  deliverLegendUrl() {
     const source = this.layer().getSource();
     this.layer().getExtent();
     if (source instanceof TileWMS && source.getUrls()?.length) {

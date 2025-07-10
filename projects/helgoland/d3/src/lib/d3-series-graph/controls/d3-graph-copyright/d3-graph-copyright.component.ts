@@ -43,13 +43,13 @@ export class D3GraphCopyrightComponent
   protected background: d3.Selection<SVGGElement, any, any, any> | undefined;
   protected graphExtent: D3GraphExtent | undefined;
 
-  public ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['copyright'] && this.copyright()) {
       this.setText();
     }
   }
 
-  public graphInitialized(graph: D3GraphInterface) {
+  graphInitialized(graph: D3GraphInterface) {
     this.d3Graph = graph;
   }
 
@@ -65,7 +65,7 @@ export class D3GraphCopyrightComponent
     }
   }
 
-  public override cleanUp() {
+  override cleanUp() {
     this.clearLayer();
   }
 

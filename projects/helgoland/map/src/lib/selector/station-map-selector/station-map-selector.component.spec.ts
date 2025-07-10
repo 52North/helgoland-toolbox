@@ -32,7 +32,7 @@ const timeseries = require('../../../test-data/timeseries.json');
 
 @Injectable()
 class FakeDatasetApiInterface extends SplittedDataDatasetApiInterface {
-  public override getStations(
+  override getStations(
     apiUrl: string,
     params?: ParameterFilter,
     options?: HttpRequestOptions,
@@ -40,14 +40,14 @@ class FakeDatasetApiInterface extends SplittedDataDatasetApiInterface {
     return of(stations);
   }
 
-  public override getTimeseries(
+  override getTimeseries(
     apiUrl: string,
     params?: ParameterFilter,
   ): Observable<Timeseries[]> {
     return of(timeseries);
   }
 
-  public override getTimeseriesExtras(
+  override getTimeseriesExtras(
     id: string,
     apiUrl: string,
   ): Observable<TimeseriesExtras> {

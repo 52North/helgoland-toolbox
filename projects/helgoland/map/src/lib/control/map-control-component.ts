@@ -9,5 +9,5 @@ export abstract class MapControlComponent {
   /**
    * Connect map id.
    */
-  public readonly mapId = input.required<string>();
+  readonly mapId = input.required<string>();
 }

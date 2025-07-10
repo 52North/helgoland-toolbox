@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
 import { forkJoin, Observable } from 'rxjs';
@@ -33,7 +33,7 @@ export class SplittedDataDatasetApiInterface extends DatasetImplApiInterface {
     this.translate = translate;
   }
 
-  public override getTsData<T extends IDataEntry>(
+  override getTsData<T extends IDataEntry>(
     id: string,
     apiUrl: string,
     timespan: Timespan,
@@ -127,7 +127,7 @@ export class SplittedDataDatasetApiInterface extends DatasetImplApiInterface {
     }
   }
 
-  public override getData<T extends IDataEntry>(
+  override getData<T extends IDataEntry>(
     id: string,
     apiUrl: string,
     timespan: Timespan,

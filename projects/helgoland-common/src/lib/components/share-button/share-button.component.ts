@@ -19,7 +19,7 @@ export class ShareButtonComponent {
   private translate = inject(TranslateService);
   private liveAnnouncer = inject(LiveAnnouncer);
 
-  public readonly generatedUrlFunction = input<() => string>();
+  readonly generatedUrlFunction = input<() => string>();
 
   private readonly snackBarConfig: MatSnackBarConfig = {
     duration: 2000,
@@ -27,7 +27,7 @@ export class ShareButtonComponent {
     horizontalPosition: 'center',
   };
 
-  public shareState() {
+  shareState() {
     const generatedUrlFunction = this.generatedUrlFunction();
     if (generatedUrlFunction) {
       const url = generatedUrlFunction();

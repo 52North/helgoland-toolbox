@@ -49,7 +49,7 @@ export class D3GraphPanZoomInteractionComponent
   protected datasets: SeriesGraphDataset[] = [];
   protected data: Map<string, GraphDataEntry[]> | undefined;
 
-  public graphInitialized(graph: D3GraphInterface) {
+  graphInitialized(graph: D3GraphInterface) {
     this.d3Graph = graph;
   }
 
@@ -61,30 +61,30 @@ export class D3GraphPanZoomInteractionComponent
     this.data = options.preparedData;
   }
 
-  public zoomStartBackground(event: MouseEvent) {
+  zoomStartBackground(event: MouseEvent) {
     if (this.timespan) this.zoomStartHandler(this.timespan, event);
   }
 
-  public zoomMoveBackground(event: MouseEvent) {
+  zoomMoveBackground(event: MouseEvent) {
     if (this.graph && this.graphExtent)
       this.zoomHandler(this.graph, this.graphExtent, event);
   }
 
-  public zoomEndBackground() {
+  zoomEndBackground() {
     if (this.graphExtent && this.timespan)
       this.zoomEndHandler(this.timespan, this.graphExtent, this.datasets);
   }
 
-  public dragStartBackground(event: MouseEvent) {
+  dragStartBackground(event: MouseEvent) {
     if (this.timespan) this.panStartHandler(this.timespan, event);
   }
 
-  public dragMoveBackground(event: MouseEvent) {
+  dragMoveBackground(event: MouseEvent) {
     if (this.graphExtent && this.dragMoveRange)
       this.panMoveHandler(this.graphExtent, this.dragMoveRange, event);
   }
 
-  public dragEndBackground(event: MouseEvent) {
+  dragEndBackground(event: MouseEvent) {
     this.panEndHandler();
   }
 

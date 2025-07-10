@@ -20,20 +20,20 @@ export class FavoriteTogglerComponent implements OnChanges {
   protected favSrvc = inject(FavoriteService);
   protected translate = inject(TranslateService);
 
-  public readonly dataset = input.required<HelgolandTimeseries>();
+  readonly dataset = input.required<HelgolandTimeseries>();
 
-  public readonly options = input.required<DatasetOptions>();
+  readonly options = input.required<DatasetOptions>();
 
-  public isFavorite: boolean = false;
+  isFavorite: boolean = false;
 
-  public ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     const dataset = this.dataset();
     if (changes['dataset'] && dataset) {
       this.isFavorite = this.favSrvc.hasFavorite(dataset);
     }
   }
 
-  public toggle() {
+  toggle() {
     if (this.isFavorite) {
       this.removeFavorite();
     } else {

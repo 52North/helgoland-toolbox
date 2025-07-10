@@ -4,7 +4,7 @@ import { LayerOptions } from '../base/map-options';
 
 @Directive()
 export abstract class LayerControlComponent {
-  public readonly layeroptions = input.required<LayerOptions>();
+  readonly layeroptions = input.required<LayerOptions>();
 
-  public readonly mapId = input.required<string>();
+  readonly mapId = input.required<string>();
 }

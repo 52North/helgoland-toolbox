@@ -56,7 +56,7 @@ export class OlLayerZoomExtentComponent implements OnInit {
     }
   }
 
-  public zoomToExtent() {
+  zoomToExtent() {
     if (this.extent && this.view) {
       if (!this.crs) {
         this.view.fit(this.extent);

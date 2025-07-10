@@ -12,7 +12,7 @@ import {
 import { VocabNercLabelMapperService } from './vocab-nerc-label-mapper/vocab-nerc-label-mapper.service';
 
 export class MockedSettingsService extends SettingsService<Settings> {
-  public override getSettings(): Settings {
+  override getSettings(): Settings {
     return {
       proxyUrl: 'https://cors-anywhere.herokuapp.com/',
     };

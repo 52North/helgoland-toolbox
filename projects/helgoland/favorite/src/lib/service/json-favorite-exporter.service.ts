@@ -11,7 +11,7 @@ import {
 export class JsonFavoriteExporterService {
   protected favoriteSrvc = inject(FavoriteService);
 
-  public exportFavorites() {
+  exportFavorites() {
     const filename = 'favorites.json';
     const json = {
       singles: this.favoriteSrvc.getFavorites(),
@@ -35,7 +35,7 @@ export class JsonFavoriteExporterService {
     // }
   }
 
-  public importFavorites(event: any): Observable<boolean> {
+  importFavorites(event: any): Observable<boolean> {
     return new Observable<boolean>((observer: Observer<boolean>) => {
       const files = event.target.files;
       if (files && files.length > 0) {

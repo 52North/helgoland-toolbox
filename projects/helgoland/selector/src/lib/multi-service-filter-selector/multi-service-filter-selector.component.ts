@@ -4,8 +4,8 @@ import {
   OnChanges,
   SimpleChanges,
   inject,
-  output,
   input,
+  output,
 } from '@angular/core';
 import {
   Filter,
@@ -44,25 +44,25 @@ export class MultiServiceFilterSelectorComponent
 {
   protected servicesConnector = inject(HelgolandServicesConnector);
 
-  public readonly endpoint = input.required<MultiServiceFilterEndpoint>();
+  readonly endpoint = input.required<MultiServiceFilterEndpoint>();
 
-  public readonly filterList = input<MultiServiceFilter[]>([]);
+  readonly filterList = input<MultiServiceFilter[]>([]);
 
-  public readonly selected = input<string>();
+  readonly selected = input<string>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onItemSelected = output<FilteredParameter>();
 
-  public loading = 0;
-  public items: FilteredParameter[] = [];
+  loading = 0;
+  items: FilteredParameter[] = [];
 
-  public ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges) {
     if (changes['filterList'] && this.filterList()) {
       this.loadItems();
     }
   }
 
-  public onSelectItem(item: FilteredParameter): void {
+  onSelectItem(item: FilteredParameter): void {
     this.deselectAllItems();
     item.selected = true;
     this.onItemSelected.emit(item);

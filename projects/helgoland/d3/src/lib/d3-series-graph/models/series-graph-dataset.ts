@@ -128,7 +128,7 @@ export interface DatasetDescription {
 }
 
 export class DatasetChild {
-  public stateChangeEvent: Subject<void> = new Subject();
+  stateChangeEvent: Subject<void> = new Subject();
 
   constructor(
     private _id: string,
@@ -138,38 +138,38 @@ export class DatasetChild {
     private _color: string,
   ) {}
 
-  public get id(): string {
+  get id(): string {
     return this._id;
   }
 
-  public get visible(): boolean {
+  get visible(): boolean {
     return this._visible;
   }
 
-  public setVisible(v: boolean, update = true) {
+  setVisible(v: boolean, update = true) {
     this._visible = v;
     if (update) {
       this.stateChangeEvent.next();
     }
   }
 
-  public get data(): GraphDataEntry[] {
+  get data(): GraphDataEntry[] {
     return this._data;
   }
 
-  public setData(data: GraphDataEntry[]) {
+  setData(data: GraphDataEntry[]) {
     this._data = data;
   }
 
-  public get color(): string {
+  get color(): string {
     return this._color;
   }
 
-  public setColor(color: string) {
+  setColor(color: string) {
     this._color = color;
   }
 
-  public get label(): string {
+  get label(): string {
     return this._label;
   }
 }
@@ -180,9 +180,9 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
 
   private _children: DatasetChild[] = [];
 
-  public stateChangeEvent: Subject<SeriesGraphDataset> = new Subject();
-  public dataChangeEvent: Subject<SeriesGraphDataset> = new Subject();
-  public deleteEvent: Subject<SeriesGraphDataset> = new Subject();
+  stateChangeEvent: Subject<SeriesGraphDataset> = new Subject();
+  dataChangeEvent: Subject<SeriesGraphDataset> = new Subject();
+  deleteEvent: Subject<SeriesGraphDataset> = new Subject();
 
   constructor(
     private _id: string,

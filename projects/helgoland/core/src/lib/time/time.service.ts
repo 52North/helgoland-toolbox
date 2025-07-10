@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { plainToClass } from 'class-transformer';
 import moment, { duration, MomentInputObject } from 'moment';
 
@@ -13,27 +13,24 @@ import {
 export class Time {
   protected localStorage = inject(LocalStorage);
 
-  public centerTimespan(timespan: Timespan, date: Date): Timespan {
+  centerTimespan(timespan: Timespan, date: Date): Timespan {
     const halfduration = this.getDuration(timespan).asMilliseconds() / 2;
     const from = moment(date).subtract(halfduration).unix() * 1000;
     const to = moment(date).add(halfduration).unix() * 1000;
     return new Timespan(from, to);
   }
 
-  public centerTimespanWithDuration(
-    timespan: Timespan,
-    d: moment.Duration,
-  ): Timespan {
+  centerTimespanWithDuration(timespan: Timespan, d: moment.Duration): Timespan {
     const half = d.asMilliseconds() / 2;
     const center = this.getCenterOfTimespan(timespan);
     return new Timespan(center - half, center + half);
   }
 
-  public getCenterOfTimespan(timespan: Timespan): number {
+  getCenterOfTimespan(timespan: Timespan): number {
     return timespan.from + (timespan.to - timespan.from) / 2;
   }
 
-  public createByDurationWithEnd(
+  createByDurationWithEnd(
     d: moment.Duration,
     end: number | Date,
     endOf?: moment.unitOfTime.StartOf,
@@ -46,14 +43,14 @@ export class Time {
     return new Timespan(mStart.toDate(), mEnd.toDate());
   }
 
-  public stepBack(timespan: Timespan): Timespan {
+  stepBack(timespan: Timespan): Timespan {
     const d = this.getDuration(timespan);
     const from = moment(timespan.from).subtract(d).unix() * 1000;
     const to = moment(timespan.to).subtract(d).unix() * 1000;
     return new Timespan(from, to);
   }
 
-  public stepForward(timespan: Timespan): Timespan {
+  stepForward(timespan: Timespan): Timespan {
     const d = this.getDuration(timespan);
     const from = moment(timespan.from).add(d).unix() * 1000;
     const to = moment(timespan.to).add(d).unix() * 1000;
@@ -65,17 +62,13 @@ export class Time {
    * @param timespan
    * @param interval
    */
-  public stepForwardCustom(timespan: Timespan, interval: number): Timespan {
+  stepForwardCustom(timespan: Timespan, interval: number): Timespan {
     const from = moment(timespan.from).add(interval).unix() * 1000;
     const to = moment(timespan.to).add(interval).unix() * 1000;
     return new Timespan(from, to);
   }
 
-  public overlaps(
-    timeInterval: TimeInterval,
-    from: number,
-    to: number,
-  ): boolean {
+  overlaps(timeInterval: TimeInterval, from: number, to: number): boolean {
     const timespan = this.createTimespanOfInterval(timeInterval);
     if (timespan.from <= to && timespan.to >= from) {
       return true;
@@ -83,12 +76,12 @@ export class Time {
     return false;
   }
 
-  public containsIn(timeInterval: TimeInterval, timestamp: number) {
+  containsIn(timeInterval: TimeInterval, timestamp: number) {
     const timespan = this.createTimespanOfInterval(timeInterval);
     return timespan.from <= timestamp && timestamp <= timespan.to;
   }
 
-  public createTimespanOfInterval(timeInterval: TimeInterval): Timespan {
+  createTimespanOfInterval(timeInterval: TimeInterval): Timespan {
     if (timeInterval instanceof Timespan) {
       return timeInterval;
     } else if (timeInterval instanceof BufferedTime) {
@@ -100,7 +93,7 @@ export class Time {
     throw new Error('Wrong time interval!');
   }
 
-  public getBufferedTimespan(
+  getBufferedTimespan(
     timespan: Timespan,
     factor: number,
     maxBufferInMs?: number,
@@ -115,11 +108,11 @@ export class Time {
     return new Timespan(from, to);
   }
 
-  public saveTimespan(param: string, timespan: Timespan) {
+  saveTimespan(param: string, timespan: Timespan) {
     this.localStorage.save(param, timespan);
   }
 
-  public loadTimespan(param: string): Timespan | null {
+  loadTimespan(param: string): Timespan | null {
     const json = this.localStorage.load<object>(param);
     if (json) {
       return plainToClass<Timespan, object>(Timespan, json);
@@ -127,14 +120,14 @@ export class Time {
     return null;
   }
 
-  public initTimespan(): Timespan {
+  initTimespan(): Timespan {
     const now = new Date();
     const start = moment(now).startOf('day').unix() * 1000;
     const end = moment(now).endOf('day').unix() * 1000;
     return new Timespan(start, end);
   }
 
-  public generateTimespan(
+  generateTimespan(
     defaultTimeseriesTimeduration: MomentInputObject,
     align: 'start' | 'center' | 'end',
   ): Timespan {

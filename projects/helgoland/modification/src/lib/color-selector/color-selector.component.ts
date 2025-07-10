@@ -7,9 +7,9 @@ import { ColorPickerModule } from 'ngx-color-picker';
   imports: [ColorPickerModule],
 })
 export class ColorSelectorComponent {
-  public readonly color = input.required<string>();
+  readonly color = input.required<string>();
 
-  public readonly colorList = input.required<string[]>();
+  readonly colorList = input.required<string[]>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onColorChange = output<string>();

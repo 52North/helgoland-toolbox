@@ -15,9 +15,9 @@ import { SimpleTimeseriesEntryComponent } from '../simple-timeseries-entry/simpl
   standalone: true,
 })
 export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryComponent {
-  public readonly datasetOptions = input.required<DatasetOptions>();
+  readonly datasetOptions = input.required<DatasetOptions>();
 
-  public readonly highlight = input<boolean>();
+  readonly highlight = input<boolean>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onUpdateOptions = output<DatasetOptions>();
@@ -28,17 +28,17 @@ export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryC
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onShowGeometry = output<GeoJSON.GeoJsonObject>();
 
-  public toggleVisibility() {
+  toggleVisibility() {
     const datasetOptions = this.datasetOptions();
     datasetOptions.visible = !datasetOptions.visible;
     this.onUpdateOptions.emit(datasetOptions);
   }
 
-  public editDatasetOptions() {
+  editDatasetOptions() {
     this.onEditOptions.emit(this.datasetOptions());
   }
 
-  public showGeometry() {
+  showGeometry() {
     if (this.dataset?.platform.geometry) {
       this.onShowGeometry.emit(this.dataset.platform.geometry);
     }

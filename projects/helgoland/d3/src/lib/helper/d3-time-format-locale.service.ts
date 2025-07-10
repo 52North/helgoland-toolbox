@@ -20,7 +20,7 @@ export class D3TimeFormatLocaleService {
   protected formatMonth = 'MMM YY';
   protected formatYear = 'YYYY';
 
-  public formatTime(time: number): string {
+  formatTime(time: number): string {
     const curr = this.timezoneSrvc.createTzDate(time);
 
     const format =

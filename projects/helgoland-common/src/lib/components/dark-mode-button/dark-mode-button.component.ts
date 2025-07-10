@@ -13,7 +13,7 @@ import { LayoutModeService } from '../../services/layout-mode.service';
 export class DarkModeButtonComponent implements OnInit {
   private layout = inject(LayoutModeService);
 
-  public darkModeActive: boolean | undefined;
+  darkModeActive: boolean | undefined;
 
   ngOnInit() {
     this.darkModeActive = this.layout.isDarkModeActive();

@@ -1,4 +1,4 @@
-import { Component, output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { ClipboardModule } from 'ngx-clipboard';
 
 @Component({
@@ -7,7 +7,7 @@ import { ClipboardModule } from 'ngx-clipboard';
   imports: [ClipboardModule],
 })
 export class PermalinkToClipboardComponent {
-  public readonly url = input.required<string>();
+  readonly url = input.required<string>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onTriggered = output<void>();

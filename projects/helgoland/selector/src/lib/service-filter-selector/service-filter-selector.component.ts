@@ -4,8 +4,8 @@ import {
   OnChanges,
   SimpleChanges,
   inject,
-  output,
   input,
+  output,
 } from '@angular/core';
 import {
   HelgolandParameterFilter,
@@ -29,13 +29,13 @@ export class ServiceFilterSelectorComponent
 {
   protected servicesConnector = inject(HelgolandServicesConnector);
 
-  public readonly endpoint = input.required<string>();
+  readonly endpoint = input.required<string>();
 
-  public readonly serviceUrl = input.required<string>();
+  readonly serviceUrl = input.required<string>();
 
-  public readonly filter = input<HelgolandParameterFilter>();
+  readonly filter = input<HelgolandParameterFilter>();
 
-  public readonly selectionId = input<string>();
+  readonly selectionId = input<string>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onItemSelected = output<Parameter>();
@@ -46,16 +46,16 @@ export class ServiceFilterSelectorComponent
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onLoading = output<boolean>();
 
-  public loading = false;
-  public items: Parameter[] = [];
+  loading = false;
+  items: Parameter[] = [];
 
-  public ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges) {
     if (changes['endpoint'] || changes['filter'] || changes['serviceUrl']) {
       this.loadItems();
     }
   }
 
-  public onSelectItem(item: Parameter): void {
+  onSelectItem(item: Parameter): void {
     this.onItemSelected.emit(item);
   }
 

@@ -32,42 +32,42 @@ export abstract class CachedMapComponent
   /**
    * A map with the given ID is created inside this component. This ID can be used the get the map instance over the map cache service.
    */
-  public readonly mapId = input.required<string>();
+  readonly mapId = input.required<string>();
 
   /**
    * The corresponding leaflet map options (see: https://leafletjs.com/reference-1.3.4.html#map-option)
    */
-  public readonly mapOptions = input<L.MapOptions>({ zoomControl: false });
+  readonly mapOptions = input<L.MapOptions>({ zoomControl: false });
 
   /**
    * Bounds for the map
    */
-  public readonly fitBounds = input<L.LatLngBoundsExpression>();
+  readonly fitBounds = input<L.LatLngBoundsExpression>();
 
   /**
    * Map, which holds all overlay map layer (see: https://leafletjs.com/reference-1.3.4.html#layer)
    */
-  public readonly overlayMaps = input<LayerMap>();
+  readonly overlayMaps = input<LayerMap>();
 
   /**
    * Map, which holds all base map layer (see: https://leafletjs.com/reference-1.3.4.html#layer)
    */
-  public readonly baseMaps = input<LayerMap>();
+  readonly baseMaps = input<LayerMap>();
 
   /**
    * Describes the the zoom options (see: https://leafletjs.com/reference-1.3.4.html#control-layers)
    */
-  public readonly layerControlOptions = input<L.Control.LayersOptions>();
+  readonly layerControlOptions = input<L.Control.LayersOptions>();
 
   /**
    * Describes the the zoom control options (see: https://leafletjs.com/reference-1.3.4.html#control-zoom)
    */
-  public readonly zoomControlOptions = input<L.Control.ZoomOptions>();
+  readonly zoomControlOptions = input<L.Control.ZoomOptions>();
 
   /**
    * Informs when initialization is done with map id.
    */
-  public readonly mapInitialized = output<string>();
+  readonly mapInitialized = output<string>();
 
   /**
    * The map object.
@@ -87,7 +87,7 @@ export abstract class CachedMapComponent
     this._differBaseMaps = this.kvDiffers.find({}).create();
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (this.map) {
       const fitBounds = this.fitBounds();
       if (changes['fitBounds'] && fitBounds) {
@@ -99,7 +99,7 @@ export abstract class CachedMapComponent
     }
   }
 
-  public ngDoCheck(): void {
+  ngDoCheck(): void {
     const overlayMaps = this.overlayMaps();
     if (this._differOverlayMaps && overlayMaps) {
       const changes = this._differOverlayMaps.diff(overlayMaps);
@@ -122,7 +122,7 @@ export abstract class CachedMapComponent
     }
   }
 
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
     if (this.map) {
       this.map.remove();
       this.map = undefined;

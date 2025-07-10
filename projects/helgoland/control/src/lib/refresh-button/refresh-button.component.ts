@@ -18,15 +18,15 @@ import { Settings, SettingsService } from '@helgoland/core';
 export class RefreshButtonComponent implements OnChanges, OnInit {
   protected settings = inject<SettingsService<Settings>>(SettingsService);
 
-  public readonly refreshInterval = input<number>();
+  readonly refreshInterval = input<number>();
 
-  public readonly toggled = input<boolean>();
+  readonly toggled = input<boolean>();
 
-  public readonly refreshing = output<boolean>();
+  readonly refreshing = output<boolean>();
 
   private interval: number | undefined;
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     if (!this.refreshInterval()) {
       const refreshDataInterval =
         this.settings.getSettings().refreshDataInterval;
@@ -35,13 +35,13 @@ export class RefreshButtonComponent implements OnChanges, OnInit {
     this.evaluteRefreshing();
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['toggled']) {
       this.evaluteRefreshing();
     }
   }
 
-  public toggle() {
+  toggle() {
     const toggled = !this.toggled();
     if (toggled) {
       this.refresh();

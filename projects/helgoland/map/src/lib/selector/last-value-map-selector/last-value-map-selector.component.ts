@@ -4,10 +4,10 @@ import {
   Component,
   DoCheck,
   inject,
+  input,
   IterableDiffer,
   IterableDiffers,
   OnChanges,
-  input,
 } from '@angular/core';
 import {
   DatasetType,
@@ -54,19 +54,19 @@ export class LastValueMapSelectorComponent
   /**
    * The list of internal series IDs, which should be presented with their last values on the map.
    */
-  public readonly lastValueSeriesIDs = input<string[]>([]);
+  readonly lastValueSeriesIDs = input<string[]>([]);
 
   /**
    * Presentation type how to display the series.
    */
-  public readonly lastValuePresentation = input<LastValuePresentation>(
+  readonly lastValuePresentation = input<LastValuePresentation>(
     LastValuePresentation.Colorized,
   );
 
   /**
    * Ignores all Statusintervals where the timestamp is before a given duration in milliseconds and draws instead the default marker.
    */
-  public readonly ignoreStatusIntervalIfBeforeDuration = input(Infinity);
+  readonly ignoreStatusIntervalIfBeforeDuration = input(Infinity);
 
   private _lastValueSeriesIDsDiff: IterableDiffer<string>;
 
@@ -79,7 +79,7 @@ export class LastValueMapSelectorComponent
       .create();
   }
 
-  public override ngDoCheck() {
+  override ngDoCheck() {
     super.ngDoCheck();
     const changes = this._lastValueSeriesIDsDiff.diff(
       this.lastValueSeriesIDs(),

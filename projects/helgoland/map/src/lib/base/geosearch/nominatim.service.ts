@@ -69,7 +69,7 @@ export class NominatimGeoSearchService implements GeoSearch {
 
   protected serviceUrl = 'https://nominatim.openstreetmap.org/';
 
-  public searchTerm(
+  searchTerm(
     term: string,
     options: GeoSearchOptions = {},
   ): Observable<GeoSearchResult> {
@@ -126,7 +126,7 @@ export class NominatimGeoSearchService implements GeoSearch {
       );
   }
 
-  public reverse(
+  reverse(
     point: Point,
     options: GeoReverseOptions = {},
   ): Observable<GeoReverseResult> {

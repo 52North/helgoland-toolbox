@@ -35,26 +35,26 @@ export class ResultMapComponent
   extends CachedMapComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
-  public readonly facetSearchService = input.required<FacetSearchService>();
+  readonly facetSearchService = input.required<FacetSearchService>();
 
-  public readonly cluster = input(true);
+  readonly cluster = input(true);
 
-  public readonly aggregateToStations = input(false);
+  readonly aggregateToStations = input(false);
 
-  public readonly selectSingleStation = input(false);
+  readonly selectSingleStation = input(false);
 
-  public readonly autoZoomToResults = input(true);
+  readonly autoZoomToResults = input(true);
 
-  public readonly nextResultsZoom = input(true);
+  readonly nextResultsZoom = input(true);
 
   private resultZoomed = this.nextResultsZoom();
 
-  public readonly selectedFeature = output<{
+  readonly selectedFeature = output<{
     feature: FacetSearchElementFeature;
     url: string;
   }>();
 
-  public readonly selectedEntry = output<FacetSearchElement>();
+  readonly selectedEntry = output<FacetSearchElement>();
 
   private markerFeatureGroup: L.FeatureGroup | undefined;
   private resultsSubs: Subscription | undefined;

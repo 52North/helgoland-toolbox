@@ -3,7 +3,7 @@ import { BidiMap } from '../dynamicGUI/BidiMap';
 import { ReturnObject } from './ReturnObject';
 
 export class DecoderUtils {
-  public getAttributeOfElement(
+  getAttributeOfElement(
     root: Element,
     elemName: string,
     elemNamespace: string,
@@ -22,11 +22,7 @@ export class DecoderUtils {
     return undefined;
   }
 
-  public getElement(
-    root: Element,
-    elemName: string,
-    elemNamespace: string,
-  ): Element {
+  getElement(root: Element, elemName: string, elemNamespace: string): Element {
     if (
       root.namespaceURI === elemNamespace &&
       root.tagName.indexOf(elemName) > -1
@@ -40,7 +36,7 @@ export class DecoderUtils {
     return null;
   }
 
-  public getDecodedList<T>(
+  getDecodedList<T>(
     root: Element,
     elemName: string,
     elemNamespace: string,
@@ -71,7 +67,7 @@ export class DecoderUtils {
     return list;
   }
 
-  public processProfileID(
+  processProfileID(
     docElement: Element,
     modelElement: any,
     modelElementProperty: string,
@@ -103,7 +99,7 @@ export class DecoderUtils {
     return mapProfileID;
   }
 
-  public getMatchingChildElements(
+  getMatchingChildElements(
     root: Element,
     elemName: string,
     elemNamespace: string,

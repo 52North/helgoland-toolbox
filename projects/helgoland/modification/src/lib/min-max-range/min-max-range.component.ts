@@ -2,8 +2,8 @@ import {
   Component,
   OnChanges,
   SimpleChanges,
-  output,
   input,
+  output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MinMaxRange } from '@helgoland/core';
@@ -15,15 +15,15 @@ import { MinMaxRange } from '@helgoland/core';
   imports: [FormsModule],
 })
 export class MinMaxRangeComponent implements OnChanges {
-  public rangeMin: number | undefined;
-  public rangeMax: number | undefined;
+  rangeMin: number | undefined;
+  rangeMax: number | undefined;
 
-  public readonly range = input<MinMaxRange>();
+  readonly range = input<MinMaxRange>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onRangeChange = output<MinMaxRange | void>();
 
-  public ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges) {
     const range = this.range();
     if (changes['range'] && range) {
       this.rangeMin = range.min;
@@ -31,7 +31,7 @@ export class MinMaxRangeComponent implements OnChanges {
     }
   }
 
-  public setYaxisRange() {
+  setYaxisRange() {
     const min =
       this.rangeMin === null || this.rangeMin === undefined ? 0 : this.rangeMin;
     const max =
@@ -39,7 +39,7 @@ export class MinMaxRangeComponent implements OnChanges {
     this.onRangeChange.emit({ min, max });
   }
 
-  public resetYaxisRange() {
+  resetYaxisRange() {
     this.rangeMin = undefined;
     this.rangeMax = undefined;
     this.onRangeChange.emit();

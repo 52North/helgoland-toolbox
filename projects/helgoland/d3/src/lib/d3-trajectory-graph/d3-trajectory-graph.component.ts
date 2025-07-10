@@ -6,8 +6,8 @@ import {
   OnChanges,
   output,
   SimpleChanges,
-  ViewEncapsulation,
   viewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import {
   DatasetOptions,
@@ -95,7 +95,7 @@ export class D3TrajectoryGraphComponent
   extends DatasetPresenterComponent<DatasetOptions, D3GraphOptions>
   implements AfterViewInit, OnChanges
 {
-  public readonly selection = input<D3SelectionRange>();
+  readonly selection = input<D3SelectionRange>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onSelectionChangedFinished = output<D3SelectionRange>();
@@ -106,15 +106,13 @@ export class D3TrajectoryGraphComponent
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onHoverHighlight = output<number>();
 
-  public override readonly presenterOptions = input<D3GraphOptions | undefined>(
-    {
-      axisType: D3AxisType.Distance,
-      dotted: false,
-      groupYAxis: true,
-    },
-  );
+  override readonly presenterOptions = input<D3GraphOptions | undefined>({
+    axisType: D3AxisType.Distance,
+    dotted: false,
+    groupYAxis: true,
+  });
 
-  public readonly d3Elem = viewChild<ElementRef>('dthree');
+  readonly d3Elem = viewChild<ElementRef>('dthree');
 
   protected datasetMap: Map<string, DatasetConstellation> = new Map();
   protected rawSvg: any;
@@ -144,7 +142,7 @@ export class D3TrajectoryGraphComponent
   protected bufferSum: number = 0;
   protected dataLength: number = 0;
 
-  public override ngOnChanges(changes: SimpleChanges) {
+  override ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
     if (changes['selection'] && this.selection()) {
       this.processAllData();
@@ -152,7 +150,7 @@ export class D3TrajectoryGraphComponent
     }
   }
 
-  public ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     this.rawSvg = select(this.d3Elem()?.nativeElement)
       .append('svg')
       .attr('width', '100%')
@@ -172,7 +170,7 @@ export class D3TrajectoryGraphComponent
     this.drawLineGraph();
   }
 
-  public reloadDataForDatasets(datasetIds: string[]): void {
+  reloadDataForDatasets(datasetIds: string[]): void {
     console.log('reload data at ' + new Date());
   }
 

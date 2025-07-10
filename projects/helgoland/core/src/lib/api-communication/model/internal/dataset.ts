@@ -16,7 +16,7 @@ export enum DatasetType {
 }
 
 export class HelgolandDataset {
-  public internalId: string;
+  internalId: string;
 
   constructor(
     public id: string,

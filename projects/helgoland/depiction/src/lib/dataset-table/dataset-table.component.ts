@@ -27,14 +27,14 @@ export class DatasetTableComponent
     Not implemented: graphOptions input; all outputs (onDatasetSelected, onTimespanChanged, onMessageThrown, onLoading)
   */
 
-  public preparedData: DatasetTableData[] = Array();
-  public preparedColors: string[] = Array();
-  public ready = false;
+  preparedData: DatasetTableData[] = Array();
+  preparedColors: string[] = Array();
+  ready = false;
 
-  public timeseriesArray: HelgolandTimeseries[] = new Array();
+  timeseriesArray: HelgolandTimeseries[] = new Array();
   private additionalStylesheet!: HTMLElement;
 
-  public ngOnInit() {
+  ngOnInit() {
     const elem = document.getElementById('selectedIdsStylesheet');
     if (elem) {
       this.additionalStylesheet = elem;
@@ -46,7 +46,7 @@ export class DatasetTableComponent
   }
 
   /* called when user clicks on table headers */
-  public sort(event: any) {
+  sort(event: any) {
     // can be 'datetime' or an integer indicating the index of the column in the values array
     const by = event.target.dataset.columnId;
     const direction = event.target.classList.contains('sorted-asc')
@@ -88,7 +88,7 @@ export class DatasetTableComponent
 
   protected onTimezoneChanged(timezone: string): void {}
 
-  public reloadDataForDatasets(datasetIds: string[]): void {
+  reloadDataForDatasets(datasetIds: string[]): void {
     // console.log('reload data at ' + new Date());
   }
 

@@ -15,7 +15,7 @@ import { SettingsService } from '../settings/settings.service';
 export class CorsProxyInterceptor implements HttpServiceInterceptor {
   private settingsSrvc = inject<SettingsService<Settings>>(SettingsService);
 
-  public intercept(
+  intercept(
     req: HttpRequest<any>,
     metadata: HttpRequestOptions,
     next: HttpServiceHandler,

@@ -17,7 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
 export class ParameterListSelectorComponent extends MultiServiceFilterSelectorComponent {
   readonly list = viewChild(MatSelectionList);
 
-  public selectionChanged(selection: MatSelectionListChange) {
+  selectionChanged(selection: MatSelectionListChange) {
     const match = this.items.find((e) => e.id === selection.options[0].value);
     if (match) {
       this.onItemSelected.emit(match);

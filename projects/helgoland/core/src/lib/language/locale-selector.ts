@@ -13,17 +13,17 @@ import { Language } from './model/language';
 export abstract class LocalSelectorComponent implements OnChanges {
   protected translate = inject(TranslateService);
 
-  public readonly languageList = input<Language[]>();
+  readonly languageList = input<Language[]>();
 
-  public currentLang: Language | undefined;
+  currentLang: Language | undefined;
 
-  public ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['languageList']) {
       this.updateCurrentLang();
     }
   }
 
-  public setLanguage(lang: Language) {
+  setLanguage(lang: Language) {
     this.translate.use(lang.code).subscribe(() => this.updateCurrentLang());
   }
 

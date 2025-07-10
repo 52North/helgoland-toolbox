@@ -17,7 +17,7 @@ export class OlMapService {
    * @param mapId
    * @param map
    */
-  public setMap(mapId: string, map: Map) {
+  setMap(mapId: string, map: Map) {
     if (this.map[mapId] instanceof Subject) {
       const subject = this.map[mapId] as Subject<Map>;
       subject.next(map);
@@ -32,7 +32,7 @@ export class OlMapService {
    * @param mapId
    * @returns the map as observable
    */
-  public getMap(mapId: string): Observable<Map> {
+  getMap(mapId: string): Observable<Map> {
     if (this.map[mapId]) {
       if (this.map[mapId] instanceof Subject) {
         return this.map[mapId];
@@ -50,7 +50,7 @@ export class OlMapService {
    *
    * @param id
    */
-  public removeMap(id: string): void {
+  removeMap(id: string): void {
     if (this.map[id]) {
       delete this.map[id];
     }

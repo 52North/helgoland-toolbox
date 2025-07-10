@@ -18,7 +18,7 @@ export class InternalIdHandler {
    * Generates and set an internal id for the given dataset.
    * @param dataset The dataset for which the internal id will be generated and saved.
    */
-  public generateInternalId(dataset: IDataset) {
+  generateInternalId(dataset: IDataset) {
     dataset.internalId = dataset.url + INTERNAL_ID_SEPERATOR + dataset.id;
   }
 
@@ -28,7 +28,7 @@ export class InternalIdHandler {
    * @param id - service specific id
    * @returns - the internal id
    */
-  public createInternalId(url: string, id: string): string {
+  createInternalId(url: string, id: string): string {
     return url + INTERNAL_ID_SEPERATOR + id;
   }
 
@@ -37,9 +37,7 @@ export class InternalIdHandler {
    * @param internalId The internal id as string
    * @returns Construct of url and API id
    */
-  public resolveInternalId(
-    internalId: string | InternalDatasetId,
-  ): InternalDatasetId {
+  resolveInternalId(internalId: string | InternalDatasetId): InternalDatasetId {
     if (typeof internalId === 'string') {
       if (internalId.indexOf(INTERNAL_ID_SEPERATOR) > 0) {
         const url = internalId.substring(

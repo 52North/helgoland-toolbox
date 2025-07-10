@@ -19,15 +19,15 @@ export class GeometryMapViewerComponent
   extends CachedMapComponent
   implements AfterViewInit, OnChanges
 {
-  public readonly highlight = input<GeoJSON.GeoJsonObject>();
+  readonly highlight = input<GeoJSON.GeoJsonObject>();
 
-  public readonly geometry = input<GeoJSON.GeoJsonObject>();
+  readonly geometry = input<GeoJSON.GeoJsonObject>();
 
-  public readonly zoomTo = input<GeoJSON.GeoJsonObject>();
+  readonly zoomTo = input<GeoJSON.GeoJsonObject>();
 
-  public readonly avoidZoomToGeometry = input<boolean>();
+  readonly avoidZoomToGeometry = input<boolean>();
 
-  public readonly customMarkerIcon = input<L.Icon>();
+  readonly customMarkerIcon = input<L.Icon>();
 
   private highlightGeometryOnMap: L.GeoJSON | undefined;
   private geometryOnMap: L.GeoJSON | undefined;
@@ -44,7 +44,7 @@ export class GeometryMapViewerComponent
     opacity: 1,
   };
 
-  public ngAfterViewInit() {
+  ngAfterViewInit() {
     this.createMap();
     if (this.map) {
       this.drawGeometry(this.map);
@@ -52,7 +52,7 @@ export class GeometryMapViewerComponent
     }
   }
 
-  public override ngOnChanges(changes: SimpleChanges) {
+  override ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
     if (this.map) {
       if (changes['highlight'] && changes['highlight'].currentValue) {

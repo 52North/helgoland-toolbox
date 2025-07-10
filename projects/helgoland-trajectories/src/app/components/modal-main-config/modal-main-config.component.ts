@@ -28,5 +28,5 @@ import { ConfigurationService } from './../../services/configuration.service';
 export class ModalMainConfigComponent {
   private configSrvc = inject(ConfigurationService);
 
-  public languages = this.configSrvc.configuration?.languages;
+  languages = this.configSrvc.configuration?.languages;
 }

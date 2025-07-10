@@ -17,14 +17,14 @@ import {
 export class PredefinedTimespanSelectorComponent implements OnInit {
   protected settingSrvc = inject<SettingsService<Settings>>(SettingsService);
 
-  public readonly timespan = input.required<Timespan>();
+  readonly timespan = input.required<Timespan>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onTimespanChange = output<Timespan>();
 
-  public parsedTimespanPresets: ParsedTimespanPreset[] = [];
+  parsedTimespanPresets: ParsedTimespanPreset[] = [];
 
-  public ngOnInit() {
+  ngOnInit() {
     const timespanPresets = this.settingSrvc.getSettings().timespanPresets;
     if (timespanPresets) {
       this.parsedTimespanPresets = timespanPresets
@@ -48,7 +48,7 @@ export class PredefinedTimespanSelectorComponent implements OnInit {
     }
   }
 
-  public isSafeMomentExpression(expression: string): boolean {
+  isSafeMomentExpression(expression: string): boolean {
     /* eslint-disable max-len */
     // regex checks whether code to be eval'ed adhers to syntax given in https://momentjs.com/docs/#/manipulating/
     // explanation:               Start with "moment()"   Possible functions: add(number, string) and subtract(number, string)                            Further possible functions: startOf(string) and endOf(string)                           Further possible functions: year(number), ..., milliseconds(number).                         functions can be chained infinitely, or not at all
@@ -64,7 +64,7 @@ export class PredefinedTimespanSelectorComponent implements OnInit {
     return safeMomentExpression.test(expression);
   }
 
-  public isSafeTimespanPreset(preset: TimespanPreset): boolean {
+  isSafeTimespanPreset(preset: TimespanPreset): boolean {
     // test both inputs against the regex
     const isSafe =
       this.isSafeMomentExpression(preset.timespan.from) &&
@@ -82,7 +82,7 @@ export class PredefinedTimespanSelectorComponent implements OnInit {
     }
   }
 
-  public parseMomentExpression(expression: string): Date | null {
+  parseMomentExpression(expression: string): Date | null {
     // just to be sure not to eval() something nasty
     if (this.isSafeMomentExpression(expression)) {
       // if satisfied, eval the inputs -> the ._d property contains the corresponding Date objects from which the Timespan can be constructed
@@ -92,7 +92,7 @@ export class PredefinedTimespanSelectorComponent implements OnInit {
     return null;
   }
 
-  public timespanChanged(preset: ParsedTimespanPreset) {
+  timespanChanged(preset: ParsedTimespanPreset) {
     const timespan = new Timespan(preset.timespan.from, preset.timespan.to);
     this.onTimespanChange.emit(timespan);
   }

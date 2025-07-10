@@ -17,7 +17,7 @@ export class OlLayerTitleComponent implements OnInit {
 
   readonly layer = input.required<Layer>();
 
-  public title: string | undefined;
+  title: string | undefined;
 
   ngOnInit() {
     const source = this.layer().getSource();

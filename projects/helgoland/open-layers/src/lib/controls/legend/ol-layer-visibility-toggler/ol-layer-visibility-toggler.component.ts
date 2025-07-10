@@ -12,7 +12,7 @@ import BaseLayer from 'ol/layer/Base';
 export class OlLayerVisibilityTogglerComponent {
   readonly layer = input.required<BaseLayer>();
 
-  public toggleVisibility() {
+  toggleVisibility() {
     this.layer().setVisible(!this.layer().getVisible());
   }
 }

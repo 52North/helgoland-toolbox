@@ -16,7 +16,7 @@ export class TrajectoryViewPermalinkService extends PermalinkService<
   private trajectorySrvc = inject(TrajectoriesService);
   private activatedRoute = inject(ActivatedRoute);
 
-  public validatePeramlink(): Observable<void> {
+  validatePeramlink(): Observable<void> {
     return new Observable((observer: Observer<void>) => {
       this.activatedRoute.queryParams.subscribe((params) => {
         if (params[PARAM_ID]) {

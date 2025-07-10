@@ -12,7 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 export class ClearStorageButtonComponent {
   localStorage = inject(LocalStorage);
 
-  public clearAndReload() {
+  clearAndReload() {
     this.localStorage.clearStorage();
     window.location.reload();
   }

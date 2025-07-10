@@ -11,7 +11,7 @@ import { Observable, Observer } from 'rxjs';
 export class ServiceSelectorService {
   protected servicesConnector = inject(HelgolandServicesConnector);
 
-  public fetchServicesOfAPI(
+  fetchServicesOfAPI(
     url: string,
     blacklist: BlacklistedService[],
     filter: HelgolandParameterFilter,

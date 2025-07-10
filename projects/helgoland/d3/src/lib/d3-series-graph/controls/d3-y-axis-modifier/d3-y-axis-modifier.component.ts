@@ -42,7 +42,7 @@ export class D3YAxisModifierComponent
   protected adjustedRanges: Map<string, MinMaxRange> = new Map();
   protected d3Graph: D3GraphInterface | undefined;
 
-  public graphInitialized(graph: D3GraphInterface) {
+  graphInitialized(graph: D3GraphInterface) {
     this.d3Graph = graph;
     this.d3Graph.redrawCompleteGraph();
   }

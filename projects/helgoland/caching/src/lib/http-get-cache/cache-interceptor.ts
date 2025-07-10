@@ -25,7 +25,7 @@ export class CachingInterceptor implements HttpServiceInterceptor {
     this.logging = this.config?.logging || false;
   }
 
-  public intercept(
+  intercept(
     req: HttpRequest<any>,
     metadata: HttpRequestOptions,
     next: HttpServiceHandler,

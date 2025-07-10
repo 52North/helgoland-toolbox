@@ -3,9 +3,9 @@ export abstract class TimeInterval {
 }
 
 export class Timespan extends TimeInterval {
-  public from: number;
+  from: number;
 
-  public to: number;
+  to: number;
 
   constructor(from: number | Date, to?: number | Date) {
     super();
@@ -21,8 +21,8 @@ export class Timespan extends TimeInterval {
 }
 
 export class BufferedTime extends TimeInterval {
-  public timestamp: Date;
-  public bufferInterval: number;
+  timestamp: Date;
+  bufferInterval: number;
 
   constructor(timestamp: Date, bufferInterval: number) {
     super();

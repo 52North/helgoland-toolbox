@@ -3,7 +3,7 @@ import moment from 'moment';
 import { Timespan } from '../../model/internal/timeInterval';
 
 export class UrlGenerator {
-  public createBaseUrl(apiUrl: string, endpoint: string, id?: string): string {
+  createBaseUrl(apiUrl: string, endpoint: string, id?: string): string {
     let requestUrl = apiUrl + endpoint;
     if (id) {
       requestUrl += '/' + id;
@@ -11,7 +11,7 @@ export class UrlGenerator {
     return requestUrl;
   }
 
-  public addUrlParams(url: string, params: Map<string, string>): string {
+  addUrlParams(url: string, params: Map<string, string>): string {
     if (!url.endsWith('?')) {
       url = url + '?';
     }
@@ -21,7 +21,7 @@ export class UrlGenerator {
     return url.slice(0, -1);
   }
 
-  public createTimespanRequestParam(timespan: Timespan): string {
+  createTimespanRequestParam(timespan: Timespan): string {
     return encodeURIComponent(
       moment(timespan.from).format() + '/' + moment(timespan.to).format(),
     );

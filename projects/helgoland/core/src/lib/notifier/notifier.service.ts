@@ -19,7 +19,7 @@ export class NotifierService {
     }
   }
 
-  public notify(text: string) {
+  notify(text: string) {
     clearTimeout(this.notifierTimeout);
     const notifierElement = document.getElementById(ID);
     if (notifierElement) {

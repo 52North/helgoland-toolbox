@@ -12,16 +12,12 @@ export class BasicAuthService {
 
   private basicAuthTokens: Map<string, string> = new Map();
 
-  public ongoingRequests: Map<string, Observable<boolean>> = new Map();
+  ongoingRequests: Map<string, Observable<boolean>> = new Map();
 
   /**
    * Do the authentication.
    */
-  public auth(
-    username: string,
-    password: string,
-    url: string,
-  ): Observable<string> {
+  auth(username: string, password: string, url: string): Observable<string> {
     const token = 'Basic ' + btoa(username + ':' + password);
     const headers = new HttpHeaders({ Authorization: token });
     return this.http.get(url, { headers }).pipe(
@@ -35,7 +31,7 @@ export class BasicAuthService {
   /**
    * Removes existing token.
    */
-  public clearToken(url: string): void {
+  clearToken(url: string): void {
     if (this.basicAuthTokens.has(url)) {
       this.basicAuthTokens.delete(url);
     }
@@ -44,14 +40,14 @@ export class BasicAuthService {
   /**
    * Checks if a token exists.
    */
-  public hasToken(url: string): boolean {
+  hasToken(url: string): boolean {
     return this.basicAuthTokens.has(url);
   }
 
   /**
    * Gets the token for the given service url.
    */
-  public getToken(url: string): string | undefined {
+  getToken(url: string): string | undefined {
     return this.basicAuthTokens.get(url);
   }
 }

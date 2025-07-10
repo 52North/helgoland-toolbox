@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { forkJoin, Observable, Observer } from 'rxjs';
 
 /**
@@ -15,7 +15,7 @@ export class StatusCheckService {
   /**
    * Checks all internal registered URLs if they are reachable. Gives back every URL, which was not reachable
    */
-  public checkAll(): Observable<(string | null)[]> {
+  checkAll(): Observable<(string | null)[]> {
     return this.doCheck(this.urls);
   }
 
@@ -23,7 +23,7 @@ export class StatusCheckService {
    * Checks the given URL.
    * @returns Observable with the URL if not reachable.
    */
-  public checkUrl(url: string): Observable<string | null> {
+  checkUrl(url: string): Observable<string | null> {
     return this.doCheckUrl(url);
   }
 
@@ -31,14 +31,14 @@ export class StatusCheckService {
    * Checks the given URLs.
    * @returns Observable of all not reachable URLs.
    */
-  public checkUrls(urls: string[]): Observable<(string | null)[]> {
+  checkUrls(urls: string[]): Observable<(string | null)[]> {
     return this.doCheck(urls);
   }
 
   /**
    * Adds the URL to the internal collection.
    */
-  public addUrl(url: string) {
+  addUrl(url: string) {
     const index = this.urls.indexOf(url);
     if (index === -1) {
       this.urls.push(url);
@@ -48,7 +48,7 @@ export class StatusCheckService {
   /**
    * Removes the URL of the internal collection.
    */
-  public removeUrl(url: string) {
+  removeUrl(url: string) {
     const index = this.urls.indexOf(url);
     if (index > -1) {
       this.urls.splice(index, 1);

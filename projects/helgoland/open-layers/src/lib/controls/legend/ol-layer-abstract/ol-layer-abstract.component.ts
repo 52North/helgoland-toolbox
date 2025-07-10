@@ -17,7 +17,7 @@ export class OlLayerAbstractComponent implements OnInit {
 
   readonly layer = input.required<Layer>();
 
-  public abstract: string | undefined;
+  abstract: string | undefined;
 
   ngOnInit() {
     const source = this.layer().getSource();

@@ -8,11 +8,11 @@ import { MapControlComponent } from '../map-control-component';
   standalone: true,
 })
 export class ZoomControlComponent extends MapControlComponent {
-  public zoomIn() {
+  zoomIn() {
     this.mapCache.getMap(this.mapId()).zoomIn();
   }
 
-  public zoomOut() {
+  zoomOut() {
     this.mapCache.getMap(this.mapId()).zoomOut();
   }
 }

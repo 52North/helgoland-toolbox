@@ -11,7 +11,7 @@ const LOCATED_MARKER_ID = 'located';
 export class LocateService {
   protected mapCache = inject(MapCache);
 
-  public startLocate(id: string) {
+  startLocate(id: string) {
     const map = this.mapCache.getMap(id);
     map.on(LOCATION_FOUND_EVENT, (evt: L.LocationEvent) => {
       this.removeMarker(map);
@@ -28,7 +28,7 @@ export class LocateService {
     });
   }
 
-  public stopLocate(id: string) {
+  stopLocate(id: string) {
     const map = this.mapCache.getMap(id);
     map.stopLocate();
     map.off(LOCATION_FOUND_EVENT);

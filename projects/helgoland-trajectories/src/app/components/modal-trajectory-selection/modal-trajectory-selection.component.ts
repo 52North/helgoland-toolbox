@@ -48,14 +48,13 @@ export class ModalTrajectorySelectionComponent implements OnInit {
   private servicesConnector = inject(HelgolandServicesConnector);
   private trajectorySrvc = inject(TrajectoriesService);
 
-  public datasetApis: DatasetApi[] =
-    this.configSrvc.configuration?.datasetApis || [];
+  datasetApis: DatasetApi[] = this.configSrvc.configuration?.datasetApis || [];
 
-  public datasetsLoading: boolean | undefined;
+  datasetsLoading: boolean | undefined;
 
-  public filterList: ParameterListEntry[] = [];
+  filterList: ParameterListEntry[] = [];
 
-  public providerFilter: HelgolandParameterFilter = {
+  providerFilter: HelgolandParameterFilter = {
     type: DatasetType.Trajectory,
     expanded: true,
   };
@@ -69,7 +68,7 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     });
   }
 
-  public serviceSelected(service: HelgolandService) {
+  serviceSelected(service: HelgolandService) {
     this.filterList.splice(1);
     if (this.filterList.length > 0) {
       this.filterList[this.filterList.length - 1].expanded = false;
@@ -89,7 +88,7 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     });
   }
 
-  public selectFilter(entry: ParameterListEntry, filter: ParameterType) {
+  selectFilter(entry: ParameterListEntry, filter: ParameterType) {
     if (entry.selectedFilter === ParameterType.OFFERING) {
       delete entry.apiFilter[0].filter?.offering;
     }
@@ -102,7 +101,7 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     entry.selectedFilter = filter;
   }
 
-  public itemSelected(filter: ParameterListEntry, item: Parameter) {
+  itemSelected(filter: ParameterListEntry, item: Parameter) {
     filter.selectedItem = item;
     filter.expanded = false;
 
@@ -151,7 +150,7 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     });
   }
 
-  public featureSelected(filter: ParameterListEntry, item: Parameter) {
+  featureSelected(filter: ParameterListEntry, item: Parameter) {
     const url = filter.apiFilter[0].url;
     const dsFilter = filter.apiFilter[0].filter!;
     dsFilter.feature = item.id;

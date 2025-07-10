@@ -20,7 +20,7 @@ export class LabelMapperService {
 
   private cache: IdCache<string> = new IdCache();
 
-  public getMappedLabel(label: string): Observable<string> {
+  getMappedLabel(label: string): Observable<string> {
     const chachedLabel = this.cache.get(label);
     if (chachedLabel) {
       return of(chachedLabel);

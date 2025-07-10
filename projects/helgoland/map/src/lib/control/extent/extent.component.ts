@@ -8,9 +8,9 @@ import { MapControlComponent } from '../map-control-component';
   standalone: true,
 })
 export class ExtentControlComponent extends MapControlComponent {
-  public readonly extent = input.required<L.LatLngBoundsExpression>();
+  readonly extent = input.required<L.LatLngBoundsExpression>();
 
-  public zoomToExtent() {
+  zoomToExtent() {
     this.mapCache.getMap(this.mapId()).fitBounds(this.extent());
   }
 }

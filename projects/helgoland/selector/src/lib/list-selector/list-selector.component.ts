@@ -5,8 +5,8 @@ import {
   OnChanges,
   SimpleChanges,
   inject,
-  output,
   input,
+  output,
 } from '@angular/core';
 import {
   FilteredProvider,
@@ -37,20 +37,20 @@ export class ListSelectorComponent implements OnChanges {
   protected listSelectorService = inject(ListSelectorService);
   protected servicesConnector = inject(HelgolandServicesConnector);
 
-  public readonly parameters = input<ListSelectorParameter[]>();
+  readonly parameters = input<ListSelectorParameter[]>();
 
-  public readonly filter = input<HelgolandParameterFilter>({});
+  readonly filter = input<HelgolandParameterFilter>({});
 
-  public readonly providerList = input<FilteredProvider[]>();
+  readonly providerList = input<FilteredProvider[]>();
 
-  public readonly selectorId = input<string>();
+  readonly selectorId = input<string>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   readonly onDatasetSelection = output<HelgolandDataset[]>();
 
-  public activePanel: string;
+  activePanel: string;
 
-  public ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges) {
     if (changes['providerList'] && changes['providerList'].currentValue) {
       const selectorId = this.selectorId();
       const providerList = this.providerList();
@@ -103,7 +103,7 @@ export class ListSelectorComponent implements OnChanges {
     }
   }
 
-  public itemSelected(item: FilteredParameter, index: number) {
+  itemSelected(item: FilteredParameter, index: number) {
     if (index < this.parameters().length - 1) {
       parameters[index].headerAddition = item.label;
       parameters[index].selected = item.label;

@@ -71,25 +71,25 @@ export class D3SeriesGraphWrapperComponent
     inject(D3SeriesGraphErrorHandler, { optional: true })! ??
     new D3SeriesSimpleGraphErrorHandler();
 
-  public readonly yaxisModifier = input<boolean>();
+  readonly yaxisModifier = input<boolean>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public readonly onHighlightChanged = output<HighlightOutput>();
+  readonly onHighlightChanged = output<HighlightOutput>();
 
-  public readonly hoveringService = input<D3HoveringService>(
+  readonly hoveringService = input<D3HoveringService>(
     new D3SimpleHoveringService(),
   );
 
-  public readonly mainTimeInterval = input<Timespan>();
+  readonly mainTimeInterval = input<Timespan>();
 
-  public override readonly presenterOptions = input<D3PlotOptions | undefined>({
+  override readonly presenterOptions = input<D3PlotOptions | undefined>({
     hoverStyle: HoveringStyle.none,
   });
 
-  public datasets: SeriesGraphDataset[] = [];
-  public override timespan: Timespan | undefined;
+  datasets: SeriesGraphDataset[] = [];
+  override timespan: Timespan | undefined;
 
-  public graphOptions: D3SeriesGraphOptions = {
+  graphOptions: D3SeriesGraphOptions = {
     grid: true,
     showTimeLabel: false,
     hoverStyle: HoveringStyle.point,
@@ -104,7 +104,7 @@ export class D3SeriesGraphWrapperComponent
 
   protected datasetMap: Map<string, HelgolandTimeseries> = new Map();
 
-  public override ngOnChanges(changes: SimpleChanges): void {
+  override ngOnChanges(changes: SimpleChanges): void {
     super.ngOnChanges(changes);
     if (changes['yaxisModifier']) {
       const yaxisModifier = this.yaxisModifier();
@@ -116,7 +116,7 @@ export class D3SeriesGraphWrapperComponent
     }
   }
 
-  public reloadDataForDatasets(datasetIds: string[]): void {
+  reloadDataForDatasets(datasetIds: string[]): void {
     datasetIds.forEach((id) => {
       if (this.datasetMap.has(id)) {
         this.loadDatasetData(id);
@@ -380,11 +380,11 @@ export class D3SeriesGraphWrapperComponent
     this.dataLoaded.emit(new Set(ids));
   }
 
-  public updateTimespan(timespan: Timespan) {
+  updateTimespan(timespan: Timespan) {
     this.onTimespanChanged.emit(timespan);
   }
 
-  public datasetSelected(selectedIds: string[]) {
+  datasetSelected(selectedIds: string[]) {
     this.onDatasetSelected.emit(selectedIds);
   }
 

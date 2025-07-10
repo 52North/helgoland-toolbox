@@ -75,7 +75,7 @@ export class DefinedTimespanService {
     });
   }
 
-  public getInterval(intervalDescriber: DefinedTimespan): Timespan {
+  getInterval(intervalDescriber: DefinedTimespan): Timespan {
     const intervalFunc = this.intervals.get(intervalDescriber);
     if (intervalFunc) {
       return intervalFunc();

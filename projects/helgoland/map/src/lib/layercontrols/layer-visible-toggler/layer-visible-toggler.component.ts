@@ -12,7 +12,7 @@ import { MapHandlerService } from './../../base/map-handler.service';
 export class LayerVisibleTogglerComponent extends LayerControlComponent {
   private mapHandler = inject(MapHandlerService);
 
-  public toggle() {
+  toggle() {
     this.mapHandler.toggleOverlayLayer(this.layeroptions(), this.mapId());
   }
 }

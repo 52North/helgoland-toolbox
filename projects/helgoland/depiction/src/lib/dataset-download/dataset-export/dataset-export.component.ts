@@ -2,11 +2,11 @@
 import {
   Component,
   inject,
+  input,
   OnChanges,
   OnInit,
-  SimpleChanges,
   output,
-  input,
+  SimpleChanges,
 } from '@angular/core';
 import {
   DatasetType,
@@ -52,24 +52,24 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   /**
    * options to define the export parameters
    */
-  public readonly exportOptions = input.required<ExportOptions>();
+  readonly exportOptions = input.required<ExportOptions>();
 
   /**
    * id of the dataset that should be downloaded
    */
-  public readonly inputId = input<string>();
+  readonly inputId = input<string>();
 
   /**
    * returns the metadata of the selected dataset to be visualized
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public readonly onMetadataChange = output<HelgolandTimeseries>();
+  readonly onMetadataChange = output<HelgolandTimeseries>();
 
   /**
    * Output to inform the loading status, while file is created
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public readonly onLoadingChange = output<boolean>();
+  readonly onLoadingChange = output<boolean>();
 
   ngOnInit() {
     const inputId = this.inputId();
@@ -121,7 +121,7 @@ export class DatasetExportComponent implements OnInit, OnChanges {
     }
   }
 
-  public onDownload(downloadType: DownloadType): void {
+  onDownload(downloadType: DownloadType): void {
     this.onLoadingChange.emit(true);
     this.fileName = this.inputId();
     if (this.dataset) {

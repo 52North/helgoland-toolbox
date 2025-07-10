@@ -11,5 +11,5 @@ import { versions } from './../../../../../../versions';
   imports: [TranslateModule, HelgolandCoreModule],
 })
 export class VersionInfoComponent {
-  public versions = versions;
+  versions = versions;
 }
