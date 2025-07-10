@@ -8,11 +8,11 @@ import { AbstractProcess, SensorMLXmlService } from '@helgoland/sensorml';
   imports: [],
 })
 export class SensormlComponent {
-  public readerResult!: string;
-  public error!: string;
-  public description!: AbstractProcess;
+  readerResult!: string;
+  error!: string;
+  description!: AbstractProcess;
 
-  public changeListener($event: any): void {
+  changeListener($event: any): void {
     const file: File = $event.target.files[0];
     const myReader: FileReader = new FileReader();
 
@@ -32,7 +32,7 @@ export class SensormlComponent {
     myReader.readAsText(file);
   }
 
-  public openInEditor(): void {
+  openInEditor(): void {
     console.log(this.description);
   }
 }

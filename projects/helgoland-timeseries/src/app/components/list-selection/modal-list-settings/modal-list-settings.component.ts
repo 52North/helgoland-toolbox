@@ -32,7 +32,7 @@ export class ModalListSettingsComponent {
   private configSrvc = inject(ConfigurationService);
   protected listConfig = inject<ListConfig>(MAT_DIALOG_DATA);
 
-  public datasetApis: DatasetApi[] = [];
+  datasetApis: DatasetApi[] = [];
 
   constructor() {
     if (this.configSrvc.configuration?.datasetApis) {
@@ -40,7 +40,7 @@ export class ModalListSettingsComponent {
     }
   }
 
-  public serviceSelected(service: HelgolandService) {
+  serviceSelected(service: HelgolandService) {
     this.listConfig.selectedService = service;
   }
 }

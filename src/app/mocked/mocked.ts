@@ -15,7 +15,7 @@ import dataset from './dataset.json';
   providedIn: 'root',
 })
 export class MockedApiV3InterfaceService extends ApiV3InterfaceService {
-  public getDataset(
+  getDataset(
     id: string,
     apiUrl: string,
     params?: ApiV3ParameterFilter,
@@ -23,7 +23,7 @@ export class MockedApiV3InterfaceService extends ApiV3InterfaceService {
     return of(dataset as any);
   }
 
-  public getDatasets(
+  getDatasets(
     apiUrl: string,
     params?: ApiV3ParameterFilter,
     options?: HttpRequestOptions,

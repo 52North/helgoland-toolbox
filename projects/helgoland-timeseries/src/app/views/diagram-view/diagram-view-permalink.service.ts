@@ -37,7 +37,7 @@ export class DiagramViewInitStateService {
     }
   }
 
-  public preloadDatasets(): Observable<boolean> {
+  preloadDatasets(): Observable<boolean> {
     return this.activatedRoute.queryParams.pipe(
       mergeMap((params) => this.handleParams(params)),
     );
@@ -101,7 +101,7 @@ export class DiagramViewInitStateService {
     history.replaceState(history.state, '', url.href);
   }
 
-  public generatePermalink = () => {
+  generatePermalink = () => {
     let paramUrl = '';
     if (this.graphDatasetsSrvc.hasDatasets()) {
       const ids: string[] = [];

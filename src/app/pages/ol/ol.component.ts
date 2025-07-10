@@ -17,11 +17,11 @@ import { OSM, TileWMS } from 'ol/source';
 export class OlComponent implements OnInit {
   private mapService = inject(OlMapService);
 
-  public layers: Layer[] = [];
+  layers: Layer[] = [];
 
-  public overviewMapLayers: Layer[] = [new TileLayer({ source: new OSM() })];
+  overviewMapLayers: Layer[] = [new TileLayer({ source: new OSM() })];
 
-  public mapId = 'test-map';
+  mapId = 'test-map';
 
   constructor() {}
 
@@ -81,19 +81,19 @@ export class OlComponent implements OnInit {
     // }));
   }
 
-  public getLegendUrl(legendUrl: string) {
+  getLegendUrl(legendUrl: string) {
     alert(legendUrl);
     console.log(legendUrl);
   }
 
-  public removeLayer(i: number) {
+  removeLayer(i: number) {
     const layer = this.layers.splice(i, 1);
     this.mapService
       .getMap(this.mapId)
       .subscribe((map) => map.removeLayer(layer[0]));
   }
 
-  public stationSelected(station: HelgolandPlatform) {
+  stationSelected(station: HelgolandPlatform) {
     alert(station.label);
     console.log(station);
   }

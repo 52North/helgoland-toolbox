@@ -55,7 +55,7 @@ export class ModalEditTimeseriesOptionsComponent implements AfterContentInit {
   }>(MAT_DIALOG_DATA);
   protected config = inject(ConfigurationService);
 
-  public adjustedColor: string | undefined;
+  adjustedColor: string | undefined;
 
   private style: DatasetStyle;
   private yaxis: AxisSettings;

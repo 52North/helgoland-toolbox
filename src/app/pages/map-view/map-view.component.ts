@@ -34,22 +34,22 @@ export class MapViewComponent implements OnInit, AfterViewInit {
   private httpClient = inject(HttpClient);
   private mapCache = inject(MapCache);
 
-  public fitBounds: L.LatLngBoundsExpression = [
+  fitBounds: L.LatLngBoundsExpression = [
     [54, 7],
     [48, 14],
   ];
-  public zoomControlOptions: L.Control.ZoomOptions = { position: 'topleft' };
-  public overlayMaps: LayerMap = new Map();
-  public baseMaps: LayerMap = new Map();
-  public layerControlOptions: L.Control.LayersOptions = {
+  zoomControlOptions: L.Control.ZoomOptions = { position: 'topleft' };
+  overlayMaps: LayerMap = new Map();
+  baseMaps: LayerMap = new Map();
+  layerControlOptions: L.Control.LayersOptions = {
     position: 'bottomleft',
   };
-  public mapOptions: L.MapOptions = {
+  mapOptions: L.MapOptions = {
     dragging: true,
     zoomControl: true,
     boxZoom: true,
   };
-  public searchOptions: GeoSearchOptions = { countrycodes: [] };
+  searchOptions: GeoSearchOptions = { countrycodes: [] };
 
   private hmsUrl =
     'http://colabis.dev.52north.org/geocure/services/colabis-geoserver/features/' +
@@ -80,10 +80,10 @@ export class MapViewComponent implements OnInit, AfterViewInit {
     opacity: 1,
   };
 
-  public zoomLevel: number | undefined;
-  public bounds: LatLngBounds | undefined;
+  zoomLevel: number | undefined;
+  bounds: LatLngBounds | undefined;
 
-  public ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     this.mapCache
       .getMap('map-view')
       .on('zoomend', (event) => this.updateLabels(event))
@@ -97,7 +97,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
     this.bounds = map.getBounds();
   }
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.baseMaps.set('Topo', {
       label: 'Topo',
       visible: true,
@@ -162,7 +162,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public addOverlayMapLayer() {
+  addOverlayMapLayer() {
     this.overlayMaps.set('warning-shapes-fine', {
       label: 'warning-shapes-fine',
       visible: true,
@@ -235,7 +235,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public removeOverlayMapLayer() {
+  removeOverlayMapLayer() {
     this.overlayMaps = new Map();
   }
 

@@ -27,7 +27,7 @@ export class ModalFavoriteListButtonComponent {
   private dialog = inject(MatDialog);
   protected favoriteSrvc = inject(FavoriteService);
 
-  public openFavoriteList() {
+  openFavoriteList() {
     this.dialog.open(ModalFavoriteListComponent, {
       autoFocus: false,
       width: '500px',

@@ -15,5 +15,5 @@ import {
   ],
 })
 export class PermalinkComponent {
-  public permalinkUrl = 'test-url';
+  permalinkUrl = 'test-url';
 }

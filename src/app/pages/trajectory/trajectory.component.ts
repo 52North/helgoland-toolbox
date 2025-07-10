@@ -36,11 +36,11 @@ export class TrajectoryComponent implements OnInit {
   private internalIdHandler = inject(InternalIdHandler);
   private servicesConnector = inject(HelgolandServicesConnector);
 
-  public geometry!: LineString;
+  geometry!: LineString;
 
-  public highlightGeometry!: GeoJsonObject;
+  highlightGeometry!: GeoJsonObject;
 
-  public datasetIds: string[] = [
+  datasetIds: string[] = [
     'http://nexos.demo.52north.org/52n-sos-nexos-test/api/__quantity_1',
     // 'http://codm.hzg.de/52n-sos-webapp/api/v1/__measurement_125100',
     // 'http://codm.hzg.de/52n-sos-webapp/api/v1/__measurement_125101',
@@ -49,20 +49,20 @@ export class TrajectoryComponent implements OnInit {
     // 'http://codm.hzg.de/52n-sos-webapp/api/v1/__measurement_125104'
   ];
 
-  public options: Map<string, DatasetOptions> = new Map();
+  options: Map<string, DatasetOptions> = new Map();
 
-  public timespan!: Timespan;
+  timespan!: Timespan;
 
-  public selection!: D3SelectionRange;
+  selection!: D3SelectionRange;
 
-  public zoomToGeometry!: GeoJsonObject;
+  zoomToGeometry!: GeoJsonObject;
 
-  public graphOptions: D3GraphOptions = {
+  graphOptions: D3GraphOptions = {
     axisType: D3AxisType.Distance,
     dotted: true,
   };
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.datasetIds.forEach((entry) => {
       const option = new DatasetOptions(entry, this.color.getColor());
       option.visible = true;
@@ -98,14 +98,14 @@ export class TrajectoryComponent implements OnInit {
     }
   }
 
-  public onChartHighlightChanged(idx: number) {
+  onChartHighlightChanged(idx: number) {
     this.highlightGeometry = {
       type: 'Point',
       coordinates: this.geometry.coordinates[idx],
     } as Point;
   }
 
-  public onChartSelectionChangedFinished(range: D3SelectionRange) {
+  onChartSelectionChangedFinished(range: D3SelectionRange) {
     this.selection = range;
     this.zoomToGeometry = {
       type: 'LineString',
@@ -113,14 +113,14 @@ export class TrajectoryComponent implements OnInit {
     } as LineString;
   }
 
-  public onChartSelectionChanged(range: D3SelectionRange) {
+  onChartSelectionChanged(range: D3SelectionRange) {
     this.highlightGeometry = {
       type: 'LineString',
       coordinates: this.geometry.coordinates.slice(range.from, range.to),
     } as LineString;
   }
 
-  public editOptions(option: DatasetOptions) {
+  editOptions(option: DatasetOptions) {
     const dialogRef = this.dialog.open(StyleModificationComponent, {
       data: option,
     });

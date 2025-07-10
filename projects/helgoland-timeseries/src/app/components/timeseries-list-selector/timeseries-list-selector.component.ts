@@ -14,7 +14,7 @@ import { TimeseriesService } from './../../services/timeseries-service.service';
 export class TimeseriesListSelectorComponent extends MultiServiceFilterSelectorComponent {
   protected timeseriesSrvc = inject(TimeseriesService);
 
-  public selectionChanged(selection: MatSelectionListChange) {
+  selectionChanged(selection: MatSelectionListChange) {
     const ds = selection.options[0].value as HelgolandDataset;
     if (selection.options[0].selected) {
       this.timeseriesSrvc.addDataset(ds.internalId);

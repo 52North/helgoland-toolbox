@@ -6,8 +6,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { EditLabelComponent } from '../../edit-label/edit-label.component';
 import { Favorite, FavoriteService } from '../../../services/favorite.service';
+import { EditLabelComponent } from '../../edit-label/edit-label.component';
 
 interface EditableFavorite extends Favorite {
   editMode: boolean;
@@ -30,22 +30,22 @@ interface EditableFavorite extends Favorite {
 export class ModalFavoriteListComponent implements OnInit {
   favoriteSrvc = inject(FavoriteService);
 
-  public singles: EditableFavorite[] = [];
+  singles: EditableFavorite[] = [];
 
   ngOnInit(): void {
     this.setFavorites();
   }
 
-  public addSingleToDiagram(fav: Favorite) {
+  addSingleToDiagram(fav: Favorite) {
     this.favoriteSrvc.addFavoriteToDiagram(fav);
   }
 
-  public deleteFav(fav: Favorite) {
+  deleteFav(fav: Favorite) {
     this.favoriteSrvc.removeFavorite(fav.id);
     this.setFavorites();
   }
 
-  public setFavLabel(fav: Favorite, label: string) {
+  setFavLabel(fav: Favorite, label: string) {
     this.favoriteSrvc.changeLabel(fav, label);
   }
 

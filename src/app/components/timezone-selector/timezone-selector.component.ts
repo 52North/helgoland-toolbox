@@ -11,7 +11,7 @@ import { TimezoneService } from '@helgoland/core';
 export class TimezoneSelectorComponent implements OnInit {
   private timezoneSrvc = inject(TimezoneService);
 
-  public timezone: string | undefined;
+  timezone: string | undefined;
 
   ngOnInit() {
     this.timezone = this.timezoneSrvc.getTimezoneName();

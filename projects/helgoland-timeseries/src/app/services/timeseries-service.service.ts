@@ -108,19 +108,19 @@ export class TimeseriesServiceImpl
     return this.datasetMap.get(internalId);
   }
 
-  public async addDataset(internalId: string) {
+  async addDataset(internalId: string) {
     this.addDatasetbyId(internalId);
   }
 
-  public getDatasets(): string[] {
+  getDatasets(): string[] {
     return [];
   }
 
-  public hasDataset(id: string): boolean {
+  hasDataset(id: string): boolean {
     return this.graphDatasetsSrvc.hasDataset(id);
   }
 
-  public removeDataset(id: string) {
+  removeDataset(id: string) {
     this.graphDatasetsSrvc.deleteDataset(id, true);
   }
 

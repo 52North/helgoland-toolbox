@@ -23,7 +23,7 @@ import { TimezoneSelectorComponent } from './components/timezone-selector/timezo
   ],
 })
 export class AppComponent {
-  public languageList: Language[];
+  languageList: Language[];
 
   constructor() {
     const translate = inject(TranslateService);

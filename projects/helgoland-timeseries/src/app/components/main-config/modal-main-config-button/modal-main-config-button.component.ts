@@ -16,7 +16,7 @@ import { ModalMainConfigComponent } from '../modal-main-config/modal-main-config
 export class ModalMainConfigButtonComponent {
   private dialog = inject(MatDialog);
 
-  public openMainConfig() {
+  openMainConfig() {
     this.dialog.open(ModalMainConfigComponent);
   }
 }

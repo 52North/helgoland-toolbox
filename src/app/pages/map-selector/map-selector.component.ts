@@ -44,7 +44,7 @@ class MarkerSelectorGeneratorImpl implements MarkerSelectorGenerator {
     private mapId: string,
   ) {}
 
-  public createFilledMarker(station: HelgolandPlatform, color: string): Layer {
+  createFilledMarker(station: HelgolandPlatform, color: string): Layer {
     let geometry: Layer;
     if (station.geometry?.type === 'Point') {
       const point = station.geometry as GeoJSON.Point;
@@ -73,11 +73,11 @@ class MarkerSelectorGeneratorImpl implements MarkerSelectorGenerator {
     return geometry;
   }
 
-  public createDefaultFilledMarker(station: HelgolandPlatform): Layer {
+  createDefaultFilledMarker(station: HelgolandPlatform): Layer {
     return this.createFilledMarker(station, '#fff');
   }
 
-  public createDefaultGeometry(station: HelgolandPlatform): Layer {
+  createDefaultGeometry(station: HelgolandPlatform): Layer {
     return this.createFilledMarker(station, '#ff0000');
   }
 
@@ -102,34 +102,34 @@ class MarkerSelectorGeneratorImpl implements MarkerSelectorGenerator {
 export class MapSelectorComponent {
   private mapCache = inject(MapCache);
 
-  public providerUrl = 'https://geo.irceline.be/sos/api/v1/';
-  // public providerUrl = 'http://mudak-wrm.dev.52north.org/sos/api/';
+  providerUrl = 'https://geo.irceline.be/sos/api/v1/';
+  // providerUrl = 'http://mudak-wrm.dev.52north.org/sos/api/';
 
-  public fitBounds: L.LatLngBoundsExpression = [
+  fitBounds: L.LatLngBoundsExpression = [
     [49.5, 3.27],
     [51.5, 5.67],
   ];
-  public fitBounds2: L.LatLngBoundsExpression = [
+  fitBounds2: L.LatLngBoundsExpression = [
     [49.5, 3.27],
     [51.5, 5.67],
   ];
-  public zoomControlOptions: L.Control.ZoomOptions = { position: 'topleft' };
-  public avoidZoomToSelection = false;
-  public baseMaps: LayerMap = new Map();
-  public overlayMaps: LayerMap = new Map();
-  public layerControlOptions: L.Control.LayersOptions = {
+  zoomControlOptions: L.Control.ZoomOptions = { position: 'topleft' };
+  avoidZoomToSelection = false;
+  baseMaps: LayerMap = new Map();
+  overlayMaps: LayerMap = new Map();
+  layerControlOptions: L.Control.LayersOptions = {
     position: 'bottomleft',
   };
-  public cluster = false;
-  public loadingStations: boolean = false;
-  public stationFilter: HelgolandParameterFilter = {
+  cluster = false;
+  loadingStations: boolean = false;
+  stationFilter: HelgolandParameterFilter = {
     // phenomenon: '8'
   };
-  public statusIntervals = false;
-  public mapOptions: L.MapOptions = { dragging: true, zoomControl: false };
-  public searchOptions: GeoSearchOptions = { countrycodes: [] };
-  public markerSelectorGenerator: MarkerSelectorGenerator;
-  public mapId = 'mapid';
+  statusIntervals = false;
+  mapOptions: L.MapOptions = { dragging: true, zoomControl: false };
+  searchOptions: GeoSearchOptions = { countrycodes: [] };
+  markerSelectorGenerator: MarkerSelectorGenerator;
+  mapId = 'mapid';
 
   constructor() {
     this.markerSelectorGenerator = new MarkerSelectorGeneratorImpl(
@@ -144,15 +144,15 @@ export class MapSelectorComponent {
     }, 2000);
   }
 
-  public lastValueSeriesIDs = [
+  lastValueSeriesIDs = [
     'https://fluggs.wupperverband.de/sws5/api/__51',
     'https://fluggs.wupperverband.de/sws5/api/__78',
     'https://fluggs.wupperverband.de/sws5/api/__95',
   ];
-  public lastValuePresentation = LastValuePresentation.Textual;
-  public fitBoundsMarkerOptions: FitBoundsOptions = { padding: [20, 20] };
+  lastValuePresentation = LastValuePresentation.Textual;
+  fitBoundsMarkerOptions: FitBoundsOptions = { padding: [20, 20] };
 
-  public addOverlayMapLayer() {
+  addOverlayMapLayer() {
     this.overlayMaps = new Map();
     this.overlayMaps.set('pm10_24hmean_1x1', {
       label: 'pm10_24hmean_1x1',
@@ -188,19 +188,19 @@ export class MapSelectorComponent {
     });
   }
 
-  public removeOverlayMapLayer() {
+  removeOverlayMapLayer() {
     this.overlayMaps = new Map();
   }
 
-  public showZoomControlsRight() {
+  showZoomControlsRight() {
     this.zoomControlOptions = { position: 'topright' };
   }
 
-  public showZoomControlsLeft() {
+  showZoomControlsLeft() {
     this.zoomControlOptions = { position: 'topleft' };
   }
 
-  public switchProvider() {
+  switchProvider() {
     if (this.providerUrl === 'https://geo.irceline.be/sos/api/v1/') {
       this.providerUrl =
         'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/';
@@ -209,25 +209,25 @@ export class MapSelectorComponent {
     }
   }
 
-  public zoomToOtherExtend() {
+  zoomToOtherExtend() {
     this.fitBounds = [
       [39.5, 3.27],
       [41.5, 5.67],
     ];
   }
 
-  public onStationSelected(station: HelgolandPlatform) {
+  onStationSelected(station: HelgolandPlatform) {
     console.log('Clicked station: ' + station.label);
   }
 
-  public onSelectPhenomenon(phenomenon: Phenomenon) {
+  onSelectPhenomenon(phenomenon: Phenomenon) {
     console.log('Select: ' + phenomenon.label + ' with ID: ' + phenomenon.id);
     this.stationFilter = {
       phenomenon: phenomenon.id,
     };
   }
 
-  public timeseriesSelected(ts: Timeseries) {
+  timeseriesSelected(ts: Timeseries) {
     alert(`Clicked ${ts.label}`);
   }
 }

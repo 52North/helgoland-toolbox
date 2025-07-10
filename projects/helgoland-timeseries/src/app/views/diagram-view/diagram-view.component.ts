@@ -86,21 +86,21 @@ export class DiagramViewComponent implements OnInit {
 
   // private _mobileQueryListener: () => void;
 
-  public diagramConfig: DiagramConfig = {
+  diagramConfig: DiagramConfig = {
     overviewVisible: true,
     yaxisVisible: true,
     yaxisModifier: true,
     hoverstyle: HoveringStyle.point,
   };
 
-  public graphOptions: D3SeriesGraphOptions = {
+  graphOptions: D3SeriesGraphOptions = {
     showTimeLabel: false,
     hoverStyle: this.diagramConfig.hoverstyle,
     togglePanZoom: true,
     yaxisModifier: this.diagramConfig.yaxisModifier,
   };
 
-  public overviewOptions: D3SeriesGraphOptions = {
+  overviewOptions: D3SeriesGraphOptions = {
     showTimeLabel: false,
     yaxis: false,
     hoverStyle: HoveringStyle.none,
@@ -151,7 +151,7 @@ export class DiagramViewComponent implements OnInit {
     //   this.datasetOptions = this.timeseries.datasetOptions;
     // }
 
-    // public setSelected(selectedIds: string[]) {
+    // setSelected(selectedIds: string[]) {
     //   this.selectedIds = selectedIds;
   }
 
@@ -182,7 +182,7 @@ export class DiagramViewComponent implements OnInit {
     });
   }
 
-  public jumpToDate(date: Date) {
+  jumpToDate(date: Date) {
     this.graphDatasetsSrvc.timespan = this.time.centerTimespan(
       this.graphDatasetsSrvc.timespan!,
       date,

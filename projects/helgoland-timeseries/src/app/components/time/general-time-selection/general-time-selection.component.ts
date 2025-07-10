@@ -46,18 +46,18 @@ export class GeneralTimeSelectionComponent {
   protected timeSrvc = inject(Time);
   protected definedTimeSrvc = inject(DefinedTimespanService);
 
-  public LASTHOUR = DefinedTimespan.LASTHOUR;
-  public TODAY = DefinedTimespan.TODAY;
-  public YESTERDAY = DefinedTimespan.YESTERDAY;
-  public TODAY_YESTERDAY = DefinedTimespan.TODAY_YESTERDAY;
-  public CURRENT_WEEK = DefinedTimespan.CURRENT_WEEK;
-  public LAST_WEEK = DefinedTimespan.LAST_WEEK;
-  public CURRENT_MONTH = DefinedTimespan.CURRENT_MONTH;
-  public LAST_MONTH = DefinedTimespan.LAST_MONTH;
-  public CURRENT_YEAR = DefinedTimespan.CURRENT_YEAR;
-  public LAST_YEAR = DefinedTimespan.LAST_YEAR;
+  LASTHOUR = DefinedTimespan.LASTHOUR;
+  TODAY = DefinedTimespan.TODAY;
+  YESTERDAY = DefinedTimespan.YESTERDAY;
+  TODAY_YESTERDAY = DefinedTimespan.TODAY_YESTERDAY;
+  CURRENT_WEEK = DefinedTimespan.CURRENT_WEEK;
+  LAST_WEEK = DefinedTimespan.LAST_WEEK;
+  CURRENT_MONTH = DefinedTimespan.CURRENT_MONTH;
+  LAST_MONTH = DefinedTimespan.LAST_MONTH;
+  CURRENT_YEAR = DefinedTimespan.CURRENT_YEAR;
+  LAST_YEAR = DefinedTimespan.LAST_YEAR;
 
-  public range: UntypedFormGroup = new UntypedFormGroup({
+  range: UntypedFormGroup = new UntypedFormGroup({
     start: new UntypedFormControl(),
     end: new UntypedFormControl(),
   });

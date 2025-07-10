@@ -12,7 +12,7 @@ export class NotifierService {
   private snackBarRef!: MatSnackBarRef<NotificationComponent>;
   private snackBarIsDisplayed: boolean = false;
 
-  public notify(message: string, duration: number = 2000): void {
+  notify(message: string, duration: number = 2000): void {
     this.messages.push(message);
     if (!this.snackBarIsDisplayed) {
       this.snackBarRef = this.snackBar.openFromComponent(

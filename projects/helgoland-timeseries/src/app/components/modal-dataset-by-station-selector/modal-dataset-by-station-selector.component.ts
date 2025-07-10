@@ -48,7 +48,7 @@ export class ModalDatasetByStationSelectorComponent extends DatasetByStationSele
     super.prepareResult(result, selection);
   }
 
-  public adjustSelection(change: MatSelectionListChange) {
+  adjustSelection(change: MatSelectionListChange) {
     const id = (change.options[0].value as SelectableDataset).internalId;
     if (change.options[0].selected) {
       this.timeseries.addDataset(id);
@@ -57,7 +57,7 @@ export class ModalDatasetByStationSelectorComponent extends DatasetByStationSele
     }
   }
 
-  public getCategoryLabel(categories: Parameter[]) {
+  getCategoryLabel(categories: Parameter[]) {
     return categories.map((e) => e.label).join(', ');
   }
 }

@@ -28,23 +28,23 @@ export class AppRouterService {
     });
   }
 
-  public toDiagram() {
+  toDiagram() {
     this.router.navigate(['']);
   }
 
-  public toMapSelection() {
+  toMapSelection() {
     if (this.router.url.indexOf(LIST_SELECTION_ROUTE) === -1) {
       this.router.navigate([MAP_SELECTION_ROUTE]);
     }
   }
 
-  public toListSelection() {
+  toListSelection() {
     if (this.router.url.indexOf(MAP_SELECTION_ROUTE) === -1) {
       this.router.navigate([LIST_SELECTION_ROUTE]);
     }
   }
 
-  public resetNavigation() {
+  resetNavigation() {
     this.router.navigate(['']);
   }
 

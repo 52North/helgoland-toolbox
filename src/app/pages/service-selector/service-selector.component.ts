@@ -16,13 +16,13 @@ import { HelgolandSelectorModule } from '@helgoland/selector';
 export class ServiceSelectorComponent {
   private settings = inject<SettingsService<Settings>>(SettingsService);
 
-  public datasetApis: DatasetApi[] | undefined;
+  datasetApis: DatasetApi[] | undefined;
 
   constructor() {
     this.datasetApis = this.settings.getSettings().datasetApis;
   }
 
-  public providerFilter: HelgolandParameterFilter = {
+  providerFilter: HelgolandParameterFilter = {
     // type: DatasetType.Trajectory
   };
 }

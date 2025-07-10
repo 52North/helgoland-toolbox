@@ -31,20 +31,19 @@ export class DatasetsService {
   protected storageSrvc = inject(StorageService);
   protected configSrvc = inject(ConfigurationService);
 
-  public timespanChanged: EventEmitter<Timespan> = new EventEmitter();
+  timespanChanged: EventEmitter<Timespan> = new EventEmitter();
 
   private _datasets: (SeriesGraphDataset | LoadingDataset)[] = [];
-  public datasetAdded: Subject<string> = new Subject();
-  public datasetRemoved: Subject<string> = new Subject();
+  datasetAdded: Subject<string> = new Subject();
+  datasetRemoved: Subject<string> = new Subject();
 
-  public overviewDatasets: SeriesGraphDataset[] = [];
+  overviewDatasets: SeriesGraphDataset[] = [];
 
   private _loadingData: Set<string> = new Set();
-  public loadingDataChanged: EventEmitter<Set<string>> = new EventEmitter();
+  loadingDataChanged: EventEmitter<Set<string>> = new EventEmitter();
 
   private _loadingOverviewData: Set<string> = new Set();
-  public loadingOverviewDataChanged: EventEmitter<Set<string>> =
-    new EventEmitter();
+  loadingOverviewDataChanged: EventEmitter<Set<string>> = new EventEmitter();
 
   private _timespan: Timespan | undefined;
 

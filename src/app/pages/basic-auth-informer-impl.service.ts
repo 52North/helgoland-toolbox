@@ -16,7 +16,7 @@ export class BasicAuthInformerImplService implements BasicAuthInformer {
     this.basicAuthServices.registerService(providerUrl);
   }
 
-  public doBasicAuth(url: string): Observable<boolean> {
+  doBasicAuth(url: string): Observable<boolean> {
     return new Observable<boolean>((observer: Observer<boolean>) => {
       const username = prompt('Basic Auth username for ' + url);
       const password = prompt('Basic Auth password for ' + url);

@@ -13,15 +13,15 @@ import { StyleModificationComponent } from '../../components/style-modification/
 export class ProfileEntryComponent {
   private dialog = inject(MatDialog);
 
-  public id =
+  id =
     'http://nexos.demo.52north.org/52n-sos-nexos-test/api/__quantity-profile_12';
 
-  public id2 =
+  id2 =
     'http://nexos.demo.52north.org/52n-sos-nexos-test/api/__quantity-profile_73';
 
-  public datasetOptions: TimedDatasetOptions[] = [];
+  datasetOptions: TimedDatasetOptions[] = [];
 
-  public datasetOptions2: TimedDatasetOptions[] = [];
+  datasetOptions2: TimedDatasetOptions[] = [];
 
   constructor() {
     this.datasetOptions.push(
@@ -36,19 +36,19 @@ export class ProfileEntryComponent {
     );
   }
 
-  public updateOptions(options: TimedDatasetOptions[]) {
+  updateOptions(options: TimedDatasetOptions[]) {
     console.log('update options');
   }
 
-  public deleteProfileOptions(option: TimedDatasetOptions) {
+  deleteProfileOptions(option: TimedDatasetOptions) {
     console.log('delete options');
   }
 
-  public selectProfile(selected: boolean, id: string) {
+  selectProfile(selected: boolean, id: string) {
     console.log(id + ' selected: ' + selected);
   }
 
-  public editOption(option: TimedDatasetOptions) {
+  editOption(option: TimedDatasetOptions) {
     const dialogRef = this.dialog.open(StyleModificationComponent, {
       data: option,
     });
@@ -56,11 +56,11 @@ export class ProfileEntryComponent {
     // dialogRef.afterClosed().subscribe((result) => { });
   }
 
-  public openCombiView(option: TimedDatasetOptions) {
+  openCombiView(option: TimedDatasetOptions) {
     console.log('open in combi view');
   }
 
-  public showGeometry(geometry: GeoJSON.GeoJsonObject) {
+  showGeometry(geometry: GeoJSON.GeoJsonObject) {
     console.log('show geometry-type: ');
     console.dir(geometry);
   }

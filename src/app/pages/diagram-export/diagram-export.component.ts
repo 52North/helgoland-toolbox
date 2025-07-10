@@ -26,24 +26,24 @@ import { NoDataEntryComponent } from './no-data-entry/no-data-entry.component';
 export class DiagramExportComponent implements OnInit {
   private color = inject(ColorService);
 
-  public title = 'Exported Diagram';
-  public height = 300;
-  public width = 500;
-  public start = new Date(2019, 10, 13);
-  public end = new Date(2019, 10, 14);
+  title = 'Exported Diagram';
+  height = 300;
+  width = 500;
+  start = new Date(2019, 10, 13);
+  end = new Date(2019, 10, 14);
 
-  public format: 'png' | 'svg' = 'png';
+  format: 'png' | 'svg' = 'png';
 
-  public datasetOptions: Map<string, DatasetOptions> = new Map();
+  datasetOptions: Map<string, DatasetOptions> = new Map();
 
-  public datasetIds = [
+  datasetIds = [
     'https://fluggs.wupperverband.de/sws5/api/__26',
     // 'https://fluggs.wupperverband.de/sws5/api/__49',
     // 'https://fluggs.wupperverband.de/sws5/api/__51',
     // 'https://fluggs.wupperverband.de/sws5/api/__72',
   ];
 
-  public timespan: Timespan | undefined;
+  timespan: Timespan | undefined;
 
   ngOnInit() {
     this.datasetIds.forEach((entry) => {

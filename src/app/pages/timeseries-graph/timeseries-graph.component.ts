@@ -9,21 +9,21 @@ import { HelgolandModificationModule } from '@helgoland/modification';
   imports: [HelgolandD3Module, HelgolandModificationModule],
 })
 export class TimeseriesGraphComponent {
-  public datasetIds = ['https://fluggs.wupperverband.de/sws5/api/__63'];
-  public datasetIdsOne = ['https://fluggs.wupperverband.de/sws5/api/__72'];
-  // public datasetIdsMultiple = ['https://fluggs.wupperverband.de/sws5/api/__26'];
-  public datasetIdsMultiple = [
+  datasetIds = ['https://fluggs.wupperverband.de/sws5/api/__63'];
+  datasetIdsOne = ['https://fluggs.wupperverband.de/sws5/api/__72'];
+  // datasetIdsMultiple = ['https://fluggs.wupperverband.de/sws5/api/__26'];
+  datasetIdsMultiple = [
     'https://fluggs.wupperverband.de/sws5/api/__63',
     'https://fluggs.wupperverband.de/sws5/api/__72',
     'https://fluggs.wupperverband.de/sws5/api/__26',
   ];
-  public colors = ['#123456', '#FF0000'];
+  colors = ['#123456', '#FF0000'];
 
-  public timespan = new Timespan(
+  timespan = new Timespan(
     new Date().getTime() - 100000000,
     new Date().getTime(),
   );
-  public diagramOptionsD3: D3PlotOptions = {
+  diagramOptionsD3: D3PlotOptions = {
     togglePanZoom: false,
     showReferenceValues: false,
     hoverable: true,
@@ -32,13 +32,13 @@ export class TimeseriesGraphComponent {
     generalizeAllways: true,
   };
 
-  public selectedIds: string[] = [];
+  selectedIds: string[] = [];
 
-  public datasetOptions: Map<string, DatasetOptions> = new Map();
-  public datasetOptionsOne: Map<string, DatasetOptions> = new Map();
-  public datasetOptionsMultiple: Map<string, DatasetOptions> = new Map();
-  public datasetOptionsMultiple02: Map<string, DatasetOptions> = new Map();
-  public panZoom = 'zoom';
+  datasetOptions: Map<string, DatasetOptions> = new Map();
+  datasetOptionsOne: Map<string, DatasetOptions> = new Map();
+  datasetOptionsMultiple: Map<string, DatasetOptions> = new Map();
+  datasetOptionsMultiple02: Map<string, DatasetOptions> = new Map();
+  panZoom = 'zoom';
 
   constructor() {
     this.datasetIds.forEach((entry) => {
@@ -56,17 +56,17 @@ export class TimeseriesGraphComponent {
     });
   }
 
-  public timespanChanged(timespan: Timespan) {
+  timespanChanged(timespan: Timespan) {
     this.timespan = timespan;
   }
 
-  public togglePanZoom() {
+  togglePanZoom() {
     this.diagramOptionsD3.togglePanZoom = !this.diagramOptionsD3.togglePanZoom;
     this.panZoom =
       this.diagramOptionsD3.togglePanZoom === true ? 'pan' : 'zoom';
   }
 
-  public highlight(ids: string[]) {
+  highlight(ids: string[]) {
     this.selectedIds = ids;
   }
 }

@@ -50,17 +50,17 @@ export class EditLabelComponent implements AfterViewInit, OnInit {
     this.cd.detectChanges();
   }
 
-  public changeLabel(updatedLabel: string) {
+  changeLabel(updatedLabel: string) {
     this.editedLabel = updatedLabel;
   }
 
-  public clear() {
+  clear() {
     if (this.label() !== undefined) {
       this.labelChanged.emit(this.label()!);
     }
   }
 
-  public confirm() {
+  confirm() {
     if (this.editedLabel) {
       this.labelChanged.emit(this.editedLabel);
     }

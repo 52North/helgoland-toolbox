@@ -38,30 +38,30 @@ export class FacetSearchComponent {
   private apiv3 = inject(ApiV3InterfaceService);
   facetSearch = inject(FacetSearchService);
 
-  public timeseries: Timeseries[] = [];
+  timeseries: Timeseries[] = [];
 
-  public categoryType: ParameterFacetType = ParameterFacetType.category;
-  public featureType: ParameterFacetType = ParameterFacetType.feature;
-  public offeringType: ParameterFacetType = ParameterFacetType.offering;
-  public phenomenonType: ParameterFacetType = ParameterFacetType.phenomenon;
-  public procedureType: ParameterFacetType = ParameterFacetType.procedure;
+  categoryType: ParameterFacetType = ParameterFacetType.category;
+  featureType: ParameterFacetType = ParameterFacetType.feature;
+  offeringType: ParameterFacetType = ParameterFacetType.offering;
+  phenomenonType: ParameterFacetType = ParameterFacetType.phenomenon;
+  procedureType: ParameterFacetType = ParameterFacetType.procedure;
 
-  public featureSort: ParameterFacetSort = ParameterFacetSort.descCount;
+  featureSort: ParameterFacetSort = ParameterFacetSort.descCount;
 
-  public categoryAutocomplete: string | undefined;
-  public featureAutocomplete: string | undefined;
-  public offeringAutocomplete: string | undefined;
-  public phenomenonAutocomplete: string | undefined;
-  public procedureAutocomplete: string | undefined;
+  categoryAutocomplete: string | undefined;
+  featureAutocomplete: string | undefined;
+  offeringAutocomplete: string | undefined;
+  phenomenonAutocomplete: string | undefined;
+  procedureAutocomplete: string | undefined;
 
-  public resultCount: number = 0;
-  public showMap = true;
-  public resetAllDisabled: boolean = false;
+  resultCount: number = 0;
+  showMap = true;
+  resetAllDisabled: boolean = false;
 
-  public selectedStart: Date | undefined;
-  public selectedEnd: Date | undefined;
+  selectedStart: Date | undefined;
+  selectedEnd: Date | undefined;
 
-  public mapId = 'facet-search-map';
+  mapId = 'facet-search-map';
 
   constructor() {
     this.translate.onLangChange.subscribe((_) => {
@@ -113,40 +113,37 @@ export class FacetSearchComponent {
     // })
   }
 
-  public onSelectedEntry(entry: FacetSearchElement) {
+  onSelectedEntry(entry: FacetSearchElement) {
     console.log(entry);
   }
 
-  public onSelectedFeature(elem: {
-    feature: FacetSearchElementFeature;
-    url: string;
-  }) {
+  onSelectedFeature(elem: { feature: FacetSearchElementFeature; url: string }) {
     console.log(elem);
   }
 
-  public toggleResultView() {
+  toggleResultView() {
     this.showMap = !this.showMap;
   }
 
-  public resetAllFacets() {
+  resetAllFacets() {
     this.facetSearch.resetAllFacets();
   }
 
-  public setStart(start: MatDatepickerInputEvent<Date>) {
+  setStart(start: MatDatepickerInputEvent<Date>) {
     if (start.value)
       this.facetSearch.setSelectedTimespan(
         new Timespan(start.value, this.selectedEnd),
       );
   }
 
-  public setEnd(end: MatDatepickerInputEvent<Date>) {
+  setEnd(end: MatDatepickerInputEvent<Date>) {
     if (end.value && this.selectedStart)
       this.facetSearch.setSelectedTimespan(
         new Timespan(this.selectedStart, end.value),
       );
   }
 
-  public setAutocomplete(acString: string | undefined, evt: any) {
+  setAutocomplete(acString: string | undefined, evt: any) {
     acString = evt.target.value;
   }
 

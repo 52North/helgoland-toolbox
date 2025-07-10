@@ -50,9 +50,9 @@ export class ListSelectionComponent implements OnInit {
   private configSrvc = inject(ConfigurationService);
   private errorHandler = inject(ErrorHandlerService);
 
-  public selectedService: HelgolandService | undefined;
+  selectedService: HelgolandService | undefined;
 
-  public filterList: ParameterListEntry[] = [];
+  filterList: ParameterListEntry[] = [];
 
   ngOnInit(): void {
     if (this.configSrvc.configuration.defaultService?.apiUrl) {

@@ -31,15 +31,15 @@ export class ExportPopupComponent {
     timespan: Timespan;
   }>(MAT_DIALOG_DATA);
 
-  public exportOptions!: ExportOptions;
-  public inputId: string;
-  public loading = false;
+  exportOptions!: ExportOptions;
+  inputId: string;
+  loading = false;
   // pre-define variable metadata to avoid errors (undefined)
-  public dataset: HelgolandTimeseries | undefined;
-  public disabled = false;
+  dataset: HelgolandTimeseries | undefined;
+  disabled = false;
 
-  public selectedStart: Date | undefined;
-  public selectedEnd: Date | undefined;
+  selectedStart: Date | undefined;
+  selectedEnd: Date | undefined;
 
   constructor() {
     this.inputId = this.data.id;
@@ -50,7 +50,7 @@ export class ExportPopupComponent {
     }
   }
 
-  public onCSVDownload() {
+  onCSVDownload() {
     this.onDownload(DownloadType.CSV);
   }
 
@@ -62,7 +62,7 @@ export class ExportPopupComponent {
    * Function that triggers the download of the data based on the specified parameters.
    * @param dwType {string} typy of the download file (csv or xlsx)
    */
-  public onDownload(dwType: DownloadType): void {
+  onDownload(dwType: DownloadType): void {
     if (this.selectedStart && this.selectedEnd) {
       this.exportOptions = {
         downloadType: dwType,
@@ -75,7 +75,7 @@ export class ExportPopupComponent {
    * Function that retrieves data about the selected dataset via inputId.
    * @param metadata {ExportData} information about the dataset
    */
-  public onMetadata(dataset: HelgolandTimeseries): void {
+  onMetadata(dataset: HelgolandTimeseries): void {
     if (!this.selectedStart && dataset.firstValue) {
       this.selectedStart = new Date(dataset.firstValue.timestamp);
     }
@@ -90,11 +90,11 @@ export class ExportPopupComponent {
    * Function indicating the download status.
    * @param loading {boolean} indicates loading of the download progress
    */
-  public onLoading(loading: boolean): void {
+  onLoading(loading: boolean): void {
     this.loading = loading;
   }
 
-  public onClose(): void {
+  onClose(): void {
     this.dialogRef.close('closes');
   }
 }

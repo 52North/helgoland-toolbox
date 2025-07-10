@@ -41,10 +41,10 @@ export class ModalMapSettingsComponent {
   private configSrvc = inject(ConfigurationService);
   protected mapConfig = inject<MapConfig>(MAT_DIALOG_DATA);
 
-  public datasetApis: DatasetApi[];
-  public blacklist: BlacklistedService[];
+  datasetApis: DatasetApi[];
+  blacklist: BlacklistedService[];
 
-  public filter: HelgolandParameterFilter = {
+  filter: HelgolandParameterFilter = {
     type: DatasetType.Timeseries,
     expanded: true,
   };
@@ -54,7 +54,7 @@ export class ModalMapSettingsComponent {
     this.blacklist = this.configSrvc.configuration?.providerBlackList || [];
   }
 
-  public serviceSelected(service: HelgolandService) {
+  serviceSelected(service: HelgolandService) {
     this.mapConfig.selectedService = service;
   }
 }

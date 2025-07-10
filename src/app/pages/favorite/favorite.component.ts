@@ -22,7 +22,7 @@ export class FavoriteComponent {
   private jsonExport = inject(JsonFavoriteExporterService);
   private servicesConnector = inject(HelgolandServicesConnector);
 
-  public favorites: ExtendedSingleFavorite[] = [];
+  favorites: ExtendedSingleFavorite[] = [];
 
   constructor() {
     this.servicesConnector
@@ -39,18 +39,18 @@ export class FavoriteComponent {
       });
   }
 
-  public changeLabelName(favorite: SingleFavorite) {
+  changeLabelName(favorite: SingleFavorite) {
     const newLabel = favorite.label + 'Test';
     this.favoriteSrvc.changeLabel(favorite, newLabel);
   }
 
-  public import(event: Event) {
+  import(event: Event) {
     this.jsonExport.importFavorites(event).subscribe(() => {
       this.loadFavorites();
     });
   }
 
-  public export() {
+  export() {
     this.jsonExport.exportFavorites();
   }
 
@@ -74,11 +74,11 @@ export class FavoriteComponent {
     });
   }
 
-  public createDatasetIdsArray(fav: ExtendedSingleFavorite) {
+  createDatasetIdsArray(fav: ExtendedSingleFavorite) {
     return [fav.favorite.internalId];
   }
 
-  public createDatasetOptions(fav: ExtendedSingleFavorite) {
+  createDatasetOptions(fav: ExtendedSingleFavorite) {
     const optionsMap = new Map<string, DatasetOptions>();
     optionsMap.set(fav.favorite.internalId, fav.options);
     return optionsMap;

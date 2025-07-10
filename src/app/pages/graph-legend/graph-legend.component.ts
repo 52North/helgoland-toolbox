@@ -95,7 +95,7 @@ export class GraphLegendComponent {
   protected timezoneSrvc = inject(TimezoneService);
   protected pointSymbolDrawer = inject(D3PointSymbolDrawerService);
 
-  public datasetIds = [
+  datasetIds = [
     'https://fluggs.wupperverband.de/sws5/api/__26',
     'https://fluggs.wupperverband.de/sws5/api/__49',
     'https://fluggs.wupperverband.de/sws5/api/__51',
@@ -111,15 +111,15 @@ export class GraphLegendComponent {
     // 'http://nexos.dev.52north.org/52n-sos-upc/api/timeseries/46',
     // 'http://mudak-wrm.dev.52north.org/sos/api/__70'
   ];
-  public reloadForDatasets: string[] = [];
-  public timespan;
-  public yaxisModifier = true;
+  reloadForDatasets: string[] = [];
+  timespan;
+  yaxisModifier = true;
 
-  public hoveringService = new HoveringTestService();
+  hoveringService = new HoveringTestService();
 
-  public loadings: Set<string> = new Set();
+  loadings: Set<string> = new Set();
 
-  public d3diagramOptions: D3PlotOptions = {
+  d3diagramOptions: D3PlotOptions = {
     showReferenceValues: true,
     togglePanZoom: true,
     generalizeAllways: false,
@@ -138,29 +138,29 @@ export class GraphLegendComponent {
     groupYaxis: true,
   };
 
-  public d3overviewOptions: D3PlotOptions = {
+  d3overviewOptions: D3PlotOptions = {
     overview: true,
     hoverStyle: HoveringStyle.none,
     yaxis: false,
   };
 
-  public datasetOptions: Map<string, DatasetOptions> = new Map();
-  public datasetOptionsOne: Map<string, DatasetOptions> = new Map();
+  datasetOptions: Map<string, DatasetOptions> = new Map();
+  datasetOptionsOne: Map<string, DatasetOptions> = new Map();
 
-  public highlightId: string | undefined;
+  highlightId: string | undefined;
 
-  public selectedIds: string[] = [];
+  selectedIds: string[] = [];
 
-  public overviewLoading = false;
-  public graphLoading = false;
+  overviewLoading = false;
+  graphLoading = false;
 
-  public hoverstyle: HoveringStyle = HoveringStyle.point;
-  public HoveringStyleEnum = HoveringStyle;
-  public highlightedTime: Date | undefined;
+  hoverstyle: HoveringStyle = HoveringStyle.point;
+  HoveringStyleEnum = HoveringStyle;
+  highlightedTime: Date | undefined;
 
   // parameters to auto update timespan on click
-  public timeIntervalUpdateTimespan = 100000; // milliseconds of time
-  public refreshIntervalUpdateTimespan = 2; // seconds to refresh again
+  timeIntervalUpdateTimespan = 100000; // milliseconds of time
+  refreshIntervalUpdateTimespan = 2; // seconds to refresh again
 
   constructor() {
     this.datasetIds.forEach((entry) => {
@@ -178,70 +178,70 @@ export class GraphLegendComponent {
     );
   }
 
-  public timespanChanged(timespan: Timespan) {
+  timespanChanged(timespan: Timespan) {
     this.timespan = timespan;
   }
 
-  public isSelected(id: string) {
+  isSelected(id: string) {
     return this.selectedIds.indexOf(id) > -1;
   }
 
-  public showGeometry(geometry: GeoJSON.GeoJsonObject) {
+  showGeometry(geometry: GeoJSON.GeoJsonObject) {
     this.dialog.open(GeometryViewComponent, {
       data: geometry,
     });
   }
 
-  public refreshData() {
+  refreshData() {
     this.reloadForDatasets = [this.datasetIds[0]];
   }
 
-  public highlight(selected: boolean, id: string) {
+  highlight(selected: boolean, id: string) {
     this.highlightId = id;
   }
 
-  public setSelected(selectedIds: string[]) {
+  setSelected(selectedIds: string[]) {
     this.selectedIds = selectedIds;
   }
 
-  public deleteTimeseries(id: string) {
+  deleteTimeseries(id: string) {
     const idx = this.datasetIds.findIndex((entry) => entry === id);
     this.datasetIds.splice(idx, 1);
     this.datasetOptions.delete(id);
   }
 
-  public changeYAxesVisibility() {
+  changeYAxesVisibility() {
     this.d3diagramOptions.yaxis = !this.d3diagramOptions.yaxis;
   }
 
-  public updateOptions(option: DatasetOptions) {
+  updateOptions(option: DatasetOptions) {
     this.datasetOptions.set(option.internalId, option);
   }
 
-  public onGraphLoading(loading: boolean) {
+  onGraphLoading(loading: boolean) {
     this.graphLoading = loading;
   }
 
-  public listLoadings() {
+  listLoadings() {
     return Array.from(this.loadings);
   }
 
-  public onOverviewLoading(loading: boolean) {
+  onOverviewLoading(loading: boolean) {
     this.overviewLoading = loading;
     this.cdr.detectChanges();
   }
 
-  public editOption(option: DatasetOptions) {
+  editOption(option: DatasetOptions) {
     this.dialog.open(StyleModificationComponent, {
       data: option,
     });
   }
 
-  public dateChanged(date: Date) {
+  dateChanged(date: Date) {
     this.timespan = this.time.centerTimespan(this.timespan, date);
   }
 
-  public selectTimeseries(selected: boolean, id: string) {
+  selectTimeseries(selected: boolean, id: string) {
     if (selected) {
       if (this.selectedIds.indexOf(id) < 0) {
         this.selectedIds.push(id);
@@ -256,20 +256,20 @@ export class GraphLegendComponent {
     }
   }
 
-  // public refresh(triggered) {
+  // refresh(triggered) {
   //     console.log('refresh at ' + new Date());
   // }
 
-  public groupYaxisChanged() {
+  groupYaxisChanged() {
     this.d3diagramOptions.groupYaxis = !this.d3diagramOptions.groupYaxis;
   }
 
-  public changeHovering(id: HoveringStyle) {
+  changeHovering(id: HoveringStyle) {
     this.hoverstyle = id;
     this.d3diagramOptions.hoverStyle = this.hoverstyle;
   }
 
-  public highlightChanged(highlightObject: HighlightOutput) {
+  highlightChanged(highlightObject: HighlightOutput) {
     this.highlightedTime = new Date(highlightObject.timestamp);
   }
 
@@ -277,7 +277,7 @@ export class GraphLegendComponent {
    * Function that is executed as soons as a hovered datapoint is clicked.
    * @param tsData {TimeseriesData[]} array of various timeseries with data at the same timestamp
    */
-  public clickedDataPoint(tsData: {
+  clickedDataPoint(tsData: {
     timeseries: HelgolandTimeseries;
     data: HelgolandTimeseriesData;
   }) {
@@ -309,7 +309,7 @@ export class GraphLegendComponent {
     // });
   }
 
-  public openDownload(id: String) {
+  openDownload(id: String) {
     this.dialog.open(ExportPopupComponent, {
       data: {
         id,

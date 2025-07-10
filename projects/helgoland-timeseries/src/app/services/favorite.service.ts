@@ -17,7 +17,7 @@ export class FavoriteService {
   private favoriteServices =
     inject(DATASET_FAVORITE_SERVICE_INJECTION, { optional: true }) ?? [];
 
-  public countChange: BehaviorSubject<number> = new BehaviorSubject(0);
+  countChange: BehaviorSubject<number> = new BehaviorSubject(0);
 
   constructor() {
     this.updateFavCount();

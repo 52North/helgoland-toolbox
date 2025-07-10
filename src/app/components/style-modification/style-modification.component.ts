@@ -20,16 +20,16 @@ export class StyleModificationComponent {
   dialogRef = inject<MatDialogRef<StyleModificationComponent>>(MatDialogRef);
   option = inject<DatasetOptions>(MAT_DIALOG_DATA);
 
-  public color: string | undefined;
-  public generalize: boolean | undefined;
-  public zeroBasedYAxis: boolean | undefined;
-  public autoRangeSelection: boolean | undefined;
-  public separateYAxis: boolean | undefined;
-  public pointRadius: number;
-  public lineWidth: number;
-  public range: MinMaxRange | undefined;
+  color: string | undefined;
+  generalize: boolean | undefined;
+  zeroBasedYAxis: boolean | undefined;
+  autoRangeSelection: boolean | undefined;
+  separateYAxis: boolean | undefined;
+  pointRadius: number;
+  lineWidth: number;
+  range: MinMaxRange | undefined;
 
-  public colorList: string[];
+  colorList: string[];
 
   constructor() {
     this.colorList = ['#FF0000', '#00FF00', '#0000FF'];
@@ -42,13 +42,13 @@ export class StyleModificationComponent {
     this.separateYAxis = this.option.separateYAxis;
   }
 
-  public updateRange(range: MinMaxRange | void) {
+  updateRange(range: MinMaxRange | void) {
     if (range) {
       this.range = range;
     }
   }
 
-  public onOk() {
+  onOk() {
     if (this.color) {
       this.option.color = this.color;
     }
@@ -62,7 +62,7 @@ export class StyleModificationComponent {
     this.dialogRef.close(this.option);
   }
 
-  public setColor(color: string) {
+  setColor(color: string) {
     this.color = color;
   }
 }

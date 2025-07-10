@@ -11,11 +11,11 @@ export class GeometryViewComponent {
   dialogRef = inject<MatDialogRef<GeometryViewComponent>>(MatDialogRef);
   geometry = inject<GeoJSON.GeoJsonObject>(MAT_DIALOG_DATA);
 
-  public mapOptions: L.MapOptions = {
+  mapOptions: L.MapOptions = {
     maxZoom: 15,
   };
 
-  public onOk() {
+  onOk() {
     this.dialogRef.close();
   }
 }
