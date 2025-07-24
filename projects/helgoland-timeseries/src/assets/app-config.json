@@ -1,27 +1,12 @@
 {
     "defaultService": {
         "serviceId": "1",
-        "apiUrl": "https://fluggs.wupperverband.de/sws5/api/"
+            "apiUrl": "https://mdpu-lung.docker.srv.int.52north.org/FROST-Server/v1.1/"
     },
     "datasetApis": [
         {
-            "name": "geo.irceline.be",
-            "url": "https://geo.irceline.be/sos/api/v1/"
-        },
-        {
-            "name": "fluggs.wupperverband.de",
-            "url": "https://fluggs.wupperverband.de/sws5/api/"
-        },
-        {
-            "name": "STA-Test",
-            "url": "https://calgary-aq-sta.sensorup.com/v1.0/"
-        },
-        {
-            "name": "Pegelonline WSV",
-            "url": "https://pegelonline-testprev.wsv.de/webservices/nutzer/rest-api/v2/",
-            "basicAuth": true,
-            "basicAuthPostFix": "stations",
-            "connector": "PegelonlineApiConnector"
+            "name": "https://mdpu-lung.docker.srv.int.52north.org/FROST-Server/v1.1/",
+            "url": "https://mdpu-lung.docker.srv.int.52north.org/FROST-Server/v1.1/"
         }
     ],
     "languages": [

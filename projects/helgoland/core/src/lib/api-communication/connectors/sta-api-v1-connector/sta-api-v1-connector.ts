@@ -204,13 +204,13 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     if (params) {
       const filterList: string[] = [];
       if (params.category) {
-        filterList.push(`id eq ${params.category}`);
+        filterList.push(`id eq '${params.category}'`);
       }
       if (params.feature) {
-        filterList.push(`Datastreams/Thing/Locations/id eq ${params.feature}`);
+        filterList.push(`Datastreams/Thing/Locations/id eq '${params.feature}'`);
       }
       if (params.procedure) {
-        filterList.push(`Datastreams/Sensor/id eq ${params.procedure}`);
+        filterList.push(`Datastreams/Sensor/id eq '${params.procedure}'`);
       }
       return this.createFilter(filterList);
     }
@@ -253,15 +253,15 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
       const filterList: string[] = [];
       if (params.category) {
         filterList.push(
-          `Datastreams/ObservedProperty/id eq ${params.category}`,
+          `Datastreams/ObservedProperty/id eq '${params.category}'`,
         );
       }
       if (params.feature) {
-        filterList.push(`Datastreams/Thing/Locations/id eq ${params.feature}`);
+        filterList.push(`Datastreams/Thing/Locations/id eq '${params.feature}'`);
       }
       if (params.phenomenon) {
         filterList.push(
-          `Datastreams/ObservedProperty/id eq ${params.phenomenon}`,
+          `Datastreams/ObservedProperty/id eq '${params.phenomenon}'`,
         );
       }
       return this.createFilter(filterList);
@@ -303,16 +303,16 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
       const filterList: string[] = [];
       if (params.category) {
         filterList.push(
-          `Things/Datastreams/ObservedProperty/id eq ${params.category}`,
+          `Things/Datastreams/ObservedProperty/id eq '${params.category}'`,
         );
       }
       if (params.phenomenon) {
         filterList.push(
-          `Things/Datastreams/ObservedProperty/id eq ${params.phenomenon}`,
+          `Things/Datastreams/ObservedProperty/id eq '${params.phenomenon}'`,
         );
       }
       if (params.procedure) {
-        filterList.push(`Things/Datastreams/Sensor/id eq ${params.procedure}`);
+        filterList.push(`Things/Datastreams/Sensor/id eq '${params.procedure}'`);
       }
       return this.createFilter(filterList);
     }
@@ -370,13 +370,13 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     if (params) {
       const filterList: string[] = [];
       if (params.phenomenon) {
-        filterList.push(`id eq ${params.phenomenon}`);
+        filterList.push(`id eq ${params.phenomenon}'`);
       }
       if (params.feature) {
-        filterList.push(`Datastreams/Thing/Locations/id eq ${params.feature}`);
+        filterList.push(`Datastreams/Thing/Locations/id eq '${params.feature}'`);
       }
       if (params.procedure) {
-        filterList.push(`Datastreams/Sensor/id eq ${params.procedure}`);
+        filterList.push(`Datastreams/Sensor/id eq '${params.procedure}'`);
       }
       return this.createFilter(filterList);
     }
@@ -388,7 +388,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
   ): StaFilter<LocationSelectParams, LocationExpandParams> {
     if (filter && filter.phenomenon) {
       return {
-        $filter: `Things/Datastreams/ObservedProperty/id eq ${filter.phenomenon}`,
+        $filter: `Things/Datastreams/ObservedProperty/id eq '${filter.phenomenon}'`,
       };
     }
     return {};
@@ -467,16 +467,16 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     if (params) {
       const filterList: string[] = [];
       if (params.phenomenon) {
-        filterList.push(`ObservedProperty/id eq ${params.phenomenon}`);
+        filterList.push(`ObservedProperty/id eq '${params.phenomenon}'`);
       }
       if (params.category) {
-        filterList.push(`ObservedProperty/id eq ${params.category}`);
+        filterList.push(`ObservedProperty/id eq '${params.category}'`);
       }
       if (params.procedure) {
-        filterList.push(`Sensor/id eq ${params.procedure}`);
+        filterList.push(`Sensor/id eq '${params.procedure}'`);
       }
       if (params.feature) {
-        filterList.push(`Thing/Locations/id eq ${params.feature}`);
+        filterList.push(`Thing/Locations/id eq '${params.feature}'`);
       }
       filter = this.createFilter(filterList);
     }
@@ -728,7 +728,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
       url,
       DEFAULT_SERVICE_LABEL,
       'STA',
-      '1.0',
+      '1.1',
       {
         categories: 0,
         features: 0,
