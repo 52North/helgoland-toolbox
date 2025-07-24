@@ -634,9 +634,10 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     refValues: ReferenceValue[],
     url: string,
   ): HelgolandTimeseries {
-    if (ds['@iot.id'] && ds.unitOfMeasurement?.symbol && ds.Thing?.Locations) {
+    if (ds['@iot.id'] && ds.Thing?.Locations) {
       const id = ds['@iot.id'];
-      const symbol = ds.unitOfMeasurement?.symbol;
+      // Symbol is null for "einheitenlose" parameters such as pH-Value
+      const symbol = ds.unitOfMeasurement?.symbol ?? " ";
       const platform = this.createHelgolandPlatform(ds.Thing.Locations[0]);
       const parameter = this.createTsParameter(ds, ds.Thing);
       const name = this.createTimeseriesName(ds, parameter);
