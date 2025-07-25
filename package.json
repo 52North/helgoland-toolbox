@@ -1,6 +1,6 @@
 {
   "name": "helgoland-toolbox",
-  "version": "17.0.1",
+  "version": "20.0.0",
   "description": "Helgoland toolbox",
   "license": "Apache-2.0",
   "keywords": [
@@ -45,7 +45,7 @@
     "versions-script": "node scripts/git.version.js",
     "preversion": "npm run license-report && ng lint",
     "version": "npm run lib:build && git add -A .",
-    "postversion": "git push && git push --tags && npm run lib:publish",
+    "_postversion": "git push && git push --tags && npm run lib:publish",
     "bundle-war": "node scripts/bundle-war.js",
     "i18n": "npm run i18n:extract:common && npm run i18n:extract:timeseries && npm run i18n:extract:trajectories",
     "i18n:extract:common": "ngx-translate-extract --input ./projects/helgoland-common/src --output ./projects/helgoland-common/src/i18n/*.json --clean --format --sort",

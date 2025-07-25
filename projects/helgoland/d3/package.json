@@ -1,6 +1,6 @@
 {
   "name": "@helgoland/d3",
-  "version": "17.0.1",
+  "version": "20.0.0",
   "dependencies": {
     "@angular/common": "^20.0.0",
     "@angular/core": "^20.0.0",
