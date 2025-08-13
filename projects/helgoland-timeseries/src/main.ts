@@ -45,7 +45,6 @@ import {
   AppConfig,
   ConfigurationService,
 } from './app/services/configuration.service';
-import { DummyDatasetsService } from './app/services/dummy-datasets.service';
 import {
   DATASET_FAVORITE_SERVICE_INJECTION,
   DATASET_STATE_SERVICE_INJECTION,
@@ -156,16 +155,16 @@ bootstrapApplication(AppComponent, {
       useExisting: TimeseriesService,
       multi: true,
     },
-    {
-      provide: DATASET_STATE_SERVICE_INJECTION,
-      useExisting: DummyDatasetsService,
-      multi: true,
-    },
-    {
-      provide: DATASET_FAVORITE_SERVICE_INJECTION,
-      useExisting: DummyDatasetsService,
-      multi: true,
-    },
+    // {
+    //   provide: DATASET_STATE_SERVICE_INJECTION,
+    //   useExisting: DummyDatasetsService,
+    //   multi: true,
+    // },
+    // {
+    //   provide: DATASET_FAVORITE_SERVICE_INJECTION,
+    //   useExisting: DummyDatasetsService,
+    //   multi: true,
+    // },
     {
       provide: DatasetApiInterface,
       useClass: SplittedDataDatasetApiInterface,
