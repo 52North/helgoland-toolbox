@@ -69,7 +69,7 @@
               <mat-icon color="accent">remove_done</mat-icon>
             </button>
           }
-          @if (mainContentType === "diagram") {
+          @if (mainContentType === "diagram" && dataTableVisible) {
             <button
               mat-icon-button
               attr.aria-label="{{

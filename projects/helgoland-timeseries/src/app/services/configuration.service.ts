@@ -6,6 +6,7 @@ import { lastValueFrom, tap } from 'rxjs';
 export interface AppConfig extends Settings {
   supportTimeseriesSymbols: boolean;
   daysForOldTimespanCheck: number;
+  dataTableVisible: boolean;
 }
 
 @Injectable({
