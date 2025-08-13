@@ -234,10 +234,12 @@ export class TimeseriesServiceImpl
 
   addFavoriteToDiagram(fav: Favorite) {
     const dsId = fav.id.substring(FAVORITE_PREFIX.length);
-    const entry = this.favorites[fav.id];
-    const style = this.getStyleOfObject(entry.style);
-    const yaxis = this.getYAxisOfObject(entry.yAxis);
-    this.addDatasetbyId(dsId, style, yaxis);
+    if (!this.datasetMap.has(dsId)) {
+      const entry = this.favorites[fav.id];
+      const style = this.getStyleOfObject(entry.style);
+      const yaxis = this.getYAxisOfObject(entry.yAxis);
+      this.addDatasetbyId(dsId, style, yaxis);
+    }
   }
 
   removeFavorite(id: string) {
