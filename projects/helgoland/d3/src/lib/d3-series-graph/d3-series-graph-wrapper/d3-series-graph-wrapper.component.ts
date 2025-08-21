@@ -42,10 +42,9 @@ import { HighlightOutput } from '../models/d3-highlight';
 import { D3PlotOptions, HoveringStyle } from '../models/d3-plot-options';
 import {
   AxisSettings,
-  DatasetChild,
   DatasetDescription,
   DatasetStyle,
-  SeriesGraphDataset,
+  SeriesGraphDataset
 } from '../models/series-graph-dataset';
 
 @Component({
@@ -240,7 +239,7 @@ export class D3SeriesGraphWrapperComponent
             (e) => e.id === child.id,
           );
           if (ref) {
-            child.setColor(ref.color);
+            // child.setColor(ref.color);
             child.setVisible(true, false);
           } else {
             child.setVisible(false, false);
@@ -284,15 +283,16 @@ export class D3SeriesGraphWrapperComponent
           const refVis = !!options.showReferenceValues.find(
             (ref) => ref.id === refVal.referenceValueId,
           );
-          dsEntry!.addChild(
-            new DatasetChild(
-              refVal.referenceValueId,
-              refVal.label,
-              refVis,
-              [],
-              '',
-            ),
-          );
+          debugger;
+          // dsEntry!.addChild(
+          //   new DatasetChild(
+          //     refVal.referenceValueId,
+          //     refVal.label,
+          //     refVis,
+          //     [],
+          //     '',
+          //   ),
+          // );
         });
         this.datasets.push(dsEntry);
       }
@@ -432,9 +432,10 @@ export class D3SeriesGraphWrapperComponent
     if (ds.children && ds.children.length) {
       ds.children.forEach((child) => {
         const refVals = rawdata.referenceValues[child.id];
-        if (refVals) {
-          child.setData(this.createReferenceValueData(rawdata, child.id));
-        }
+        debugger;
+        // if (refVals) {
+        //   child.setData(this.createReferenceValueData(rawdata, child.id));
+        // }
       });
     }
   }

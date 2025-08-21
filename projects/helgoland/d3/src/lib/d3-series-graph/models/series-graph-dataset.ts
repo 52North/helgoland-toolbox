@@ -1,4 +1,5 @@
 import { FirstLastValue, MinMaxRange, PointSymbol } from '@helgoland/core';
+import { extent } from 'd3';
 import { Duration, duration, unitOfTime } from 'moment';
 import { Subject } from 'rxjs';
 
@@ -127,15 +128,13 @@ export interface DatasetDescription {
   lastValue?: FirstLastValue;
 }
 
-export class DatasetChild {
+export abstract class DatasetChild {
   stateChangeEvent: Subject<void> = new Subject();
 
   constructor(
-    private _id: string,
-    private _label: string,
-    private _visible: boolean,
-    private _data: GraphDataEntry[],
-    private _color: string,
+    protected _id: string,
+    protected _label: string,
+    protected _visible: boolean,
   ) {}
 
   get id(): string {
@@ -153,12 +152,36 @@ export class DatasetChild {
     }
   }
 
+  get label(): string {
+    return this._label;
+  }
+
+  abstract getDataExtent(): [number, number] | [undefined, undefined];
+}
+
+export class TimeseriesChild extends DatasetChild {
+  constructor(
+    protected override _id: string,
+    protected override _label: string,
+    protected override _visible: boolean,
+    private _data: GraphDataEntry[],
+    private _color: string,
+  ) {
+    super(_id, _label, _visible);
+  }
+
   get data(): GraphDataEntry[] {
     return this._data;
   }
 
   setData(data: GraphDataEntry[]) {
     this._data = data;
+  }
+
+  override getDataExtent() {
+    return extent<GraphDataEntry, number>(this.data, (d) =>
+      typeof d.value === 'number' ? d.value : null,
+    );
   }
 
   get color(): string {
@@ -168,9 +191,51 @@ export class DatasetChild {
   setColor(color: string) {
     this._color = color;
   }
+}
 
-  get label(): string {
-    return this._label;
+export interface AreaDatasetChildDataEntry {
+  timestamp: number;
+  values: (number | null)[];
+}
+
+export interface AreaDatasetChildStyle {
+  color: string;
+}
+
+export class AreaDatasetChild extends DatasetChild {
+  private _data: AreaDatasetChildDataEntry[] = [];
+
+  constructor(
+    protected override _id: string,
+    protected override _label: string,
+    protected override _visible: boolean,
+    private _styles: AreaDatasetChildStyle[],
+  ) {
+    super(_id, _label, _visible);
+  }
+
+  public get data() {
+    return this._data;
+  }
+
+  public get styles(): AreaDatasetChildStyle[] {
+    return this._styles;
+  }
+
+  override getDataExtent() {
+    const values: number[] = [];
+    this._data.forEach((e) => {
+      e.values.forEach((v) => {
+        if (v !== null) {
+          values.push(v);
+        }
+      });
+    });
+    return extent(values);
+  }
+
+  setData(data: AreaDatasetChildDataEntry[]) {
+    this._data = data;
   }
 }
 
@@ -183,6 +248,8 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
   stateChangeEvent: Subject<SeriesGraphDataset> = new Subject();
   dataChangeEvent: Subject<SeriesGraphDataset> = new Subject();
   deleteEvent: Subject<SeriesGraphDataset> = new Subject();
+
+  additional?: any;
 
   constructor(
     private _id: string,

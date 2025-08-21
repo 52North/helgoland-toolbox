@@ -18,11 +18,11 @@ import {
   BarStyle,
   D3SeriesGraphErrorHandler,
   D3SeriesSimpleGraphErrorHandler,
-  DatasetChild,
   DatasetStyle,
   GraphDataEntry,
   LineStyle,
   SeriesGraphDataset,
+  TimeseriesChild,
 } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 import { Duration, duration, unitOfTime } from 'moment';
@@ -352,14 +352,15 @@ export class TimeseriesServiceImpl
         this.saveState();
       });
       ts.referenceValues?.forEach((ref) => {
-        const child = new DatasetChild(
-          ref.referenceValueId,
-          ref.label,
-          ref.visible || false,
-          [],
-          this.colorService.getColor(),
+        dataset.addChild(
+          new TimeseriesChild(
+            ref.referenceValueId,
+            ref.label,
+            ref.visible || false,
+            [],
+            this.colorService.getColor(),
+          ),
         );
-        dataset.addChild(child);
       });
       this.loadDatasetData(ts.internalId);
     } else {
@@ -598,9 +599,11 @@ export class TimeseriesServiceImpl
   ) {
     if (ds.children && ds.children.length) {
       ds.children.forEach((child) => {
-        const refVals = rawdata.referenceValues[child.id];
-        if (refVals) {
-          child.setData(this.createReferenceValueData(rawdata, child.id));
+        if (child instanceof TimeseriesChild) {
+          const refVals = rawdata.referenceValues[child.id];
+          if (refVals) {
+            child.setData(this.createReferenceValueData(rawdata, child.id));
+          }
         }
       });
     }

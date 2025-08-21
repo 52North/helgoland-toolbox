@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { HelgolandCoreModule, Time, TimeInterval } from '@helgoland/core';
-import { SeriesGraphDataset } from '@helgoland/d3';
+import { AreaDatasetChild, SeriesGraphDataset, TimeseriesChild } from '@helgoland/d3';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LoadingOverlayProgressBarComponent } from 'helgoland-common';
@@ -99,6 +99,14 @@ export class DatasetLegendEntryComponent {
     if (dataset.description.lastValue) {
       this.selectDate.emit(new Date(dataset.description.lastValue.timestamp));
     }
+  }
+
+  getTimeseriesDatasetChildren() {
+    return this.dataset().children.filter((e) => e instanceof TimeseriesChild);
+  }
+
+  getAreaDatasetChildren() {
+    return this.dataset().children.filter((e) => e instanceof AreaDatasetChild);
   }
 
   private checkDataInTimespan() {

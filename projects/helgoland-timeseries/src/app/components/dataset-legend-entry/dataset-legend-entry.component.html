@@ -176,9 +176,10 @@
           </div>
         </div>
       }
-      @if (dataset().children.length > 0) {
+      <!-- Reference values -->
+      @if (getTimeseriesDatasetChildren().length > 0) {
         <div>{{ "diagram-view.legend-reference-values" | translate }}:</div>
-        @for (child of dataset().children; track child) {
+        @for (child of getTimeseriesDatasetChildren(); track child) {
           <div>
             <mat-slide-toggle
               [checked]="child.visible"

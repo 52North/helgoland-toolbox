@@ -46,10 +46,13 @@ import { D3GraphExtent, D3GraphObserver } from './d3-series-graph-control';
 import { HighlightOutput } from './models/d3-highlight';
 import { HoveringStyle } from './models/d3-plot-options';
 import {
+  AreaDatasetChild,
+  AreaDatasetChildDataEntry,
   BarStyle,
   GraphDataEntry,
   LineStyle,
   SeriesGraphDataset,
+  TimeseriesChild,
 } from './models/series-graph-dataset';
 
 const TICKS_COUNT_YAXIS = 5;
@@ -436,11 +439,7 @@ export class D3SeriesGraphComponent
 
       const dataExtentChildValues = entry.children
         .filter((c) => c.visible)
-        .map((e) =>
-          d3.extent<DataEntry, number>(e.data, (d) =>
-            typeof d.value === 'number' ? d.value : null,
-          ),
-        );
+        .map((e) => e.getDataExtent());
 
       if (visualMin === undefined) {
         visualMin = d3.min(
@@ -511,7 +510,7 @@ export class D3SeriesGraphComponent
    * Just sets the timespan, which is used for the diagram visualisation
    */
   setTimespan(timespan: Timespan) {
-    debugger;
+    // debugger;
     // this.timespan = timespan;
   }
 
@@ -1243,11 +1242,15 @@ export class D3SeriesGraphComponent
             );
             break;
           case LineStyle:
-            entry.children.forEach(
-              (e) =>
-                e.visible &&
-                this.drawRefLineChart(e.data, e.color, 1, yaxis.yScale!),
-            );
+            entry.children.forEach((e) => {
+              if (e.visible) {
+                if (e instanceof TimeseriesChild) {
+                  this.drawRefLineChart(e.data, e.color, 1, yaxis.yScale!);
+                } else if (e instanceof AreaDatasetChild) {
+                  this.drawAreaDatasetChild(e, yaxis.yScale!);
+                }
+              }
+            });
             this.drawLineChart(
               entry as SeriesGraphDataset<LineStyle>,
               idx,
@@ -1256,6 +1259,43 @@ export class D3SeriesGraphComponent
             break;
         }
       }
+    }
+  }
+
+  private drawAreaDatasetChild(
+    e: AreaDatasetChild,
+    yScaleBase: d3.ScaleLinear<number, number>,
+  ) {
+    for (let i = 0; i < e.styles.length; i++) {
+      const idx1 = i;
+      const idx2 = i + 1;
+
+      const area = d3
+        .area<AreaDatasetChildDataEntry>()
+        .defined((d) => {
+          return (
+            !isNaN(d.timestamp) &&
+            d.values[idx1] !== null &&
+            !isNaN(d.values[idx1]) &&
+            d.values[idx2] !== null &&
+            !isNaN(d.values[idx2])
+          );
+        })
+        .x((d) => this.xScaleBase!(d.timestamp))
+        .y0((d) => {
+          return yScaleBase(d.values[idx1]!);
+        })
+        .y1((d) => {
+          return yScaleBase(d.values[idx2]!);
+        })
+        .curve(d3.curveLinear);
+
+      this.graphBody
+        .append('svg:path')
+        .datum(e.data)
+        .attr('class', 'area')
+        .attr('fill', e.styles[i].color)
+        .attr('d', area);
     }
   }
 
