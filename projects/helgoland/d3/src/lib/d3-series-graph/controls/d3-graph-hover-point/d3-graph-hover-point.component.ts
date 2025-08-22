@@ -235,30 +235,32 @@ export class D3GraphHoverPointComponent
 
     this.datasets?.forEach((ds, i) => {
       if (ds.style instanceof LineStyle && ds.visible) {
-        const data = this.data!.get(ds.id)!;
-        const delaunay = Delaunay.from(
-          data,
-          (d) => d.xDiagCoord!,
-          (d) => d.yDiagCoord!,
-        );
-        const idx = delaunay.find(x, y);
-
-        if (idx != null && !isNaN(idx) && this.graphLayer) {
-          const datum = data[idx] as DataEntry;
-          const distance = this.distance(
-            datum.xDiagCoord!,
-            datum.yDiagCoord!,
-            x,
-            y,
+        const data = this.data?.get(ds.id);
+        if (data) {
+          const delaunay = Delaunay.from(
+            data,
+            (d) => d.xDiagCoord!,
+            (d) => d.yDiagCoord!,
           );
-          if (distance <= MAXIMUM_POINT_DISTANCE && distance < nearestDist) {
-            const id = `dot-${datum.timestamp}-${i}`;
-            nearest = {
-              selection: this.graphLayer.select(`#${id}`),
-              dataset: ds,
-              dataEntry: datum,
-            };
-            nearestDist = distance;
+          const idx = delaunay.find(x, y);
+  
+          if (idx != null && !isNaN(idx) && this.graphLayer) {
+            const datum = data[idx] as DataEntry;
+            const distance = this.distance(
+              datum.xDiagCoord!,
+              datum.yDiagCoord!,
+              x,
+              y,
+            );
+            if (distance <= MAXIMUM_POINT_DISTANCE && distance < nearestDist) {
+              const id = `dot-${datum.timestamp}-${i}`;
+              nearest = {
+                selection: this.graphLayer.select(`#${id}`),
+                dataset: ds,
+                dataEntry: datum,
+              };
+              nearestDist = distance;
+            }
           }
         }
       }
