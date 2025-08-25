@@ -2,10 +2,10 @@ import { Injectable, inject } from '@angular/core';
 import { LocalStorage } from '@helgoland/core';
 import {
   AxisSettings,
-  DatasetChild,
   DatasetStyle,
   LineStyle,
   SeriesGraphDataset,
+  TimeseriesChild
 } from '@helgoland/d3';
 
 import { Favorite } from './favorite.service';
@@ -29,7 +29,7 @@ export class DummyDatasetsService
 
   private addRandomDataset() {
     const dummyDataset = this.createNewDataset('blue');
-    const child = new DatasetChild(
+    const child = new TimeseriesChild(
       DATASET_ID,
       'ChildData',
       false,
