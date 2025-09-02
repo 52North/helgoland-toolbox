@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Settings, SettingsService } from '@helgoland/core';
-import { lastValueFrom, tap } from 'rxjs';
 
 export interface AppConfig extends Settings {
   supportTimeseriesSymbols: boolean;
@@ -15,19 +13,14 @@ export interface AppConfig extends Settings {
 export class ConfigurationService<
   T extends AppConfig = AppConfig,
 > extends SettingsService<T> {
-  private http = inject(HttpClient);
+  private _configuration!: T;
 
-  private readonly CONFIGURATION_URL = './assets/app-config.json';
+  public get configuration(): T {
+    return this._configuration;
+  }
 
-  configuration!: T;
-
-  loadConfiguration(): Promise<T> {
-    const request = this.http.get<T>(this.CONFIGURATION_URL).pipe(
-      tap((configuration) => {
-        this.setSettings(configuration);
-        this.configuration = configuration;
-      }),
-    );
-    return lastValueFrom(request);
+  public set configuration(config: T) {
+    this._configuration = config;
+    this.setSettings(config);
   }
 }

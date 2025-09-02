@@ -4,6 +4,7 @@ import { registerLocaleData } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import localeDe from '@angular/common/locales/de';
 import {
+  ApplicationConfig,
   enableProdMode,
   importProvidersFrom,
   inject,
@@ -69,111 +70,127 @@ export class AppTranslateLoader implements TranslateLoader {
 }
 
 export function initApplication(
+  config: AppConfig,
   configService: ConfigurationService,
   translate: TranslateService,
   localStorage: LocalStorage,
 ): () => Promise<void> {
-  return () =>
-    configService.loadConfiguration().then((config: AppConfig) => {
-      const localStorageLanguageKey = 'client-language';
-      registerLocaleData(localeDe);
-      let lang = translate.getBrowserLang() || 'en';
-      const storedLang = localStorage.load(localStorageLanguageKey) as string;
-      if (storedLang) {
-        lang = storedLang;
+  return () => {
+    configService.configuration = config;
+    const localStorageLanguageKey = 'client-language';
+    registerLocaleData(localeDe);
+    let lang = translate.getBrowserLang() || 'en';
+    const storedLang = localStorage.load(localStorageLanguageKey) as string;
+    if (storedLang) {
+      lang = storedLang;
+    }
+    const url = window.location.href;
+    const name = 'locale';
+    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+    const results = regex.exec(url);
+    if (results && results[2]) {
+      const match = config.languages?.find((e) => e.code === results[2]);
+      if (match) {
+        lang = match.code;
       }
-      const url = window.location.href;
-      const name = 'locale';
-      const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-      const results = regex.exec(url);
-      if (results && results[2]) {
-        const match = config.languages?.find((e) => e.code === results[2]);
-        if (match) {
-          lang = match.code;
-        }
-      }
-      translate.setDefaultLang(lang);
-      translate.onLangChange.subscribe((lce) => {
-        localStorage.save(localStorageLanguageKey, lce.lang);
-      });
-      return firstValueFrom(translate.use(lang));
+    }
+    translate.setDefaultLang(lang);
+    translate.onLangChange.subscribe((lce) => {
+      localStorage.save(localStorageLanguageKey, lce.lang);
     });
+    return firstValueFrom(translate.use(lang));
+  };
 }
 
-bootstrapApplication(AppComponent, {
-  providers: [
-    provideRouter(ROUTES),
-    provideHttpClient(),
-    provideAnimations(),
-    importProvidersFrom(
-      TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: AppTranslateLoader,
-        },
+const initializeApp = async () => {
+  const config: AppConfig = await fetch('./assets/app-config.json').then(
+    (res) => res?.json(),
+  );
+
+  const appConfig: ApplicationConfig = {
+    providers: [
+      provideRouter(ROUTES),
+      provideHttpClient(),
+      provideAnimations(),
+      importProvidersFrom(
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: AppTranslateLoader,
+          },
+        }),
+      ),
+      provideAppInitializer(() => {
+        const initializerFn = initApplication(
+          config,
+          inject(ConfigurationService),
+          inject(TranslateService),
+          inject(LocalStorage),
+        );
+        return initializerFn();
       }),
-    ),
-    provideAppInitializer(() => {
-      const initializerFn = initApplication(
-        inject(ConfigurationService),
-        inject(TranslateService),
-        inject(LocalStorage),
-      );
-      return initializerFn();
-    }),
-    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
-    {
-      provide: SettingsService,
-      useExisting: ConfigurationService,
-    },
-    importProvidersFrom(HelgolandCoreModule),
-    importProvidersFrom(MatSnackBarModule),
-    importProvidersFrom(MatDialogModule),
-    importProvidersFrom(HelgolandBasicAuthModule),
-    {
-      provide: BasicAuthInformer,
-      useClass: BasicAuthInformerImplService,
-    },
-    importProvidersFrom(
-      HelgolandCachingModule.forRoot({
-        cachingDurationInMilliseconds: 300000,
-        getDataCacheActive: false,
-        logging: false,
-      }),
-    ),
-    {
-      provide: TimeseriesService,
-      useClass: TimeseriesServiceImpl,
-    },
-    {
-      provide: DATASET_STATE_SERVICE_INJECTION,
-      useExisting: TimeseriesService,
-      multi: true,
-    },
-    {
-      provide: DATASET_FAVORITE_SERVICE_INJECTION,
-      useExisting: TimeseriesService,
-      multi: true,
-    },
-    // {
-    //   provide: DATASET_STATE_SERVICE_INJECTION,
-    //   useExisting: DummyDatasetsService,
-    //   multi: true,
-    // },
-    // {
-    //   provide: DATASET_FAVORITE_SERVICE_INJECTION,
-    //   useExisting: DummyDatasetsService,
-    //   multi: true,
-    // },
-    {
-      provide: DatasetApiInterface,
-      useClass: SplittedDataDatasetApiInterface,
-    },
-    DatasetApiV1ConnectorProvider,
-    DatasetApiV2ConnectorProvider,
-    DatasetApiV3ConnectorProvider,
-    DatasetStaConnectorProvider,
-    DatasetStaCustomConnectorProvider,
-    PegelonlineApiConnectorProvider,
-  ],
-});
+      { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+      {
+        provide: SettingsService,
+        useExisting: ConfigurationService,
+      },
+      importProvidersFrom(HelgolandCoreModule),
+      importProvidersFrom(MatSnackBarModule),
+      importProvidersFrom(MatDialogModule),
+      importProvidersFrom(HelgolandBasicAuthModule),
+      {
+        provide: BasicAuthInformer,
+        useClass: BasicAuthInformerImplService,
+      },
+      importProvidersFrom(
+        HelgolandCachingModule.forRoot({
+          cachingDurationInMilliseconds: 300000,
+          getDataCacheActive: false,
+          logging: false,
+        }),
+      ),
+      {
+        provide: TimeseriesService,
+        useClass: TimeseriesServiceImpl,
+      },
+      {
+        provide: DATASET_STATE_SERVICE_INJECTION,
+        useExisting: TimeseriesService,
+        multi: true,
+      },
+      {
+        provide: DATASET_FAVORITE_SERVICE_INJECTION,
+        useExisting: TimeseriesService,
+        multi: true,
+      },
+      // {
+      //   provide: DATASET_STATE_SERVICE_INJECTION,
+      //   useExisting: DummyDatasetsService,
+      //   multi: true,
+      // },
+      // {
+      //   provide: DATASET_FAVORITE_SERVICE_INJECTION,
+      //   useExisting: DummyDatasetsService,
+      //   multi: true,
+      // },
+      {
+        provide: DatasetApiInterface,
+        useClass: SplittedDataDatasetApiInterface,
+      },
+      DatasetApiV1ConnectorProvider,
+      DatasetApiV2ConnectorProvider,
+      DatasetApiV3ConnectorProvider,
+      DatasetStaConnectorProvider,
+      DatasetStaCustomConnectorProvider,
+      PegelonlineApiConnectorProvider,
+    ],
+  };
+
+  await bootstrapApplication(AppComponent, appConfig);
+};
+
+initializeApp().catch((error) =>
+  console.error(
+    `Failed to initialize the application. ${error.message || error}`,
+  ),
+);
