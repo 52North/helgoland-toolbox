@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   MatDatepickerInputEvent,
   MatDatepickerModule,
@@ -31,38 +31,39 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./facet-search.component.scss'],
   imports: [HelgolandFacetSearchModule, MatDatepickerModule, CommonModule],
   providers: [MapCache],
-  standalone: true,
 })
 export class FacetSearchComponent {
-  public timeseries: Timeseries[] = [];
+  private servicesConnector = inject(HelgolandServicesConnector);
+  private translate = inject(TranslateService);
+  private apiv3 = inject(ApiV3InterfaceService);
+  facetSearch = inject(FacetSearchService);
 
-  public categoryType: ParameterFacetType = ParameterFacetType.category;
-  public featureType: ParameterFacetType = ParameterFacetType.feature;
-  public offeringType: ParameterFacetType = ParameterFacetType.offering;
-  public phenomenonType: ParameterFacetType = ParameterFacetType.phenomenon;
-  public procedureType: ParameterFacetType = ParameterFacetType.procedure;
+  timeseries: Timeseries[] = [];
 
-  public featureSort: ParameterFacetSort = ParameterFacetSort.descCount;
+  categoryType: ParameterFacetType = ParameterFacetType.category;
+  featureType: ParameterFacetType = ParameterFacetType.feature;
+  offeringType: ParameterFacetType = ParameterFacetType.offering;
+  phenomenonType: ParameterFacetType = ParameterFacetType.phenomenon;
+  procedureType: ParameterFacetType = ParameterFacetType.procedure;
 
-  public categoryAutocomplete: string | undefined;
-  public featureAutocomplete: string | undefined;
-  public offeringAutocomplete: string | undefined;
-  public phenomenonAutocomplete: string | undefined;
-  public procedureAutocomplete: string | undefined;
+  featureSort: ParameterFacetSort = ParameterFacetSort.descCount;
 
-  public resultCount: number = 0;
-  public showMap = true;
-  public resetAllDisabled: boolean = false;
+  categoryAutocomplete: string | undefined;
+  featureAutocomplete: string | undefined;
+  offeringAutocomplete: string | undefined;
+  phenomenonAutocomplete: string | undefined;
+  procedureAutocomplete: string | undefined;
 
-  public selectedStart: Date | undefined;
-  public selectedEnd: Date | undefined;
+  resultCount: number = 0;
+  showMap = true;
+  resetAllDisabled: boolean = false;
 
-  constructor(
-    private servicesConnector: HelgolandServicesConnector,
-    private translate: TranslateService,
-    private apiv3: ApiV3InterfaceService,
-    public facetSearch: FacetSearchService,
-  ) {
+  selectedStart: Date | undefined;
+  selectedEnd: Date | undefined;
+
+  mapId = 'facet-search-map';
+
+  constructor() {
     this.translate.onLangChange.subscribe((_) => {
       this.fetchDatasets();
     });
@@ -112,40 +113,37 @@ export class FacetSearchComponent {
     // })
   }
 
-  public onSelectedEntry(entry: FacetSearchElement) {
+  onSelectedEntry(entry: FacetSearchElement) {
     console.log(entry);
   }
 
-  public onSelectedFeature(elem: {
-    feature: FacetSearchElementFeature;
-    url: string;
-  }) {
+  onSelectedFeature(elem: { feature: FacetSearchElementFeature; url: string }) {
     console.log(elem);
   }
 
-  public toggleResultView() {
+  toggleResultView() {
     this.showMap = !this.showMap;
   }
 
-  public resetAllFacets() {
+  resetAllFacets() {
     this.facetSearch.resetAllFacets();
   }
 
-  public setStart(start: MatDatepickerInputEvent<Date>) {
+  setStart(start: MatDatepickerInputEvent<Date>) {
     if (start.value)
       this.facetSearch.setSelectedTimespan(
         new Timespan(start.value, this.selectedEnd),
       );
   }
 
-  public setEnd(end: MatDatepickerInputEvent<Date>) {
+  setEnd(end: MatDatepickerInputEvent<Date>) {
     if (end.value && this.selectedStart)
       this.facetSearch.setSelectedTimespan(
         new Timespan(this.selectedStart, end.value),
       );
   }
 
-  public setAutocomplete(acString: string | undefined, evt: any) {
+  setAutocomplete(acString: string | undefined, evt: any) {
     acString = evt.target.value;
   }
 

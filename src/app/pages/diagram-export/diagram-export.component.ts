@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -22,29 +22,28 @@ import { NoDataEntryComponent } from './no-data-entry/no-data-entry.component';
     HelgolandD3Module,
     NoDataEntryComponent,
   ],
-  standalone: true,
 })
 export class DiagramExportComponent implements OnInit {
-  public title = 'Exported Diagram';
-  public height = 300;
-  public width = 500;
-  public start = new Date(2019, 10, 13);
-  public end = new Date(2019, 10, 14);
+  private color = inject(ColorService);
 
-  public format: 'png' | 'svg' = 'png';
+  title = 'Exported Diagram';
+  height = 300;
+  width = 500;
+  start = new Date(2019, 10, 13);
+  end = new Date(2019, 10, 14);
 
-  public datasetOptions: Map<string, DatasetOptions> = new Map();
+  format: 'png' | 'svg' = 'png';
 
-  public datasetIds = [
+  datasetOptions: Map<string, DatasetOptions> = new Map();
+
+  datasetIds = [
     'https://fluggs.wupperverband.de/sws5/api/__26',
     // 'https://fluggs.wupperverband.de/sws5/api/__49',
     // 'https://fluggs.wupperverband.de/sws5/api/__51',
     // 'https://fluggs.wupperverband.de/sws5/api/__72',
   ];
 
-  public timespan: Timespan | undefined;
-
-  constructor(private color: ColorService) {}
+  timespan: Timespan | undefined;
 
   ngOnInit() {
     this.datasetIds.forEach((entry) => {

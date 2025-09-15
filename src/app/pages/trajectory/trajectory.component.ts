@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import {
   ColorService,
@@ -28,17 +27,20 @@ import { StyleModificationComponent } from '../../components/style-modification/
     HelgolandDatasetlistModule,
     HelgolandD3Module,
     HelgolandMapViewModule,
-    CommonModule,
     MatDialogModule,
   ],
-  standalone: true,
 })
 export class TrajectoryComponent implements OnInit {
-  public geometry!: LineString;
+  private color = inject(ColorService);
+  private dialog = inject(MatDialog);
+  private internalIdHandler = inject(InternalIdHandler);
+  private servicesConnector = inject(HelgolandServicesConnector);
 
-  public highlightGeometry!: GeoJsonObject;
+  geometry!: LineString;
 
-  public datasetIds: string[] = [
+  highlightGeometry!: GeoJsonObject;
+
+  datasetIds: string[] = [
     'http://nexos.demo.52north.org/52n-sos-nexos-test/api/__quantity_1',
     // 'http://codm.hzg.de/52n-sos-webapp/api/v1/__measurement_125100',
     // 'http://codm.hzg.de/52n-sos-webapp/api/v1/__measurement_125101',
@@ -47,27 +49,20 @@ export class TrajectoryComponent implements OnInit {
     // 'http://codm.hzg.de/52n-sos-webapp/api/v1/__measurement_125104'
   ];
 
-  public options: Map<string, DatasetOptions> = new Map();
+  options: Map<string, DatasetOptions> = new Map();
 
-  public timespan!: Timespan;
+  timespan!: Timespan;
 
-  public selection!: D3SelectionRange;
+  selection!: D3SelectionRange;
 
-  public zoomToGeometry!: GeoJsonObject;
+  zoomToGeometry!: GeoJsonObject;
 
-  public graphOptions: D3GraphOptions = {
+  graphOptions: D3GraphOptions = {
     axisType: D3AxisType.Distance,
     dotted: true,
   };
 
-  constructor(
-    private color: ColorService,
-    private dialog: MatDialog,
-    private internalIdHandler: InternalIdHandler,
-    private servicesConnector: HelgolandServicesConnector,
-  ) {}
-
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.datasetIds.forEach((entry) => {
       const option = new DatasetOptions(entry, this.color.getColor());
       option.visible = true;
@@ -103,14 +98,14 @@ export class TrajectoryComponent implements OnInit {
     }
   }
 
-  public onChartHighlightChanged(idx: number) {
+  onChartHighlightChanged(idx: number) {
     this.highlightGeometry = {
       type: 'Point',
       coordinates: this.geometry.coordinates[idx],
     } as Point;
   }
 
-  public onChartSelectionChangedFinished(range: D3SelectionRange) {
+  onChartSelectionChangedFinished(range: D3SelectionRange) {
     this.selection = range;
     this.zoomToGeometry = {
       type: 'LineString',
@@ -118,14 +113,14 @@ export class TrajectoryComponent implements OnInit {
     } as LineString;
   }
 
-  public onChartSelectionChanged(range: D3SelectionRange) {
+  onChartSelectionChanged(range: D3SelectionRange) {
     this.highlightGeometry = {
       type: 'LineString',
       coordinates: this.geometry.coordinates.slice(range.from, range.to),
     } as LineString;
   }
 
-  public editOptions(option: DatasetOptions) {
+  editOptions(option: DatasetOptions) {
     const dialogRef = this.dialog.open(StyleModificationComponent, {
       data: option,
     });

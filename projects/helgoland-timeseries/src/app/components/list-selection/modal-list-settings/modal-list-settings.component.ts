@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
@@ -25,22 +25,22 @@ export interface ListConfig {
     ServiceListSelectorComponent,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class ModalListSettingsComponent {
-  public datasetApis: DatasetApi[] = [];
+  protected dialogRef =
+    inject<MatDialogRef<ModalListSettingsComponent>>(MatDialogRef);
+  private configSrvc = inject(ConfigurationService);
+  protected listConfig = inject<ListConfig>(MAT_DIALOG_DATA);
 
-  constructor(
-    public dialogRef: MatDialogRef<ModalListSettingsComponent>,
-    private configSrvc: ConfigurationService,
-    @Inject(MAT_DIALOG_DATA) public listConfig: ListConfig,
-  ) {
+  datasetApis: DatasetApi[] = [];
+
+  constructor() {
     if (this.configSrvc.configuration?.datasetApis) {
       this.datasetApis = this.configSrvc.configuration?.datasetApis;
     }
   }
 
-  public serviceSelected(service: HelgolandService) {
+  serviceSelected(service: HelgolandService) {
     this.listConfig.selectedService = service;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { Time, Timespan } from '@helgoland/core';
 
 @Component({
@@ -8,42 +8,41 @@ import { Time, Timespan } from '@helgoland/core';
   standalone: true,
 })
 export class AutoUpdateTimespanComponent {
+  protected timeSrvc = inject(Time);
+
   /**
    * optional timeinterval in seconds to be added to current timespan. If not set, the refreshInterval is selected.
    */
-  @Input()
-  public timeInterval: number | undefined;
+  readonly timeInterval = input<number>();
 
   /**
    * current Timespan to calculate new timespan
    */
-  @Input({ required: true })
-  public currentTimespan!: Timespan;
+  readonly currentTimespan = input.required<Timespan>();
 
   /**
    * refresh interval in seconds
    */
-  @Input({ required: true })
-  public refreshInterval!: number;
+  readonly refreshInterval = input.required<number>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onChangeTimespan: EventEmitter<Timespan> = new EventEmitter();
+  readonly onChangeTimespan = output<Timespan>();
 
-  public toggleAutoUpdate = false;
+  toggleAutoUpdate = false;
   private timer = false;
 
-  constructor(protected timeSrvc: Time) {}
-
-  public toggleUpdateTimeinterval() {
+  toggleUpdateTimeinterval() {
     this.toggleAutoUpdate = !this.toggleAutoUpdate;
     this.startTimer();
   }
 
-  public updateTimespan() {
-    const stepSeconds = this.timeInterval || this.refreshInterval;
+  updateTimespan() {
+    const stepSeconds = this.timeInterval() || this.refreshInterval();
     this.onChangeTimespan.emit(
-      this.timeSrvc.stepForwardCustom(this.currentTimespan, stepSeconds * 1000),
+      this.timeSrvc.stepForwardCustom(
+        this.currentTimespan(),
+        stepSeconds * 1000,
+      ),
     );
   }
 
@@ -55,7 +54,7 @@ export class AutoUpdateTimespanComponent {
         setTimeout(() => {
           this.timer = false;
           this.startTimer();
-        }, this.refreshInterval * 1000);
+        }, this.refreshInterval() * 1000);
       }
     }
   }

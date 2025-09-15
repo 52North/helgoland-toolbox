@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   DatasetApi,
   HelgolandCoreModule,
@@ -12,17 +11,18 @@ import { HelgolandSelectorModule } from '@helgoland/selector';
 @Component({
   templateUrl: './service-selector.component.html',
   styleUrls: ['./service-selector.component.css'],
-  imports: [HelgolandCoreModule, HelgolandSelectorModule, CommonModule],
-  standalone: true,
+  imports: [HelgolandCoreModule, HelgolandSelectorModule],
 })
 export class ServiceSelectorComponent {
-  public datasetApis: DatasetApi[] | undefined;
+  private settings = inject<SettingsService<Settings>>(SettingsService);
 
-  constructor(private settings: SettingsService<Settings>) {
+  datasetApis: DatasetApi[] | undefined;
+
+  constructor() {
     this.datasetApis = this.settings.getSettings().datasetApis;
   }
 
-  public providerFilter: HelgolandParameterFilter = {
+  providerFilter: HelgolandParameterFilter = {
     // type: DatasetType.Trajectory
   };
 }

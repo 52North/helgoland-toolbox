@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   DatasetOptions,
   DatasetType,
@@ -16,17 +15,16 @@ import {
 @Component({
   templateUrl: './favorite.component.html',
   styleUrls: ['./favorite.component.css'],
-  imports: [HelgolandD3Module, CommonModule],
-  standalone: true,
+  imports: [HelgolandD3Module],
 })
 export class FavoriteComponent {
-  public favorites: ExtendedSingleFavorite[] = [];
+  private favoriteSrvc = inject(FavoriteService);
+  private jsonExport = inject(JsonFavoriteExporterService);
+  private servicesConnector = inject(HelgolandServicesConnector);
 
-  constructor(
-    private favoriteSrvc: FavoriteService,
-    private jsonExport: JsonFavoriteExporterService,
-    private servicesConnector: HelgolandServicesConnector,
-  ) {
+  favorites: ExtendedSingleFavorite[] = [];
+
+  constructor() {
     this.servicesConnector
       .getDataset(
         { id: '26', url: 'https://fluggs.wupperverband.de/sws5/api/' },
@@ -41,18 +39,18 @@ export class FavoriteComponent {
       });
   }
 
-  public changeLabelName(favorite: SingleFavorite) {
+  changeLabelName(favorite: SingleFavorite) {
     const newLabel = favorite.label + 'Test';
     this.favoriteSrvc.changeLabel(favorite, newLabel);
   }
 
-  public import(event: Event) {
+  import(event: Event) {
     this.jsonExport.importFavorites(event).subscribe(() => {
       this.loadFavorites();
     });
   }
 
-  public export() {
+  export() {
     this.jsonExport.exportFavorites();
   }
 
@@ -76,11 +74,11 @@ export class FavoriteComponent {
     });
   }
 
-  public createDatasetIdsArray(fav: ExtendedSingleFavorite) {
+  createDatasetIdsArray(fav: ExtendedSingleFavorite) {
     return [fav.favorite.internalId];
   }
 
-  public createDatasetOptions(fav: ExtendedSingleFavorite) {
+  createDatasetOptions(fav: ExtendedSingleFavorite) {
     const optionsMap = new Map<string, DatasetOptions>();
     optionsMap.set(fav.favorite.internalId, fav.options);
     return optionsMap;

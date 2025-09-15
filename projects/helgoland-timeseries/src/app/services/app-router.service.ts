@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationEnd, Router } from '@angular/router';
 
@@ -12,10 +12,10 @@ export const LIST_SELECTION_ROUTE = 'list-selection';
   providedIn: 'root',
 })
 export class AppRouterService {
-  constructor(
-    private router: Router,
-    private dialog: MatDialog,
-  ) {
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+
+  constructor() {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
         if (val.url.indexOf(LIST_SELECTION_ROUTE) > -1) {
@@ -28,23 +28,23 @@ export class AppRouterService {
     });
   }
 
-  public toDiagram() {
+  toDiagram() {
     this.router.navigate(['']);
   }
 
-  public toMapSelection() {
+  toMapSelection() {
     if (this.router.url.indexOf(LIST_SELECTION_ROUTE) === -1) {
       this.router.navigate([MAP_SELECTION_ROUTE]);
     }
   }
 
-  public toListSelection() {
+  toListSelection() {
     if (this.router.url.indexOf(MAP_SELECTION_ROUTE) === -1) {
       this.router.navigate([LIST_SELECTION_ROUTE]);
     }
   }
 
-  public resetNavigation() {
+  resetNavigation() {
     this.router.navigate(['']);
   }
 

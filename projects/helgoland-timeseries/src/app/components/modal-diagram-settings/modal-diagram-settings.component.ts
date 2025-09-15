@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import {
@@ -28,11 +28,9 @@ export interface DiagramConfig {
     MatButtonToggleModule,
     MatDialogModule,
   ],
-  standalone: true,
 })
 export class ModalDiagramSettingsComponent {
-  constructor(
-    public dialogRef: MatDialogRef<ModalDiagramSettingsComponent>,
-    @Inject(MAT_DIALOG_DATA) public diagramConfig: DiagramConfig,
-  ) {}
+  protected dialogRef =
+    inject<MatDialogRef<ModalDiagramSettingsComponent>>(MatDialogRef);
+  protected diagramConfig = inject<DiagramConfig>(MAT_DIALOG_DATA);
 }

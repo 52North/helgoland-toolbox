@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, input, OnDestroy, OnInit, output } from '@angular/core';
 import { TzDatePipe } from '@helgoland/core';
 import { Subscription } from 'rxjs';
 
@@ -18,33 +11,31 @@ import {
   selector: 'n52-result-list',
   templateUrl: './result-list.component.html',
   styleUrls: ['./result-list.component.scss'],
-  standalone: true,
   imports: [TzDatePipe],
 })
 export class ResultListComponent implements OnInit, OnDestroy {
-  @Input({ required: true }) public facetSearchService!: FacetSearchService;
+  readonly facetSearchService = input.required<FacetSearchService>();
 
-  @Output() public selected: EventEmitter<FacetSearchElement> =
-    new EventEmitter();
+  readonly selected = output<FacetSearchElement>();
 
-  public entries: FacetSearchElement[] = [];
+  entries: FacetSearchElement[] = [];
 
   private resultSubs: Subscription | undefined;
 
   constructor() {}
 
   ngOnInit() {
-    this.resultSubs = this.facetSearchService
+    this.resultSubs = this.facetSearchService()
       .getResults()
       .subscribe((ts) => (this.entries = ts));
-    this.entries = this.facetSearchService.getFilteredResults();
+    this.entries = this.facetSearchService().getFilteredResults();
   }
 
   ngOnDestroy(): void {
     this.resultSubs?.unsubscribe();
   }
 
-  public timeseriesSelected(ts: FacetSearchElement) {
+  timeseriesSelected(ts: FacetSearchElement) {
     this.selected.emit(ts);
   }
 }

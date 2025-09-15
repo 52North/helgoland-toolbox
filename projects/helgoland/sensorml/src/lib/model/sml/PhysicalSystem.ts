@@ -1,8 +1,8 @@
+import { DisplayName } from '../../common/decorators/DisplayName';
 import { AbstractPhysicalProcess } from './AbstractPhysicalProcess';
 import { AggregatingProcess } from './AggregatingProcess';
 import { ComponentList } from './ComponentList';
 import { ConnectionList } from './ConnectionList';
-import { DisplayName } from '../../common/decorators/DisplayName';
 
 export class PhysicalSystem
   extends AbstractPhysicalProcess
@@ -15,11 +15,11 @@ export class PhysicalSystem
   connections: ConnectionList = new ConnectionList();
 
   // getter
-  public static SCHEMA(): string {
+  static SCHEMA(): string {
     return 'http://schemas.opengis.net/sensorML/2.0/physical_system.xsd';
   }
 
-  public static NAME(): string {
+  static NAME(): string {
     return 'PhysicalSystem';
   }
 

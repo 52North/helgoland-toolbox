@@ -12,7 +12,7 @@ export class RangeCalculationsService {
    * @param axis {YAxis}
    * @param factor {number}
    */
-  public bufferUnfixedRange(axis: YAxis, factor: number = 0.1) {
+  bufferUnfixedRange(axis: YAxis, factor: number = 0.1) {
     if (axis.range.max !== undefined && axis.range.min !== undefined) {
       const offset = (axis.range.max - axis.range.min) * factor;
       if (!axis.fixedMin) {
@@ -29,10 +29,7 @@ export class RangeCalculationsService {
    * @param rangeOne {MinMaxRange}
    * @param rangeTwo {MinMaxRange}
    */
-  public mergeRanges(
-    rangeOne: MinMaxRange,
-    rangeTwo: MinMaxRange,
-  ): MinMaxRange {
+  mergeRanges(rangeOne: MinMaxRange, rangeTwo: MinMaxRange): MinMaxRange {
     const calcMin = Math.min(
       rangeOne.min !== undefined ? rangeOne.min : Number.POSITIVE_INFINITY,
       rangeTwo.min !== undefined ? rangeTwo.min : Number.POSITIVE_INFINITY,
@@ -52,7 +49,7 @@ export class RangeCalculationsService {
    * Sets range to default interval of -1 to 1, if min and max of range are not set.
    * @param range {MinMaxRange} range to be set
    */
-  public setDefaultExtendIfUndefined(axis: YAxis) {
+  setDefaultExtendIfUndefined(axis: YAxis) {
     if (
       axis.range &&
       axis.range.min !== undefined &&

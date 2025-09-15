@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import {
@@ -11,16 +10,16 @@ import {
   selector: 'helgoland-notification',
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.scss'],
-  imports: [CommonModule, MatIconModule, MatButtonModule],
-  standalone: true,
+  imports: [MatIconModule, MatButtonModule],
 })
 export class NotificationComponent {
+  protected snackBarRef =
+    inject<MatSnackBarRef<NotificationComponent>>(MatSnackBarRef);
+  protected data = inject(MAT_SNACK_BAR_DATA);
+
   messages: string[] = [];
 
-  constructor(
-    public snackBarRef: MatSnackBarRef<NotificationComponent>,
-    @Inject(MAT_SNACK_BAR_DATA) public data: any,
-  ) {
+  constructor() {
     this.messages = this.data.messages;
   }
 

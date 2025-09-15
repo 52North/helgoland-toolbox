@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
@@ -34,27 +34,27 @@ export interface MapConfig {
     ServiceListSelectorComponent,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class ModalMapSettingsComponent {
-  public datasetApis: DatasetApi[];
-  public blacklist: BlacklistedService[];
+  protected dialogRef =
+    inject<MatDialogRef<ModalMapSettingsComponent>>(MatDialogRef);
+  private configSrvc = inject(ConfigurationService);
+  protected mapConfig = inject<MapConfig>(MAT_DIALOG_DATA);
 
-  public filter: HelgolandParameterFilter = {
+  datasetApis: DatasetApi[];
+  blacklist: BlacklistedService[];
+
+  filter: HelgolandParameterFilter = {
     type: DatasetType.Timeseries,
     expanded: true,
   };
 
-  constructor(
-    public dialogRef: MatDialogRef<ModalMapSettingsComponent>,
-    private configSrvc: ConfigurationService,
-    @Inject(MAT_DIALOG_DATA) public mapConfig: MapConfig,
-  ) {
+  constructor() {
     this.datasetApis = this.configSrvc.configuration?.datasetApis || [];
     this.blacklist = this.configSrvc.configuration?.providerBlackList || [];
   }
 
-  public serviceSelected(service: HelgolandService) {
+  serviceSelected(service: HelgolandService) {
     this.mapConfig.selectedService = service;
   }
 }

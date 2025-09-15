@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { LayerControlComponent } from '../layer-control-component';
 import { MapHandlerService } from './../../base/map-handler.service';
@@ -10,11 +10,9 @@ import { MapHandlerService } from './../../base/map-handler.service';
   standalone: true,
 })
 export class LayerVisibleTogglerComponent extends LayerControlComponent {
-  constructor(private mapHandler: MapHandlerService) {
-    super();
-  }
+  private mapHandler = inject(MapHandlerService);
 
-  public toggle() {
-    this.mapHandler.toggleOverlayLayer(this.layeroptions, this.mapId);
+  toggle() {
+    this.mapHandler.toggleOverlayLayer(this.layeroptions(), this.mapId());
   }
 }

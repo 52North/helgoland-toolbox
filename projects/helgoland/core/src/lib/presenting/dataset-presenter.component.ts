@@ -1,14 +1,14 @@
 import {
   Directive,
   DoCheck,
-  EventEmitter,
-  Input,
   IterableDiffer,
   IterableDiffers,
   OnChanges,
   OnDestroy,
-  Output,
   SimpleChanges,
+  inject,
+  input,
+  output,
 } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -36,75 +36,73 @@ export abstract class DatasetPresenterComponent<
   extends ResizableComponent
   implements OnChanges, DoCheck, OnDestroy
 {
+  protected iterableDiffers = inject(IterableDiffers);
+  protected servicesConnector = inject(HelgolandServicesConnector);
+  protected datasetIdResolver = inject(InternalIdHandler);
+  protected timeSrvc = inject(Time);
+  protected translateService = inject(TranslateService);
+  protected timezoneSrvc = inject(TimezoneService);
+
   /**
    * List of presented dataset ids.
    */
-  @Input()
-  public datasetIds: string[] = [];
+  readonly datasetIds = input<string[]>([]);
 
   /**
    * List of presented selected dataset ids.
    */
-  @Input()
-  public selectedDatasetIds: string[] = [];
+  readonly selectedDatasetIds = input<string[]>([]);
 
   /**
    * The time interval in which the data should presented.
    */
-  @Input()
-  public timeInterval: TimeInterval | undefined;
+  readonly timeInterval = input<TimeInterval>();
 
   /**
    * The corresponding dataset options.
    */
-  @Input()
-  public datasetOptions: Map<string, T> | undefined;
+  readonly datasetOptions = input<Map<string, T>>();
   protected oldDatasetOptions: Map<string, T> = new Map();
 
   /**
    * Options for general presentation of the data.
    */
-  @Input()
-  public presenterOptions: U | undefined;
+  readonly presenterOptions = input<U>();
   protected oldPresenterOptions: U | undefined;
 
   /**
    * List of datasets for which a reload should be triggered, when the Array is set to new value.
    */
-  @Input()
-  public reloadForDatasets: string[] = [];
+  readonly reloadForDatasets = input<string[]>([]);
 
   /**
    * Event with a list of selected datasets.
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onDatasetSelected: EventEmitter<string[]> =
-    new EventEmitter();
+  readonly onDatasetSelected = output<string[]>();
 
   /**
    * Event when the timespan in the presentation is adjusted.
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onTimespanChanged: EventEmitter<Timespan> =
-    new EventEmitter();
+  readonly onTimespanChanged = output<Timespan>();
 
   /**
    * Event, when there occured a message in the component.
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onMessageThrown: EventEmitter<PresenterMessage> =
-    new EventEmitter();
+  readonly onMessageThrown = output<PresenterMessage>();
 
   /**
    * Event flag, while there is data loaded in the component.
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onContentLoading: EventEmitter<boolean> = new EventEmitter();
+  readonly onContentLoading = output<boolean>();
 
   /**
    * Event, which triggers list of datasets where data is currently loaded.
    */
-  @Output() public dataLoaded: EventEmitter<Set<string>> = new EventEmitter();
+  readonly dataLoaded = output<Set<string>>();
 
   protected timespan: Timespan | undefined;
 
@@ -113,14 +111,7 @@ export abstract class DatasetPresenterComponent<
   private langChangeSubscription: Subscription;
   private timezoneSubscription: Subscription;
 
-  constructor(
-    protected iterableDiffers: IterableDiffers,
-    protected servicesConnector: HelgolandServicesConnector,
-    protected datasetIdResolver: InternalIdHandler,
-    protected timeSrvc: Time,
-    protected translateService: TranslateService,
-    protected timezoneSrvc: TimezoneService,
-  ) {
+  constructor() {
     super();
     this.datasetIdsDiffer = this.iterableDiffers.find([]).create();
     this.selectedDatasetIdsDiffer = this.iterableDiffers.find([]).create();
@@ -134,29 +125,32 @@ export abstract class DatasetPresenterComponent<
   }
 
   // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['timeInterval'] && this.timeInterval) {
-      this.timespan = this.timeSrvc.createTimespanOfInterval(this.timeInterval);
+  ngOnChanges(changes: SimpleChanges): void {
+    const timeInterval = this.timeInterval();
+    if (changes['timeInterval'] && timeInterval) {
+      this.timespan = this.timeSrvc.createTimespanOfInterval(timeInterval);
       this.timeIntervalChanges();
     }
+    const reloadForDatasets = this.reloadForDatasets();
     if (
       changes['reloadForDatasets'] &&
-      this.reloadForDatasets &&
+      reloadForDatasets &&
       this.reloadDataForDatasets.length > 0
     ) {
-      this.reloadDataForDatasets(this.reloadForDatasets);
+      this.reloadDataForDatasets(reloadForDatasets);
     }
   }
 
   // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
-  public ngDoCheck(): void {
-    if (!this.deepEqual(this.oldPresenterOptions, this.presenterOptions)) {
-      this.oldPresenterOptions = Object.assign({}, this.presenterOptions);
-      const options = Object.assign({}, this.presenterOptions);
+  ngDoCheck(): void {
+    const presenterOptions = this.presenterOptions();
+    if (!this.deepEqual(this.oldPresenterOptions, presenterOptions)) {
+      this.oldPresenterOptions = Object.assign({}, presenterOptions);
+      const options = Object.assign({}, presenterOptions);
       this.presenterOptionsChanged(options);
     }
 
-    const datasetIdsChanges = this.datasetIdsDiffer.diff(this.datasetIds);
+    const datasetIdsChanges = this.datasetIdsDiffer.diff(this.datasetIds());
     if (datasetIdsChanges) {
       datasetIdsChanges.forEachAddedItem((addedItem) => {
         this.addDatasetByInternalId(addedItem.item);
@@ -167,7 +161,7 @@ export abstract class DatasetPresenterComponent<
     }
 
     const selectedDatasetIdsChanges = this.selectedDatasetIdsDiffer.diff(
-      this.selectedDatasetIds,
+      this.selectedDatasetIds(),
     );
     if (selectedDatasetIdsChanges) {
       selectedDatasetIdsChanges.forEachAddedItem((addedItem) => {
@@ -178,16 +172,17 @@ export abstract class DatasetPresenterComponent<
       });
     }
 
-    if (this.datasetOptions) {
+    const datasetOptions = this.datasetOptions();
+    if (datasetOptions) {
       const firstChange = this.oldDatasetOptions === undefined;
       if (firstChange) {
         this.oldDatasetOptions = new Map();
       }
-      this.datasetOptions.forEach((value, key) => {
+      datasetOptions.forEach((value, key) => {
         if (!this.deepEqual(value, this.oldDatasetOptions.get(key))) {
           this.oldDatasetOptions.set(
             key,
-            Object.assign({}, this.datasetOptions!.get(key)),
+            Object.assign({}, this.datasetOptions()!.get(key)),
           );
           this.datasetOptionsChanged(key, value, firstChange);
         }
@@ -196,7 +191,7 @@ export abstract class DatasetPresenterComponent<
   }
 
   // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.langChangeSubscription.unsubscribe();
     this.timezoneSubscription.unsubscribe();
   }
@@ -228,7 +223,7 @@ export abstract class DatasetPresenterComponent<
     return obj !== Object(obj);
   }
 
-  public abstract reloadDataForDatasets(datasets: string[]): void;
+  abstract reloadDataForDatasets(datasets: string[]): void;
 
   protected addDatasetByInternalId(internalId: string) {
     const internalIdObj = this.datasetIdResolver.resolveInternalId(internalId);

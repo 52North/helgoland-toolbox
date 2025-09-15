@@ -1,10 +1,10 @@
 import {
   Directive,
-  EventEmitter,
-  Input,
   OnDestroy,
   OnInit,
-  Output,
+  inject,
+  input,
+  output,
 } from '@angular/core';
 import { InternalDatasetId, InternalIdHandler } from '@helgoland/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
@@ -18,33 +18,29 @@ import { Subscription } from 'rxjs';
  */
 @Directive()
 export abstract class ListEntryComponent implements OnInit, OnDestroy {
-  @Input({ required: true })
-  public datasetId!: string;
+  protected internalIdHandler = inject(InternalIdHandler);
+  protected translateSrvc = inject(TranslateService);
 
-  @Input()
-  public selected: boolean | undefined;
+  readonly datasetId = input.required<string>();
 
-  @Output()
+  readonly selected = input<boolean>();
+
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onDeleteDataset: EventEmitter<boolean> = new EventEmitter();
+  readonly onDeleteDataset = output<boolean>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onSelectDataset: EventEmitter<boolean> = new EventEmitter();
+  readonly onSelectDataset = output<boolean>();
 
-  public loading: boolean | undefined;
+  loading: boolean | undefined;
 
   protected internalId: InternalDatasetId | undefined;
 
   private langChangeSubscription: Subscription | undefined;
 
-  constructor(
-    protected internalIdHandler: InternalIdHandler,
-    protected translateSrvc: TranslateService,
-  ) {}
-
-  public ngOnInit(): void {
-    this.internalId = this.internalIdHandler.resolveInternalId(this.datasetId);
+  ngOnInit(): void {
+    this.internalId = this.internalIdHandler.resolveInternalId(
+      this.datasetId(),
+    );
     this.loadDataset(this.internalId, this.translateSrvc.currentLang);
     this.langChangeSubscription = this.translateSrvc.onLangChange.subscribe(
       (langChangeEvent: LangChangeEvent) =>
@@ -52,17 +48,16 @@ export abstract class ListEntryComponent implements OnInit, OnDestroy {
     );
   }
 
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.langChangeSubscription?.unsubscribe();
   }
 
-  public removeDataset() {
+  removeDataset() {
     this.onDeleteDataset.emit(true);
   }
 
-  public toggleSelection() {
-    this.selected = !this.selected;
-    this.onSelectDataset.emit(this.selected);
+  toggleSelection() {
+    this.onSelectDataset.emit(!this.selected());
   }
 
   protected onLanguageChanged(langChangeEvent: LangChangeEvent): void {

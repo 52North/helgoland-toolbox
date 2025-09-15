@@ -1,6 +1,6 @@
 import 'moment-timezone';
 
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
 
@@ -8,18 +8,20 @@ import moment from 'moment';
   providedIn: 'root',
 })
 export class TimezoneService {
+  protected translateSrvc = inject(TranslateService);
+
   private currentTimezone: moment.MomentZone | null;
 
   // private offsetToLocale: number; // TODO: check if still needed
 
-  public timezoneChange: EventEmitter<string> = new EventEmitter();
+  timezoneChange: EventEmitter<string> = new EventEmitter();
 
-  constructor(protected translateSrvc: TranslateService) {
+  constructor() {
     this.currentTimezone = moment.tz.zone(moment.tz.guess());
     this.calcOffset();
   }
 
-  public setTimezone(tzStr: string = '') {
+  setTimezone(tzStr: string = '') {
     const tz = moment.tz.zone(tzStr);
     if (tz) {
       this.currentTimezone = tz;
@@ -43,11 +45,11 @@ export class TimezoneService {
     //   this.offsetToLocale = -1 * guess.utcOffset(date) + this.currentTimezone.utcOffset(date);
   }
 
-  public getTimezoneName(): string {
+  getTimezoneName(): string {
     return this.currentTimezone?.name ? this.currentTimezone?.name : '';
   }
 
-  public formatTzDate(
+  formatTzDate(
     date: moment.Moment | Date | number | string,
     format?: string,
   ): string {
@@ -69,15 +71,15 @@ export class TimezoneService {
     return date.tz(this.getTimezoneName()).format(format);
   }
 
-  public createTzDate(m: moment.MomentInput): moment.Moment {
+  createTzDate(m: moment.MomentInput): moment.Moment {
     return moment(m).tz(this.getTimezoneName());
   }
 
-  // public getOffsetToLocaleInMs() {
+  // getOffsetToLocaleInMs() {
   //   return this.offsetToLocale * 1000 * 60;
   // }
 
-  // public getOffsetToLocaleInHours() {
+  // getOffsetToLocaleInHours() {
   //   return this.offsetToLocale / 60;
   // }
 }

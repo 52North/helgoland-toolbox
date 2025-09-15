@@ -1,10 +1,11 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import { CommonModule } from '@angular/common';
+
 import {
   ChangeDetectorRef,
   Component,
   OnInit,
   ViewEncapsulation,
+  inject,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -29,6 +30,7 @@ import {
   ShareButtonComponent,
 } from 'helgoland-common';
 
+import { DataTableComponent } from '../../components/data-table/data-table.component';
 import { DatasetLegendEntryComponent } from '../../components/dataset-legend-entry/dataset-legend-entry.component';
 import { ModalFavoriteListButtonComponent } from '../../components/favorites/modal-favorite-list-button/modal-favorite-list-button.component';
 import {
@@ -36,6 +38,7 @@ import {
   ModalDiagramSettingsComponent,
 } from '../../components/modal-diagram-settings/modal-diagram-settings.component';
 import { GeneralTimeSelectionComponent } from '../../components/time/general-time-selection/general-time-selection.component';
+import { AppConfig, ConfigurationService } from '../../services/configuration.service';
 import { ModalMainConfigButtonComponent } from './../../components/main-config/modal-main-config-button/modal-main-config-button.component';
 import { AppRouterService } from './../../services/app-router.service';
 import {
@@ -44,13 +47,13 @@ import {
 } from './../../services/graph-datasets.service';
 import { DiagramViewInitStateService } from './diagram-view-permalink.service';
 
+type MainContentType = 'diagram' | 'table';
 @Component({
   selector: 'helgoland-diagram-view',
   templateUrl: './diagram-view.component.html',
   styleUrls: ['./diagram-view.component.scss'],
   encapsulation: ViewEncapsulation.None,
   imports: [
-    CommonModule,
     DatasetLegendEntryComponent,
     GeneralTimeSelectionComponent,
     HelgolandD3Module,
@@ -68,47 +71,50 @@ import { DiagramViewInitStateService } from './diagram-view-permalink.service';
     ModalMainConfigButtonComponent,
     ShareButtonComponent,
     TranslateModule,
+    DataTableComponent,
   ],
-  standalone: true,
 })
 export class DiagramViewComponent implements OnInit {
+  private changeDetectorRef = inject(ChangeDetectorRef);
+  private media = inject(MediaMatcher);
+  private dialog = inject(MatDialog);
+  protected appRouter = inject(AppRouterService);
+  protected initStateService = inject(DiagramViewInitStateService);
+  private time = inject(Time);
+  protected graphDatasetsSrvc = inject(DatasetsService);
+  private configSrvc = inject(ConfigurationService<AppConfig>) as ConfigurationService<AppConfig>;
+
   mobileQuery: MediaQueryList;
 
   // private _mobileQueryListener: () => void;
 
-  public diagramConfig: DiagramConfig = {
+  diagramConfig: DiagramConfig = {
     overviewVisible: true,
     yaxisVisible: true,
     yaxisModifier: true,
     hoverstyle: HoveringStyle.point,
   };
 
-  public graphOptions: D3SeriesGraphOptions = {
+  graphOptions: D3SeriesGraphOptions = {
     showTimeLabel: false,
     hoverStyle: this.diagramConfig.hoverstyle,
     togglePanZoom: true,
     yaxisModifier: this.diagramConfig.yaxisModifier,
   };
 
-  public overviewOptions: D3SeriesGraphOptions = {
+  overviewOptions: D3SeriesGraphOptions = {
     showTimeLabel: false,
     yaxis: false,
     hoverStyle: HoveringStyle.none,
     overview: true,
   };
 
-  diagramLoading: boolean = false;
+  mainContentType: MainContentType = 'diagram';
+  dataTableVisible = this.configSrvc.getSettings().dataTableVisible || false;
+  dataLoading: boolean = false;
   overviewLoading: boolean = false;
 
-  constructor(
-    private changeDetectorRef: ChangeDetectorRef,
-    private media: MediaMatcher,
-    private dialog: MatDialog,
-    public appRouter: AppRouterService,
-    public initStateService: DiagramViewInitStateService,
-    private time: Time,
-    public graphDatasetsSrvc: DatasetsService,
-  ) {
+  constructor() {
     this.mobileQuery = this.media.matchMedia('(max-width: 1024px)');
     // this._mobileQueryListener = () => {
     //   debugger;
@@ -129,7 +135,7 @@ export class DiagramViewComponent implements OnInit {
     });
 
     this.graphDatasetsSrvc.loadingDataChanged.subscribe(
-      (ld) => (this.diagramLoading = ld.size > 0),
+      (ld) => (this.dataLoading = ld.size > 0),
     );
 
     this.graphDatasetsSrvc.loadingOverviewDataChanged.subscribe(
@@ -148,7 +154,7 @@ export class DiagramViewComponent implements OnInit {
     //   this.datasetOptions = this.timeseries.datasetOptions;
     // }
 
-    // public setSelected(selectedIds: string[]) {
+    // setSelected(selectedIds: string[]) {
     //   this.selectedIds = selectedIds;
   }
 
@@ -179,7 +185,7 @@ export class DiagramViewComponent implements OnInit {
     });
   }
 
-  public jumpToDate(date: Date) {
+  jumpToDate(date: Date) {
     this.graphDatasetsSrvc.timespan = this.time.centerTimespan(
       this.graphDatasetsSrvc.timespan!,
       date,

@@ -2,18 +2,16 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Directive,
-  EventEmitter,
-  Input,
-  KeyValueDiffers,
   OnChanges,
-  Output,
   SimpleChanges,
+  inject,
+  input,
+  output,
 } from '@angular/core';
 import { HelgolandParameterFilter } from '@helgoland/core';
 import * as L from 'leaflet';
 
 import { CachedMapComponent } from '../base/cached-map-component';
-import { MapCache } from '../base/map-cache.service';
 import { MarkerSelectorGenerator } from './model/marker-selector-generator';
 
 @Directive()
@@ -21,64 +19,50 @@ export abstract class MapSelectorComponent<T>
   extends CachedMapComponent
   implements OnChanges, AfterViewInit
 {
+  protected cd = inject(ChangeDetectorRef);
+
   /**
    * @input The serviceUrl, where the selection should be loaded.
    */
-  @Input()
-  public serviceUrl: string | undefined;
+  readonly serviceUrl = input<string>();
 
   /**
    * @input The filter which should be used, while fetching the selection.
    */
-  @Input()
-  public filter: HelgolandParameterFilter | undefined;
+  readonly filter = input<HelgolandParameterFilter>();
 
-  @Input()
-  public avoidZoomToSelection: boolean | undefined;
+  readonly avoidZoomToSelection = input<boolean>();
 
-  @Input()
-  public markerSelectorGenerator: MarkerSelectorGenerator | undefined;
+  readonly markerSelectorGenerator = input<MarkerSelectorGenerator>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onSelected: EventEmitter<T> = new EventEmitter<T>();
+  readonly onSelected = output<T>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onContentLoading: EventEmitter<boolean> = new EventEmitter();
+  readonly onContentLoading = output<boolean>();
 
   /**
    * @input Additional configuration for the marker zooming (https://leafletjs.com/reference-1.3.4.html#fitbounds-options)
    */
-  @Input()
-  public fitBoundsMarkerOptions: L.FitBoundsOptions | undefined;
+  readonly fitBoundsMarkerOptions = input<L.FitBoundsOptions>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onNoResultsFound: EventEmitter<boolean> = new EventEmitter();
+  readonly onNoResultsFound = output<boolean>();
 
-  constructor(
-    protected override mapCache: MapCache,
-    protected override kvDiffers: KeyValueDiffers,
-    protected cd: ChangeDetectorRef,
-  ) {
-    super(mapCache, kvDiffers);
-  }
-
-  public ngAfterViewInit() {
+  ngAfterViewInit() {
     this.createMap();
     setTimeout(() => {
-      if (this.map && this.serviceUrl)
-        this.drawGeometries(this.map, this.serviceUrl);
+      const serviceUrl = this.serviceUrl();
+      if (this.map && serviceUrl) this.drawGeometries(this.map, serviceUrl);
       this.cd.detectChanges();
     }, 10);
   }
 
-  public override ngOnChanges(changes: SimpleChanges) {
+  override ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
     if (changes['serviceUrl'] || changes['filter'] || changes['cluster']) {
-      if (this.map && this.serviceUrl)
-        this.drawGeometries(this.map, this.serviceUrl);
+      const serviceUrl = this.serviceUrl();
+      if (this.map && serviceUrl) this.drawGeometries(this.map, serviceUrl);
     }
   }
 
@@ -97,8 +81,8 @@ export abstract class MapSelectorComponent<T>
    * @param bounds where to zoom
    */
   protected zoomToMarkerBounds(bounds: L.LatLngBoundsExpression, map: L.Map) {
-    if (!this.avoidZoomToSelection && map) {
-      map.fitBounds(bounds, this.fitBoundsMarkerOptions || {});
+    if (!this.avoidZoomToSelection() && map) {
+      map.fitBounds(bounds, this.fitBoundsMarkerOptions() || {});
     }
   }
 }

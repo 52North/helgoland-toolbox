@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { inject, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 import { Point } from 'geojson';
@@ -10,8 +13,11 @@ describe('NominatimService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, HelgolandCoreModule],
-      providers: [NominatimGeoSearchService],
+      imports: [HelgolandCoreModule],
+      providers: [
+        NominatimGeoSearchService,
+        provideHttpClient(withInterceptorsFromDi()),
+      ],
     });
   });
 

@@ -2,108 +2,104 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
-  EventEmitter,
-  Input,
   OnChanges,
   OnDestroy,
-  Output,
   SimpleChanges,
+  inject,
+  input,
+  output,
 } from '@angular/core';
 import { DatasetOptions, Time, TimeInterval, Timespan } from '@helgoland/core';
 
-import { D3PlotOptions } from '../models/d3-plot-options';
 import { D3SeriesGraphWrapperComponent } from '../d3-series-graph-wrapper/d3-series-graph-wrapper.component';
+import { D3PlotOptions } from '../models/d3-plot-options';
 
 @Component({
   selector: 'n52-d3-series-graph-overview-wrapper',
   templateUrl: './d3-series-graph-overview-wrapper.component.html',
   styleUrls: ['./d3-series-graph-overview-wrapper.component.scss'],
   imports: [D3SeriesGraphWrapperComponent],
-  standalone: true,
 })
 export class D3SeriesGraphOverviewWrapperComponent
   implements OnChanges, AfterViewInit, OnDestroy
 {
-  @Input({ required: true })
-  public datasetIds!: string[];
+  protected timeSrvc = inject(Time);
+  protected cd = inject(ChangeDetectorRef);
 
-  @Input()
-  public datasetOptions: Map<string, DatasetOptions> | undefined;
+  readonly datasetIds = input.required<string[]>();
 
-  @Input()
-  public presenterOptions: D3PlotOptions | undefined;
+  readonly datasetOptions = input<Map<string, DatasetOptions>>();
 
-  @Input({ required: true })
-  public timeInterval!: TimeInterval;
+  readonly presenterOptions = input<D3PlotOptions, D3PlotOptions>(
+    {
+      overview: true,
+      yaxis: false,
+    },
+    {
+      transform: (value: D3PlotOptions) => {
+        debugger;
+        return {
+          ...value,
+          overview: true,
+          yaxis: false,
+        };
+      },
+    },
+  );
 
-  @Input()
-  public rangefactor: number = 1;
+  readonly timeInterval = input.required<TimeInterval>();
 
-  @Input()
-  public reloadForDatasets: string[] = [];
+  readonly rangefactor = input<number>(1);
 
-  @Output()
+  readonly reloadForDatasets = input<string[]>([]);
+
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onTimespanChanged: EventEmitter<Timespan> = new EventEmitter();
+  readonly onTimespanChanged = output<Timespan>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onLoading: EventEmitter<boolean> = new EventEmitter();
+  readonly onLoading = output<boolean>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onContentLoading: EventEmitter<boolean> = new EventEmitter();
+  readonly onContentLoading = output<boolean>();
 
-  public overviewTimespan: Timespan | undefined;
-  public timespan!: Timespan;
+  overviewTimespan: Timespan | undefined;
+  timespan!: Timespan;
 
   private init = false;
 
-  constructor(
-    protected timeSrvc: Time,
-    protected cd: ChangeDetectorRef,
-  ) {
-    if (this.presenterOptions) {
-      this.presenterOptions.overview = true;
-    } else {
-      this.presenterOptions = {
-        overview: true,
-        yaxis: false,
-      };
-    }
-  }
-
-  public ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     this.calculateOverviewRange();
     this.init = true;
     this.cd.detectChanges();
   }
 
-  public ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges) {
     if (changes['timeInterval'] && this.init) {
       this.calculateOverviewRange();
     }
   }
 
-  public ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.cd.detach();
   }
 
-  public timeSpanChanged(timespan: Timespan) {
+  timeSpanChanged(timespan: Timespan) {
     this.onTimespanChanged.emit(timespan);
   }
 
-  public onGraphLoading(loading: boolean) {
+  onGraphLoading(loading: boolean) {
     this.onContentLoading.emit(loading);
   }
 
   private calculateOverviewRange() {
-    const timespan = this.timeSrvc.createTimespanOfInterval(this.timeInterval);
+    const timespan = this.timeSrvc.createTimespanOfInterval(
+      this.timeInterval(),
+    );
     this.timespan = timespan;
     if (this.timespan) {
       this.overviewTimespan = this.timeSrvc.getBufferedTimespan(
         timespan,
-        this.rangefactor,
+        this.rangefactor(),
       );
     }
   }

@@ -2,14 +2,12 @@ import 'leaflet.markercluster';
 
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
-  EventEmitter,
-  Input,
-  KeyValueDiffers,
   OnChanges,
-  Output,
   SimpleChanges,
+  inject,
+  input,
+  output,
 } from '@angular/core';
 import {
   HelgolandDataset,
@@ -21,7 +19,6 @@ import {
 } from '@helgoland/core';
 import L from 'leaflet';
 
-import { MapCache } from '../../base/map-cache.service';
 import { MapSelectorComponent } from '../map-selector.component';
 import { TrajectoryResult } from '../model/trajectory-result';
 
@@ -35,12 +32,12 @@ export class ProfileTrajectoryMapSelectorComponent
   extends MapSelectorComponent<TrajectoryResult>
   implements OnChanges, AfterViewInit
 {
-  @Input({ required: true })
-  public selectedTimespan!: Timespan;
+  protected servicesConnector = inject(HelgolandServicesConnector);
 
-  @Output()
+  readonly selectedTimespan = input.required<Timespan>();
+
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onTimeListDetermined: EventEmitter<number[]> = new EventEmitter();
+  readonly onTimeListDetermined = output<number[]>();
 
   private layer: L.FeatureGroup = this.initLayer();
   private data: LocatedProfileDataEntry[] = [];
@@ -58,24 +55,15 @@ export class ProfileTrajectoryMapSelectorComponent
     opacity: 1,
   };
 
-  constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    protected override mapCache: MapCache,
-    protected override kvDiffers: KeyValueDiffers,
-    protected override cd: ChangeDetectorRef,
-  ) {
-    super(mapCache, kvDiffers, cd);
-  }
-
-  public override ngOnChanges(changes: SimpleChanges) {
+  override ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
-    if (changes['selectedTimespan'] && this.selectedTimespan && this.map) {
+    if (changes['selectedTimespan'] && this.selectedTimespan() && this.map) {
       this.clearMap(this.map);
       this.data.forEach((entry) => {
         if (
           this.dataset &&
-          this.selectedTimespan.from <= entry.timestamp &&
-          entry.timestamp <= this.selectedTimespan.to
+          this.selectedTimespan().from <= entry.timestamp &&
+          entry.timestamp <= this.selectedTimespan().to
         ) {
           this.layer.addLayer(this.createGeoJson(entry, this.dataset));
         }
@@ -90,7 +78,7 @@ export class ProfileTrajectoryMapSelectorComponent
       return;
     }
     this.servicesConnector
-      .getDatasets(serviceUrl, { ...this.filter, expanded: true })
+      .getDatasets(serviceUrl, { ...this.filter(), expanded: true })
       .subscribe((datasets) => {
         datasets.forEach((dataset) => {
           if (

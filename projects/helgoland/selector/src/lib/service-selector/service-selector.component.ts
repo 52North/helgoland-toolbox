@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit, inject, input, output } from '@angular/core';
 import {
   BlacklistedService,
   DatasetApi,
@@ -7,8 +7,8 @@ import {
 } from '@helgoland/core';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { ServiceSelectorService } from './service-selector.service';
 import { CommonModule } from '@angular/common';
+import { ServiceSelectorService } from './service-selector.service';
 
 interface ExtendedHelgolandService extends HelgolandService {
   protected?: boolean;
@@ -21,61 +21,48 @@ interface ExtendedHelgolandService extends HelgolandService {
   selector: 'n52-service-selector',
   templateUrl: './service-selector.component.html',
   styleUrls: ['./service-selector.component.scss'],
-  standalone: true,
   imports: [CommonModule, TranslateModule],
 })
 export class ServiceSelectorComponent implements OnInit {
-  @Input()
-  public datasetApiList: DatasetApi[] = [];
+  protected serviceSelectorService = inject(ServiceSelectorService);
 
-  @Input()
-  public providerBlacklist: BlacklistedService[] = [];
+  readonly datasetApiList = input<DatasetApi[]>([]);
 
-  @Input()
-  public supportStations: boolean | undefined; // TODO: needed???
+  readonly providerBlacklist = input<BlacklistedService[]>([]);
 
-  @Input()
-  public selectedService: HelgolandService | undefined;
+  readonly supportStations = input<boolean>(); // TODO: needed???
 
-  @Input()
-  public filter: HelgolandParameterFilter = {};
+  readonly selectedService = input<HelgolandService>();
 
-  @Input()
-  public showUnresolvableServices: boolean | undefined;
+  readonly filter = input<HelgolandParameterFilter>({});
 
-  @Output()
+  readonly showUnresolvableServices = input<boolean>();
+
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onServiceSelected: EventEmitter<HelgolandService> =
-    new EventEmitter<HelgolandService>();
+  readonly onServiceSelected = output<HelgolandService>();
 
-  public services: ExtendedHelgolandService[] = [];
-  public unResolvableServices: DatasetApi[] = [];
-  public loadingCount = 0;
+  services: ExtendedHelgolandService[] = [];
+  unResolvableServices: DatasetApi[] = [];
+  loadingCount = 0;
 
-  constructor(protected serviceSelectorService: ServiceSelectorService) {}
-
-  public ngOnInit() {
-    if (!this.filter) {
-      this.filter = {};
-    }
-    if (!this.providerBlacklist) {
-      this.providerBlacklist = [];
-    }
-    if (this.datasetApiList) {
-      this.loadingCount = this.datasetApiList.length;
+  ngOnInit() {
+    const datasetApiList = this.datasetApiList();
+    if (datasetApiList) {
+      this.loadingCount = datasetApiList.length;
       this.services = [];
       this.unResolvableServices = [];
-      this.datasetApiList.forEach((api) => {
+      datasetApiList.forEach((api) => {
         this.serviceSelectorService
-          .fetchServicesOfAPI(api.url, this.providerBlacklist, this.filter)
+          .fetchServicesOfAPI(api.url, this.providerBlacklist(), this.filter())
           .subscribe({
             next: (res) => {
               this.loadingCount--;
               if (res && res instanceof Array) {
                 res.forEach((entry) => {
+                  const filter = this.filter();
                   if (
                     entry.quantities?.datasets ||
-                    (this.filter && !this.filter.expanded)
+                    (filter && !filter.expanded)
                   ) {
                     this.services.push(entry);
                   }
@@ -101,17 +88,18 @@ export class ServiceSelectorComponent implements OnInit {
     }
   }
 
-  public isSelected(service: HelgolandService) {
-    if (!this.selectedService) {
+  isSelected(service: HelgolandService) {
+    const selectedService = this.selectedService();
+    if (!selectedService) {
       return false;
     }
     return (
-      this.selectedService.id === service.id &&
-      this.selectedService.apiUrl === service.apiUrl
+      selectedService.id === service.id &&
+      selectedService.apiUrl === service.apiUrl
     );
   }
 
-  public selectService(service: HelgolandService) {
+  selectService(service: HelgolandService) {
     this.onServiceSelected.emit(service);
   }
 }

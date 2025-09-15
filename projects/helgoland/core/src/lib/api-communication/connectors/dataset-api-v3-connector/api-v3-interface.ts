@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -218,14 +218,10 @@ export interface ApiV3SamplingsFilter {
   providedIn: 'root',
 })
 export class ApiV3InterfaceService extends ApiInterface {
-  constructor(
-    protected httpService: HttpService,
-    protected internalIdHander: InternalIdHandler,
-  ) {
-    super();
-  }
+  protected httpService = inject(HttpService);
+  protected internalIdHander = inject(InternalIdHandler);
 
-  public getServices(
+  getServices(
     apiUrl: string,
     params?: ApiV3ParameterFilter,
     options?: HttpRequestOptions,
@@ -238,7 +234,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     );
   }
 
-  public getService(
+  getService(
     id: string,
     apiUrl: string,
     params?: ApiV3ParameterFilter,
@@ -252,7 +248,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     );
   }
 
-  public getCategories(
+  getCategories(
     apiUrl: string,
     params?: ApiV3ParameterFilter,
     options?: HttpRequestOptions,
@@ -265,7 +261,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     );
   }
 
-  public getCategory(
+  getCategory(
     id: string,
     apiUrl: string,
     params?: ApiV3ParameterFilter,
@@ -279,7 +275,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     );
   }
 
-  public getOfferings(
+  getOfferings(
     apiUrl: string,
     params?: ApiV3ParameterFilter,
     options?: HttpRequestOptions,
@@ -292,7 +288,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     );
   }
 
-  public getOffering(
+  getOffering(
     id: string,
     apiUrl: string,
     params?: ApiV3ParameterFilter,
@@ -306,7 +302,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     );
   }
 
-  public getPhenomena(
+  getPhenomena(
     apiUrl: string,
     params?: ApiV3ParameterFilter,
     options?: HttpRequestOptions,
@@ -319,7 +315,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     );
   }
 
-  public getPhenomenon(
+  getPhenomenon(
     id: string,
     apiUrl: string,
     params?: ApiV3ParameterFilter,
@@ -333,7 +329,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     );
   }
 
-  public getFeatures(
+  getFeatures(
     apiUrl: string,
     params?: ApiV3ParameterFilter,
     options?: HttpRequestOptions,
@@ -346,7 +342,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     );
   }
 
-  public getFeature(
+  getFeature(
     id: string,
     apiUrl: string,
     params?: ApiV3ParameterFilter,
@@ -360,7 +356,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     );
   }
 
-  public getProcedures(
+  getProcedures(
     apiUrl: string,
     params?: ApiV3ParameterFilter,
     options?: HttpRequestOptions,
@@ -373,7 +369,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     );
   }
 
-  public getProcedure(
+  getProcedure(
     id: string,
     apiUrl: string,
     params?: ApiV3ParameterFilter,
@@ -387,7 +383,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     );
   }
 
-  public getPlatforms(
+  getPlatforms(
     apiUrl: string,
     params?: ApiV3ParameterFilter,
     options?: HttpRequestOptions,
@@ -400,7 +396,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     );
   }
 
-  public getPlatform(
+  getPlatform(
     id: string,
     apiUrl: string,
     params?: ApiV3ParameterFilter,
@@ -414,7 +410,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     );
   }
 
-  public getDatasets(
+  getDatasets(
     apiUrl: string,
     params?: ApiV3ParameterFilter,
     options?: HttpRequestOptions,
@@ -427,7 +423,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     ).pipe(map((res) => res.map((e) => this.prepareDataset(e, apiUrl))));
   }
 
-  public getDataset(
+  getDataset(
     id: string,
     apiUrl: string,
     params?: ApiV3ParameterFilter,
@@ -438,7 +434,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     );
   }
 
-  public getDatasetData<T extends IDataEntry>(
+  getDatasetData<T extends IDataEntry>(
     id: string,
     apiUrl: string,
     params?: ApiV3DatasetDataFilter,
@@ -454,7 +450,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     );
   }
 
-  public getDatasetExtras(
+  getDatasetExtras(
     id: string,
     apiUrl: string,
     params?: ApiV3DatasetExtrasFilter,
@@ -466,7 +462,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     );
   }
 
-  public getSamplings(
+  getSamplings(
     apiUrl: string,
     params?: ApiV3SamplingsFilter,
     options?: HttpRequestOptions,
@@ -479,7 +475,7 @@ export class ApiV3InterfaceService extends ApiInterface {
     );
   }
 
-  public getSampling(
+  getSampling(
     id: string,
     apiUrl: string,
     params?: ApiV3SamplingsFilter,

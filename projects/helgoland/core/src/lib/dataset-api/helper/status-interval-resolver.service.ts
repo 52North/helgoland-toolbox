@@ -6,7 +6,7 @@ import { StatusInterval } from '../../model/dataset-api/dataset';
 export class StatusIntervalResolverService {
   constructor() {}
 
-  public getMatchingInterval(
+  getMatchingInterval(
     value: number,
     statusIntervals: StatusInterval[],
   ): StatusInterval | undefined {

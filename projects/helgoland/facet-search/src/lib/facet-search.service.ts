@@ -1,4 +1,4 @@
-import { Injectable, Optional } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Timespan } from '@helgoland/core';
 import { Observable, ReplaySubject } from 'rxjs';
 
@@ -18,6 +18,8 @@ export class FacetSearchConfig {
 
 @Injectable()
 export class FacetSearchServiceImpl implements FacetSearchService {
+  private config = inject(FacetSearchConfig, { optional: true });
+
   protected onResultsChanged: ReplaySubject<FacetSearchElement[]> =
     new ReplaySubject(1);
 
@@ -31,22 +33,22 @@ export class FacetSearchServiceImpl implements FacetSearchService {
 
   protected nullable = false;
 
-  constructor(@Optional() config?: FacetSearchConfig) {
-    if (config && config.showZeroValues) {
-      this.nullable = config.showZeroValues;
+  constructor() {
+    if (this.config && this.config.showZeroValues) {
+      this.nullable = this.config.showZeroValues;
     }
   }
 
-  public setEntries(ts: FacetSearchElement[]) {
+  setEntries(ts: FacetSearchElement[]) {
     this.entries = ts;
     this.setFilteredEntries();
   }
 
-  public getResults(): Observable<FacetSearchElement[]> {
+  getResults(): Observable<FacetSearchElement[]> {
     return this.onResultsChanged.asObservable();
   }
 
-  public getParameterList(
+  getParameterList(
     type: ParameterFacetType,
     sort: ParameterFacetSort,
   ): FacetParameter[] {
@@ -106,16 +108,14 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     return this.sortParameters(params, sort);
   }
 
-  public getSelectedParameter(
-    type: ParameterFacetType,
-  ): FacetParameter | undefined {
+  getSelectedParameter(type: ParameterFacetType): FacetParameter | undefined {
     if (this.facets.has(type)) {
       return this.facets.get(type);
     }
     return undefined;
   }
 
-  public selectParameter(type: ParameterFacetType, parameter: FacetParameter) {
+  selectParameter(type: ParameterFacetType, parameter: FacetParameter) {
     if (parameter.selected) {
       this.facets.set(type, parameter);
     } else {
@@ -124,32 +124,32 @@ export class FacetSearchServiceImpl implements FacetSearchService {
     this.setFilteredEntries();
   }
 
-  public areFacetsSelected(): boolean {
+  areFacetsSelected(): boolean {
     return this.facets.size > 0 || !!this.selectedTimespan;
   }
 
-  public getFilteredResults(): FacetSearchElement[] {
+  getFilteredResults(): FacetSearchElement[] {
     return this.filteredEntries;
   }
 
-  public getCompleteTimespan(): Timespan | undefined {
+  getCompleteTimespan(): Timespan | undefined {
     return this.createTimespan(this.entries);
   }
 
-  public setSelectedTimespan(timespan?: Timespan) {
+  setSelectedTimespan(timespan?: Timespan) {
     this.selectedTimespan = timespan;
     this.setFilteredEntries();
   }
 
-  public getSelectedTimespan(): Timespan | undefined {
+  getSelectedTimespan(): Timespan | undefined {
     return this.selectedTimespan;
   }
 
-  public getFilteredTimespan(): Timespan | undefined {
+  getFilteredTimespan(): Timespan | undefined {
     return this.createTimespan(this.filteredEntries);
   }
 
-  public resetAllFacets() {
+  resetAllFacets() {
     this.facets.clear();
     this.selectedTimespan = undefined;
     this.setFilteredEntries();

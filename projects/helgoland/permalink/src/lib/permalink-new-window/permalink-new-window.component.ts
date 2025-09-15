@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'n52-permalink-new-window',
@@ -6,15 +6,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   standalone: true,
 })
 export class PermalinkNewWindowComponent {
-  @Input({ required: true })
-  public url!: string;
+  readonly url = input.required<string>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onTriggered: EventEmitter<void> = new EventEmitter<void>();
+  readonly onTriggered = output<void>();
 
-  public openInNewWindow() {
-    window.open(this.url, '_blank');
+  openInNewWindow() {
+    window.open(this.url(), '_blank');
     this.onTriggered.emit();
   }
 }

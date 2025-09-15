@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit, inject, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -18,23 +17,19 @@ interface Symbol {
   templateUrl: './timeseries-symbol-select.component.html',
   styleUrls: ['./timeseries-symbol-select.component.scss'],
   imports: [
-    CommonModule,
     FormsModule,
     MatFormFieldModule,
     MatSelectModule,
     MatSliderModule,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class TimeseriesSymbolSelectComponent implements OnInit {
-  // <<<<<<< HEAD
-  @Input({ required: true }) lineStyle: LineStyle | undefined;
+  private translate = inject(TranslateService);
 
-  @Output() styleChanged: EventEmitter<LineStyle> = new EventEmitter();
-  // =======
-  //   @Input({ required: true }) options!: DatasetOptions;
-  // >>>>>>> 00252b782fb5fc2c23fb8c28596a26f0603e3757
+  readonly lineStyle = input.required<LineStyle | undefined>();
+
+  readonly styleChanged = output<LineStyle>();
 
   symbols: Symbol[] = [
     {
@@ -74,32 +69,32 @@ export class TimeseriesSymbolSelectComponent implements OnInit {
   selectedSymbol: PointSymbolType | 'point' = 'point';
   symbolSize = 1;
 
-  constructor(private translate: TranslateService) {}
-
   ngOnInit() {
-    if (this.lineStyle) {
-      if (this.lineStyle.pointSymbol) {
-        this.selectedSymbol = this.lineStyle.pointSymbol.type;
-        this.symbolSize = this.lineStyle.pointSymbol.size;
+    const lineStyle = this.lineStyle();
+    if (lineStyle) {
+      if (lineStyle.pointSymbol) {
+        this.selectedSymbol = lineStyle.pointSymbol.type;
+        this.symbolSize = lineStyle.pointSymbol.size;
       } else {
         this.selectedSymbol = 'point';
-        this.symbolSize = this.lineStyle.pointRadius;
+        this.symbolSize = lineStyle.pointRadius;
       }
     }
   }
 
   adjustSymbol() {
-    if (this.lineStyle) {
+    const lineStyle = this.lineStyle();
+    if (lineStyle) {
       if (this.selectedSymbol === 'point') {
-        this.lineStyle.pointSymbol = undefined;
-        this.lineStyle.pointRadius = this.symbolSize;
+        lineStyle.pointSymbol = undefined;
+        lineStyle.pointRadius = this.symbolSize;
       } else {
-        this.lineStyle.pointSymbol = {
+        lineStyle.pointSymbol = {
           type: PointSymbolType[this.selectedSymbol],
           size: this.symbolSize,
         };
       }
-      this.styleChanged.emit(this.lineStyle);
+      this.styleChanged.emit(lineStyle);
     }
   }
 }

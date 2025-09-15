@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -37,7 +36,6 @@ import { TrajectoryLabelComponent } from './../trajectory-label/trajectory-label
   templateUrl: './trajectory-view.component.html',
   styleUrls: ['./trajectory-view.component.scss'],
   imports: [
-    CommonModule,
     HelgolandD3Module,
     HelgolandMapViewModule,
     LegendEntryComponent,
@@ -57,38 +55,42 @@ import { TrajectoryLabelComponent } from './../trajectory-label/trajectory-label
     TrajectoryLabelComponent,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class TrajectoryViewComponent implements OnInit {
-  public trajectory: HelgolandTrajectory | undefined;
+  protected trajectorySrvc = inject(TrajectoriesService);
+  protected translateSrvc = inject(TranslateService);
+  protected permalinkSrvc = inject(TrajectoryViewPermalinkService);
+  private dialog = inject(MatDialog);
 
-  public timespan: Timespan | undefined;
+  trajectory: HelgolandTrajectory | undefined;
 
-  public selectedTimespan: Timespan | undefined;
+  timespan: Timespan | undefined;
 
-  public geometry: GeoJSON.LineString | undefined;
+  selectedTimespan: Timespan | undefined;
 
-  public highlightGeometry: GeoJSON.GeoJsonObject | undefined;
+  geometry: GeoJSON.LineString | undefined;
 
-  public zoomToGeometry: GeoJSON.LineString | undefined;
+  highlightGeometry: GeoJSON.GeoJsonObject | undefined;
 
-  public loading: boolean = false;
+  zoomToGeometry: GeoJSON.LineString | undefined;
 
-  public datasetIds: string[] = [];
+  loading: boolean = false;
 
-  public options: Map<string, DatasetOptions> = new Map();
+  datasetIds: string[] = [];
 
-  public selection: D3SelectionRange | undefined;
+  options: Map<string, DatasetOptions> = new Map();
 
-  public graphOptions: D3GraphOptions = {
+  selection: D3SelectionRange | undefined;
+
+  graphOptions: D3GraphOptions = {
     axisType: D3AxisType.Time,
     dotted: false,
     groupYAxis: true,
   };
 
-  public trajectoryGraphLoading: boolean = false;
+  trajectoryGraphLoading: boolean = false;
 
-  public axisTypes = [
+  axisTypes = [
     {
       type: D3AxisType.Distance,
       label: this.translateSrvc.instant('chart-styling.xaxis-option.distance'),
@@ -102,13 +104,6 @@ export class TrajectoryViewComponent implements OnInit {
       label: this.translateSrvc.instant('chart-styling.xaxis-option.ticks'),
     },
   ];
-
-  constructor(
-    public trajectorySrvc: TrajectoriesService,
-    public translateSrvc: TranslateService,
-    public permalinkSrvc: TrajectoryViewPermalinkService,
-    private dialog: MatDialog,
-  ) {}
 
   ngOnInit(): void {
     this.permalinkSrvc.validatePeramlink().subscribe((_) => {
@@ -133,7 +128,7 @@ export class TrajectoryViewComponent implements OnInit {
     }
   }
 
-  public onChartSelectionChanged(range: D3SelectionRange) {
+  onChartSelectionChanged(range: D3SelectionRange) {
     if (this.geometry) {
       this.highlightGeometry = {
         type: 'LineString',
@@ -142,7 +137,7 @@ export class TrajectoryViewComponent implements OnInit {
     }
   }
 
-  public onChartSelectionChangedFinished(range: D3SelectionRange) {
+  onChartSelectionChangedFinished(range: D3SelectionRange) {
     if (this.geometry) {
       this.selection = range;
       this.zoomToGeometry = {
@@ -152,7 +147,7 @@ export class TrajectoryViewComponent implements OnInit {
     }
   }
 
-  public onChartHighlightChanged(idx: number) {
+  onChartHighlightChanged(idx: number) {
     if (this.geometry) {
       this.highlightGeometry = {
         type: 'Point',
@@ -161,30 +156,30 @@ export class TrajectoryViewComponent implements OnInit {
     }
   }
 
-  public setXaxisType(axisType: D3AxisType) {
+  setXaxisType(axisType: D3AxisType) {
     this.graphOptions.axisType = axisType;
   }
 
-  public isXaxisTypeSelected(axisType: D3AxisType): boolean {
+  isXaxisTypeSelected(axisType: D3AxisType): boolean {
     return this.graphOptions.axisType === axisType;
   }
 
-  public toggleDotted() {
+  toggleDotted() {
     this.graphOptions.dotted = !this.graphOptions.dotted;
   }
 
-  public openSelection(disableClose = false) {
+  openSelection(disableClose = false) {
     this.dialog.open(ModalTrajectorySelectionComponent, {
       disableClose,
       autoFocus: false,
     });
   }
 
-  public openMainConfig() {
+  openMainConfig() {
     this.dialog.open(ModalMainConfigComponent);
   }
 
-  public setGraphLoading(loading: boolean) {
+  setGraphLoading(loading: boolean) {
     setTimeout(() => (this.trajectoryGraphLoading = loading));
   }
 }

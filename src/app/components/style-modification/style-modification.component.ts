@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -15,40 +15,40 @@ import { HelgolandModificationModule } from '@helgoland/modification';
     MatCheckboxModule,
     FormsModule,
   ],
-  standalone: true,
 })
 export class StyleModificationComponent {
-  public color: string | undefined;
-  public generalize: boolean | undefined;
-  public zeroBasedYAxis: boolean | undefined;
-  public autoRangeSelection: boolean | undefined;
-  public separateYAxis: boolean | undefined;
-  public pointRadius: number;
-  public lineWidth: number;
-  public range: MinMaxRange | undefined;
+  dialogRef = inject<MatDialogRef<StyleModificationComponent>>(MatDialogRef);
+  option = inject<DatasetOptions>(MAT_DIALOG_DATA);
 
-  public colorList: string[];
+  color: string | undefined;
+  generalize: boolean | undefined;
+  zeroBasedYAxis: boolean | undefined;
+  autoRangeSelection: boolean | undefined;
+  separateYAxis: boolean | undefined;
+  pointRadius: number;
+  lineWidth: number;
+  range: MinMaxRange | undefined;
 
-  constructor(
-    public dialogRef: MatDialogRef<StyleModificationComponent>,
-    @Inject(MAT_DIALOG_DATA)
-    public option: DatasetOptions,
-  ) {
+  colorList: string[];
+
+  constructor() {
     this.colorList = ['#FF0000', '#00FF00', '#0000FF'];
-    this.generalize = option.generalize;
-    this.zeroBasedYAxis = option.zeroBasedYAxis;
-    this.autoRangeSelection = option.autoRangeSelection;
-    this.pointRadius = option.pointRadius;
-    this.lineWidth = option.lineWidth;
-    this.range = option.yAxisRange;
-    this.separateYAxis = option.separateYAxis;
+    this.generalize = this.option.generalize;
+    this.zeroBasedYAxis = this.option.zeroBasedYAxis;
+    this.autoRangeSelection = this.option.autoRangeSelection;
+    this.pointRadius = this.option.pointRadius;
+    this.lineWidth = this.option.lineWidth;
+    this.range = this.option.yAxisRange;
+    this.separateYAxis = this.option.separateYAxis;
   }
 
-  public updateRange(range: MinMaxRange) {
-    this.range = range;
+  updateRange(range: MinMaxRange | void) {
+    if (range) {
+      this.range = range;
+    }
   }
 
-  public onOk() {
+  onOk() {
     if (this.color) {
       this.option.color = this.color;
     }
@@ -62,7 +62,7 @@ export class StyleModificationComponent {
     this.dialogRef.close(this.option);
   }
 
-  public setColor(color: string) {
+  setColor(color: string) {
     this.color = color;
   }
 }

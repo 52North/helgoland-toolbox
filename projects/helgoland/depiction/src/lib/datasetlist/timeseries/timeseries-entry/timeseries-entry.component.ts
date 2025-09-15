@@ -4,18 +4,15 @@ import {
   Injectable,
   OnChanges,
   ViewEncapsulation,
+  inject,
 } from '@angular/core';
 import {
   ColorService,
   DatasetOptions,
-  HelgolandServicesConnector,
   IdCache,
-  InternalIdHandler,
   ReferenceValue,
-  Time,
   TzDatePipe,
 } from '@helgoland/core';
-import { TranslateService } from '@ngx-translate/core';
 
 import { LabelMapperComponent } from '../../../label-mapper/label-mapper.component';
 import { FirstLatestTimeseriesEntryComponent } from '../first-latest-timeseries-entry/first-latest-timeseries-entry.component';
@@ -35,34 +32,25 @@ export class ReferenceValueColorCache extends IdCache<{
   templateUrl: './timeseries-entry.component.html',
   styleUrls: ['./timeseries-entry.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [NgStyle, NgClass, LabelMapperComponent, TzDatePipe],
 })
 export class TimeseriesEntryComponent
   extends FirstLatestTimeseriesEntryComponent
   implements OnChanges
 {
-  public informationVisible = false;
-  public referenceValues: ReferenceValue[] = [];
+  protected color = inject(ColorService);
+  protected refValCache = inject(ReferenceValueColorCache);
 
-  constructor(
-    protected override servicesConnector: HelgolandServicesConnector,
-    protected override timeSrvc: Time,
-    protected override internalIdHandler: InternalIdHandler,
-    protected color: ColorService,
-    protected refValCache: ReferenceValueColorCache,
-    public override translateSrvc: TranslateService,
-  ) {
-    super(servicesConnector, internalIdHandler, translateSrvc, timeSrvc);
-  }
+  informationVisible = false;
+  referenceValues: ReferenceValue[] = [];
 
-  public toggleInformation() {
+  toggleInformation() {
     this.informationVisible = !this.informationVisible;
   }
 
-  public toggleReferenceValue(refValue: ReferenceValue) {
+  toggleReferenceValue(refValue: ReferenceValue) {
     const options = JSON.parse(
-      JSON.stringify(this.datasetOptions),
+      JSON.stringify(this.datasetOptions()),
     ) as DatasetOptions;
     const idx = options.showReferenceValues.findIndex(
       (entry) => entry.id === refValue.referenceValueId,
@@ -89,7 +77,7 @@ export class TimeseriesEntryComponent
     if (this.dataset?.referenceValues) {
       this.dataset.referenceValues.forEach((e) => {
         const refValId = this.createRefValId(e.referenceValueId);
-        const refValOption = this.datasetOptions.showReferenceValues.find(
+        const refValOption = this.datasetOptions().showReferenceValues.find(
           (o) => o.id === e.referenceValueId,
         );
         if (refValOption) {

@@ -43,12 +43,12 @@ import {
 } from '../../model/sml';
 import {
   AbstractDataComponent,
-  SweDataRecord,
-  SweText,
-  SweVector,
-  SweMatrix,
   SweDataArray,
   SweDataComponent,
+  SweDataRecord,
+  SweMatrix,
+  SweText,
+  SweVector,
 } from '../../model/swe';
 import { GmlEncoder } from './GmlEncoder';
 import { IsoEncoder } from './IsoEncoder';
@@ -60,7 +60,7 @@ export class SensorMLEncoder {
   private isoEncoder = new IsoEncoder();
   private gmlEncoder = new GmlEncoder();
 
-  public encodeTerm(term: Term, document: Document): Node {
+  encodeTerm(term: Term, document: Document): Node {
     const termNode = document.createElementNS(NAMESPACES.SML, 'sml:Term');
 
     if (term.definition) {
@@ -99,7 +99,7 @@ export class SensorMLEncoder {
     return termNode;
   }
 
-  public encodeAbstractMetadataList(
+  encodeAbstractMetadataList(
     node: Element,
     object: AbstractMetadataList,
     document: Document,
@@ -111,10 +111,7 @@ export class SensorMLEncoder {
     }
   }
 
-  public encodeIdentifierList(
-    object: IdentifierList,
-    document: Document,
-  ): Node {
+  encodeIdentifierList(object: IdentifierList, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:IdentifierList');
 
     this.encodeAbstractMetadataList(node, object, document);
@@ -133,7 +130,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeKeywordList(object: KeywordList, document: Document): Node {
+  encodeKeywordList(object: KeywordList, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:KeywordList');
 
     this.encodeAbstractMetadataList(node, object, document);
@@ -165,10 +162,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeClassifierList(
-    object: ClassifierList,
-    document: Document,
-  ): Node {
+  encodeClassifierList(object: ClassifierList, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:ClassifierList');
 
     this.encodeAbstractMetadataList(node, object, document);
@@ -187,7 +181,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeCharacteristicList(
+  encodeCharacteristicList(
     object: CharacteristicList,
     document: Document,
   ): Node {
@@ -220,7 +214,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeEventList(object: EventList, document: Document): Node {
+  encodeEventList(object: EventList, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:EventList');
 
     this.encodeAbstractMetadataList(node, object, document);
@@ -236,10 +230,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeCapabilityList(
-    object: CapabilityList,
-    document: Document,
-  ): Node {
+  encodeCapabilityList(object: CapabilityList, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:CapabilityList');
 
     this.encodeAbstractMetadataList(node, object, document);
@@ -265,7 +256,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeContactList(object: ContactList, document: Document): Node {
+  encodeContactList(object: ContactList, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:ContactList');
 
     this.encodeAbstractMetadataList(node, object, document);
@@ -286,7 +277,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeDocumentList(object: DocumentList, document: Document): Node {
+  encodeDocumentList(object: DocumentList, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:DocumentList');
 
     this.encodeAbstractMetadataList(node, object, document);
@@ -307,7 +298,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeEvent(object: Event, document: Document): Node {
+  encodeEvent(object: Event, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:Event');
 
     this.sweEncoder.encodeAbstractSweIdentifiable(node, object, document);
@@ -400,7 +391,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeDescribedObject(
+  encodeDescribedObject(
     node: Element,
     object: DescribedObject,
     document: Document,
@@ -534,7 +525,7 @@ export class SensorMLEncoder {
     }
   }
 
-  public encodeAbstractProcess(
+  encodeAbstractProcess(
     node: Element,
     object: AbstractProcess,
     document: Document,
@@ -611,7 +602,7 @@ export class SensorMLEncoder {
     }
   }
 
-  public encodeModes(object: AbstractModes, document: Document): Node {
+  encodeModes(object: AbstractModes, document: Document): Node {
     if (object instanceof ModeChoice) {
       return this.encodeModeChoice(object, document);
     }
@@ -619,7 +610,7 @@ export class SensorMLEncoder {
     throw new Error('Unsupported modes type');
   }
 
-  public encodeModeChoice(object: ModeChoice, document: Document): Node {
+  encodeModeChoice(object: ModeChoice, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:ModeChoice');
 
     this.sweEncoder.encodeAbstractSwe(node, object, document);
@@ -635,7 +626,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeMode(object: Mode, document: Document): Node {
+  encodeMode(object: Mode, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:Mode');
     this.encodeDescribedObject(node, object, document);
 
@@ -653,7 +644,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeSettings(object: Settings, document: Document): Node {
+  encodeSettings(object: Settings, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:Settings');
     this.sweEncoder.encodeAbstractSwe(node, object, document);
 
@@ -764,7 +755,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeFeatureList(object: FeatureList, document: Document) {
+  encodeFeatureList(object: FeatureList, document: Document) {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:FeatureList');
 
     this.encodeAbstractMetadataList(node, object, document);
@@ -783,7 +774,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeInputList(object: InputList, document: Document): Node {
+  encodeInputList(object: InputList, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:InputList');
     this.sweEncoder.encodeAbstractSwe(node, object, document);
 
@@ -798,7 +789,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeOutputList(object: OutputList, document: Document): Node {
+  encodeOutputList(object: OutputList, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:OutputList');
     this.sweEncoder.encodeAbstractSwe(node, object, document);
 
@@ -816,7 +807,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeParameterList(object: ParameterList, document: Document): Node {
+  encodeParameterList(object: ParameterList, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:ParameterList');
     this.sweEncoder.encodeAbstractSwe(node, object, document);
 
@@ -834,7 +825,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeDataInterface(object: DataInterface, document: Document): Node {
+  encodeDataInterface(object: DataInterface, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:DataInterface');
 
     this.sweEncoder.encodeAbstractSweIdentifiable(node, object, document);
@@ -861,7 +852,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeObservableProperty(
+  encodeObservableProperty(
     object: ObservableProperty,
     document: Document,
   ): Node {
@@ -879,7 +870,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeInputOrOutputOrParameter(
+  encodeInputOrOutputOrParameter(
     node: Element,
     object: InputOrOutputOrParameter,
     document: Document,
@@ -893,7 +884,7 @@ export class SensorMLEncoder {
     }
   }
 
-  public encodeSimpleProcess(
+  encodeSimpleProcess(
     object: SimpleProcess,
     document: Document,
     node?: Element,
@@ -907,7 +898,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeProcessMethod(object: ProcessMethod, document: Document): Node {
+  encodeProcessMethod(object: ProcessMethod, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:ProcessMethod');
     this.sweEncoder.encodeAbstractSweIdentifiable(node, object, document);
 
@@ -925,12 +916,12 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeAlgorithm(object: AbstractAlgorithm, document: Document): Node {
+  encodeAlgorithm(object: AbstractAlgorithm, document: Document): Node {
     // TODO implement algorithm
     throw new Error('not yet implemented');
   }
 
-  public encodeAggregateProcess(
+  encodeAggregateProcess(
     object: AggregateProcess,
     document: Document,
     node?: Element,
@@ -944,10 +935,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeConnectionList(
-    object: ConnectionList,
-    document: Document,
-  ): Node {
+  encodeConnectionList(object: ConnectionList, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:ConnectionList');
     this.sweEncoder.encodeAbstractSwe(node, object, document);
 
@@ -965,7 +953,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeConnection(object: Connection, document: Document): Node {
+  encodeConnection(object: Connection, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:Link');
     if (object.source) {
       const sourceNode = document.createElementNS(NAMESPACES.SML, 'sml:source');
@@ -983,10 +971,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeComponentList(
-    componentList: ComponentList,
-    document: Document,
-  ): Node {
+  encodeComponentList(componentList: ComponentList, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:ComponentList');
     this.sweEncoder.encodeAbstractSwe(node, componentList, document);
 
@@ -1036,7 +1021,7 @@ export class SensorMLEncoder {
     }
   }
 
-  public encodeAbstractPhysicalProcess(
+  encodeAbstractPhysicalProcess(
     node: Element,
     object: AbstractPhysicalProcess,
     document: Document,
@@ -1103,7 +1088,7 @@ export class SensorMLEncoder {
     }
   }
 
-  public encodePosition(object: Position, document: Document): Node {
+  encodePosition(object: Position, document: Document): Node {
     if (object instanceof Point) {
       return this.gmlEncoder.encodePoint(object, document);
     }
@@ -1128,7 +1113,7 @@ export class SensorMLEncoder {
     return undefined;
   }
 
-  public encodeProcess(
+  encodeProcess(
     object: AbstractProcess,
     document: Document,
     node?: Element,
@@ -1149,7 +1134,7 @@ export class SensorMLEncoder {
     throw new Error('Unsupported process type');
   }
 
-  public encodeSpatialFrame(object: SpatialFrame, document: Document): Node {
+  encodeSpatialFrame(object: SpatialFrame, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:SpatialFrame');
     this.sweEncoder.encodeAbstractSweIdentifiable(node, object, document);
 
@@ -1175,7 +1160,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeTemporalFrame(object: TemporalFrame, document: Document): Node {
+  encodeTemporalFrame(object: TemporalFrame, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.SML, 'sml:TemporalFrame');
     this.sweEncoder.encodeAbstractSweIdentifiable(node, object, document);
 
@@ -1188,7 +1173,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodePhysicalSystem(
+  encodePhysicalSystem(
     object: PhysicalSystem,
     document: Document,
     node?: Element,
@@ -1203,7 +1188,7 @@ export class SensorMLEncoder {
     return node;
   }
 
-  public encodeAggregatingProcess(
+  encodeAggregatingProcess(
     node: Element,
     object: AggregatingProcess,
     document: Document,
@@ -1231,7 +1216,7 @@ export class SensorMLEncoder {
     }
   }
 
-  public encodeProcessMethodProcess(
+  encodeProcessMethodProcess(
     node: Element,
     object: ProcessMethodProcess,
     document: Document,
@@ -1243,7 +1228,7 @@ export class SensorMLEncoder {
     }
   }
 
-  public encodePhysicalComponent(
+  encodePhysicalComponent(
     object: PhysicalComponent,
     document: Document,
     node?: Element,

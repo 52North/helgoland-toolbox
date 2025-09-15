@@ -1,14 +1,14 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 
 import { SettingsServiceTestingProvider } from '../../../../../testing/settings.testing';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
-import {
-  MultiServiceFilterEndpoint,
-  MultiServiceFilterSelectorComponent,
-} from './multi-service-filter-selector.component';
+import { MultiServiceFilterSelectorComponent } from './multi-service-filter-selector.component';
 
 describe('MultiServiceFilterSelectorComponent', () => {
   let component: MultiServiceFilterSelectorComponent;
@@ -17,13 +17,15 @@ describe('MultiServiceFilterSelectorComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
         TranslateTestingModule,
         MultiServiceFilterSelectorComponent,
       ],
-      providers: [SettingsServiceTestingProvider],
+      providers: [
+        SettingsServiceTestingProvider,
+        provideHttpClient(withInterceptorsFromDi()),
+      ],
     }).compileComponents();
   }));
 
@@ -47,13 +49,15 @@ describe('MultiServiceFilterSelectorComponent creation', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
         TranslateTestingModule,
         MultiServiceFilterSelectorComponent,
       ],
-      providers: [SettingsServiceTestingProvider],
+      providers: [
+        SettingsServiceTestingProvider,
+        provideHttpClient(withInterceptorsFromDi()),
+      ],
     }).compileComponents();
   }));
 

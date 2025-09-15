@@ -1,15 +1,15 @@
 import { SensorMLNamespaceResolver } from './SensorMLNamespaceResolver';
 
 export class XPathDocument {
-  public static parse(xml: string): XPathDocument {
+  static parse(xml: string): XPathDocument {
     const parser = new DOMParser();
     const document = parser.parseFromString(xml, 'application/xml');
     return new XPathDocument(document);
   }
 
-  constructor(public document: Document) {}
+  constructor(document: Document) {}
 
-  public eval(
+  eval(
     expr: string,
     context?: Node,
   ): boolean | string | number | Node | Node[] {

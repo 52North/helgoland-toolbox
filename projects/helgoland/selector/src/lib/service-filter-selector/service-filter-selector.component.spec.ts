@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
@@ -14,13 +17,15 @@ describe('ServiceFilterSelectorComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
         TranslateTestingModule,
         ServiceFilterSelectorComponent,
       ],
-      providers: [SettingsServiceTestingProvider],
+      providers: [
+        SettingsServiceTestingProvider,
+        provideHttpClient(withInterceptorsFromDi()),
+      ],
     }).compileComponents();
   }));
 

@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { HelgolandTrajectory } from '@helgoland/core';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -7,10 +6,8 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'helgoland-trajectories-label',
   templateUrl: './trajectory-label.component.html',
   styleUrls: ['./trajectory-label.component.scss'],
-  imports: [CommonModule, TranslateModule],
-  standalone: true,
+  imports: [TranslateModule],
 })
 export class TrajectoryLabelComponent {
-  @Input({ required: true })
-  trajectory!: HelgolandTrajectory;
+  readonly trajectory = input.required<HelgolandTrajectory>();
 }

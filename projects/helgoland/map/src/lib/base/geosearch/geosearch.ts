@@ -59,12 +59,12 @@ export interface GeoReverseResult {
 }
 
 export abstract class GeoSearch {
-  public abstract searchTerm(
+  abstract searchTerm(
     term: string,
     options?: GeoSearchOptions,
   ): Observable<GeoSearchResult>;
 
-  public abstract reverse(
+  abstract reverse(
     point: Point,
     options?: GeoReverseOptions,
   ): Observable<GeoReverseResult>;

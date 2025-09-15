@@ -1,5 +1,5 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Injectable, Optional } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   BarRenderingHints,
   ColorService,
@@ -18,11 +18,11 @@ import {
   BarStyle,
   D3SeriesGraphErrorHandler,
   D3SeriesSimpleGraphErrorHandler,
-  DatasetChild,
   DatasetStyle,
   GraphDataEntry,
   LineStyle,
   SeriesGraphDataset,
+  TimeseriesChild,
 } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
 import { Duration, duration, unitOfTime } from 'moment';
@@ -65,6 +65,19 @@ export abstract class TimeseriesService {
 export class TimeseriesServiceImpl
   implements TimeseriesService, DatasetStateService, DatasetFavoriteService
 {
+  protected servicesConnector = inject(HelgolandServicesConnector);
+  protected localStorage = inject(LocalStorage);
+  protected timeSrvc = inject(Time);
+  protected sumValues = inject(SumValuesService);
+  protected colorService = inject(ColorService);
+  protected translate = inject(TranslateService);
+  protected graphDatasetsSrvc = inject(DatasetsService);
+  protected errorHandler = inject(D3SeriesGraphErrorHandler, {
+    optional: true,
+  })!;
+  protected notifier = inject(NotifierService);
+  protected la = inject(LiveAnnouncer);
+
   private state = new Map<string, SaveState>();
   private favorites: {
     [key: string]: FavoriteSaveState;
@@ -79,25 +92,13 @@ export class TimeseriesServiceImpl
     timespanBufferFactor: 0.2,
   };
 
-  constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    protected localStorage: LocalStorage,
-    protected timeSrvc: Time,
-    protected sumValues: SumValuesService,
-    protected colorService: ColorService,
-    protected translate: TranslateService,
-    protected graphDatasetsSrvc: DatasetsService,
-    @Optional()
-    protected errorHandler: D3SeriesGraphErrorHandler,
-    protected notifier: NotifierService,
-    protected la: LiveAnnouncer,
-  ) {
+  constructor() {
     this.graphDatasetsSrvc.timespanChanged.subscribe(() =>
       this.datasetMap.forEach((dataset) =>
         this.loadDatasetData(dataset.internalId),
       ),
     );
-    if (!errorHandler) {
+    if (!this.errorHandler) {
       this.errorHandler = new D3SeriesSimpleGraphErrorHandler();
     }
     this.loadFavorites();
@@ -107,19 +108,19 @@ export class TimeseriesServiceImpl
     return this.datasetMap.get(internalId);
   }
 
-  public async addDataset(internalId: string) {
+  async addDataset(internalId: string) {
     this.addDatasetbyId(internalId);
   }
 
-  public getDatasets(): string[] {
+  getDatasets(): string[] {
     return [];
   }
 
-  public hasDataset(id: string): boolean {
+  hasDataset(id: string): boolean {
     return this.graphDatasetsSrvc.hasDataset(id);
   }
 
-  public removeDataset(id: string) {
+  removeDataset(id: string) {
     this.graphDatasetsSrvc.deleteDataset(id, true);
   }
 
@@ -233,10 +234,12 @@ export class TimeseriesServiceImpl
 
   addFavoriteToDiagram(fav: Favorite) {
     const dsId = fav.id.substring(FAVORITE_PREFIX.length);
-    const entry = this.favorites[fav.id];
-    const style = this.getStyleOfObject(entry.style);
-    const yaxis = this.getYAxisOfObject(entry.yAxis);
-    this.addDatasetbyId(dsId, style, yaxis);
+    if (!this.datasetMap.has(dsId)) {
+      const entry = this.favorites[fav.id];
+      const style = this.getStyleOfObject(entry.style);
+      const yaxis = this.getYAxisOfObject(entry.yAxis);
+      this.addDatasetbyId(dsId, style, yaxis);
+    }
   }
 
   removeFavorite(id: string) {
@@ -349,14 +352,15 @@ export class TimeseriesServiceImpl
         this.saveState();
       });
       ts.referenceValues?.forEach((ref) => {
-        const child = new DatasetChild(
-          ref.referenceValueId,
-          ref.label,
-          ref.visible || false,
-          [],
-          this.colorService.getColor(),
+        dataset.addChild(
+          new TimeseriesChild(
+            ref.referenceValueId,
+            ref.label,
+            ref.visible || false,
+            [],
+            this.colorService.getColor(),
+          ),
         );
-        dataset.addChild(child);
       });
       this.loadDatasetData(ts.internalId);
     } else {
@@ -595,9 +599,11 @@ export class TimeseriesServiceImpl
   ) {
     if (ds.children && ds.children.length) {
       ds.children.forEach((child) => {
-        const refVals = rawdata.referenceValues[child.id];
-        if (refVals) {
-          child.setData(this.createReferenceValueData(rawdata, child.id));
+        if (child instanceof TimeseriesChild) {
+          const refVals = rawdata.referenceValues[child.id];
+          if (refVals) {
+            child.setData(this.createReferenceValueData(rawdata, child.id));
+          }
         }
       });
     }

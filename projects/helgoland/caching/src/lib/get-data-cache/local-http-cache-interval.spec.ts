@@ -1,4 +1,8 @@
-import { HttpClientModule, HttpResponse } from '@angular/common/http';
+import {
+  HttpResponse,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { inject, TestBed } from '@angular/core/testing';
 import {
   DefinedTimespan,
@@ -19,8 +23,12 @@ describe('LocalHttpCacheInterval', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, HelgolandCachingModule],
-      providers: [LocalHttpCacheInterval, DefinedTimespanService],
+      imports: [HelgolandCachingModule],
+      providers: [
+        LocalHttpCacheInterval,
+        DefinedTimespanService,
+        provideHttpClient(withInterceptorsFromDi()),
+      ],
     });
     defTsSrvc = TestBed.inject(DefinedTimespanService);
   });

@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
   DatasetApiV1ConnectorProvider,
@@ -18,7 +21,6 @@ describe('DatasetByStationSelectorComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
         TranslateTestingModule,
         HelgolandCoreModule,
         HelgolandLabelMapperModule,
@@ -28,6 +30,7 @@ describe('DatasetByStationSelectorComponent', () => {
         DatasetApiInterfaceTesting,
         SettingsServiceTestingProvider,
         DatasetApiV1ConnectorProvider,
+        provideHttpClient(withInterceptorsFromDi()),
       ],
     }).compileComponents();
   }));

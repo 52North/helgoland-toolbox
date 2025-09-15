@@ -1,6 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
-import { MapCache } from '../../base/map-cache.service';
 import { MapControlComponent } from '../map-control-component';
 
 @Component({
@@ -9,14 +8,9 @@ import { MapControlComponent } from '../map-control-component';
   standalone: true,
 })
 export class ExtentControlComponent extends MapControlComponent {
-  @Input({ required: true })
-  public extent!: L.LatLngBoundsExpression;
+  readonly extent = input.required<L.LatLngBoundsExpression>();
 
-  constructor(protected override mapCache: MapCache) {
-    super(mapCache);
-  }
-
-  public zoomToExtent() {
-    this.mapCache.getMap(this.mapId).fitBounds(this.extent);
+  zoomToExtent() {
+    this.mapCache.getMap(this.mapId()).fitBounds(this.extent());
   }
 }

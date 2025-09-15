@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { SettingsService } from '@helgoland/core';
 
@@ -11,8 +14,12 @@ describe('LabelMapperComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, LabelMapperComponent],
-      providers: [LabelMapperService, SettingsService],
+      imports: [LabelMapperComponent],
+      providers: [
+        LabelMapperService,
+        SettingsService,
+        provideHttpClient(withInterceptorsFromDi()),
+      ],
     }).compileComponents();
   }));
 

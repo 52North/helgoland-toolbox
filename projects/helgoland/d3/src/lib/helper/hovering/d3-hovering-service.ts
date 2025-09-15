@@ -14,33 +14,33 @@ export interface HoverPosition {
 }
 
 export abstract class D3HoveringService {
-  public abstract initPointHovering(
+  abstract initPointHovering(
     elem: d3.Selection<SVGGElement, any, any, any>,
   ): void;
 
-  public abstract hidePointHovering(
+  abstract hidePointHovering(
     d: DataEntry,
     entry: SeriesGraphDataset,
     pointElem: d3.Selection<d3.BaseType, any, any, any>,
   ): void;
 
-  public abstract showPointHovering(
+  abstract showPointHovering(
     d: DataEntry,
     entry: SeriesGraphDataset,
     pointElem: d3.Selection<d3.BaseType, any, any, any>,
   ): void;
 
-  public abstract positioningPointHovering(
+  abstract positioningPointHovering(
     x: number,
     y: number,
     color: string,
     background: any,
   ): void;
 
-  public abstract showTooltip(
+  abstract showTooltip(
     elements: HoveringElement[],
     position: HoverPosition,
   ): void;
 
-  public abstract removeTooltip(): void;
+  abstract removeTooltip(): void;
 }

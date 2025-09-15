@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { HelgolandMapSelectorModule } from '@helgoland/map';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   ColorService,
   DatasetType,
   DefinedTimespan,
   DefinedTimespanService,
-  FirstLastValue,
   HelgolandServicesConnector,
   HelgolandTimeseries,
   Timespan,
@@ -20,27 +18,29 @@ import {
   LineStyle,
   SeriesGraphDataset,
 } from '@helgoland/d3';
+import { HelgolandMapSelectorModule } from '@helgoland/map';
 
 @Component({
   templateUrl: './sandbox.component.html',
   styleUrls: ['./sandbox.component.scss'],
   imports: [HelgolandMapSelectorModule, HelgolandD3Module],
-  standalone: true,
 })
 export class SandboxComponent implements OnInit {
-  public datasets: SeriesGraphDataset[] = [];
-  public timespan: Timespan = this.definedTsSrvc.getInterval(
-    DefinedTimespan.TODAY,
-  );
+  private servicesConnector = inject(HelgolandServicesConnector);
+  private definedTsSrvc = inject(DefinedTimespanService);
+  private colorSrvc = inject(ColorService);
 
-  public copyright: D3Copyright = {
+  datasets: SeriesGraphDataset[] = [];
+  timespan: Timespan = this.definedTsSrvc.getInterval(DefinedTimespan.TODAY);
+
+  copyright: D3Copyright = {
     label: '52north',
     positionX: 'right',
     positionY: 'bottom',
     link: 'http://52north.org',
   };
 
-  public plotOptions: D3SeriesGraphOptions = {
+  plotOptions: D3SeriesGraphOptions = {
     showTimeLabel: false,
     hoverStyle: HoveringStyle.point,
     timeRangeLabel: {
@@ -49,13 +49,7 @@ export class SandboxComponent implements OnInit {
     yaxisModifier: true,
   };
 
-  constructor(
-    private servicesConnector: HelgolandServicesConnector,
-    private definedTsSrvc: DefinedTimespanService,
-    private colorSrvc: ColorService,
-  ) {}
-
-  public ngOnInit(): void {
+  ngOnInit(): void {
     // this.setNewTimespan();
     const value = {
       timestamp: new Date().getTime(),
@@ -80,7 +74,7 @@ export class SandboxComponent implements OnInit {
     this.loadDataset();
   }
 
-  public loadDataset() {
+  loadDataset() {
     const id = 'https://fluggs.wupperverband.de/sws5/api/__26';
     this.servicesConnector
       .getDataset(id, { type: DatasetType.Timeseries })
@@ -89,7 +83,7 @@ export class SandboxComponent implements OnInit {
       });
   }
 
-  public changePlotOptions() {
+  changePlotOptions() {
     this.plotOptions.showTimeLabel = !this.plotOptions.showTimeLabel;
     if (this.plotOptions.hoverStyle) {
       this.plotOptions.hoverStyle = this.getHoveringStyle(
@@ -158,18 +152,18 @@ export class SandboxComponent implements OnInit {
       });
   }
 
-  public addNewValue() {
+  addNewValue() {
     this.datasets[0].addNewData(new Date().getTime(), this.createValue());
   }
 
-  public zoomTimeframe() {
+  zoomTimeframe() {
     const factor = 0.1;
     const diff = this.timespan.to - this.timespan.from;
     const d = diff * factor;
     this.timespan = new Timespan(this.timespan.from + d, this.timespan.to - d);
   }
 
-  public changeStyle() {
+  changeStyle() {
     this.datasets.forEach((e) => {
       const style = e.style;
       style.baseColor = this.colorSrvc.getColor();
@@ -177,11 +171,11 @@ export class SandboxComponent implements OnInit {
     });
   }
 
-  public updateTimespan(timespan: Timespan) {
+  updateTimespan(timespan: Timespan) {
     this.timespan = timespan;
   }
 
-  public onDatasetSelected(temp: any) {
+  onDatasetSelected(temp: any) {
     console.log(temp);
   }
 

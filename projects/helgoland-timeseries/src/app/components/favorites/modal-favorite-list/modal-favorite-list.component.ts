@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -7,8 +6,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { EditLabelComponent } from '../../edit-label/edit-label.component';
 import { Favorite, FavoriteService } from '../../../services/favorite.service';
+import { EditLabelComponent } from '../../edit-label/edit-label.component';
 
 interface EditableFavorite extends Favorite {
   editMode: boolean;
@@ -20,7 +19,6 @@ interface EditableFavorite extends Favorite {
   styleUrls: ['./modal-favorite-list.component.scss'],
   imports: [
     TranslateModule,
-    CommonModule,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
@@ -28,27 +26,26 @@ interface EditableFavorite extends Favorite {
     MatDialogModule,
     EditLabelComponent,
   ],
-  standalone: true,
 })
 export class ModalFavoriteListComponent implements OnInit {
-  public singles: EditableFavorite[] = [];
+  favoriteSrvc = inject(FavoriteService);
 
-  constructor(public favoriteSrvc: FavoriteService) {}
+  singles: EditableFavorite[] = [];
 
   ngOnInit(): void {
     this.setFavorites();
   }
 
-  public addSingleToDiagram(fav: Favorite) {
+  addSingleToDiagram(fav: Favorite) {
     this.favoriteSrvc.addFavoriteToDiagram(fav);
   }
 
-  public deleteFav(fav: Favorite) {
+  deleteFav(fav: Favorite) {
     this.favoriteSrvc.removeFavorite(fav.id);
     this.setFavorites();
   }
 
-  public setFavLabel(fav: Favorite, label: string) {
+  setFavLabel(fav: Favorite, label: string) {
     this.favoriteSrvc.changeLabel(fav, label);
   }
 

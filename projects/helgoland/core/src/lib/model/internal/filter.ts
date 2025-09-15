@@ -1,8 +1,8 @@
 import { ParameterFilter } from './../internal/http-requests';
 
 export class Filter {
-  public url: string | undefined;
-  public service: string | undefined;
-  public itemId: string | undefined;
-  public filter: ParameterFilter | undefined;
+  url: string | undefined;
+  service: string | undefined;
+  itemId: string | undefined;
+  filter: ParameterFilter | undefined;
 }

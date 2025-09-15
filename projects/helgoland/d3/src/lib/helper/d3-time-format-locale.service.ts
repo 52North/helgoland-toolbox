@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { TimezoneService } from '@helgoland/core';
 import moment from 'moment';
 
@@ -9,6 +9,8 @@ import moment from 'moment';
   providedIn: 'root',
 })
 export class D3TimeFormatLocaleService {
+  protected timezoneSrvc = inject(TimezoneService);
+
   protected formatMillisecond = '.SSS';
   protected formatSecond = ':ss';
   protected formatMinute = 'HH:mm';
@@ -18,9 +20,7 @@ export class D3TimeFormatLocaleService {
   protected formatMonth = 'MMM YY';
   protected formatYear = 'YYYY';
 
-  constructor(protected timezoneSrvc: TimezoneService) {}
-
-  public formatTime(time: number): string {
+  formatTime(time: number): string {
     const curr = this.timezoneSrvc.createTzDate(time);
 
     const format =

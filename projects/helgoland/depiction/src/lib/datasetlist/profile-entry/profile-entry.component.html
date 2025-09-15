@@ -2,7 +2,7 @@
   <div
     class="legendItem"
     style="position: relative"
-    [ngClass]="{ selected: selected }"
+    [ngClass]="{ selected: selected() }"
     (click)="toggleSelection()"
   >
     <div class="legendItemheader">
@@ -34,7 +34,7 @@
         </div>
       }
     </div>
-    @for (item of datasetOptions; track item) {
+    @for (item of datasetOptions(); track item) {
       <div>
         <div>
           <span [ngStyle]="{ color: item.color }">{{

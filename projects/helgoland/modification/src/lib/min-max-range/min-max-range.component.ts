@@ -1,40 +1,37 @@
 import {
   Component,
-  EventEmitter,
-  Input,
   OnChanges,
-  Output,
   SimpleChanges,
+  input,
+  output,
 } from '@angular/core';
-import { MinMaxRange } from '@helgoland/core';
 import { FormsModule } from '@angular/forms';
+import { MinMaxRange } from '@helgoland/core';
 
 @Component({
   selector: 'n52-min-max-range',
   templateUrl: './min-max-range.component.html',
   styleUrls: ['./min-max-range.component.css'],
-  standalone: true,
   imports: [FormsModule],
 })
 export class MinMaxRangeComponent implements OnChanges {
-  public rangeMin: number | undefined;
-  public rangeMax: number | undefined;
+  rangeMin: number | undefined;
+  rangeMax: number | undefined;
 
-  @Input()
-  public range: MinMaxRange | undefined;
+  readonly range = input<MinMaxRange>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onRangeChange: EventEmitter<MinMaxRange> = new EventEmitter();
+  readonly onRangeChange = output<MinMaxRange | void>();
 
-  public ngOnChanges(changes: SimpleChanges) {
-    if (changes['range'] && this.range) {
-      this.rangeMin = this.range.min;
-      this.rangeMax = this.range.max;
+  ngOnChanges(changes: SimpleChanges) {
+    const range = this.range();
+    if (changes['range'] && range) {
+      this.rangeMin = range.min;
+      this.rangeMax = range.max;
     }
   }
 
-  public setYaxisRange() {
+  setYaxisRange() {
     const min =
       this.rangeMin === null || this.rangeMin === undefined ? 0 : this.rangeMin;
     const max =
@@ -42,7 +39,7 @@ export class MinMaxRangeComponent implements OnChanges {
     this.onRangeChange.emit({ min, max });
   }
 
-  public resetYaxisRange() {
+  resetYaxisRange() {
     this.rangeMin = undefined;
     this.rangeMax = undefined;
     this.onRangeChange.emit();

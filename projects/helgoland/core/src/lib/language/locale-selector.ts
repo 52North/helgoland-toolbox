@@ -1,29 +1,34 @@
-import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Directive,
+  OnChanges,
+  SimpleChanges,
+  inject,
+  input,
+} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Language } from './model/language';
 
 @Directive()
 export abstract class LocalSelectorComponent implements OnChanges {
-  @Input()
-  public languageList: Language[] | undefined;
+  protected translate = inject(TranslateService);
 
-  public currentLang: Language | undefined;
+  readonly languageList = input<Language[]>();
 
-  constructor(protected translate: TranslateService) {}
+  currentLang: Language | undefined;
 
-  public ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['languageList']) {
       this.updateCurrentLang();
     }
   }
 
-  public setLanguage(lang: Language) {
+  setLanguage(lang: Language) {
     this.translate.use(lang.code).subscribe(() => this.updateCurrentLang());
   }
 
   protected updateCurrentLang() {
-    this.currentLang = this.languageList?.find(
+    this.currentLang = this.languageList()?.find(
       (e) => e.code === this.translate.currentLang,
     );
   }

@@ -37,25 +37,23 @@ import {
   SweXmlEncoding,
   UnitOfMeasure,
 } from '../../model/swe';
-import { NAMESPACES } from './Namespaces';
-import { DecoderUtils } from './DecoderUtils';
-import { ReturnObject } from './ReturnObject';
 import { BidiMap } from '../dynamicGUI/BidiMap';
+import { DecoderUtils } from './DecoderUtils';
+import { NAMESPACES } from './Namespaces';
+import { ReturnObject } from './ReturnObject';
 
 export class SweDecoder {
   private utils = new DecoderUtils();
 
   private _profileIDMap: BidiMap;
 
-  public get profileIDMap() {
+  get profileIDMap() {
     return this._profileIDMap;
   }
-  public set profileIDMap(profileIDMap: BidiMap) {
+  set profileIDMap(profileIDMap: BidiMap) {
     this._profileIDMap = profileIDMap;
   }
-  public decodeDataComponent(
-    elem: Element,
-  ): ReturnObject<AbstractDataComponent> {
+  decodeDataComponent(elem: Element): ReturnObject<AbstractDataComponent> {
     const vector = this.decodeVector(elem);
     if (vector != null) {
       return vector;
@@ -133,7 +131,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeCoordinate(node: Element): ReturnObject<SweCoordinate> {
+  decodeCoordinate(node: Element): ReturnObject<SweCoordinate> {
     const coordinate = new SweCoordinate();
 
     if (node.hasAttribute('name')) {
@@ -177,7 +175,7 @@ export class SweDecoder {
     return new ReturnObject(coordinate, node);
   }
 
-  public decodeVector(node: Element): ReturnObject<SweVector> {
+  decodeVector(node: Element): ReturnObject<SweVector> {
     const vectorNode = this.utils.getElement(node, 'Vector', NAMESPACES.SWE);
     if (vectorNode != null) {
       const vector = new SweVector();
@@ -217,7 +215,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeField(fieldNode: Element): ReturnObject<SweField> {
+  decodeField(fieldNode: Element): ReturnObject<SweField> {
     const field = new SweField();
 
     if (fieldNode.hasAttribute('name')) {
@@ -244,7 +242,7 @@ export class SweDecoder {
     return new ReturnObject(field, fieldNode);
   }
 
-  public decodeDataRecord(elem: Element): ReturnObject<SweDataRecord> {
+  decodeDataRecord(elem: Element): ReturnObject<SweDataRecord> {
     const dataRecordElem = this.utils.getElement(
       elem,
       'DataRecord',
@@ -268,7 +266,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeDataStream(elem: Element): ReturnObject<SweDataStream> {
+  decodeDataStream(elem: Element): ReturnObject<SweDataStream> {
     const dataStreamElem = this.utils.getElement(
       elem,
       'DataStream',
@@ -332,7 +330,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeMatrix(elem: Element): ReturnObject<SweMatrix> {
+  decodeMatrix(elem: Element): ReturnObject<SweMatrix> {
     const matrixElem = this.utils.getElement(elem, 'Matrix', NAMESPACES.SWE);
     if (matrixElem != null) {
       const matrix = new SweMatrix();
@@ -364,7 +362,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeDataArray(elem: Element): ReturnObject<SweDataArray> {
+  decodeDataArray(elem: Element): ReturnObject<SweDataArray> {
     const dataArrayElem = this.utils.getElement(
       elem,
       'DataArray',
@@ -379,7 +377,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeAbstractEncoding(elem: Element): ReturnObject<SweEncoding> {
+  decodeAbstractEncoding(elem: Element): ReturnObject<SweEncoding> {
     const textEncoding = this.decodeTextEncoding(elem);
     if (textEncoding != null) {
       return textEncoding;
@@ -398,7 +396,7 @@ export class SweDecoder {
     throw new Error('Unsupported encoding type');
   }
 
-  public decodeTextEncoding(elem: Element): ReturnObject<SweTextEncoding> {
+  decodeTextEncoding(elem: Element): ReturnObject<SweTextEncoding> {
     const textEncodingElem = this.utils.getElement(
       elem,
       'TextEncoding',
@@ -458,7 +456,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeBinaryEncoding(elem: Element): ReturnObject<SweBinaryEncoding> {
+  decodeBinaryEncoding(elem: Element): ReturnObject<SweBinaryEncoding> {
     const binaryEncodingElem = this.utils.getElement(
       elem,
       'BinaryEncoding',
@@ -544,9 +542,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeBinaryComponent(
-    elem: Element,
-  ): ReturnObject<SweBinaryComponent> {
+  decodeBinaryComponent(elem: Element): ReturnObject<SweBinaryComponent> {
     const componentElem = this.utils.getElement(
       elem,
       'Component',
@@ -632,7 +628,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeBinaryBlock(elem: Element): ReturnObject<SweBinaryBlock> {
+  decodeBinaryBlock(elem: Element): ReturnObject<SweBinaryBlock> {
     const blockElem = this.utils.getElement(elem, 'Block', NAMESPACES.SWE);
     if (blockElem != null) {
       const block = new SweBinaryBlock();
@@ -709,7 +705,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeXmlEncoding(elem: Element): ReturnObject<SweXmlEncoding> {
+  decodeXmlEncoding(elem: Element): ReturnObject<SweXmlEncoding> {
     const xmlEncodingElem = this.utils.getElement(
       elem,
       'XMLEncoding',
@@ -725,7 +721,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeElementType(elem: Element): ReturnObject<SweElementType> {
+  decodeElementType(elem: Element): ReturnObject<SweElementType> {
     const elementTypeElem = this.utils.getElement(
       elem,
       'elementType',
@@ -759,7 +755,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeDataChoice(elem: Element): ReturnObject<SweDataChoice> {
+  decodeDataChoice(elem: Element): ReturnObject<SweDataChoice> {
     const dataChoiceElem = this.utils.getElement(
       elem,
       'DataChoice',
@@ -791,7 +787,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeDataChoiceItem(elem: Element): ReturnObject<SweDataChoiceItem> {
+  decodeDataChoiceItem(elem: Element): ReturnObject<SweDataChoiceItem> {
     const dataChoiceItem = new SweDataChoiceItem();
 
     if (elem.hasAttribute('name')) {
@@ -821,7 +817,7 @@ export class SweDecoder {
     return new ReturnObject(dataChoiceItem, elem);
   }
 
-  public decodeUnitOfMeasure(elem: Element): ReturnObject<UnitOfMeasure> {
+  decodeUnitOfMeasure(elem: Element): ReturnObject<UnitOfMeasure> {
     const uomElem = this.utils.getElement(elem, 'uom', NAMESPACES.SWE);
     if (uomElem != null) {
       const uom = new UnitOfMeasure();
@@ -857,7 +853,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeQuantityRange(elem: Element): ReturnObject<SweQuantityRange> {
+  decodeQuantityRange(elem: Element): ReturnObject<SweQuantityRange> {
     const quantityRangeElem = this.utils.getElement(
       elem,
       'QuantityRange',
@@ -922,7 +918,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeTimeRange(elem: Element): ReturnObject<SweTimeRange> {
+  decodeTimeRange(elem: Element): ReturnObject<SweTimeRange> {
     const timeRangeElem = this.utils.getElement(
       elem,
       'TimeRange',
@@ -1021,7 +1017,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeCountRange(elem: Element): ReturnObject<SweCountRange> {
+  decodeCountRange(elem: Element): ReturnObject<SweCountRange> {
     const countRangeElem = this.utils.getElement(
       elem,
       'CountRange',
@@ -1074,7 +1070,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeConstraint(
+  decodeConstraint(
     elem: Element,
   ): ReturnObject<AllowedTimes | AllowedTokens | AllowedValues> {
     const allowedTimes = this.decodeAllowedTimes(elem);
@@ -1095,7 +1091,7 @@ export class SweDecoder {
     throw new Error('Unsupported constraint type');
   }
 
-  public decodeCategoryRange(elem: Element): ReturnObject<SweCategoryRange> {
+  decodeCategoryRange(elem: Element): ReturnObject<SweCategoryRange> {
     const categoryRangeElem = this.utils.getElement(
       elem,
       'CategoryRange',
@@ -1168,7 +1164,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeBoolean(elem: Element): ReturnObject<SweBoolean> {
+  decodeBoolean(elem: Element): ReturnObject<SweBoolean> {
     const boolElem = this.utils.getElement(elem, 'Boolean', NAMESPACES.SWE);
     if (boolElem != null) {
       const bool = new SweBoolean();
@@ -1191,7 +1187,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeCount(elem: Element): ReturnObject<SweCount> {
+  decodeCount(elem: Element): ReturnObject<SweCount> {
     const countElem = this.utils.getElement(elem, 'Count', NAMESPACES.SWE);
     if (countElem != null) {
       const count = new SweCount();
@@ -1233,7 +1229,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeQuantity(elem: Element): ReturnObject<SweQuantity> {
+  decodeQuantity(elem: Element): ReturnObject<SweQuantity> {
     const quantityElem = this.utils.getElement(
       elem,
       'Quantity',
@@ -1295,7 +1291,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeTime(elem: Element): ReturnObject<SweTime> {
+  decodeTime(elem: Element): ReturnObject<SweTime> {
     const timeElem = this.utils.getElement(elem, 'Time', NAMESPACES.SWE);
     if (timeElem != null) {
       const time = new SweTime();
@@ -1378,7 +1374,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeCategory(elem: Element): ReturnObject<SweCategory> {
+  decodeCategory(elem: Element): ReturnObject<SweCategory> {
     const catElem = this.utils.getElement(elem, 'Category', NAMESPACES.SWE);
     if (catElem != null) {
       const category = new SweCategory();
@@ -1438,7 +1434,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeText(elem: Element): ReturnObject<SweText> {
+  decodeText(elem: Element): ReturnObject<SweText> {
     const textElem = this.utils.getElement(elem, 'Text', NAMESPACES.SWE);
     if (textElem != null) {
       const text = new SweText();
@@ -1480,7 +1476,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeAllowedTokens(elem: Element): ReturnObject<AllowedTokens> {
+  decodeAllowedTokens(elem: Element): ReturnObject<AllowedTokens> {
     const allowedTokensElem = this.utils.getElement(
       elem,
       'AllowedTokens',
@@ -1523,7 +1519,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeAllowedValues(elem: Element): ReturnObject<AllowedValues> {
+  decodeAllowedValues(elem: Element): ReturnObject<AllowedValues> {
     const allowedValuesElem = this.utils.getElement(
       elem,
       'AllowedValues',
@@ -1588,7 +1584,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeAllowedTimes(elem: Element): ReturnObject<AllowedTimes> {
+  decodeAllowedTimes(elem: Element): ReturnObject<AllowedTimes> {
     const allowedTimesElem = this.utils.getElement(
       elem,
       'AllowedTimes',
@@ -1662,7 +1658,7 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeNilValue(elem: Element): ReturnObject<SweNilValue> {
+  decodeNilValue(elem: Element): ReturnObject<SweNilValue> {
     const nilValue = new SweNilValue();
 
     if (elem.hasAttribute('reason')) {
@@ -1686,7 +1682,7 @@ export class SweDecoder {
     return new ReturnObject(nilValue, elem);
   }
 
-  public decodeQuality(elem: Element): ReturnObject<SweQuality> {
+  decodeQuality(elem: Element): ReturnObject<SweQuality> {
     const quantity = this.decodeQuantity(elem);
     if (quantity != null) {
       return quantity;
@@ -1709,14 +1705,14 @@ export class SweDecoder {
     return undefined;
   }
 
-  public decodeAbstractSwe(elem: Element, component: AbstractSWE): void {
+  decodeAbstractSwe(elem: Element, component: AbstractSWE): void {
     if (elem.hasAttribute('id')) {
       component.id = elem.getAttribute('id');
     }
     // TODO add extension
   }
 
-  public decodeAbstractSweIdentifiable(
+  decodeAbstractSweIdentifiable(
     elem: Element,
     object: AbstractSWEIdentifiable,
   ): void {
@@ -1748,7 +1744,7 @@ export class SweDecoder {
     }
   }
 
-  public decodeAbstractDataComponent(
+  decodeAbstractDataComponent(
     elem: Element,
     component: AbstractDataComponent,
   ): void {
@@ -1767,7 +1763,7 @@ export class SweDecoder {
     }
   }
 
-  public decodeAbstractSimpleComponent(
+  decodeAbstractSimpleComponent(
     elem: Element,
     component: AbstractSimpleComponent,
   ): void {

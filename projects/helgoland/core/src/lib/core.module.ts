@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { Injectable, NgModule } from '@angular/core';
 
 import { ColorService } from './color/color.service';
@@ -34,8 +37,8 @@ export class ExtendedSettingsService extends SettingsService<Settings> {
  * - time service for calculations
  */
 @NgModule({
-  imports: [HttpClientModule, MatchLabelPipe, TzDatePipe],
   exports: [MatchLabelPipe, TzDatePipe],
+  imports: [MatchLabelPipe, TzDatePipe],
   providers: [
     ColorService,
     DatasetApiMapping,
@@ -47,6 +50,7 @@ export class ExtendedSettingsService extends SettingsService<Settings> {
     SumValuesService,
     HttpService,
     Time,
+    provideHttpClient(withInterceptorsFromDi()),
   ],
 })
 export class HelgolandCoreModule {}

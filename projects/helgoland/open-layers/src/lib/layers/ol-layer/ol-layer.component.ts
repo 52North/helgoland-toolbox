@@ -1,9 +1,9 @@
 import {
   AfterViewInit,
   Component,
-  Input,
   OnChanges,
   SimpleChanges,
+  input,
 } from '@angular/core';
 import { Map } from 'ol';
 import BaseLayer from 'ol/layer/Base';
@@ -30,24 +30,25 @@ export class OlLayerComponent
   /**
    * Configured layer
    */
-  @Input({ required: true }) layer!: BaseLayer;
+  readonly layer = input.required<BaseLayer>();
 
   private map!: Map;
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes && this.layer) {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes && this.layer()) {
       this.addLayer();
     }
   }
 
-  public mapInitialized(map: Map) {
+  mapInitialized(map: Map) {
     this.map = map;
     this.addLayer();
   }
 
   private addLayer() {
-    if (this.map && this.layer) {
-      this.map.addLayer(this.layer);
+    const layer = this.layer();
+    if (this.map && layer) {
+      this.map.addLayer(layer);
     }
   }
 }

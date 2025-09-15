@@ -68,11 +68,11 @@ export interface BarRenderingHints {
 }
 
 export class DatasetParameterConstellation extends ParameterConstellation {
-  public platform: PlatformParameter | undefined;
+  platform: PlatformParameter | undefined;
 }
 
 export class Dataset implements IDataset {
-  public seriesParameters?: DatasetParameterConstellation;
+  seriesParameters?: DatasetParameterConstellation;
 
   constructor(
     public id: string,
@@ -91,8 +91,8 @@ export class Dataset implements IDataset {
 }
 
 export class Timeseries implements IDataset {
-  public hasData = false;
-  public statusIntervals?: StatusInterval[];
+  hasData = false;
+  statusIntervals?: StatusInterval[];
 
   constructor(
     public id: string,

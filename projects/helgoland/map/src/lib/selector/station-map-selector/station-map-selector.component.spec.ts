@@ -1,6 +1,6 @@
 import {
-  HttpClientTestingModule,
   HttpTestingController,
+  provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { Injectable } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
@@ -16,6 +16,10 @@ import {
 } from '@helgoland/core';
 import { Observable, of } from 'rxjs';
 
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { SettingsServiceTestingProvider } from '../../../../../../testing/settings.testing';
 import { TranslateTestingModule } from '../../../../../../testing/translate.testing.module';
 import { MapCache } from '../../base/map-cache.service';
@@ -28,7 +32,7 @@ const timeseries = require('../../../test-data/timeseries.json');
 
 @Injectable()
 class FakeDatasetApiInterface extends SplittedDataDatasetApiInterface {
-  public override getStations(
+  override getStations(
     apiUrl: string,
     params?: ParameterFilter,
     options?: HttpRequestOptions,
@@ -36,14 +40,14 @@ class FakeDatasetApiInterface extends SplittedDataDatasetApiInterface {
     return of(stations);
   }
 
-  public override getTimeseries(
+  override getTimeseries(
     apiUrl: string,
     params?: ParameterFilter,
   ): Observable<Timeseries[]> {
     return of(timeseries);
   }
 
-  public override getTimeseriesExtras(
+  override getTimeseriesExtras(
     id: string,
     apiUrl: string,
   ): Observable<TimeseriesExtras> {
@@ -59,7 +63,6 @@ describe('StationMapSelectorComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
         HelgolandCoreModule,
         TranslateTestingModule,
         StationMapSelectorComponent,
@@ -71,6 +74,8 @@ describe('StationMapSelectorComponent', () => {
         },
         MapCache,
         SettingsServiceTestingProvider,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

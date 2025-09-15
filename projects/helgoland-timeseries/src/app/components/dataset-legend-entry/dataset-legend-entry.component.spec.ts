@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HelgolandCoreModule } from '@helgoland/core';
@@ -12,13 +15,13 @@ describe('DatasetLegendEntryComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [DatasetLegendEntryComponent],
       imports: [
         TranslateTestingModule,
         HelgolandCoreModule,
-        HttpClientModule,
         MatDialogModule,
+        DatasetLegendEntryComponent,
       ],
+      providers: [provideHttpClient(withInterceptorsFromDi())],
     }).compileComponents();
   }));
 

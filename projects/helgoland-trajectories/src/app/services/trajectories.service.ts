@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   ColorService,
   DatasetOptions,
@@ -25,28 +25,28 @@ export interface TrajectoryResult {
   providedIn: 'root',
 })
 export class TrajectoriesService {
-  public loading = new ReplaySubject<boolean>();
-  public result = new ReplaySubject<TrajectoryResult>();
+  private colorSrvc = inject(ColorService);
+  private localStorage = inject(LocalStorage);
+  private servicesConnector = inject(HelgolandServicesConnector);
+
+  loading = new ReplaySubject<boolean>();
+  result = new ReplaySubject<TrajectoryResult>();
   private internalId!: string;
 
-  constructor(
-    private colorSrvc: ColorService,
-    private localStorage: LocalStorage,
-    private servicesConnector: HelgolandServicesConnector,
-  ) {
+  constructor() {
     this.loadState();
   }
 
-  public set mainTrajectoryId(id: string) {
+  set mainTrajectoryId(id: string) {
     this.internalId = id;
     this.loadTrajectory();
   }
 
-  public get mainTrajectoryId(): string {
+  get mainTrajectoryId(): string {
     return this.internalId;
   }
 
-  public loadTrajectory() {
+  loadTrajectory() {
     this.loading.next(true);
     this.servicesConnector
       .getDataset(this.internalId, { type: DatasetType.Trajectory })

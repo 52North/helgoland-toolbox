@@ -1,13 +1,12 @@
 /* eslint-disable @angular-eslint/no-conflicting-lifecycle */
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   DoCheck,
-  Input,
+  inject,
+  input,
   IterableDiffer,
   IterableDiffers,
-  KeyValueDiffers,
   OnChanges,
 } from '@angular/core';
 import {
@@ -28,7 +27,6 @@ import {
 import { forkJoin, Observable, Observer } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
-import { MapCache } from '../../base/map-cache.service';
 import { MapSelectorComponent } from '../map-selector.component';
 import {
   LastValueLabelGenerator,
@@ -48,47 +46,44 @@ export class LastValueMapSelectorComponent
   extends MapSelectorComponent<HelgolandTimeseries>
   implements AfterViewInit, DoCheck, OnChanges
 {
+  protected iDiffers = inject(IterableDiffers);
+  protected servicesConnector = inject(HelgolandServicesConnector);
+  protected lastValueLabelGenerator = inject(LastValueLabelGenerator);
+  protected statusIntervalResolver = inject(StatusIntervalResolverService);
+
   /**
    * The list of internal series IDs, which should be presented with their last values on the map.
    */
-  @Input()
-  public lastValueSeriesIDs: string[] = [];
+  readonly lastValueSeriesIDs = input<string[]>([]);
 
   /**
    * Presentation type how to display the series.
    */
-  @Input()
-  public lastValuePresentation: LastValuePresentation =
-    LastValuePresentation.Colorized;
+  readonly lastValuePresentation = input<LastValuePresentation>(
+    LastValuePresentation.Colorized,
+  );
 
   /**
    * Ignores all Statusintervals where the timestamp is before a given duration in milliseconds and draws instead the default marker.
    */
-  @Input()
-  public ignoreStatusIntervalIfBeforeDuration = Infinity;
+  readonly ignoreStatusIntervalIfBeforeDuration = input(Infinity);
 
   private _lastValueSeriesIDsDiff: IterableDiffer<string>;
 
   private markerFeatureGroup: L.FeatureGroup<Marker> = featureGroup();
 
-  constructor(
-    protected override mapCache: MapCache,
-    protected override kvDiffers: KeyValueDiffers,
-    protected iDiffers: IterableDiffers,
-    protected override cd: ChangeDetectorRef,
-    protected servicesConnector: HelgolandServicesConnector,
-    protected lastValueLabelGenerator: LastValueLabelGenerator,
-    protected statusIntervalResolver: StatusIntervalResolverService,
-  ) {
-    super(mapCache, kvDiffers, cd);
+  constructor() {
+    super();
     this._lastValueSeriesIDsDiff = this.iDiffers
-      .find(this.lastValueSeriesIDs)
+      .find(this.lastValueSeriesIDs())
       .create();
   }
 
-  public override ngDoCheck() {
+  override ngDoCheck() {
     super.ngDoCheck();
-    const changes = this._lastValueSeriesIDsDiff.diff(this.lastValueSeriesIDs);
+    const changes = this._lastValueSeriesIDsDiff.diff(
+      this.lastValueSeriesIDs(),
+    );
 
     if (changes && this.map) {
       const ids: string[] = [];
@@ -105,8 +100,9 @@ export class LastValueMapSelectorComponent
 
   protected drawGeometries(map: Map, serviceUrl: string): void {
     this.onContentLoading.emit(true);
-    if (this.lastValueSeriesIDs && this.lastValueSeriesIDs.length) {
-      this.createMarkersBySeriesIDs(this.lastValueSeriesIDs, map);
+    const lastValueSeriesIDs = this.lastValueSeriesIDs();
+    if (lastValueSeriesIDs && lastValueSeriesIDs.length) {
+      this.createMarkersBySeriesIDs(lastValueSeriesIDs, map);
     }
   }
 
@@ -133,7 +129,7 @@ export class LastValueMapSelectorComponent
   }
 
   private createMarker(ts: HelgolandTimeseries): Observable<Layer> {
-    switch (this.lastValuePresentation) {
+    switch (this.lastValuePresentation()) {
       case LastValuePresentation.Colorized:
         return this.createColorizedMarker(ts);
       case LastValuePresentation.Textual:
@@ -161,7 +157,7 @@ export class LastValueMapSelectorComponent
             ts.lastValue &&
             ts.lastValue.value &&
             ts.lastValue.timestamp >
-              new Date().getTime() - this.ignoreStatusIntervalIfBeforeDuration
+              new Date().getTime() - this.ignoreStatusIntervalIfBeforeDuration()
           ) {
             const interval = this.statusIntervalResolver.getMatchingInterval(
               ts.lastValue.value,

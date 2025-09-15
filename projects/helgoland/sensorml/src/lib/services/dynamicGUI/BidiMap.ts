@@ -46,11 +46,7 @@ export class BidiMap {
     this._logger = this._loggerFactory.getLogger('BidiMap');
   }
 
-  public addLinkage(
-    elementObject: any,
-    objectProperty: string,
-    profileID: string,
-  ) {
+  addLinkage(elementObject: any, objectProperty: string, profileID: string) {
     const elementAndPrefix = new ObjectAndProperty(
       elementObject,
       objectProperty,
@@ -64,7 +60,7 @@ export class BidiMap {
     this.iDToElement.set(profileID, elementAndPrefix);
   }
 
-  public getProfileID(modelObject: any, objectProperty: string): string {
+  getProfileID(modelObject: any, objectProperty: string): string {
     if (!modelObject || !objectProperty) {
       throw new Error(
         'One or both paramerter error: modelObject' +
@@ -87,7 +83,7 @@ export class BidiMap {
     return undefined;
   }
 
-  public getElementObject(profileID: string): any {
+  getElementObject(profileID: string): any {
     return this.iDToElement.get(profileID);
   }
 }

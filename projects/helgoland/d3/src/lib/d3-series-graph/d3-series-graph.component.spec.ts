@@ -11,8 +11,11 @@ describe('D3SeriesGraphComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [HelgolandCoreModule, TranslateTestingModule],
-      declarations: [D3SeriesGraphComponent],
+      imports: [
+        HelgolandCoreModule,
+        TranslateTestingModule,
+        D3SeriesGraphComponent,
+      ],
     }).compileComponents();
   }));
 

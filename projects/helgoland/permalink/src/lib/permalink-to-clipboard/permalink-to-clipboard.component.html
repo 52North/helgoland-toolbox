@@ -1,7 +1,7 @@
 <button
   type="button"
   ngxClipboard
-  [cbContent]="url"
+  [cbContent]="url()"
   (click)="onTriggered.emit()"
 >
   copy to clipboard

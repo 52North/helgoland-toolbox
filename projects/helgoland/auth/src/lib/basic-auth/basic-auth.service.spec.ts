@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { inject, TestBed } from '@angular/core/testing';
 
 import { BasicAuthService } from './basic-auth.service';
@@ -6,8 +9,11 @@ import { BasicAuthService } from './basic-auth.service';
 describe('BasicAuthService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule],
-      providers: [BasicAuthService],
+      imports: [],
+      providers: [
+        BasicAuthService,
+        provideHttpClient(withInterceptorsFromDi()),
+      ],
     });
   });
 

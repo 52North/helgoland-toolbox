@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { LocalStorage } from '@helgoland/core';
 import {
   AxisSettings,
-  DatasetChild,
   DatasetStyle,
   LineStyle,
   SeriesGraphDataset,
+  TimeseriesChild
 } from '@helgoland/d3';
 
 import { Favorite } from './favorite.service';
@@ -24,14 +24,12 @@ const DUMMY_DATASET_LOCAL_STORAGE_KEY = 'DUMMY_DATASET_LOCAL_STORAGE';
 export class DummyDatasetsService
   implements DatasetStateService, DatasetFavoriteService
 {
-  constructor(
-    protected graphDatasetsSrvc: DatasetsService,
-    protected localStorage: LocalStorage,
-  ) {}
+  protected graphDatasetsSrvc = inject(DatasetsService);
+  protected localStorage = inject(LocalStorage);
 
   private addRandomDataset() {
     const dummyDataset = this.createNewDataset('blue');
-    const child = new DatasetChild(
+    const child = new TimeseriesChild(
       DATASET_ID,
       'ChildData',
       false,

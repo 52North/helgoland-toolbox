@@ -11,7 +11,7 @@ export class LastValueLabelGeneratorService extends LastValueLabelGenerator {
     super();
   }
 
-  public createIconLabel(ts: HelgolandTimeseries) {
+  createIconLabel(ts: HelgolandTimeseries) {
     if (ts.lastValue) {
       const date = moment(ts.lastValue.timestamp).fromNow();
       return L.divIcon({

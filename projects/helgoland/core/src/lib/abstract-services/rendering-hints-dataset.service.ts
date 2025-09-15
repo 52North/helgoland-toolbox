@@ -23,10 +23,7 @@ export abstract class RenderingHintsDatasetService<
     super();
   }
 
-  public override async addDataset(
-    internalId: string,
-    options?: T,
-  ): Promise<boolean> {
+  override async addDataset(internalId: string, options?: T): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
       if (this.datasetIds.indexOf(internalId) < 0) {
         if (options) {

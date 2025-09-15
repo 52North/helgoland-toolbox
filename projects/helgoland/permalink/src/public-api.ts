@@ -1,5 +1,5 @@
 /*
- * Public API Surface of permalink
+ * API Surface of permalink
  */
 
 export * from './lib/permalink-in-mail/permalink-in-mail.component';

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   FeatureGroup,
   GridLayer,
@@ -15,7 +15,7 @@ import { LayerMap, LayerOptions } from './map-options';
   providedIn: 'root',
 })
 export class MapHandlerService {
-  constructor(private mapCache: MapCache) {}
+  private mapCache = inject(MapCache);
 
   toggleOverlayLayer(layer: LayerOptions, mapId: string) {
     if (this.mapCache.hasMap(mapId)) {

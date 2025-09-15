@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BasicAuthServiceMaintainer } from '@helgoland/auth';
 import {
   EventFilter,
@@ -18,31 +18,30 @@ import {
   templateUrl: './eventing.component.html',
   styleUrls: ['./eventing.component.css'],
   imports: [CommonModule],
-  standalone: true,
 })
 export class EventingComponent {
+  private basicAuthServices = inject(BasicAuthServiceMaintainer);
+  private eventingApi = inject(EventingApiService);
+
   private readonly url = '';
 
-  public loading: boolean = false;
+  loading: boolean = false;
 
-  public requestError: string | undefined;
+  requestError: string | undefined;
 
-  public eventResults: EventResults | undefined;
+  eventResults: EventResults | undefined;
 
-  public subscriptionResults: SubscriptionResults | undefined;
+  subscriptionResults: SubscriptionResults | undefined;
 
-  public publicationResults: PublicationResults | undefined;
+  publicationResults: PublicationResults | undefined;
 
-  public notificationResults: NotificationResults | undefined;
+  notificationResults: NotificationResults | undefined;
 
-  constructor(
-    private basicAuthServices: BasicAuthServiceMaintainer,
-    private eventingApi: EventingApiService,
-  ) {
+  constructor() {
     this.basicAuthServices.registerService(this.url);
   }
 
-  public requestEvents() {
+  requestEvents() {
     this.startloading();
     const params: EventFilter = {
       limit: 10,
@@ -57,7 +56,7 @@ export class EventingComponent {
     });
   }
 
-  public requestSubscriptions() {
+  requestSubscriptions() {
     this.startloading();
     const params: SubscriptionFilter = { limit: 1 };
     this.eventingApi.getSubscriptions(this.url, params).subscribe({
@@ -67,7 +66,7 @@ export class EventingComponent {
     });
   }
 
-  public requestPublications() {
+  requestPublications() {
     this.startloading();
     const params: PublicationFilter = { limit: 1 };
     this.eventingApi.getPublications(this.url, params).subscribe({
@@ -81,7 +80,7 @@ export class EventingComponent {
     return (error: HttpErrorResponse) => (this.requestError = error.message);
   }
 
-  public requestNotifications() {
+  requestNotifications() {
     this.startloading();
     const params: NotificationFilter = {
       limit: 10,

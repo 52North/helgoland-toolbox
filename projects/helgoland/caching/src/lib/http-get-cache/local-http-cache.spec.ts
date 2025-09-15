@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { inject, TestBed } from '@angular/core/testing';
 import { HttpService } from '@helgoland/core';
 
@@ -8,8 +11,8 @@ import { LocalHttpCache } from './local-http-cache';
 describe('LocalHttpCache', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, HelgolandCachingModule],
-      providers: [LocalHttpCache],
+      imports: [HelgolandCachingModule],
+      providers: [LocalHttpCache, provideHttpClient(withInterceptorsFromDi())],
     });
   });
 

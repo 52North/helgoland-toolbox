@@ -1,15 +1,13 @@
 import {
   AfterViewInit,
   Component,
-  Input,
-  KeyValueDiffers,
   OnChanges,
   SimpleChanges,
+  input,
 } from '@angular/core';
 import * as L from 'leaflet';
 
 import { CachedMapComponent } from '../../base/cached-map-component';
-import { MapCache } from '../../base/map-cache.service';
 
 @Component({
   selector: 'n52-geometry-map-viewer',
@@ -21,20 +19,15 @@ export class GeometryMapViewerComponent
   extends CachedMapComponent
   implements AfterViewInit, OnChanges
 {
-  @Input()
-  public highlight: GeoJSON.GeoJsonObject | undefined;
+  readonly highlight = input<GeoJSON.GeoJsonObject>();
 
-  @Input()
-  public geometry: GeoJSON.GeoJsonObject | undefined;
+  readonly geometry = input<GeoJSON.GeoJsonObject>();
 
-  @Input()
-  public zoomTo: GeoJSON.GeoJsonObject | undefined;
+  readonly zoomTo = input<GeoJSON.GeoJsonObject>();
 
-  @Input()
-  public avoidZoomToGeometry: boolean | undefined;
+  readonly avoidZoomToGeometry = input<boolean>();
 
-  @Input()
-  public customMarkerIcon: L.Icon | undefined;
+  readonly customMarkerIcon = input<L.Icon>();
 
   private highlightGeometryOnMap: L.GeoJSON | undefined;
   private geometryOnMap: L.GeoJSON | undefined;
@@ -51,14 +44,7 @@ export class GeometryMapViewerComponent
     opacity: 1,
   };
 
-  constructor(
-    protected override mapCache: MapCache,
-    protected override kvDiffers: KeyValueDiffers,
-  ) {
-    super(mapCache, kvDiffers);
-  }
-
-  public ngAfterViewInit() {
+  ngAfterViewInit() {
     this.createMap();
     if (this.map) {
       this.drawGeometry(this.map);
@@ -66,7 +52,7 @@ export class GeometryMapViewerComponent
     }
   }
 
-  public override ngOnChanges(changes: SimpleChanges) {
+  override ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
     if (this.map) {
       if (changes['highlight'] && changes['highlight'].currentValue) {
@@ -83,7 +69,7 @@ export class GeometryMapViewerComponent
 
   private zoomToGeometry(map: L.Map) {
     try {
-      const geometry = L.geoJSON(this.zoomTo);
+      const geometry = L.geoJSON(this.zoomTo());
       map.fitBounds(geometry.getBounds());
     } catch (err) {
       console.error(err);
@@ -95,7 +81,7 @@ export class GeometryMapViewerComponent
     if (this.highlightGeometryOnMap) {
       map.removeLayer(this.highlightGeometryOnMap);
     }
-    this.highlightGeometryOnMap = L.geoJSON(this.highlight, {
+    this.highlightGeometryOnMap = L.geoJSON(this.highlight(), {
       pointToLayer: (feature, latlng) => {
         return L.circleMarker(latlng, this.highlightStyle);
       },
@@ -105,14 +91,16 @@ export class GeometryMapViewerComponent
   }
 
   private drawGeometry(map: L.Map) {
-    if (this.geometry) {
+    const geometry = this.geometry();
+    if (geometry) {
       if (this.geometryOnMap) {
         map.removeLayer(this.geometryOnMap);
       }
-      this.geometryOnMap = L.geoJSON(this.geometry, {
+      this.geometryOnMap = L.geoJSON(geometry, {
         pointToLayer: (feature, latlng) => {
-          if (this.customMarkerIcon) {
-            return L.marker(latlng, { icon: this.customMarkerIcon });
+          const customMarkerIcon = this.customMarkerIcon();
+          if (customMarkerIcon) {
+            return L.marker(latlng, { icon: customMarkerIcon });
           } else {
             return L.circleMarker(latlng, this.defaultStyle);
           }
@@ -122,7 +110,7 @@ export class GeometryMapViewerComponent
       this.geometryOnMap.setStyle(this.defaultStyle);
       this.geometryOnMap.addTo(map);
 
-      if (!this.avoidZoomToGeometry) {
+      if (!this.avoidZoomToGeometry()) {
         map.fitBounds(this.geometryOnMap.getBounds());
       }
     }

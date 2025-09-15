@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, inject, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TzDatePipe } from '@helgoland/core';
 import BaseLayer from 'ol/layer/Base';
@@ -13,27 +13,27 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
 @Component({
   selector: 'n52-ol-layer-time-selector',
   templateUrl: './ol-layer-time-selector.component.html',
-  standalone: true,
   imports: [FormsModule, TzDatePipe],
 })
 export class OlLayerTimeSelectorComponent implements OnInit {
-  @Input({ required: true }) layer!: BaseLayer;
+  protected wmsCaps = inject(WmsCapabilitiesService);
 
-  public currentTime: Date | undefined;
+  readonly layer = input.required<BaseLayer>();
 
-  public timeDimensions: Date[] | undefined;
+  currentTime: Date | undefined;
 
-  public loading: boolean | undefined;
+  timeDimensions: Date[] | undefined;
+
+  loading: boolean | undefined;
 
   protected layerSource: TileWMS | undefined;
   protected layerid: string | undefined;
   protected url: string | undefined;
 
-  constructor(protected wmsCaps: WmsCapabilitiesService) {}
-
   ngOnInit() {
-    if (this.layer instanceof Layer) {
-      const source = this.layer.getSource();
+    const layer = this.layer();
+    if (layer instanceof Layer) {
+      const source = layer.getSource();
       if (source instanceof TileWMS && source.getUrls()?.length) {
         this.loading = true;
         this.layerSource = source;
@@ -52,11 +52,11 @@ export class OlLayerTimeSelectorComponent implements OnInit {
     }
   }
 
-  public onSelect(time: Date) {
+  onSelect(time: Date) {
     this.setTime(time);
   }
 
-  public compareFn(option1: Date, option2: Date) {
+  compareFn(option1: Date, option2: Date) {
     return option1 && option2 && option1.getTime() === option2.getTime();
   }
 

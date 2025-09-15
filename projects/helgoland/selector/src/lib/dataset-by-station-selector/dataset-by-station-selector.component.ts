@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit, inject, input, output } from '@angular/core';
 import {
   DatasetType,
   HelgolandDataset,
@@ -12,62 +12,55 @@ import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 import { TranslateService } from '@ngx-translate/core';
 
 export class SelectableDataset extends HelgolandTimeseries {
-  public selected = false;
+  selected = false;
 }
 
 @Component({
   selector: 'n52-dataset-by-station-selector',
   templateUrl: './dataset-by-station-selector.component.html',
   styleUrls: ['./dataset-by-station-selector.component.scss'],
-  standalone: true,
   imports: [NgClass, HelgolandLabelMapperModule, TzDatePipe],
 })
 export class DatasetByStationSelectorComponent implements OnInit {
-  @Input({ required: true })
-  public station!: HelgolandPlatform;
+  protected servicesConnector = inject(HelgolandServicesConnector);
+  protected translateSrvc = inject(TranslateService);
 
-  @Input({ required: true })
-  public url!: string;
+  readonly station = input.required<HelgolandPlatform>();
 
-  @Input()
-  public defaultSelected = false;
+  readonly url = input.required<string>();
 
-  @Input()
-  public phenomenonId: string | undefined;
+  readonly defaultSelected = input(false);
 
-  @Output()
+  readonly phenomenonId = input<string>();
+
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onSelectionChanged: EventEmitter<HelgolandDataset[]> =
-    new EventEmitter<HelgolandDataset[]>();
+  readonly onSelectionChanged = output<HelgolandDataset[]>();
 
-  public phenomenonMatchedList: SelectableDataset[] = [];
-  public othersList: SelectableDataset[] = [];
+  phenomenonMatchedList: SelectableDataset[] = [];
+  othersList: SelectableDataset[] = [];
 
-  public counter = 0;
+  counter = 0;
 
-  constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    public translateSrvc: TranslateService,
-  ) {}
-
-  public ngOnInit() {
+  ngOnInit() {
     this.servicesConnector
-      .getPlatform(this.station.id, this.url, { type: DatasetType.Timeseries })
+      .getPlatform(this.station().id, this.url(), {
+        type: DatasetType.Timeseries,
+      })
       .subscribe((station) => {
-        this.station = station;
+        // this.station = station;
         this.counter = 0;
-        this.station.datasetIds.forEach((id) => {
+        station.datasetIds.forEach((id) => {
           this.counter++;
           this.servicesConnector
             .getDataset(
-              { id: id, url: this.url },
+              { id: id, url: this.url() },
               { type: DatasetType.Timeseries },
             )
             .subscribe({
               next: (result) =>
                 this.prepareResult(
                   result as SelectableDataset,
-                  this.defaultSelected,
+                  this.defaultSelected(),
                 ),
               error: (error) => console.error(error),
               complete: () => this.counter--,
@@ -76,15 +69,16 @@ export class DatasetByStationSelectorComponent implements OnInit {
       });
   }
 
-  public toggle(timeseries: SelectableDataset) {
+  toggle(timeseries: SelectableDataset) {
     timeseries.selected = !timeseries.selected;
     this.updateSelection();
   }
 
   protected prepareResult(result: SelectableDataset, selection: boolean) {
     result.selected = selection;
-    if (this.phenomenonId) {
-      if (result.parameters.phenomenon?.id === this.phenomenonId) {
+    const phenomenonId = this.phenomenonId();
+    if (phenomenonId) {
+      if (result.parameters.phenomenon?.id === phenomenonId) {
         this.phenomenonMatchedList.push(result);
       } else {
         this.othersList.push(result);

@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HelgolandCommonModule } from 'helgoland-common';
@@ -14,11 +17,11 @@ describe('ModalMainConfigComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         TranslateTestingModule,
-        HttpClientModule,
         HelgolandCommonModule,
         NoopAnimationsModule,
         ModalMainConfigComponent,
       ],
+      providers: [provideHttpClient(withInterceptorsFromDi())],
     }).compileComponents();
   });
 

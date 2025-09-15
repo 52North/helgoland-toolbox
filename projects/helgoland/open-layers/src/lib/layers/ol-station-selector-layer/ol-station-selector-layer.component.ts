@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Host, Input, Output } from '@angular/core';
+import { Component, inject, output, input } from '@angular/core';
 import {
   HelgolandParameterFilter,
   HelgolandPlatform,
@@ -17,8 +17,6 @@ import VectorSource from 'ol/source/Vector';
 import { Circle, Fill, Stroke, Style, Text } from 'ol/style';
 
 import { OlBaseComponent } from '../../ol-base.component';
-import { OlMapService } from '../../services/map.service';
-import { OlMapId } from '../../services/mapid.service';
 
 /**
  * Component to display station based on the input parameters. The component must be embedded as seen in the example:
@@ -34,63 +32,49 @@ import { OlMapId } from '../../services/mapid.service';
   standalone: true,
 })
 export class OlStationSelectorLayerComponent extends OlBaseComponent {
+  protected servicesConnector = inject(HelgolandServicesConnector);
+
   /**
    * The serviceUrl, where the selection should be loaded.
    */
-  @Input({ required: true })
-  serviceUrl!: string;
+  readonly serviceUrl = input.required<string>();
 
   /**
    * The filter which should be used, while fetching the selection.
    */
-  @Input()
-  filter: HelgolandParameterFilter | undefined;
+  readonly filter = input<HelgolandParameterFilter>();
 
   /**
    * Zoom to the stations after collected and displayed
    */
-  @Input()
-  zoomToResult = true;
+  readonly zoomToResult = input(true);
 
   /**
    * Cluster stations
    */
-  @Input()
-  cluster = true;
+  readonly cluster = input(true);
 
   /**
    * Inform, when a station is selected
    */
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  onSelected: EventEmitter<HelgolandPlatform> =
-    new EventEmitter<HelgolandPlatform>();
+  readonly onSelected = output<HelgolandPlatform>();
 
   /**
    * Inform, while stations are loaded
    */
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  onContentLoading: EventEmitter<boolean> = new EventEmitter();
+  readonly onContentLoading = output<boolean>();
 
   /**
    * Inform, when no stations are found
    */
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  onNoResultsFound: EventEmitter<boolean> = new EventEmitter();
+  readonly onNoResultsFound = output<boolean>();
 
   private map!: Map;
 
   private layer!: VectorLayer;
-
-  constructor(
-    protected override mapService: OlMapService,
-    @Host() protected override mapidService: OlMapId,
-    protected servicesConnector: HelgolandServicesConnector,
-  ) {
-    super(mapService, mapidService);
-  }
 
   mapInitialized(map: Map) {
     this.map = map;
@@ -105,7 +89,7 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
 
   private createStationGeometries() {
     this.servicesConnector
-      .getPlatforms(this.serviceUrl, this.filter)
+      .getPlatforms(this.serviceUrl(), this.filter())
       .subscribe((stations) => {
         const features: Feature[] = this.createFeatureList(stations);
 
@@ -115,14 +99,14 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
 
         this.createClickInteraction();
 
-        if (this.zoomToResult) {
+        if (this.zoomToResult()) {
           this.zoomToFeatures(features);
         }
       });
   }
 
   private createLayer(features: Feature[]) {
-    if (this.cluster) {
+    if (this.cluster()) {
       this.layer = new VectorLayer({
         source: new Cluster({
           distance: 100,
@@ -159,7 +143,7 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
   }
 
   private createHoverInteraction() {
-    if (this.cluster) {
+    if (this.cluster()) {
       const hoverSelect = new Select({
         condition: pointerMove,
         style: (feature) => this.styleClusterLayer(feature),
@@ -181,7 +165,7 @@ export class OlStationSelectorLayerComponent extends OlBaseComponent {
     const clickSelect = new Select({
       condition: click,
       style: (feature) =>
-        this.cluster
+        this.cluster()
           ? this.styleClusterLayer(feature)
           : this.createMarkerStyle(),
       layers: [this.layer],

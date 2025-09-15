@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,12 +12,11 @@ import { ModalMainConfigComponent } from '../modal-main-config/modal-main-config
   templateUrl: './modal-main-config-button.component.html',
   styleUrls: ['./modal-main-config-button.component.scss'],
   imports: [MatTooltipModule, TranslateModule, MatIconModule, MatButtonModule],
-  standalone: true,
 })
 export class ModalMainConfigButtonComponent {
-  constructor(private dialog: MatDialog) {}
+  private dialog = inject(MatDialog);
 
-  public openMainConfig() {
+  openMainConfig() {
     this.dialog.open(ModalMainConfigComponent);
   }
 }

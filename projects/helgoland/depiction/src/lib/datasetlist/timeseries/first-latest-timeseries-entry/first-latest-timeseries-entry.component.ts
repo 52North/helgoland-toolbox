@@ -1,20 +1,17 @@
 import {
   Component,
-  EventEmitter,
-  Input,
   OnChanges,
-  Output,
   SimpleChanges,
+  inject,
+  input,
+  output,
 } from '@angular/core';
 import {
   FirstLastValue,
-  HelgolandServicesConnector,
-  InternalIdHandler,
   Time,
   TimeInterval,
   TzDatePipe,
 } from '@helgoland/core';
-import { TranslateService } from '@ngx-translate/core';
 
 import { ConfigurableTimeseriesEntryComponent } from '../configurable-timeseries-entry/configurable-timeseries-entry.component';
 
@@ -27,46 +24,36 @@ import { ConfigurableTimeseriesEntryComponent } from '../configurable-timeseries
   selector: 'n52-first-latest-timeseries-entry',
   templateUrl: './first-latest-timeseries-entry.component.html',
   styleUrls: ['./first-latest-timeseries-entry.component.css'],
-  standalone: true,
   imports: [TzDatePipe],
 })
 export class FirstLatestTimeseriesEntryComponent
   extends ConfigurableTimeseriesEntryComponent
   implements OnChanges
 {
-  @Input()
-  public timeInterval: TimeInterval | undefined;
+  protected timeSrvc = inject(Time);
 
-  @Output()
+  readonly timeInterval = input<TimeInterval>();
+
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onSelectDate: EventEmitter<Date> = new EventEmitter();
+  readonly onSelectDate = output<Date>();
 
-  public firstValue: FirstLastValue | undefined;
-  public lastValue: FirstLastValue | undefined;
-  public hasData = true;
+  firstValue: FirstLastValue | undefined;
+  lastValue: FirstLastValue | undefined;
+  hasData = true;
 
-  constructor(
-    protected override servicesConnector: HelgolandServicesConnector,
-    protected override internalIdHandler: InternalIdHandler,
-    protected override translateSrvc: TranslateService,
-    protected timeSrvc: Time,
-  ) {
-    super(servicesConnector, internalIdHandler, translateSrvc);
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['timeInterval']) {
       this.checkDataInTimespan();
     }
   }
 
-  public jumpToFirstTimeStamp() {
+  jumpToFirstTimeStamp() {
     if (this.dataset?.firstValue) {
       this.onSelectDate.emit(new Date(this.dataset.firstValue.timestamp));
     }
   }
 
-  public jumpToLastTimeStamp() {
+  jumpToLastTimeStamp() {
     if (this.dataset?.lastValue) {
       this.onSelectDate.emit(new Date(this.dataset.lastValue.timestamp));
     }
@@ -82,14 +69,15 @@ export class FirstLatestTimeseriesEntryComponent
   }
 
   private checkDataInTimespan() {
+    const timeInterval = this.timeInterval();
     if (
-      this.timeInterval &&
+      timeInterval &&
       this.dataset &&
       this.dataset.firstValue &&
       this.dataset.lastValue
     ) {
       this.hasData = this.timeSrvc.overlaps(
-        this.timeInterval,
+        timeInterval,
         this.dataset.firstValue.timestamp,
         this.dataset.lastValue.timestamp,
       );

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 
 import {
@@ -9,9 +9,9 @@ import {
 
 @Injectable()
 export class JsonFavoriteExporterService {
-  constructor(protected favoriteSrvc: FavoriteService) {}
+  protected favoriteSrvc = inject(FavoriteService);
 
-  public exportFavorites() {
+  exportFavorites() {
     const filename = 'favorites.json';
     const json = {
       singles: this.favoriteSrvc.getFavorites(),
@@ -35,7 +35,7 @@ export class JsonFavoriteExporterService {
     // }
   }
 
-  public importFavorites(event: any): Observable<boolean> {
+  importFavorites(event: any): Observable<boolean> {
     return new Observable<boolean>((observer: Observer<boolean>) => {
       const files = event.target.files;
       if (files && files.length > 0) {

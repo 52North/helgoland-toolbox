@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { LocalStorage } from '@helgoland/core';
 
 const DATASET_ORDER = 'dataset-order';
@@ -7,9 +7,9 @@ const DATASET_ORDER = 'dataset-order';
   providedIn: 'root',
 })
 export class StorageService {
-  private ids = new Set<string>();
+  private localStorage = inject(LocalStorage);
 
-  constructor(private localStorage: LocalStorage) {}
+  private ids = new Set<string>();
 
   loadOrder(): string[] {
     const list = this.localStorage.load(DATASET_ORDER);

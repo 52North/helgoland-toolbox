@@ -1,8 +1,8 @@
 // @ts-nocheck
+import { DisplayName } from '../../common/decorators/DisplayName';
 import { AbstractPhysicalProcess } from './AbstractPhysicalProcess';
 import { ProcessMethod } from './ProcessMethod';
 import { ProcessMethodProcess } from './ProcessMethodProcess';
-import { DisplayName } from '../../common/decorators/DisplayName';
 
 /**
  * A PhysicalComponent is a physical process that will not be further divided
@@ -20,11 +20,11 @@ export class PhysicalComponent
   method: ProcessMethod;
 
   // getter
-  public static SCHEMA(): string {
+  static SCHEMA(): string {
     return 'http://schemas.opengis.net/sensorML/2.0/physical_component.xsd';
   }
 
-  public static NAME(): string {
+  static NAME(): string {
     return 'PhysicalComponent';
   }
 

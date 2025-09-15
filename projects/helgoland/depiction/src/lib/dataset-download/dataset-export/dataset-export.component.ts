@@ -1,11 +1,11 @@
 // @ts-nocheck
 import {
   Component,
-  EventEmitter,
-  Input,
+  inject,
+  input,
   OnChanges,
   OnInit,
-  Output,
+  output,
   SimpleChanges,
 } from '@angular/core';
 import {
@@ -40,6 +40,9 @@ export enum DownloadType {
   standalone: true,
 })
 export class DatasetExportComponent implements OnInit, OnChanges {
+  protected servicesConnector = inject(HelgolandServicesConnector);
+  protected timeSrvc = inject(Time);
+
   private dataset: HelgolandTimeseries;
   private fileName = 'timeseries';
   private timespan: Timespan;
@@ -47,36 +50,30 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   /**
    * options to define the export parameters
    */
-  @Input({ required: true })
-  public exportOptions!: ExportOptions;
+  readonly exportOptions = input.required<ExportOptions>();
 
   /**
    * id of the dataset that should be downloaded
    */
-  @Input() public inputId: string;
+  readonly inputId = input<string>();
 
   /**
    * returns the metadata of the selected dataset to be visualized
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onMetadataChange: EventEmitter<HelgolandTimeseries> =
-    new EventEmitter();
+  readonly onMetadataChange = output<HelgolandTimeseries>();
 
   /**
    * Output to inform the loading status, while file is created
    */
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onLoadingChange: EventEmitter<boolean> = new EventEmitter();
-
-  constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    protected timeSrvc: Time,
-  ) {}
+  readonly onLoadingChange = output<boolean>();
 
   ngOnInit() {
-    if (this.inputId) {
+    const inputId = this.inputId();
+    if (inputId) {
       this.servicesConnector
-        .getDataset(this.inputId, { type: DatasetType.Timeseries })
+        .getDataset(inputId, { type: DatasetType.Timeseries })
         .subscribe({
           next: (ds) => {
             this.dataset = ds;
@@ -92,8 +89,9 @@ export class DatasetExportComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['exportOptions'] && this.exportOptions) {
-      this.timespan = this.exportOptions.timeperiod;
+    const exportOptions = this.exportOptions();
+    if (changes['exportOptions'] && exportOptions) {
+      this.timespan = exportOptions.timeperiod;
       // check if timespan is inside range
       if (this.timespan.from > this.timespan.to) {
         this.timespan = {
@@ -101,31 +99,29 @@ export class DatasetExportComponent implements OnInit, OnChanges {
           to: this.timespan.from,
         };
       }
-      if (
-        this.exportOptions.timeperiod.from < this.dataset.firstValue.timestamp
-      ) {
+      if (exportOptions.timeperiod.from < this.dataset.firstValue.timestamp) {
         this.timespan.from = this.dataset.firstValue.timestamp;
       } else if (
-        this.exportOptions.timeperiod.from > this.dataset.lastValue.timestamp
+        exportOptions.timeperiod.from > this.dataset.lastValue.timestamp
       ) {
         this.timespan.from = this.dataset.lastValue.timestamp;
       }
-      if (this.exportOptions.timeperiod.to > this.dataset.lastValue.timestamp) {
+      if (exportOptions.timeperiod.to > this.dataset.lastValue.timestamp) {
         this.timespan.to = this.dataset.lastValue.timestamp;
       } else if (
-        this.exportOptions.timeperiod.to < this.dataset.firstValue.timestamp
+        exportOptions.timeperiod.to < this.dataset.firstValue.timestamp
       ) {
         this.timespan.to = this.dataset.firstValue.timestamp;
       }
-      if (this.exportOptions.downloadType) {
-        this.onDownload(this.exportOptions.downloadType);
+      if (exportOptions.downloadType) {
+        this.onDownload(exportOptions.downloadType);
       }
     }
   }
 
-  public onDownload(downloadType: DownloadType): void {
+  onDownload(downloadType: DownloadType): void {
     this.onLoadingChange.emit(true);
-    this.fileName = this.inputId;
+    this.fileName = this.inputId();
     if (this.dataset) {
       this.loadData(this.dataset, downloadType);
     }

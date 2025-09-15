@@ -4,7 +4,7 @@
     (selectionChange)="setLanguage($event.value)"
     placeholder="{{ 'main-config.language-selector.placeholder' | translate }}"
   >
-    @for (lang of languageList; track lang) {
+    @for (lang of languageList(); track lang) {
       <mat-option [value]="lang">{{ lang.label }} </mat-option>
     }
   </mat-select>

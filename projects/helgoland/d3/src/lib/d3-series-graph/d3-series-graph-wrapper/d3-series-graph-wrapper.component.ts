@@ -1,13 +1,11 @@
 import {
   Component,
-  EventEmitter,
-  Input,
-  IterableDiffers,
+  inject,
+  input,
   OnChanges,
-  Optional,
-  Output,
+  output,
   SimpleChanges,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import {
   ColorService,
@@ -16,17 +14,13 @@ import {
   DatasetPresenterComponent,
   DatasetType,
   HelgolandDataset,
-  HelgolandServicesConnector,
   HelgolandTimeseries,
   HelgolandTimeseriesData,
-  InternalIdHandler,
   SumValuesService,
-  Time,
   Timespan,
   TimeValueTuple,
-  TimezoneService,
 } from '@helgoland/core';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent } from '@ngx-translate/core';
 import { duration, unitOfTime } from 'moment';
 
 import {
@@ -48,10 +42,9 @@ import { HighlightOutput } from '../models/d3-highlight';
 import { D3PlotOptions, HoveringStyle } from '../models/d3-plot-options';
 import {
   AxisSettings,
-  DatasetChild,
   DatasetDescription,
   DatasetStyle,
-  SeriesGraphDataset,
+  SeriesGraphDataset
 } from '../models/series-graph-dataset';
 
 @Component({
@@ -64,28 +57,38 @@ import {
     D3GraphOverviewSelectionComponent,
     D3SeriesGraphComponent,
   ],
-  standalone: true,
 })
 export class D3SeriesGraphWrapperComponent
   extends DatasetPresenterComponent<DatasetOptions, D3PlotOptions>
   implements OnChanges
 {
-  @Input() public yaxisModifier: boolean | undefined;
+  protected sumValues = inject(SumValuesService);
+  protected colorService = inject(ColorService);
+  protected graphHelper = inject(D3GraphHelperService);
+  protected pointSymbolDrawer = inject(D3PointSymbolDrawerService);
+  protected errorHandler =
+    inject(D3SeriesGraphErrorHandler, { optional: true })! ??
+    new D3SeriesSimpleGraphErrorHandler();
+
+  readonly yaxisModifier = input<boolean>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onHighlightChanged: EventEmitter<HighlightOutput> =
-    new EventEmitter();
+  readonly onHighlightChanged = output<HighlightOutput>();
 
-  @Input() public hoveringService: D3HoveringService =
-    new D3SimpleHoveringService(this.timezoneSrvc, this.pointSymbolDrawer);
+  readonly hoveringService = input<D3HoveringService>(
+    new D3SimpleHoveringService(),
+  );
 
-  @Input()
-  public mainTimeInterval: Timespan | undefined;
+  readonly mainTimeInterval = input<Timespan>();
 
-  public datasets: SeriesGraphDataset[] = [];
-  public override timespan: Timespan | undefined;
+  override readonly presenterOptions = input<D3PlotOptions | undefined>({
+    hoverStyle: HoveringStyle.none,
+  });
 
-  public graphOptions: D3SeriesGraphOptions = {
+  datasets: SeriesGraphDataset[] = [];
+  override timespan: Timespan | undefined;
+
+  graphOptions: D3SeriesGraphOptions = {
     grid: true,
     showTimeLabel: false,
     hoverStyle: HoveringStyle.point,
@@ -96,52 +99,23 @@ export class D3SeriesGraphWrapperComponent
     yaxisModifier: true,
   };
 
-  @ViewChild(D3SeriesGraphComponent)
-  private d3Graph!: D3SeriesGraphComponent;
+  private readonly d3Graph = viewChild.required(D3SeriesGraphComponent);
 
   protected datasetMap: Map<string, HelgolandTimeseries> = new Map();
 
-  constructor(
-    protected override iterableDiffers: IterableDiffers,
-    protected override servicesConnector: HelgolandServicesConnector,
-    protected override datasetIdResolver: InternalIdHandler,
-    protected override timeSrvc: Time,
-    protected override translateService: TranslateService,
-    protected override timezoneSrvc: TimezoneService,
-    protected sumValues: SumValuesService,
-    protected colorService: ColorService,
-    protected graphHelper: D3GraphHelperService,
-    protected pointSymbolDrawer: D3PointSymbolDrawerService,
-    @Optional()
-    protected errorHandler: D3SeriesGraphErrorHandler = new D3SeriesSimpleGraphErrorHandler(),
-  ) {
-    super(
-      iterableDiffers,
-      servicesConnector,
-      datasetIdResolver,
-      timeSrvc,
-      translateService,
-      timezoneSrvc,
-    );
-    if (!this.presenterOptions) {
-      this.presenterOptions = {
-        hoverStyle: HoveringStyle.none,
-      };
-    }
-  }
-
-  public override ngOnChanges(changes: SimpleChanges): void {
+  override ngOnChanges(changes: SimpleChanges): void {
     super.ngOnChanges(changes);
     if (changes['yaxisModifier']) {
+      const yaxisModifier = this.yaxisModifier();
       this.graphOptions.yaxisModifier =
-        this.yaxisModifier !== undefined
-          ? this.yaxisModifier
+        yaxisModifier !== undefined
+          ? yaxisModifier
           : this.graphOptions.yaxisModifier;
       this.drawGraph();
     }
   }
 
-  public reloadDataForDatasets(datasetIds: string[]): void {
+  reloadDataForDatasets(datasetIds: string[]): void {
     datasetIds.forEach((id) => {
       if (this.datasetMap.has(id)) {
         this.loadDatasetData(id);
@@ -230,18 +204,20 @@ export class D3SeriesGraphWrapperComponent
         : this.graphOptions.togglePanZoom;
     this.graphOptions.yaxis =
       options.yaxis !== undefined ? options.yaxis : this.graphOptions.yaxis;
+    const yaxisModifier = this.yaxisModifier();
     this.graphOptions.yaxisModifier =
-      this.yaxisModifier !== undefined
-        ? this.yaxisModifier
+      yaxisModifier !== undefined
+        ? yaxisModifier
         : this.graphOptions.yaxisModifier;
-    if (this.presenterOptions) {
-      this.presenterOptions.timespanBufferFactor =
-        this.presenterOptions.timespanBufferFactor !== undefined
-          ? this.presenterOptions.timespanBufferFactor
+    const presenterOptions = this.presenterOptions();
+    if (presenterOptions) {
+      presenterOptions.timespanBufferFactor =
+        presenterOptions.timespanBufferFactor !== undefined
+          ? presenterOptions.timespanBufferFactor
           : 0.2;
-      this.presenterOptions.requestBeforeAfterValues =
-        this.presenterOptions.requestBeforeAfterValues !== undefined
-          ? this.presenterOptions.requestBeforeAfterValues
+      presenterOptions.requestBeforeAfterValues =
+        presenterOptions.requestBeforeAfterValues !== undefined
+          ? presenterOptions.requestBeforeAfterValues
           : false;
     }
     this.drawGraph();
@@ -263,7 +239,7 @@ export class D3SeriesGraphWrapperComponent
             (e) => e.id === child.id,
           );
           if (ref) {
-            child.setColor(ref.color);
+            // child.setColor(ref.color);
             child.setVisible(true, false);
           } else {
             child.setVisible(false, false);
@@ -279,12 +255,12 @@ export class D3SeriesGraphWrapperComponent
   private loadAddedDataset(dataset: HelgolandDataset): void {
     if (dataset instanceof HelgolandTimeseries) {
       let dsEntry = this.datasets.find((e) => e.id === dataset.internalId);
-      const options = this.datasetOptions?.get(dataset.internalId);
+      const options = this.datasetOptions()?.get(dataset.internalId);
       if (dsEntry === undefined && options) {
         const style = this.getGraphStyle(options);
         const yaxis = this.getAxisSettings(options);
         const selected =
-          this.selectedDatasetIds.indexOf(dataset.internalId) >= 0;
+          this.selectedDatasetIds().indexOf(dataset.internalId) >= 0;
         const description: DatasetDescription = {
           categoryLabel: dataset.parameters.category?.map((e) => e.label),
           phenomenonLabel: dataset.parameters.phenomenon?.label,
@@ -307,15 +283,16 @@ export class D3SeriesGraphWrapperComponent
           const refVis = !!options.showReferenceValues.find(
             (ref) => ref.id === refVal.referenceValueId,
           );
-          dsEntry!.addChild(
-            new DatasetChild(
-              refVal.referenceValueId,
-              refVal.label,
-              refVis,
-              [],
-              '',
-            ),
-          );
+          debugger;
+          // dsEntry!.addChild(
+          //   new DatasetChild(
+          //     refVal.referenceValueId,
+          //     refVal.label,
+          //     refVis,
+          //     [],
+          //     '',
+          //   ),
+          // );
         });
         this.datasets.push(dsEntry);
       }
@@ -327,15 +304,16 @@ export class D3SeriesGraphWrapperComponent
   }
 
   private loadDatasetData(id: string) {
-    const datasetOptions = this.datasetOptions?.get(id);
+    const datasetOptions = this.datasetOptions()?.get(id);
     const dataset = this.datasetMap.get(id);
     if (dataset && this.timespan) {
       const dsEntry = this.datasets.find((e) => e.id === dataset.internalId);
       if (dsEntry) {
         dsEntry.setDataLoading(true);
         this.informDatasetLoading(this.getLoadedDatasets());
+        const presenterOptions = this.presenterOptions();
         if (
-          this.presenterOptions?.sendDataRequestOnlyIfDatasetTimespanCovered &&
+          presenterOptions?.sendDataRequestOnlyIfDatasetTimespanCovered &&
           dataset.firstValue &&
           dataset.lastValue &&
           !this.timeSrvc.overlaps(
@@ -346,10 +324,10 @@ export class D3SeriesGraphWrapperComponent
         ) {
           this.prepareData(dsEntry, new HelgolandTimeseriesData([]));
           this.onCompleteLoadingData(dsEntry);
-        } else if (this.presenterOptions?.timespanBufferFactor) {
+        } else if (presenterOptions?.timespanBufferFactor) {
           const buffer = this.timeSrvc.getBufferedTimespan(
             this.timespan,
-            this.presenterOptions.timespanBufferFactor,
+            presenterOptions.timespanBufferFactor,
             duration(1, 'day').asMilliseconds(),
           );
           this.onContentLoading.emit(true);
@@ -360,10 +338,10 @@ export class D3SeriesGraphWrapperComponent
           const request = this.servicesConnector
             .getDatasetData(dataset, buffer, {
               expanded:
-                this.presenterOptions?.showReferenceValues ||
-                this.presenterOptions?.requestBeforeAfterValues,
+                presenterOptions?.showReferenceValues ||
+                presenterOptions?.requestBeforeAfterValues,
               generalize:
-                this.presenterOptions?.generalizeAllways ||
+                presenterOptions?.generalizeAllways ||
                 datasetOptions?.generalize,
             })
             .subscribe({
@@ -402,11 +380,11 @@ export class D3SeriesGraphWrapperComponent
     this.dataLoaded.emit(new Set(ids));
   }
 
-  public updateTimespan(timespan: Timespan) {
+  updateTimespan(timespan: Timespan) {
     this.onTimespanChanged.emit(timespan);
   }
 
-  public datasetSelected(selectedIds: string[]) {
+  datasetSelected(selectedIds: string[]) {
     this.onDatasetSelected.emit(selectedIds);
   }
 
@@ -426,7 +404,7 @@ export class D3SeriesGraphWrapperComponent
       // const data = this.generalizer.generalizeData(rawdata, this.width, this.timespan); // TODO: eher in graph componente
 
       const datasetIdx = this.datasets.findIndex((e) => e.id === dsEntry.id);
-      const options = this.datasetOptions?.get(dsEntry.id);
+      const options = this.datasetOptions()?.get(dsEntry.id);
 
       // sum values for bar chart visualization
       if (options && options.type === 'bar') {
@@ -454,9 +432,10 @@ export class D3SeriesGraphWrapperComponent
     if (ds.children && ds.children.length) {
       ds.children.forEach((child) => {
         const refVals = rawdata.referenceValues[child.id];
-        if (refVals) {
-          child.setData(this.createReferenceValueData(rawdata, child.id));
-        }
+        debugger;
+        // if (refVals) {
+        //   child.setData(this.createReferenceValueData(rawdata, child.id));
+        // }
       });
     }
   }
@@ -494,8 +473,9 @@ export class D3SeriesGraphWrapperComponent
   }
 
   private drawGraph() {
-    if (this.d3Graph) {
-      this.d3Graph.redrawCompleteGraph();
+    const d3Graph = this.d3Graph();
+    if (d3Graph) {
+      d3Graph.redrawCompleteGraph();
     }
   }
 }

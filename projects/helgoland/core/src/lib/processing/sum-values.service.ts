@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import moment, { unitOfTime, Duration } from 'moment';
+import moment, { Duration, unitOfTime } from 'moment';
 
 import { TimeValueTuple } from '../model/dataset-api/data';
 
@@ -7,7 +7,7 @@ import { TimeValueTuple } from '../model/dataset-api/data';
 export class SumValuesService {
   constructor() {}
 
-  public sum(
+  sum(
     startOf: unitOfTime.StartOf,
     period: Duration,
     data: TimeValueTuple[],

@@ -1,5 +1,5 @@
 <div>{{ activePanel }}</div>
-@for (param of parameters; track param; let i = $index) {
+@for (param of parameters(); track param; let i = $index) {
   <div>
     <h3>
       <span>{{ param.header }}</span>

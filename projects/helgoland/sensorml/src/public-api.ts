@@ -1,12 +1,12 @@
 /*
- * Public API Surface of sensorml
+ * API Surface of sensorml
  */
 
 export * from './lib/common/decorators/DisplayName';
 
-export * from './lib/model/sml';
 export * from './lib/model/gml';
 export * from './lib/model/iso';
+export * from './lib/model/sml';
 export * from './lib/model/swe';
 
 export * from './lib/services/dynamicGUI/BidiMap';

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import moment from 'moment';
 import { Observable, Observer, of, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -86,9 +86,9 @@ export interface DatasetItemValue {
   providedIn: 'root',
 })
 export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
-  name = 'PegelonlineApiConnector';
+  protected http = inject(HttpService);
 
-  constructor(protected http: HttpService) {}
+  name = 'PegelonlineApiConnector';
 
   canHandle(url: string): Observable<boolean> {
     // TODO: could be removed, if only used configured connector

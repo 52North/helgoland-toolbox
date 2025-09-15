@@ -28,7 +28,7 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
    * @param url {string} key
    * @param generalize {boolean} indicate if request has parameter generalized true or false to safe to different caches
    */
-  public get(url: string, generalize: boolean): CachedObject[] {
+  get(url: string, generalize: boolean): CachedObject[] {
     if (generalize) {
       return this.getByCache(this.generalizedCache, url);
     } else {
@@ -66,7 +66,7 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
    * @param timespan {Timespan} timespan
    * @param generalize {boolean} generalized or not
    */
-  public getIntersection(
+  getIntersection(
     url: string,
     timespan: Timespan,
     generalize: boolean,
@@ -85,7 +85,7 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
    * @param generalize {boolean} generalized or not
    * @param originReq {boolean} indicating if original request or manipulated
    */
-  public put(
+  put(
     url: string,
     obj: CachedObject,
     generalize: boolean,
@@ -182,7 +182,7 @@ export class LocalHttpCacheInterval extends HttpCacheInterval {
   /**
    * Remove every entry in cache.
    */
-  public clearCache() {
+  clearCache() {
     this.cache.clear();
     this.generalizedCache.clear();
   }

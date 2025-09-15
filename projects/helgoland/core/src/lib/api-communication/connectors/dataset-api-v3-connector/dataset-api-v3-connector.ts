@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import moment from 'moment';
 import { forkJoin, Observable, Observer, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -72,12 +72,10 @@ import {
   providedIn: 'root',
 })
 export class DatasetApiV3Connector implements HelgolandServiceConnector {
-  name = 'DatasetApiV3Connector';
+  protected http = inject(HttpService);
+  protected api = inject(ApiV3InterfaceService);
 
-  constructor(
-    protected http: HttpService,
-    protected api: ApiV3InterfaceService,
-  ) {}
+  name = 'DatasetApiV3Connector';
 
   canHandle(url: string): Observable<boolean> {
     return this.http

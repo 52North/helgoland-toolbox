@@ -1,6 +1,6 @@
 import 'moment-timezone';
 
-import { Injectable } from '@angular/core';
+import { inject } from '@angular/core';
 import { TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
 
@@ -17,13 +17,13 @@ import {
   HoverPosition,
 } from './d3-hovering-service';
 
-@Injectable()
 export class D3SimpleHoveringService extends D3HoveringService {
+  protected timezoneSrvc = inject(TimezoneService);
+  protected pointSymbolDrawer = inject(D3PointSymbolDrawerService);
+  protected graphHelper = inject(D3GraphHelperService);
+
   protected highlightRect: d3.Selection<SVGGElement, any, any, any> | undefined;
   protected highlightText: d3.Selection<SVGGElement, any, any, any> | undefined;
-  protected graphHelper: D3GraphHelperService = new D3GraphHelperService(
-    this.pointSymbolDrawer,
-  );
 
   protected addLineWidth = 2; // value added to linewidth
 
@@ -36,18 +36,11 @@ export class D3SimpleHoveringService extends D3HoveringService {
   private textPadding = 15;
   private rectPadding = 2;
 
-  constructor(
-    protected timezoneSrvc: TimezoneService,
-    protected pointSymbolDrawer: D3PointSymbolDrawerService,
-  ) {
-    super();
-  }
-
-  public initPointHovering(elem: d3.Selection<SVGGElement, any, any, any>) {
+  initPointHovering(elem: d3.Selection<SVGGElement, any, any, any>) {
     this.anchorElem = elem;
   }
 
-  public hidePointHovering(
+  hidePointHovering(
     d: DataEntry,
     entry: SeriesGraphDataset<LineStyle>,
     pointElem: d3.Selection<d3.BaseType, any, any, any>,
@@ -61,7 +54,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
     }
   }
 
-  public showPointHovering(
+  showPointHovering(
     d: DataEntry,
     entry: SeriesGraphDataset<LineStyle>,
     pointElem: d3.Selection<d3.BaseType, any, any, any>,
@@ -84,7 +77,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
     }
   }
 
-  public positioningPointHovering(
+  positioningPointHovering(
     x: number,
     y: number,
     color: string,
@@ -108,7 +101,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
     }
   }
 
-  public showTooltip(elements: HoveringElement[], position: HoverPosition) {
+  showTooltip(elements: HoveringElement[], position: HoverPosition) {
     if (this.anchorElem) {
       this.tooltipContainer = this.anchorElem.append('g');
       this.positionTooltipContainer(position.x, position.y);
@@ -155,7 +148,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
       .attr('transform', `translate(${rectX}, ${rectY})`);
   }
 
-  public removeTooltip() {
+  removeTooltip() {
     if (this.tooltipContainer) {
       this.tooltipContainer.remove();
     }

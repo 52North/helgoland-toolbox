@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -23,36 +22,35 @@ import {
     MatDatepickerModule,
     FormsModule,
     HelgolandCoreModule,
-    CommonModule,
   ],
-  standalone: true,
 })
 export class ExportPopupComponent {
-  public exportOptions!: ExportOptions;
-  public inputId: string;
-  public loading = false;
+  dialogRef = inject<MatDialogRef<ExportPopupComponent>>(MatDialogRef);
+  data = inject<{
+    id: string;
+    timespan: Timespan;
+  }>(MAT_DIALOG_DATA);
+
+  exportOptions!: ExportOptions;
+  inputId: string;
+  loading = false;
   // pre-define variable metadata to avoid errors (undefined)
-  public dataset: HelgolandTimeseries | undefined;
-  public disabled = false;
+  dataset: HelgolandTimeseries | undefined;
+  disabled = false;
 
-  public selectedStart: Date | undefined;
-  public selectedEnd: Date | undefined;
+  selectedStart: Date | undefined;
+  selectedEnd: Date | undefined;
 
-  constructor(
-    public dialogRef: MatDialogRef<ExportPopupComponent>,
+  constructor() {
+    this.inputId = this.data.id;
 
-    @Inject(MAT_DIALOG_DATA)
-    public data: { id: string; timespan: Timespan },
-  ) {
-    this.inputId = data.id;
-
-    if (data.timespan) {
-      this.selectedStart = new Date(data.timespan.from);
-      this.selectedEnd = new Date(data.timespan.to);
+    if (this.data.timespan) {
+      this.selectedStart = new Date(this.data.timespan.from);
+      this.selectedEnd = new Date(this.data.timespan.to);
     }
   }
 
-  public onCSVDownload() {
+  onCSVDownload() {
     this.onDownload(DownloadType.CSV);
   }
 
@@ -60,7 +58,7 @@ export class ExportPopupComponent {
    * Function that triggers the download of the data based on the specified parameters.
    * @param dwType {string} typy of the download file (csv or xlsx)
    */
-  public onDownload(dwType: DownloadType): void {
+  onDownload(dwType: DownloadType): void {
     if (this.selectedStart && this.selectedEnd) {
       this.exportOptions = {
         downloadType: dwType,
@@ -73,7 +71,7 @@ export class ExportPopupComponent {
    * Function that retrieves data about the selected dataset via inputId.
    * @param metadata {ExportData} information about the dataset
    */
-  public onMetadata(dataset: HelgolandTimeseries): void {
+  onMetadata(dataset: HelgolandTimeseries): void {
     if (!this.selectedStart && dataset.firstValue) {
       this.selectedStart = new Date(dataset.firstValue.timestamp);
     }
@@ -88,11 +86,11 @@ export class ExportPopupComponent {
    * Function indicating the download status.
    * @param loading {boolean} indicates loading of the download progress
    */
-  public onLoading(loading: boolean): void {
+  onLoading(loading: boolean): void {
     this.loading = loading;
   }
 
-  public onClose(): void {
+  onClose(): void {
     this.dialogRef.close('closes');
   }
 }

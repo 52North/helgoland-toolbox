@@ -1,5 +1,5 @@
 import { NgStyle } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, input } from '@angular/core';
 import { MatchLabelPipe } from '@helgoland/core';
 import { Subscription } from 'rxjs';
 
@@ -14,26 +14,25 @@ import {
   selector: 'n52-parameter-facet',
   templateUrl: './parameter-facet.component.html',
   styleUrls: ['./parameter-facet.component.scss'],
-  standalone: true,
   imports: [NgStyle, MatchLabelPipe],
 })
 export class ParameterFacetComponent implements OnInit, OnDestroy {
-  @Input({ required: true }) public facetSearchService!: FacetSearchService;
+  readonly facetSearchService = input.required<FacetSearchService>();
 
-  @Input({ required: true }) public type!: ParameterFacetType;
+  readonly type = input.required<ParameterFacetType>();
 
-  @Input() public sort: ParameterFacetSort = ParameterFacetSort.descCount;
+  readonly sort = input<ParameterFacetSort>(ParameterFacetSort.descCount);
 
-  @Input() public textualFilter: string | undefined;
+  readonly textualFilter = input<string>();
 
-  public parameterList: FacetParameter[] = [];
+  parameterList: FacetParameter[] = [];
 
   private resultSubs: Subscription | undefined;
 
   constructor() {}
 
   ngOnInit() {
-    this.resultSubs = this.facetSearchService
+    this.resultSubs = this.facetSearchService()
       .getResults()
       .subscribe(() => this.fetchFacetParameter());
   }
@@ -42,15 +41,15 @@ export class ParameterFacetComponent implements OnInit, OnDestroy {
     this.resultSubs?.unsubscribe();
   }
 
-  public toggleFacet(parameter: FacetParameter) {
+  toggleFacet(parameter: FacetParameter) {
     parameter.selected = !parameter.selected;
-    this.facetSearchService.selectParameter(this.type, parameter);
+    this.facetSearchService().selectParameter(this.type(), parameter);
   }
 
   private fetchFacetParameter() {
-    this.parameterList = this.facetSearchService.getParameterList(
-      this.type,
-      this.sort,
+    this.parameterList = this.facetSearchService().getParameterList(
+      this.type(),
+      this.sort(),
     );
   }
 }

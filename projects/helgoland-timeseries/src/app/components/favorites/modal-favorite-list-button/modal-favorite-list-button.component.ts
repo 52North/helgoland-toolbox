@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -22,15 +22,12 @@ import { ModalFavoriteListComponent } from './../modal-favorite-list/modal-favor
     TranslateModule,
     CommonModule,
   ],
-  standalone: true,
 })
 export class ModalFavoriteListButtonComponent {
-  constructor(
-    private dialog: MatDialog,
-    public favoriteSrvc: FavoriteService,
-  ) {}
+  private dialog = inject(MatDialog);
+  protected favoriteSrvc = inject(FavoriteService);
 
-  public openFavoriteList() {
+  openFavoriteList() {
     this.dialog.open(ModalFavoriteListComponent, {
       autoFocus: false,
       width: '500px',

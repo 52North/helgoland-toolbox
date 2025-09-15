@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import {
   DatasetFilter,
   DatasetType,
@@ -7,12 +7,11 @@ import {
   HelgolandProfile,
   HelgolandServicesConnector,
   InternalDatasetId,
-  InternalIdHandler,
   TimedDatasetOptions,
   Timespan,
   TzDatePipe,
 } from '@helgoland/core';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { LabelMapperComponent } from '../../label-mapper/label-mapper.component';
 import { ListEntryComponent } from '../list-entry.component';
@@ -21,7 +20,6 @@ import { ListEntryComponent } from '../list-entry.component';
   selector: 'n52-profile-entry',
   templateUrl: './profile-entry.component.html',
   styleUrls: ['./profile-entry.component.scss'],
-  standalone: true,
   imports: [
     NgClass,
     LabelMapperComponent,
@@ -31,65 +29,54 @@ import { ListEntryComponent } from '../list-entry.component';
   ],
 })
 export class ProfileEntryComponent extends ListEntryComponent {
-  @Input()
-  public datasetOptions: TimedDatasetOptions[] | undefined;
+  protected servicesConnector = inject(HelgolandServicesConnector);
 
-  @Output()
+  readonly datasetOptions = input<TimedDatasetOptions[]>();
+
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onUpdateOptions: EventEmitter<TimedDatasetOptions[]> =
-    new EventEmitter();
+  readonly onUpdateOptions = output<TimedDatasetOptions[]>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onDeleteDatasetOptions: EventEmitter<TimedDatasetOptions> =
-    new EventEmitter();
+  readonly onDeleteDatasetOptions = output<TimedDatasetOptions>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onEditOptions: EventEmitter<TimedDatasetOptions> = new EventEmitter();
+  readonly onEditOptions = output<TimedDatasetOptions>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onOpenInCombiView: EventEmitter<TimedDatasetOptions> =
-    new EventEmitter();
+  readonly onOpenInCombiView = output<TimedDatasetOptions>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onShowGeometry: EventEmitter<GeoJSON.GeoJsonObject> =
-    new EventEmitter();
+  readonly onShowGeometry = output<GeoJSON.GeoJsonObject>();
 
-  public dataset: HelgolandProfile | undefined;
+  dataset: HelgolandProfile | undefined;
 
-  public editableOptions: TimedDatasetOptions | undefined;
-  public tempColor: string | undefined;
+  editableOptions: TimedDatasetOptions | undefined;
+  tempColor: string | undefined;
 
-  constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    protected override internalIdHandler: InternalIdHandler,
-    protected override translateSrvc: TranslateService,
-  ) {
-    super(internalIdHandler, translateSrvc);
-  }
-
-  public removeDatasetOptions(options: TimedDatasetOptions) {
+  removeDatasetOptions(options: TimedDatasetOptions) {
     this.onDeleteDatasetOptions.emit(options);
   }
 
-  public editDatasetOptions(options: TimedDatasetOptions) {
+  editDatasetOptions(options: TimedDatasetOptions) {
     this.onEditOptions.emit(options);
   }
 
-  public toggleVisibility(options: TimedDatasetOptions) {
+  toggleVisibility(options: TimedDatasetOptions) {
     options.visible = !options.visible;
-    this.onUpdateOptions.emit(this.datasetOptions);
+    const datasetOptions = this.datasetOptions();
+    if (datasetOptions) {
+      this.onUpdateOptions.emit(datasetOptions);
+    }
   }
 
-  public openInCombiView(option: TimedDatasetOptions) {
+  openInCombiView(option: TimedDatasetOptions) {
     this.onOpenInCombiView.emit(option);
   }
 
-  public showGeometry(dataset: HelgolandProfile, option: TimedDatasetOptions) {
-    const internalId = this.internalIdHandler.resolveInternalId(this.datasetId);
+  showGeometry(dataset: HelgolandProfile, option: TimedDatasetOptions) {
+    const internalId = this.internalIdHandler.resolveInternalId(
+      this.datasetId(),
+    );
     if (dataset.isMobile) {
       const timespan = new Timespan(option.timestamp);
       this.servicesConnector
@@ -105,7 +92,11 @@ export class ProfileEntryComponent extends ListEntryComponent {
     } else if (dataset.parameters.platform) {
       this.servicesConnector
         .getPlatform(dataset.parameters.platform.id, internalId.url)
-        .subscribe((station) => this.onShowGeometry.emit(station.geometry));
+        .subscribe((station) => {
+          if (station.geometry) {
+            this.onShowGeometry.emit(station.geometry);
+          }
+        });
     }
   }
 

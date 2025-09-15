@@ -1,11 +1,4 @@
-import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, inject, input, output, viewChild } from '@angular/core';
 import {
   ReactiveFormsModule,
   UntypedFormControl,
@@ -36,7 +29,6 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './general-time-selection.component.html',
   styleUrls: ['./general-time-selection.component.scss'],
   imports: [
-    CommonModule,
     HelgolandCoreModule,
     MatButtonModule,
     MatDatepickerModule,
@@ -49,42 +41,39 @@ import { TranslateModule } from '@ngx-translate/core';
     ReactiveFormsModule,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class GeneralTimeSelectionComponent {
-  public LASTHOUR = DefinedTimespan.LASTHOUR;
-  public TODAY = DefinedTimespan.TODAY;
-  public YESTERDAY = DefinedTimespan.YESTERDAY;
-  public TODAY_YESTERDAY = DefinedTimespan.TODAY_YESTERDAY;
-  public CURRENT_WEEK = DefinedTimespan.CURRENT_WEEK;
-  public LAST_WEEK = DefinedTimespan.LAST_WEEK;
-  public CURRENT_MONTH = DefinedTimespan.CURRENT_MONTH;
-  public LAST_MONTH = DefinedTimespan.LAST_MONTH;
-  public CURRENT_YEAR = DefinedTimespan.CURRENT_YEAR;
-  public LAST_YEAR = DefinedTimespan.LAST_YEAR;
+  protected timeSrvc = inject(Time);
+  protected definedTimeSrvc = inject(DefinedTimespanService);
 
-  public range: UntypedFormGroup = new UntypedFormGroup({
+  LASTHOUR = DefinedTimespan.LASTHOUR;
+  TODAY = DefinedTimespan.TODAY;
+  YESTERDAY = DefinedTimespan.YESTERDAY;
+  TODAY_YESTERDAY = DefinedTimespan.TODAY_YESTERDAY;
+  CURRENT_WEEK = DefinedTimespan.CURRENT_WEEK;
+  LAST_WEEK = DefinedTimespan.LAST_WEEK;
+  CURRENT_MONTH = DefinedTimespan.CURRENT_MONTH;
+  LAST_MONTH = DefinedTimespan.LAST_MONTH;
+  CURRENT_YEAR = DefinedTimespan.CURRENT_YEAR;
+  LAST_YEAR = DefinedTimespan.LAST_YEAR;
+
+  range: UntypedFormGroup = new UntypedFormGroup({
     start: new UntypedFormControl(),
     end: new UntypedFormControl(),
   });
 
-  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger | undefined;
+  readonly trigger = viewChild(MatMenuTrigger);
 
-  @Input({ required: true }) timespan!: Timespan;
+  readonly timespan = input.required<Timespan>();
 
-  @Output() timespanChanged: EventEmitter<Timespan> = new EventEmitter();
-
-  constructor(
-    protected timeSrvc: Time,
-    protected definedTimeSrvc: DefinedTimespanService,
-  ) {}
+  readonly timespanChanged = output<Timespan>();
 
   back() {
-    this.timespanChanged.emit(this.timeSrvc.stepBack(this.timespan!));
+    this.timespanChanged.emit(this.timeSrvc.stepBack(this.timespan()!));
   }
 
   forward() {
-    this.timespanChanged.emit(this.timeSrvc.stepForward(this.timespan!));
+    this.timespanChanged.emit(this.timeSrvc.stepForward(this.timespan()!));
   }
 
   predefinedRange(defined: DefinedTimespan) {
@@ -96,8 +85,8 @@ export class GeneralTimeSelectionComponent {
 
   onMenuOpen(picker: MatDateRangePicker<Date>) {
     this.range.setValue({
-      start: new Date(this.timespan!.from),
-      end: new Date(this.timespan!.to),
+      start: new Date(this.timespan()!.from),
+      end: new Date(this.timespan()!.to),
     });
     picker.closedStream.subscribe((res) => {
       const ts = new Timespan(
@@ -105,7 +94,7 @@ export class GeneralTimeSelectionComponent {
         this.range.value.end.toDate(),
       );
       this.timespanChanged.emit(ts);
-      this.trigger!.closeMenu();
+      this.trigger()!.closeMenu();
     });
   }
 }

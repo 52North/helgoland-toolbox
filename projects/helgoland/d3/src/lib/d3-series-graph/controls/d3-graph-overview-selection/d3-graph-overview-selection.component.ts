@@ -1,16 +1,13 @@
 import {
   Component,
-  Input,
   OnChanges,
   SimpleChanges,
   ViewEncapsulation,
+  input,
 } from '@angular/core';
 import { Timespan } from '@helgoland/core';
 import * as d3 from 'd3';
 
-import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
-import { D3GraphId } from '../../../helper/d3-graph-id.service';
-import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import {
   AdjustBackgroundOptions,
@@ -31,8 +28,7 @@ export class D3GraphOverviewSelectionComponent
   implements OnChanges, D3GraphObserver
 {
   // difference to timespan/timeInterval --> if brush, then this is the timespan of the main-diagram
-  @Input({ required: true })
-  public selectionTimeInterval!: Timespan;
+  readonly selectionTimeInterval = input.required<Timespan>();
 
   protected mousedownBrush: boolean = false;
   protected graphComp: D3GraphInterface | undefined;
@@ -44,21 +40,13 @@ export class D3GraphOverviewSelectionComponent
   private previousTimespan: Timespan | undefined;
   private previousGraphExtent: D3GraphExtent | undefined;
 
-  constructor(
-    protected override graphId: D3GraphId,
-    protected override graphs: D3Graphs,
-    protected override graphHelper: D3GraphHelperService,
-  ) {
-    super(graphId, graphs, graphHelper);
-  }
-
   ngOnChanges(changes: SimpleChanges) {
     if (changes['selectionTimeInterval']) {
       this.drawOverviewSelection();
     }
   }
 
-  public graphInitialized(graph: D3GraphInterface) {
+  graphInitialized(graph: D3GraphInterface) {
     this.graphComp = graph;
   }
 
@@ -96,7 +84,7 @@ export class D3GraphOverviewSelectionComponent
 
   protected drawOverviewSelection() {
     if (
-      !this.selectionTimeInterval ||
+      !this.selectionTimeInterval() ||
       !this.completeTimespan ||
       !this.graphExtent ||
       !this.drawLayer
@@ -201,8 +189,8 @@ export class D3GraphOverviewSelectionComponent
 
     const minOverviewTimeInterval = timespan.from;
     const maxOverviewTimeInterval = timespan.to;
-    const minDiagramTimestamp = this.selectionTimeInterval.from;
-    const maxDiagramTimestamp = this.selectionTimeInterval.to;
+    const minDiagramTimestamp = this.selectionTimeInterval().from;
+    const maxDiagramTimestamp = this.selectionTimeInterval().to;
 
     const diffOverviewTimeInterval =
       maxOverviewTimeInterval - minOverviewTimeInterval;

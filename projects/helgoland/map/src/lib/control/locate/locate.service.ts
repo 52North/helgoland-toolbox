@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import * as L from 'leaflet';
 
 import { MapCache } from '../../base/map-cache.service';
@@ -9,9 +9,9 @@ const LOCATED_MARKER_ID = 'located';
 
 @Injectable()
 export class LocateService {
-  constructor(protected mapCache: MapCache) {}
+  protected mapCache = inject(MapCache);
 
-  public startLocate(id: string) {
+  startLocate(id: string) {
     const map = this.mapCache.getMap(id);
     map.on(LOCATION_FOUND_EVENT, (evt: L.LocationEvent) => {
       this.removeMarker(map);
@@ -28,7 +28,7 @@ export class LocateService {
     });
   }
 
-  public stopLocate(id: string) {
+  stopLocate(id: string) {
     const map = this.mapCache.getMap(id);
     map.stopLocate();
     map.off(LOCATION_FOUND_EVENT);

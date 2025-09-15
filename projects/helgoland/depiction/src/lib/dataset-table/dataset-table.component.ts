@@ -1,25 +1,20 @@
 import { NgStyle } from '@angular/common';
-import { Component, IterableDiffers, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   DatasetOptions,
   DatasetPresenterComponent,
   DatasetTableData,
   DatasetType,
-  HelgolandServicesConnector,
   HelgolandTimeseries,
   HelgolandTimeseriesData,
-  InternalIdHandler,
-  Time,
-  TimezoneService,
   TzDatePipe,
 } from '@helgoland/core';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   selector: 'n52-dataset-table',
   templateUrl: './dataset-table.component.html',
   styleUrls: ['./dataset-table.component.scss'],
-  standalone: true,
   imports: [NgStyle, TzDatePipe],
 })
 export class DatasetTableComponent
@@ -32,32 +27,14 @@ export class DatasetTableComponent
     Not implemented: graphOptions input; all outputs (onDatasetSelected, onTimespanChanged, onMessageThrown, onLoading)
   */
 
-  public preparedData: DatasetTableData[] = Array();
-  public preparedColors: string[] = Array();
-  public ready = false;
+  preparedData: DatasetTableData[] = Array();
+  preparedColors: string[] = Array();
+  ready = false;
 
-  public timeseriesArray: HelgolandTimeseries[] = new Array();
+  timeseriesArray: HelgolandTimeseries[] = new Array();
   private additionalStylesheet!: HTMLElement;
 
-  constructor(
-    protected override iterableDiffers: IterableDiffers,
-    protected override servicesConnector: HelgolandServicesConnector,
-    protected override datasetIdResolver: InternalIdHandler,
-    protected override timeSrvc: Time,
-    protected translateSrvc: TranslateService,
-    protected override timezoneSrvc: TimezoneService,
-  ) {
-    super(
-      iterableDiffers,
-      servicesConnector,
-      datasetIdResolver,
-      timeSrvc,
-      translateSrvc,
-      timezoneSrvc,
-    );
-  }
-
-  public ngOnInit() {
+  ngOnInit() {
     const elem = document.getElementById('selectedIdsStylesheet');
     if (elem) {
       this.additionalStylesheet = elem;
@@ -69,7 +46,7 @@ export class DatasetTableComponent
   }
 
   /* called when user clicks on table headers */
-  public sort(event: any) {
+  sort(event: any) {
     // can be 'datetime' or an integer indicating the index of the column in the values array
     const by = event.target.dataset.columnId;
     const direction = event.target.classList.contains('sorted-asc')
@@ -111,7 +88,7 @@ export class DatasetTableComponent
 
   protected onTimezoneChanged(timezone: string): void {}
 
-  public reloadDataForDatasets(datasetIds: string[]): void {
+  reloadDataForDatasets(datasetIds: string[]): void {
     // console.log('reload data at ' + new Date());
   }
 
@@ -122,7 +99,7 @@ export class DatasetTableComponent
 
   protected getIndexFromInternalId(internalId: string) {
     // helper method
-    return this.datasetIds.indexOf(internalId);
+    return this.datasetIds().indexOf(internalId);
   }
 
   protected setSelectedId(internalId: string) {
@@ -215,7 +192,7 @@ export class DatasetTableComponent
             this.prepareData(
               timeseries,
               result.values.map((e) => {
-                const a = new Array(this.datasetIds.length).fill(undefined);
+                const a = new Array(this.datasetIds().length).fill(undefined);
                 a[index] = e[1];
                 return { datetime: e[0], values: a };
               }),
@@ -232,7 +209,7 @@ export class DatasetTableComponent
     const index = this.getIndexFromInternalId(timeseries.internalId);
 
     // if datasetOptions are provided, use their color to style the header's "color band" (i.e. the 7px border-bottom of th)
-    const option = this.datasetOptions?.get(timeseries.internalId);
+    const option = this.datasetOptions()?.get(timeseries.internalId);
     if (option) {
       this.preparedColors[index] = option.color;
     } else {
@@ -240,7 +217,7 @@ export class DatasetTableComponent
       this.preparedColors[index] = 'rgba(0,0,0,0)';
     }
 
-    if (this.selectedDatasetIds.indexOf(timeseries.internalId) !== -1) {
+    if (this.selectedDatasetIds().indexOf(timeseries.internalId) !== -1) {
       this.setSelectedId(timeseries.internalId);
     }
 

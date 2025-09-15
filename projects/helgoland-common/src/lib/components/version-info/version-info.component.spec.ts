@@ -1,4 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HelgolandCoreModule } from '@helgoland/core';
 
@@ -14,9 +17,9 @@ describe('VersionInfoComponent', () => {
       imports: [
         TranslateTestingModule,
         HelgolandCoreModule,
-        HttpClientModule,
         VersionInfoComponent,
       ],
+      providers: [provideHttpClient(withInterceptorsFromDi())],
     }).compileComponents();
   });
 

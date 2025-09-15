@@ -1,14 +1,13 @@
-import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
   ElementRef,
-  EventEmitter,
-  Input,
   OnInit,
-  Output,
-  ViewChild,
+  inject,
+  input,
+  output,
+  viewChild,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,7 +20,6 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './edit-label.component.html',
   styleUrls: ['./edit-label.component.scss'],
   imports: [
-    CommonModule,
     FormsModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -29,39 +27,42 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
     ReactiveFormsModule,
   ],
-  standalone: true,
 })
 export class EditLabelComponent implements AfterViewInit, OnInit {
+  private cd = inject(ChangeDetectorRef);
+
   fc = new FormControl('');
 
-  @Input() label: string | undefined;
+  readonly label = input<string>();
 
-  @Output() labelChanged: EventEmitter<string> = new EventEmitter();
+  readonly labelChanged = output<string>();
 
-  @ViewChild('input') firstItem!: ElementRef;
+  readonly firstItem = viewChild.required<ElementRef>('input');
 
   editedLabel: string | undefined;
 
-  constructor(private cd: ChangeDetectorRef) {}
-
   ngOnInit(): void {
-    this.editedLabel = this.label;
+    this.editedLabel = this.label();
   }
 
   ngAfterViewInit(): void {
-    this.firstItem.nativeElement.focus();
+    this.firstItem().nativeElement.focus();
     this.cd.detectChanges();
   }
 
-  public changeLabel(updatedLabel: string) {
+  changeLabel(updatedLabel: string) {
     this.editedLabel = updatedLabel;
   }
 
-  public clear() {
-    this.labelChanged.emit(this.label);
+  clear() {
+    if (this.label() !== undefined) {
+      this.labelChanged.emit(this.label()!);
+    }
   }
 
-  public confirm() {
-    this.labelChanged.emit(this.editedLabel);
+  confirm() {
+    if (this.editedLabel) {
+      this.labelChanged.emit(this.editedLabel);
+    }
   }
 }

@@ -2,10 +2,10 @@
   <input
     #input
     matInput
-    [ngModel]="label"
+    [ngModel]="label()"
     (ngModelChange)="changeLabel($event)"
   />
-  @if (label !== editedLabel) {
+  @if (label() !== editedLabel) {
     <button matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
       <mat-icon>close</mat-icon>
     </button>

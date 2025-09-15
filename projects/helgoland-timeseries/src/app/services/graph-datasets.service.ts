@@ -1,5 +1,5 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, inject } from '@angular/core';
 import { Time, Timespan, TimezoneService } from '@helgoland/core';
 import { SeriesGraphDataset } from '@helgoland/d3';
 import { TranslateService } from '@ngx-translate/core';
@@ -23,32 +23,29 @@ export class LoadingDataset {
   providedIn: 'root',
 })
 export class DatasetsService {
-  public timespanChanged: EventEmitter<Timespan> = new EventEmitter();
+  protected timeSrvc = inject(Time);
+  protected translate = inject(TranslateService);
+  protected la = inject(LiveAnnouncer);
+  protected timezoneSrvc = inject(TimezoneService);
+  protected notifier = inject(NotifierService);
+  protected storageSrvc = inject(StorageService);
+  protected configSrvc = inject(ConfigurationService);
+
+  timespanChanged: EventEmitter<Timespan> = new EventEmitter();
 
   private _datasets: (SeriesGraphDataset | LoadingDataset)[] = [];
-  public datasetAdded: Subject<string> = new Subject();
-  public datasetRemoved: Subject<string> = new Subject();
+  datasetAdded: Subject<string> = new Subject();
+  datasetRemoved: Subject<string> = new Subject();
 
-  public overviewDatasets: SeriesGraphDataset[] = [];
+  overviewDatasets: SeriesGraphDataset[] = [];
 
   private _loadingData: Set<string> = new Set();
-  public loadingDataChanged: EventEmitter<Set<string>> = new EventEmitter();
+  loadingDataChanged: EventEmitter<Set<string>> = new EventEmitter();
 
   private _loadingOverviewData: Set<string> = new Set();
-  public loadingOverviewDataChanged: EventEmitter<Set<string>> =
-    new EventEmitter();
+  loadingOverviewDataChanged: EventEmitter<Set<string>> = new EventEmitter();
 
   private _timespan: Timespan | undefined;
-
-  constructor(
-    protected timeSrvc: Time,
-    protected translate: TranslateService,
-    protected la: LiveAnnouncer,
-    protected timezoneSrvc: TimezoneService,
-    protected notifier: NotifierService,
-    protected storageSrvc: StorageService,
-    protected configSrvc: ConfigurationService,
-  ) {}
 
   get timespan(): Timespan | undefined {
     return this._timespan;
@@ -218,7 +215,13 @@ export class DatasetsService {
       if (!current) {
         const message = this.translate.instant('events.timespan-to-old');
         this.notifier.notify(message, 8000);
-        return this.timeSrvc.centerTimespan(timespan, new Date());
+        const diff = timespan.to - timespan.from;
+        if (diff < 2 * 60 * 60 * 1000) {
+          // timespan smaller 2 hours, then show at least 2 hours
+          return this.timeSrvc.generateTimespan({ hours: 2 }, 'end');
+        } else {
+          return this.timeSrvc.generateTimespan({ milliseconds: diff }, 'end');
+        }
       }
     }
     return timespan;

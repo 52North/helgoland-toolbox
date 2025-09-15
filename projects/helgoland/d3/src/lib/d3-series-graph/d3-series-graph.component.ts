@@ -3,8 +3,8 @@ import {
   Component,
   DoCheck,
   ElementRef,
-  EventEmitter,
-  Input,
+  inject,
+  input,
   IterableDiffer,
   IterableDiffers,
   KeyValueDiffer,
@@ -12,8 +12,8 @@ import {
   NgZone,
   OnDestroy,
   OnInit,
-  Output,
-  ViewChild,
+  output,
+  viewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -46,10 +46,13 @@ import { D3GraphExtent, D3GraphObserver } from './d3-series-graph-control';
 import { HighlightOutput } from './models/d3-highlight';
 import { HoveringStyle } from './models/d3-plot-options';
 import {
+  AreaDatasetChild,
+  AreaDatasetChildDataEntry,
   BarStyle,
   GraphDataEntry,
   LineStyle,
   SeriesGraphDataset,
+  TimeseriesChild,
 } from './models/series-graph-dataset';
 
 const TICKS_COUNT_YAXIS = 5;
@@ -104,7 +107,6 @@ interface DatasetEventSubscriptions {
   styleUrls: ['./d3-series-graph.component.scss'],
   providers: [D3GraphId],
   encapsulation: ViewEncapsulation.None,
-  standalone: true,
   imports: [
     D3GraphPanZoomInteractionComponent,
     D3YAxisModifierComponent,
@@ -115,35 +117,40 @@ interface DatasetEventSubscriptions {
 export class D3SeriesGraphComponent
   implements OnDestroy, AfterViewInit, DoCheck, OnInit, D3GraphInterface
 {
-  @Input()
-  public datasets: SeriesGraphDataset[] = [];
+  protected iterableDiffers = inject(IterableDiffers);
+  protected keyValueDiffers = inject(KeyValueDiffers);
+  protected timeSrvc = inject(Time);
+  protected timeFormatLocaleService = inject(D3TimeFormatLocaleService);
+  protected translateService = inject(TranslateService);
+  protected timezoneSrvc = inject(TimezoneService);
+  protected rangeCalc = inject(RangeCalculationsService);
+  protected graphHelper = inject(D3GraphHelperService);
+  protected graphService = inject(D3Graphs);
+  protected graphId = inject(D3GraphId);
+  protected pointSymbolDrawer = inject(D3PointSymbolDrawerService);
+  protected zone = inject(NgZone);
+
+  readonly datasets = input<SeriesGraphDataset[]>([]);
   private datasetsDiffer: IterableDiffer<SeriesGraphDataset>;
 
-  @Input()
-  public timespan: Timespan | undefined;
+  readonly timespan = input<Timespan>();
   protected oldTimespan: Timespan = { from: 0, to: 0 };
 
-  @Input()
-  public hoveringService: D3HoveringService = new D3SimpleHoveringService(
-    this.timezoneSrvc,
-    this.pointSymbolDrawer,
+  readonly hoveringService = input<D3HoveringService>(
+    new D3SimpleHoveringService(),
   );
 
   /**
    * Event with a list of selected datasets.
    */
-  @Output()
-  public datasetsSelected: EventEmitter<string[]> = new EventEmitter();
+  readonly datasetsSelected = output<string[]>();
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() public onHighlightChanged: EventEmitter<HighlightOutput> =
-    new EventEmitter();
+  readonly onHighlightChanged = output<HighlightOutput>();
 
-  @Output()
-  public timespanChanged: EventEmitter<Timespan> = new EventEmitter();
+  readonly timespanChanged = output<Timespan>();
 
-  @ViewChild('d3timeseries')
-  public d3Elem: ElementRef | undefined;
+  readonly d3Elem = viewChild<ElementRef>('d3timeseries');
 
   // DOM elements
   protected rawSvg!: d3.Selection<SVGSVGElement, any, any, any>;
@@ -177,12 +184,11 @@ export class D3SeriesGraphComponent
 
   private observer: Set<D3GraphObserver> = new Set();
 
-  @Input()
-  public graphOptions: D3SeriesGraphOptions = {};
+  readonly graphOptions = input<D3SeriesGraphOptions>({});
   protected graphOptionsDiffer: KeyValueDiffer<any, any>;
 
   // default plot options
-  public plotOptions: D3SeriesGraphOptions = {
+  plotOptions: D3SeriesGraphOptions = {
     hoverStyle: HoveringStyle.point,
     grid: true,
     yaxis: true,
@@ -203,20 +209,7 @@ export class D3SeriesGraphComponent
 
   private resizeObserver: ResizeObserver | undefined;
 
-  constructor(
-    protected iterableDiffers: IterableDiffers,
-    protected keyValueDiffers: KeyValueDiffers,
-    protected timeSrvc: Time,
-    protected timeFormatLocaleService: D3TimeFormatLocaleService,
-    protected translateService: TranslateService,
-    protected timezoneSrvc: TimezoneService,
-    protected rangeCalc: RangeCalculationsService,
-    protected graphHelper: D3GraphHelperService,
-    protected graphService: D3Graphs,
-    protected graphId: D3GraphId,
-    protected pointSymbolDrawer: D3PointSymbolDrawerService,
-    protected zone: NgZone,
-  ) {
+  constructor() {
     this.datasetsDiffer = this.iterableDiffers.find([]).create();
     this.graphOptionsDiffer = this.keyValueDiffers.find({}).create();
     this.langChangeSubscription = this.translateService.onLangChange.subscribe(
@@ -228,12 +221,12 @@ export class D3SeriesGraphComponent
   }
 
   ngOnInit(): void {
-    this.datasets.forEach((e) => this.subscribeEvents(e));
+    this.datasets().forEach((e) => this.subscribeEvents(e));
   }
 
   ngDoCheck() {
-    const graphDatasetsChanges = this.datasetsDiffer.diff(this.datasets);
-    if (graphDatasetsChanges && this.datasets && this.graph) {
+    const graphDatasetsChanges = this.datasetsDiffer.diff(this.datasets());
+    if (graphDatasetsChanges && this.datasets() && this.graph) {
       graphDatasetsChanges.forEachAddedItem((addedItem) => {
         if (addedItem.item instanceof SeriesGraphDataset) {
           if (addedItem.item.hasData()) {
@@ -250,19 +243,22 @@ export class D3SeriesGraphComponent
       });
     }
 
-    const graphOptionsChanged = this.graphOptionsDiffer.diff(this.graphOptions);
+    const graphOptionsChanged = this.graphOptionsDiffer.diff(
+      this.graphOptions(),
+    );
     if (graphOptionsChanged && this.plotOptions) {
-      Object.assign(this.plotOptions, this.graphOptions);
+      Object.assign(this.plotOptions, this.graphOptions());
       this.redrawCompleteGraph();
     }
 
+    const timespan = this.timespan();
     if (
-      this.timespan &&
-      this.oldTimespan?.from !== this.timespan.from &&
-      this.oldTimespan?.to !== this.timespan.to
+      timespan &&
+      this.oldTimespan?.from !== timespan.from &&
+      this.oldTimespan?.to !== timespan.to
     ) {
-      this.oldTimespan.from = this.timespan.from;
-      this.oldTimespan.to = this.timespan.to;
+      this.oldTimespan.from = timespan.from;
+      this.oldTimespan.to = timespan.to;
       this.redrawCompleteGraph();
     }
   }
@@ -287,14 +283,14 @@ export class D3SeriesGraphComponent
     }
   }
 
-  public ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     this.ID = this.uuidv4();
 
     this.graphId.setId(this.ID);
     this.graphService.setGraph(this.ID, this);
 
     this.rawSvg = d3
-      .select<SVGSVGElement, any>(this.d3Elem?.nativeElement)
+      .select<SVGSVGElement, any>(this.d3Elem()?.nativeElement)
       .append<SVGSVGElement>('svg')
       .style('width', '100%')
       .style('height', '100%')
@@ -332,27 +328,27 @@ export class D3SeriesGraphComponent
     this.resizeObserver = new ResizeObserver((entries) =>
       this.zone.run(() => this.redrawCompleteGraph()),
     );
-    this.resizeObserver.observe(this.d3Elem?.nativeElement);
+    this.resizeObserver.observe(this.d3Elem()?.nativeElement);
   }
 
-  public ngOnDestroy() {
+  ngOnDestroy() {
     this.langChangeSubscription.unsubscribe();
     this.timezoneSubscription.unsubscribe();
-    this.resizeObserver?.unobserve(this.d3Elem?.nativeElement);
+    this.resizeObserver?.unobserve(this.d3Elem()?.nativeElement);
     if (this.ID) {
       this.graphService.removeGraph(this.ID);
     }
   }
 
-  public registerObserver(obs: D3GraphObserver) {
+  registerObserver(obs: D3GraphObserver) {
     this.observer.add(obs);
   }
 
-  public unregisterObserver(obs: D3GraphObserver) {
+  unregisterObserver(obs: D3GraphObserver) {
     this.observer.delete(obs);
   }
 
-  public getGraphElem(): d3.Selection<SVGGElement, any, any, any> {
+  getGraphElem(): d3.Selection<SVGGElement, any, any, any> {
     return this.graph;
   }
 
@@ -364,17 +360,18 @@ export class D3SeriesGraphComponent
     this.redrawGraph();
   }
 
-  public centerTime(timestamp: number): void {
-    if (this.timespan) {
+  centerTime(timestamp: number): void {
+    const timespan = this.timespan();
+    if (timespan) {
       const centeredTimespan = this.timeSrvc.centerTimespan(
-        this.timespan,
+        timespan,
         new Date(timestamp),
       );
       this.timespanChanged.emit(centeredTimespan);
     }
   }
 
-  public changeTime(from: number, to: number): void {
+  changeTime(from: number, to: number): void {
     this.timespanChanged.emit(new Timespan(from, to));
   }
 
@@ -387,7 +384,7 @@ export class D3SeriesGraphComponent
     let visualMax: number | undefined = undefined;
     let fixedMin = false;
     let fixedMax = false;
-    if (!this.timespan) return;
+    if (!this.timespan()) return;
 
     // set out of yAxisRange
     if (entry.yAxis.range?.min && entry.yAxis.range?.max) {
@@ -431,8 +428,8 @@ export class D3SeriesGraphComponent
         if (!isNaN(d.value)) {
           // with timespan restriction, it only selects values inside the selected timespan
           if (
-            this.timespan!.from <= d.timestamp &&
-            this.timespan!.to >= d.timestamp
+            this.timespan()!.from <= d.timestamp &&
+            this.timespan()!.to >= d.timestamp
           ) {
             return d.value;
           }
@@ -442,11 +439,7 @@ export class D3SeriesGraphComponent
 
       const dataExtentChildValues = entry.children
         .filter((c) => c.visible)
-        .map((e) =>
-          d3.extent<DataEntry, number>(e.data, (d) =>
-            typeof d.value === 'number' ? d.value : null,
-          ),
-        );
+        .map((e) => e.getDataExtent());
 
       if (visualMin === undefined) {
         visualMin = d3.min(
@@ -491,7 +484,7 @@ export class D3SeriesGraphComponent
    */
   private calculateHeight(): number {
     return (
-      (this.d3Elem?.nativeElement as HTMLElement).clientHeight -
+      (this.d3Elem()?.nativeElement as HTMLElement).clientHeight -
       this.margin.top -
       this.margin.bottom +
       (this.plotOptions.showTimeLabel ||
@@ -516,11 +509,12 @@ export class D3SeriesGraphComponent
   /**
    * Just sets the timespan, which is used for the diagram visualisation
    */
-  public setTimespan(timespan: Timespan) {
-    this.timespan = timespan;
+  setTimespan(timespan: Timespan) {
+    // debugger;
+    // this.timespan = timespan;
   }
 
-  public drawBaseGraph(): void {
+  drawBaseGraph(): void {
     this.drawYGridLines();
     this.drawXaxis(this.leftOffset);
     this.drawAllCharts();
@@ -532,7 +526,7 @@ export class D3SeriesGraphComponent
       const idx = this.yAxes
         .reverse()
         .findIndex((yAxe) =>
-          yAxe.ids.find((id) => this.datasets.find((e) => e.id)),
+          yAxe.ids.find((id) => this.datasets().find((e) => e.id)),
         );
       if (idx >= 0) {
         this.graph
@@ -550,7 +544,7 @@ export class D3SeriesGraphComponent
     }
   }
 
-  public getDrawingLayer(
+  getDrawingLayer(
     id: string,
     front?: boolean,
   ): d3.Selection<SVGGElement, any, any, any> {
@@ -568,9 +562,10 @@ export class D3SeriesGraphComponent
   }
 
   private prepareDatasets() {
-    if (this.datasets && this.datasets.length) {
+    const datasets = this.datasets();
+    if (datasets && datasets.length) {
       this.preparedData = new Map();
-      this.datasets.forEach((entry) => {
+      datasets.forEach((entry) => {
         if (entry.data.length > 0) {
           this.processData(entry);
         }
@@ -578,7 +573,7 @@ export class D3SeriesGraphComponent
     }
   }
 
-  public redrawCompleteGraph() {
+  redrawCompleteGraph() {
     this.prepareDatasets();
     this.redrawGraph();
   }
@@ -592,7 +587,7 @@ export class D3SeriesGraphComponent
       return;
     }
 
-    this.datasets.forEach((entry) => {
+    this.datasets().forEach((entry) => {
       const idx: number = this.listOfUoms.findIndex(
         (uom) => uom === entry.description.uom,
       );
@@ -724,9 +719,9 @@ export class D3SeriesGraphComponent
           background: this.background!,
           graph: this.graph,
           graphExtent,
-          preparedDatasets: this.datasets,
+          preparedDatasets: this.datasets(),
           preparedData: this.preparedData,
-          timespan: this.timespan!,
+          timespan: this.timespan()!,
         });
       }
     });
@@ -734,10 +729,11 @@ export class D3SeriesGraphComponent
   }
 
   protected drawTimeRangeLabels() {
+    const timespan = this.timespan();
     if (
       this.plotOptions.timeRangeLabel &&
       this.plotOptions.timeRangeLabel.show &&
-      this.timespan
+      timespan
     ) {
       this.graph
         .append('text')
@@ -747,7 +743,7 @@ export class D3SeriesGraphComponent
         .style('text-anchor', 'start')
         .text(
           this.timezoneSrvc.formatTzDate(
-            this.timespan.from,
+            timespan.from,
             this.plotOptions.timeRangeLabel.format,
           ),
         );
@@ -759,7 +755,7 @@ export class D3SeriesGraphComponent
         .style('text-anchor', 'end')
         .text(
           this.timezoneSrvc.formatTzDate(
-            this.timespan.to,
+            timespan.to,
             this.plotOptions.timeRangeLabel.format,
           ),
         );
@@ -775,7 +771,7 @@ export class D3SeriesGraphComponent
         this.rawSvg.node()?.height.baseVal.value === 0 ||
         !this.graph ||
         !this.rawSvg ||
-        this.datasets === undefined
+        this.datasets() === undefined
       );
     } catch (error) {
       return true;
@@ -783,7 +779,7 @@ export class D3SeriesGraphComponent
   }
 
   protected prepareYAxes() {
-    this.datasets.forEach(
+    this.datasets().forEach(
       (entry) => entry.visible && this.createYAxisForId(entry.id),
     );
   }
@@ -849,7 +845,7 @@ export class D3SeriesGraphComponent
    */
   protected drawAllCharts(): void {
     this.graph.selectAll('.diagram-path').remove();
-    this.datasets.forEach((entry, idx) => this.drawChart(entry, idx));
+    this.datasets().forEach((entry, idx) => this.drawChart(entry, idx));
   }
 
   /**
@@ -860,7 +856,7 @@ export class D3SeriesGraphComponent
     // range for x axis scale
     this.xScaleBase = d3
       .scaleTime()
-      .domain([new Date(this.timespan!.from), new Date(this.timespan!.to)])
+      .domain([new Date(this.timespan()!.from), new Date(this.timespan()!.to)])
       .range([bufferXrange, this.width]);
 
     const ticks = this.calcTicks();
@@ -932,7 +928,7 @@ export class D3SeriesGraphComponent
 
   private calcTicks() {
     const tickCount = (this.width - this.leftOffset) / 120;
-    return this.ticks(this.timespan!, tickCount);
+    return this.ticks(this.timespan()!, tickCount);
   }
 
   private ticks(ts: Timespan, interval: number) {
@@ -1139,9 +1135,9 @@ export class D3SeriesGraphComponent
         let pointOffset = 0;
 
         axis.ids.forEach((entryID) => {
-          const ds = this.datasets.find((e) => e.id === entryID);
+          const ds = this.datasets().find((e) => e.id === entryID);
           if (ds && ds.yAxis.showSymbolOnAxis) {
-            const dataentry = this.datasets.find((el) => el.id === entryID);
+            const dataentry = this.datasets().find((el) => el.id === entryID);
             if (dataentry && dataentry.style) {
               this.graphHelper.drawDatasetSign(
                 this.graph,
@@ -1197,13 +1193,15 @@ export class D3SeriesGraphComponent
   private highlightAxis(axis: YAxis): void {
     const selection = !axis.selected;
     axis.ids.forEach((id) => {
-      const entry = this.datasets.find((e) => e.id === id);
+      const entry = this.datasets().find((e) => e.id === id);
       entry?.setSelected(selection, false);
     });
     this.redrawGraph();
-    const list = this.datasets.filter((e) => e.selected).map((e) => e.id);
+    const list = this.datasets()
+      .filter((e) => e.selected)
+      .map((e) => e.id);
     this.datasetsSelected.emit(list);
-    this.datasets.forEach((ds) =>
+    this.datasets().forEach((ds) =>
       ds.setSelected(list.findIndex((e) => e === ds.id) >= 0, false),
     );
   }
@@ -1244,11 +1242,15 @@ export class D3SeriesGraphComponent
             );
             break;
           case LineStyle:
-            entry.children.forEach(
-              (e) =>
-                e.visible &&
-                this.drawRefLineChart(e.data, e.color, 1, yaxis.yScale!),
-            );
+            entry.children.forEach((e) => {
+              if (e.visible) {
+                if (e instanceof TimeseriesChild) {
+                  this.drawRefLineChart(e.data, e.color, 1, yaxis.yScale!);
+                } else if (e instanceof AreaDatasetChild) {
+                  this.drawAreaDatasetChild(e, yaxis.yScale!);
+                }
+              }
+            });
             this.drawLineChart(
               entry as SeriesGraphDataset<LineStyle>,
               idx,
@@ -1257,6 +1259,43 @@ export class D3SeriesGraphComponent
             break;
         }
       }
+    }
+  }
+
+  private drawAreaDatasetChild(
+    e: AreaDatasetChild,
+    yScaleBase: d3.ScaleLinear<number, number>,
+  ) {
+    for (let i = 0; i < e.styles.length; i++) {
+      const idx1 = i;
+      const idx2 = i + 1;
+
+      const area = d3
+        .area<AreaDatasetChildDataEntry>()
+        .defined((d) => {
+          return (
+            !isNaN(d.timestamp) &&
+            d.values[idx1] !== null &&
+            !isNaN(d.values[idx1]) &&
+            d.values[idx2] !== null &&
+            !isNaN(d.values[idx2])
+          );
+        })
+        .x((d) => this.xScaleBase!(d.timestamp))
+        .y0((d) => {
+          return yScaleBase(d.values[idx1]!);
+        })
+        .y1((d) => {
+          return yScaleBase(d.values[idx2]!);
+        })
+        .curve(d3.curveLinear);
+
+      this.graphBody
+        .append('svg:path')
+        .datum(e.data)
+        .attr('class', 'area')
+        .attr('fill', e.styles[i].color)
+        .attr('d', area);
     }
   }
 

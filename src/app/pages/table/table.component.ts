@@ -7,24 +7,23 @@ import { HelgolandTimeModule } from '@helgoland/time';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
   imports: [HelgolandDatasetTableModule, HelgolandTimeModule],
-  standalone: true,
 })
 export class TableComponent {
-  public datasetIds: string[] = [
+  datasetIds: string[] = [
     'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__95',
     'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__96',
     'https://geo.irceline.be/sos/api/v1/__6941',
     'http://sensorweb.demo.52north.org/sensorwebtestbed/api/v1/__97',
   ];
 
-  public selectedDatasetIds: string[] = [];
+  selectedDatasetIds: string[] = [];
 
-  public timespan = new Timespan(
+  timespan = new Timespan(
     new Date('2017-10-24T01:49:59.000Z').getTime(),
     new Date('2017-10-25T01:49:59.000Z').getTime(),
   );
 
-  public datasetOptions: Map<string, DatasetOptions> = new Map();
+  datasetOptions: Map<string, DatasetOptions> = new Map();
 
   constructor() {
     let i = 0;
@@ -37,7 +36,7 @@ export class TableComponent {
     });
   }
 
-  public timespanChanged(timespan: Timespan) {
+  timespanChanged(timespan: Timespan) {
     this.timespan = timespan;
   }
 }

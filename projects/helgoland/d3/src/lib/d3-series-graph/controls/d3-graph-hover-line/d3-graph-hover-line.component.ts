@@ -1,10 +1,7 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { Timespan, TimezoneService } from '@helgoland/core';
+import { Component, ViewEncapsulation, inject, input } from '@angular/core';
+import { TimezoneService } from '@helgoland/core';
 import * as d3 from 'd3';
 
-import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
-import { D3GraphId } from '../../../helper/d3-graph-id.service';
-import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { DataEntry } from '../../../model/d3-general';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import {
@@ -37,9 +34,11 @@ export class D3GraphHoverLineComponent
   extends D3SeriesGraphControl
   implements D3GraphObserver
 {
-  @Input() showLabels = true;
+  protected timezoneSrvc = inject(TimezoneService);
 
-  @Input() showTimelLabel = true;
+  readonly showLabels = input(true);
+
+  readonly showTimelLabel = input(true);
 
   protected d3Graph: D3GraphInterface | undefined;
   protected background: d3.Selection<SVGGElement, any, any, any> | undefined;
@@ -53,16 +52,7 @@ export class D3GraphHoverLineComponent
   protected drawLayer: d3.Selection<SVGGElement, any, any, any> | undefined;
   protected data: Map<string, GraphDataEntry[]> | undefined;
 
-  constructor(
-    protected override graphId: D3GraphId,
-    protected override graphs: D3Graphs,
-    protected override graphHelper: D3GraphHelperService,
-    protected timezoneSrvc: TimezoneService,
-  ) {
-    super(graphId, graphs, graphHelper);
-  }
-
-  public graphInitialized(graph: D3GraphInterface) {
+  graphInitialized(graph: D3GraphInterface) {
     this.d3Graph = graph;
     this.d3Graph.redrawCompleteGraph();
   }
@@ -79,44 +69,44 @@ export class D3GraphHoverLineComponent
     this.data = options.preparedData;
   }
 
-  public override cleanUp() {
+  override cleanUp() {
     if (this.drawLayer) {
       this.drawLayer.remove();
       this.drawLayer = undefined;
     }
   }
 
-  public mousemoveBackground(event: MouseEvent) {
+  mousemoveBackground(event: MouseEvent) {
     if (!this.disableHovering) {
       this.moveHoverLineIndicator(event);
       this.showHoverLineIndicator();
     }
   }
 
-  public mouseoutBackground(event: MouseEvent) {
+  mouseoutBackground(event: MouseEvent) {
     if (!this.disableHovering) {
       this.hideHoverLineIndicator();
       this.hideLabels();
     }
   }
 
-  public dragStartBackground() {
+  dragStartBackground() {
     this.hideHoverLineIndicator();
     this.hideLabels();
     this.disableHovering = true;
   }
 
-  public zoomStartBackground() {
+  zoomStartBackground() {
     this.hideHoverLineIndicator();
     this.hideLabels();
     this.disableHovering = true;
   }
 
-  public dragEndBackground() {
+  dragEndBackground() {
     this.disableHovering = false;
   }
 
-  public zoomEndBackground() {
+  zoomEndBackground() {
     this.disableHovering = false;
   }
 
@@ -165,7 +155,7 @@ export class D3GraphHoverLineComponent
       if (this.lastDraw + this.drawLatency < time) {
         const mouse = d3.pointer(event);
         this.drawLineIndicator(mouse);
-        if (this.showLabels) {
+        if (this.showLabels()) {
           this.datasets.forEach((entry, entryIdx) => {
             const idx = this.getItemForX(
               mouse[0] + this.graphExtent!.leftOffset,
@@ -195,7 +185,7 @@ export class D3GraphHoverLineComponent
   }
 
   protected drawTimeLabel(xPos: number) {
-    if (this.drawLayer && this.showTimelLabel && this.graphExtent) {
+    if (this.drawLayer && this.showTimelLabel() && this.graphExtent) {
       const time = this.graphExtent.xScale.invert(xPos);
 
       // draw label

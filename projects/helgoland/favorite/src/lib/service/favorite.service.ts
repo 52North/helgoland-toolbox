@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   DatasetOptions,
   HelgolandTimeseries,
@@ -36,17 +36,19 @@ const CACHE_PARAM_FAVORITES_GROUP = 'GroupFavorites';
 
 @Injectable()
 export class FavoriteService {
+  protected localStorage = inject(LocalStorage);
+
   private singleFavs: Map<string, SingleFavorite> = new Map();
   private groupFavs: Map<string, GroupFavorite> = new Map();
   private groupCounter = 0;
 
   private favoriteCountChanged: ReplaySubject<number> = new ReplaySubject();
 
-  constructor(protected localStorage: LocalStorage) {
+  constructor() {
     this.loadFavorites();
   }
 
-  public addFavorite(
+  addFavorite(
     dataset: HelgolandTimeseries,
     options: DatasetOptions,
     label?: string,
@@ -64,15 +66,15 @@ export class FavoriteService {
     return false;
   }
 
-  public getFavoriteCountChanged(): Observable<number> {
+  getFavoriteCountChanged(): Observable<number> {
     return this.favoriteCountChanged;
   }
 
-  public hasFavorite(dataset: HelgolandTimeseries): boolean {
+  hasFavorite(dataset: HelgolandTimeseries): boolean {
     return this.singleFavs.has(dataset.internalId);
   }
 
-  public setFavorites(
+  setFavorites(
     singles: Map<string, SingleFavorite>,
     groups: Map<string, GroupFavorite>,
   ) {
@@ -81,11 +83,11 @@ export class FavoriteService {
     this.saveFavorites();
   }
 
-  public getFavorites(): SingleFavorite[] {
+  getFavorites(): SingleFavorite[] {
     return Array.from(this.singleFavs.values());
   }
 
-  public removeFavorite(favoriteId: string): boolean {
+  removeFavorite(favoriteId: string): boolean {
     if (this.singleFavs.has(favoriteId)) {
       this.singleFavs.delete(favoriteId);
       this.saveFavorites();
@@ -99,7 +101,7 @@ export class FavoriteService {
     return false;
   }
 
-  public addFavoriteGroup(
+  addFavoriteGroup(
     datasets: { dataset: HelgolandTimeseries; options: DatasetOptions }[],
     label?: string,
   ): boolean {
@@ -113,18 +115,18 @@ export class FavoriteService {
     return true;
   }
 
-  public getFavoriteGroups(): GroupFavorite[] {
+  getFavoriteGroups(): GroupFavorite[] {
     return Array.from(this.groupFavs.values());
   }
 
-  public removeAllFavorites(): boolean {
+  removeAllFavorites(): boolean {
     this.singleFavs.clear();
     this.groupFavs.clear();
     this.saveFavorites();
     return true;
   }
 
-  public changeLabel(favorite: Favorite, label: string) {
+  changeLabel(favorite: Favorite, label: string) {
     favorite.label = label;
     if (isSingleFavorite(favorite)) {
       this.singleFavs.set(favorite.id, favorite);

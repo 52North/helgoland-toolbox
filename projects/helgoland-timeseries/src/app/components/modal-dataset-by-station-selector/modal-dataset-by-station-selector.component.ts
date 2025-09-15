@@ -1,22 +1,17 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule, MatSelectionListChange } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import {
-  HelgolandCoreModule,
-  HelgolandServicesConnector,
-  Parameter,
-} from '@helgoland/core';
+import { HelgolandCoreModule, Parameter } from '@helgoland/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 import {
   DatasetByStationSelectorComponent,
   SelectableDataset,
 } from '@helgoland/selector';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { AppRouterService } from '../../services/app-router.service';
 import { DatasetsService } from '../../services/graph-datasets.service';
@@ -27,7 +22,6 @@ import { TimeseriesService } from './../../services/timeseries-service.service';
   templateUrl: './modal-dataset-by-station-selector.component.html',
   styleUrls: ['./modal-dataset-by-station-selector.component.scss'],
   imports: [
-    CommonModule,
     HelgolandCoreModule,
     HelgolandLabelMapperModule,
     MatBadgeModule,
@@ -38,18 +32,11 @@ import { TimeseriesService } from './../../services/timeseries-service.service';
     MatProgressBarModule,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class ModalDatasetByStationSelectorComponent extends DatasetByStationSelectorComponent {
-  constructor(
-    protected override servicesConnector: HelgolandServicesConnector,
-    public override translateSrvc: TranslateService,
-    public appRouter: AppRouterService,
-    public graphDatasetsSrvc: DatasetsService,
-    public timeseries: TimeseriesService,
-  ) {
-    super(servicesConnector, translateSrvc);
-  }
+  protected appRouter = inject(AppRouterService);
+  protected graphDatasetsSrvc = inject(DatasetsService);
+  protected timeseries = inject(TimeseriesService);
 
   protected override prepareResult(
     result: SelectableDataset,
@@ -61,7 +48,7 @@ export class ModalDatasetByStationSelectorComponent extends DatasetByStationSele
     super.prepareResult(result, selection);
   }
 
-  public adjustSelection(change: MatSelectionListChange) {
+  adjustSelection(change: MatSelectionListChange) {
     const id = (change.options[0].value as SelectableDataset).internalId;
     if (change.options[0].selected) {
       this.timeseries.addDataset(id);
@@ -70,7 +57,7 @@ export class ModalDatasetByStationSelectorComponent extends DatasetByStationSele
     }
   }
 
-  public getCategoryLabel(categories: Parameter[]) {
+  getCategoryLabel(categories: Parameter[]) {
     return categories.map((e) => e.label).join(', ');
   }
 }

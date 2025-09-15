@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AbstractProcess, SensorMLXmlService } from '@helgoland/sensorml';
 
@@ -6,15 +5,14 @@ import { AbstractProcess, SensorMLXmlService } from '@helgoland/sensorml';
   selector: 'n52-sensorml',
   templateUrl: './sensorml.component.html',
   styleUrls: ['./sensorml.component.css'],
-  imports: [CommonModule],
-  standalone: true,
+  imports: [],
 })
 export class SensormlComponent {
-  public readerResult!: string;
-  public error!: string;
-  public description!: AbstractProcess;
+  readerResult!: string;
+  error!: string;
+  description!: AbstractProcess;
 
-  public changeListener($event: any): void {
+  changeListener($event: any): void {
     const file: File = $event.target.files[0];
     const myReader: FileReader = new FileReader();
 
@@ -34,7 +32,7 @@ export class SensormlComponent {
     myReader.readAsText(file);
   }
 
-  public openInEditor(): void {
+  openInEditor(): void {
     console.log(this.description);
   }
 }

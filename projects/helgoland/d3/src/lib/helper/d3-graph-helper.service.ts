@@ -1,25 +1,25 @@
+import { Injectable, inject } from '@angular/core';
 import { DatasetOptions } from '@helgoland/core';
-import { Injectable } from '@angular/core';
 import { duration, unitOfTime } from 'moment';
 
-import { D3PointSymbolDrawerService } from './d3-point-symbol-drawer.service';
 import {
   BarStyle,
   DatasetStyle,
   LineStyle,
 } from '../d3-series-graph/models/series-graph-dataset';
+import { D3PointSymbolDrawerService } from './d3-point-symbol-drawer.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class D3GraphHelperService {
-  constructor(protected pointSymbolDrawer: D3PointSymbolDrawerService) {}
+  protected pointSymbolDrawer = inject(D3PointSymbolDrawerService);
 
   /**
    * Function that returns the boundings of a html element.
    * @param el {Object} Object of the html element.
    */
-  public getDimensions(el: any): { w: number; h: number } {
+  getDimensions(el: any): { w: number; h: number } {
     let w = 0;
     let h = 0;
     if (el) {
@@ -44,7 +44,7 @@ export class D3GraphHelperService {
    * @param yPos - relative y position
    * @param selected - if selected the sign will be drawn bigger
    */
-  public drawDatasetSign(
+  drawDatasetSign(
     svgElem: d3.Selection<SVGGElement, any, any, any>,
     style: DatasetStyle,
     xPos: number,
@@ -105,7 +105,7 @@ export class D3GraphHelperService {
     }
   }
 
-  public convertDatasetOptions(options: DatasetOptions): DatasetStyle {
+  convertDatasetOptions(options: DatasetOptions): DatasetStyle {
     if (options.type === 'line') {
       return new LineStyle(
         options.color,

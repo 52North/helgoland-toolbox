@@ -10,7 +10,7 @@ import { D3DataGeneralizer } from './d3-data-generalizer';
 
 @Injectable()
 export class D3DataNoneGeneralizer extends D3DataGeneralizer {
-  public generalizeData(
+  generalizeData(
     data: HelgolandTimeseriesData,
     imageWidth: number,
     timespan: Timespan,

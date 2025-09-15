@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, input } from '@angular/core';
 
-import { WmsCapabilitiesService } from '../../../services/wms-capabilities.service';
 import { OlLayerTimeSelectorComponent } from '../ol-layer-time-selector/ol-layer-time-selector.component';
 
 /**
@@ -9,7 +8,6 @@ import { OlLayerTimeSelectorComponent } from '../ol-layer-time-selector/ol-layer
 @Component({
   selector: 'n52-ol-layer-animate-time',
   templateUrl: './ol-layer-animate-time.component.html',
-  standalone: true,
   imports: [],
 })
 export class OlLayerAnimateTimeComponent
@@ -19,15 +17,11 @@ export class OlLayerAnimateTimeComponent
   /**
    * Interval of the animation
    */
-  @Input() timeInterval = 2000;
+  readonly timeInterval = input(2000);
 
   private interval: number | undefined;
 
-  constructor(protected override wmsCaps: WmsCapabilitiesService) {
-    super(wmsCaps);
-  }
-
-  public startAnimation() {
+  startAnimation() {
     if (this.timeDimensions?.length) {
       // get current time parameter
       this.determineCurrentTimeParameter();
@@ -42,15 +36,15 @@ export class OlLayerAnimateTimeComponent
           idx = 0;
         }
         this.setTime(this.timeDimensions![idx]);
-      }, this.timeInterval);
+      }, this.timeInterval());
     }
   }
 
-  public stopAnimation() {
+  stopAnimation() {
     clearInterval(this.interval);
   }
 
-  public resetAnimation() {
+  resetAnimation() {
     if (this.layerid && this.url) {
       this.wmsCaps
         .getDefaultTimeDimension(this.layerid, this.url)

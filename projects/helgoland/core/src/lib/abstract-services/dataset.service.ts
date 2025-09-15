@@ -5,11 +5,11 @@ import { DatasetOptions } from '../model/internal/options';
 export abstract class DatasetService<
   T extends DatasetOptions | DatasetOptions[],
 > {
-  public datasetIds: string[] = [];
+  datasetIds: string[] = [];
 
-  public datasetOptions: Map<string, T> = new Map();
+  datasetOptions: Map<string, T> = new Map();
 
-  public datasetIdsChanged: EventEmitter<string[]> = new EventEmitter();
+  datasetIdsChanged: EventEmitter<string[]> = new EventEmitter();
 
   /**
    * Adds the dataset to the selection
@@ -18,7 +18,7 @@ export abstract class DatasetService<
    * @param [options]
    * @returns Successfull added the dataset.
    */
-  public async addDataset(internalId: string, options?: T): Promise<boolean> {
+  async addDataset(internalId: string, options?: T): Promise<boolean> {
     if (this.datasetIds.indexOf(internalId) < 0) {
       this.datasetIds.push(internalId);
       if (options) {
@@ -36,14 +36,14 @@ export abstract class DatasetService<
     return true;
   }
 
-  public removeAllDatasets() {
+  removeAllDatasets() {
     this.datasetIds.length = 0;
     this.datasetOptions.clear();
     this.datasetIdsChanged.emit(this.datasetIds);
     this.saveState();
   }
 
-  public removeDataset(internalId: string) {
+  removeDataset(internalId: string) {
     const datasetIdx = this.datasetIds.indexOf(internalId);
     if (datasetIdx > -1) {
       this.datasetIds.splice(datasetIdx, 1);
@@ -53,15 +53,15 @@ export abstract class DatasetService<
     this.saveState();
   }
 
-  public hasDatasets(): boolean {
+  hasDatasets(): boolean {
     return this.datasetIds.length > 0;
   }
 
-  public hasDataset(id: string): boolean {
+  hasDataset(id: string): boolean {
     return this.datasetIds.indexOf(id) >= 0;
   }
 
-  public updateDatasetOptions(options: T, internalId: string) {
+  updateDatasetOptions(options: T, internalId: string) {
     this.datasetOptions.set(internalId, options);
     this.saveState();
   }

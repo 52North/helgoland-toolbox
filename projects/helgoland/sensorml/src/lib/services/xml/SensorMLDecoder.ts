@@ -75,16 +75,16 @@ export class SensorMLDecoder {
   private utils = new DecoderUtils();
   private _profileIDMap: BidiMap;
 
-  public get profileIDMap() {
+  get profileIDMap() {
     return this._profileIDMap;
   }
-  public set profileIDMap(profileIDMap: BidiMap) {
+  set profileIDMap(profileIDMap: BidiMap) {
     this._profileIDMap = profileIDMap;
     this.gmlDecoder.profileIDMap = profileIDMap;
     this.isoDecoder.profileIDMap = profileIDMap;
     this.sweDecoder.profileIDMap = profileIDMap;
   }
-  public decodeElement(element: Element): AbstractProcess {
+  decodeElement(element: Element): AbstractProcess {
     const process = this.createProcessOfElement(element);
     if (process instanceof SimpleProcess) {
       this.decodeSimpleProcess(element, process);
@@ -120,34 +120,31 @@ export class SensorMLDecoder {
     throw new Error('Unsupported process type');
   }
 
-  public getMapWithProfileIDs() {
+  getMapWithProfileIDs() {
     return this._profileIDMap;
   }
 
-  public decodeSimpleProcess(elem: Element, object: SimpleProcess): void {
+  decodeSimpleProcess(elem: Element, object: SimpleProcess): void {
     this.decodeAbstractProcess(elem, object);
     this.decodeProcessMethodProcess(elem, object);
   }
 
-  public decodeAggregateProcess(elem: Element, object: AggregateProcess): void {
+  decodeAggregateProcess(elem: Element, object: AggregateProcess): void {
     this.decodeAbstractProcess(elem, object);
     this.decodeAggregatingProcess(elem, object);
   }
 
-  public decodePhysicalSystem(elem: Element, object: PhysicalSystem): void {
+  decodePhysicalSystem(elem: Element, object: PhysicalSystem): void {
     this.decodeAbstractPhysicalProcess(elem, object);
     this.decodeAggregatingProcess(elem, object);
   }
 
-  public decodePhysicalComponent(
-    elem: Element,
-    object: PhysicalComponent,
-  ): void {
+  decodePhysicalComponent(elem: Element, object: PhysicalComponent): void {
     this.decodeAbstractPhysicalProcess(elem, object);
     this.decodeProcessMethodProcess(elem, object);
   }
 
-  public decodeAbstractPhysicalProcess(
+  decodeAbstractPhysicalProcess(
     elem: Element,
     object: AbstractPhysicalProcess,
   ): void {
@@ -203,7 +200,7 @@ export class SensorMLDecoder {
     );
   }
 
-  public decodeSpatialFrame(elem: Element): ReturnObject<SpatialFrame> {
+  decodeSpatialFrame(elem: Element): ReturnObject<SpatialFrame> {
     const spatialFrame = new SpatialFrame();
 
     const spatialFrameElem = this.utils.getElement(
@@ -250,7 +247,7 @@ export class SensorMLDecoder {
     return new ReturnObject(spatialFrame, spatialFrameElem);
   }
 
-  public decodeTemporalFrame(elem: Element): ReturnObject<TemporalFrame> {
+  decodeTemporalFrame(elem: Element): ReturnObject<TemporalFrame> {
     const temporalFrame = new TemporalFrame();
 
     const temporalFrameElem = this.utils.getElement(
@@ -283,7 +280,7 @@ export class SensorMLDecoder {
     return new ReturnObject(temporalFrame, elem);
   }
 
-  public decodeAxis(elem: Element): ReturnObject<Axis> {
+  decodeAxis(elem: Element): ReturnObject<Axis> {
     const axis = new Axis();
 
     const name = elem.getAttribute('name');
@@ -310,7 +307,7 @@ export class SensorMLDecoder {
     return new ReturnObject(axis, elem);
   }
 
-  public decodePosition(elem: Element): ReturnObject<Position> {
+  decodePosition(elem: Element): ReturnObject<Position> {
     const point = this.gmlDecoder.decodePoint(elem);
     if (point != null) {
       return point;
@@ -339,10 +336,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeAggregatingProcess(
-    elem: Element,
-    object: AggregatingProcess,
-  ): void {
+  decodeAggregatingProcess(elem: Element, object: AggregatingProcess): void {
     const componentsElem = this.utils.getElement(
       elem,
       'components',
@@ -382,7 +376,7 @@ export class SensorMLDecoder {
     }
   }
 
-  public decodeAbstractProcess(elem: Element, object: AbstractProcess): void {
+  decodeAbstractProcess(elem: Element, object: AbstractProcess): void {
     this.decodeDescribedObject(elem, object);
 
     const returnObject: ReturnObject<string> = this.utils.getAttributeOfElement(
@@ -507,7 +501,7 @@ export class SensorMLDecoder {
     }
   }
 
-  public decodeFeatureList(elem: Element): ReturnObject<FeatureList> {
+  decodeFeatureList(elem: Element): ReturnObject<FeatureList> {
     const featureListElem = this.utils.getElement(
       elem,
       'FeatureList',
@@ -544,7 +538,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeModes(elem: Element): ReturnObject<AbstractModes> {
+  decodeModes(elem: Element): ReturnObject<AbstractModes> {
     const modeChoice = this.decodeModeChoice(elem);
     if (modeChoice != null) {
       return new ReturnObject(modeChoice, elem);
@@ -552,7 +546,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeModeChoice(elem: Element): ModeChoice {
+  decodeModeChoice(elem: Element): ModeChoice {
     const modeChoiceElem = this.utils.getElement(
       elem,
       'ModeChoice',
@@ -581,7 +575,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeMode(elem: Element): ReturnObject<Mode> {
+  decodeMode(elem: Element): ReturnObject<Mode> {
     const modeElem = this.utils.getElement(elem, 'Mode', NAMESPACES.SML);
     if (modeElem != null) {
       const mode = new Mode();
@@ -618,10 +612,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeDescribedObject(
-    elem: Element,
-    describedObject: DescribedObject,
-  ): void {
+  decodeDescribedObject(elem: Element, describedObject: DescribedObject): void {
     this.gmlDecoder.decodeAbstractFeature(elem, describedObject);
 
     describedObject.keywords = this.utils.getDecodedList(
@@ -714,7 +705,7 @@ export class SensorMLDecoder {
     );
   }
 
-  public decodeComponentList(elem: Element): ReturnObject<ComponentList> {
+  decodeComponentList(elem: Element): ReturnObject<ComponentList> {
     const componentListElem = this.utils.getElement(
       elem,
       'ComponentList',
@@ -744,7 +735,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeComponent(elem: Element): ReturnObject<Component> {
+  decodeComponent(elem: Element): ReturnObject<Component> {
     const component = new Component();
     if (elem.hasAttribute('name')) {
       component.name = elem.getAttribute('name');
@@ -761,7 +752,7 @@ export class SensorMLDecoder {
     return new ReturnObject(component, elem);
   }
 
-  public decodeConnectionList(elem: Element): ReturnObject<ConnectionList> {
+  decodeConnectionList(elem: Element): ReturnObject<ConnectionList> {
     const connectionListElem = this.utils.getElement(
       elem,
       'ConnectionList',
@@ -791,7 +782,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeConnection(elem: Element): ReturnObject<Connection> {
+  decodeConnection(elem: Element): ReturnObject<Connection> {
     const connectionElem = this.utils.getElement(elem, 'Link', NAMESPACES.SML);
     if (connectionElem != null) {
       const conn = new Connection();
@@ -835,7 +826,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeContactList(elem: Element): ReturnObject<ContactList> {
+  decodeContactList(elem: Element): ReturnObject<ContactList> {
     const contactListElem = this.utils.getElement(
       elem,
       'ContactList',
@@ -864,7 +855,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeInputList(elem: Element): ReturnObject<InputList> {
+  decodeInputList(elem: Element): ReturnObject<InputList> {
     const inputListElem = this.utils.getElement(
       elem,
       'InputList',
@@ -894,7 +885,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeOutputList(elem: Element): ReturnObject<OutputList> {
+  decodeOutputList(elem: Element): ReturnObject<OutputList> {
     const outputListElem = this.utils.getElement(
       elem,
       'OutputList',
@@ -918,7 +909,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeParameterList(elem: Element): ReturnObject<ParameterList> {
+  decodeParameterList(elem: Element): ReturnObject<ParameterList> {
     const parameterListElem = this.utils.getElement(
       elem,
       'ParameterList',
@@ -948,7 +939,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeInputOrOutputOrParameter(
+  decodeInputOrOutputOrParameter(
     elem: Element,
   ): ReturnObject<InputOrOutputOrParameter> {
     const param = new InputOrOutputOrParameter();
@@ -1013,9 +1004,7 @@ export class SensorMLDecoder {
     return new ReturnObject(param, elem);
   }
 
-  public decodeObservableProperty(
-    elem: Element,
-  ): ReturnObject<ObservableProperty> {
+  decodeObservableProperty(elem: Element): ReturnObject<ObservableProperty> {
     const obsPropElem = this.utils.getElement(
       elem,
       'ObservableProperty',
@@ -1046,7 +1035,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeDataInterface(elem: Element): ReturnObject<DataInterface> {
+  decodeDataInterface(elem: Element): ReturnObject<DataInterface> {
     const dataInterfaceElem = this.utils.getElement(
       elem,
       'DataInterface',
@@ -1110,9 +1099,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeCharacteristicList(
-    elem: Element,
-  ): ReturnObject<CharacteristicList> {
+  decodeCharacteristicList(elem: Element): ReturnObject<CharacteristicList> {
     const characteristicListElem = this.utils.getElement(
       elem,
       'CharacteristicList',
@@ -1142,7 +1129,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeCapabilitiesList(elem: Element): ReturnObject<CapabilityList> {
+  decodeCapabilitiesList(elem: Element): ReturnObject<CapabilityList> {
     const capabilitiesListElem = this.utils.getElement(
       elem,
       'CapabilityList',
@@ -1172,7 +1159,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeNamedSweDataComponent(
+  decodeNamedSweDataComponent(
     elem: Element,
   ): ReturnObject<NamedSweDataComponent> {
     if (elem != null) {
@@ -1207,7 +1194,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeKeywordList(elem: Element): ReturnObject<KeywordList> {
+  decodeKeywordList(elem: Element): ReturnObject<KeywordList> {
     const keywordListElem = this.utils.getElement(
       elem,
       'KeywordList',
@@ -1259,7 +1246,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeIdentifierList(elem: Element): ReturnObject<IdentifierList> {
+  decodeIdentifierList(elem: Element): ReturnObject<IdentifierList> {
     const identifierListElem = this.utils.getElement(
       elem,
       'IdentifierList',
@@ -1287,7 +1274,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeClassifierList(elem: Element): ReturnObject<ClassifierList> {
+  decodeClassifierList(elem: Element): ReturnObject<ClassifierList> {
     const classifierListElem = this.utils.getElement(
       elem,
       'ClassifierList',
@@ -1309,7 +1296,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeEventList(elem: Element): ReturnObject<EventList> {
+  decodeEventList(elem: Element): ReturnObject<EventList> {
     const eventListElem = this.utils.getElement(
       elem,
       'EventList',
@@ -1331,7 +1318,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeDocumentList(elem: Element): ReturnObject<DocumentList> {
+  decodeDocumentList(elem: Element): ReturnObject<DocumentList> {
     const documentListElem = this.utils.getElement(
       elem,
       'DocumentList',
@@ -1359,7 +1346,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeProcessMethodProcess(
+  decodeProcessMethodProcess(
     elem: Element,
     object: ProcessMethodProcess,
   ): void {
@@ -1379,7 +1366,7 @@ export class SensorMLDecoder {
     }
   }
 
-  public decodeProcessMethod(elem: Element): ReturnObject<ProcessMethod> {
+  decodeProcessMethod(elem: Element): ReturnObject<ProcessMethod> {
     const processMethodElem = this.utils.getElement(
       elem,
       'ProcessMethod',
@@ -1410,12 +1397,12 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeAlgorithm(elem: Element): ReturnObject<AbstractAlgorithm> {
+  decodeAlgorithm(elem: Element): ReturnObject<AbstractAlgorithm> {
     // TODO implement algorithm
     throw new Error('not yet implemented');
   }
 
-  public decodeAbstractMetadataList(
+  decodeAbstractMetadataList(
     elem: Element,
     object: AbstractMetadataList,
   ): void {
@@ -1431,7 +1418,7 @@ export class SensorMLDecoder {
     }
   }
 
-  public decodeAbstractNamedMetadataList(
+  decodeAbstractNamedMetadataList(
     elem: Element,
     object: AbstractNamedMetadataList,
   ): void {
@@ -1446,7 +1433,7 @@ export class SensorMLDecoder {
     }
   }
 
-  public decodeEvent(elem: Element): ReturnObject<Event> {
+  decodeEvent(elem: Element): ReturnObject<Event> {
     const eventElem = this.utils.getElement(elem, 'Event', NAMESPACES.SML);
     if (eventElem != null) {
       const event = new Event();
@@ -1548,7 +1535,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeSettings(elem: Element): ReturnObject<Settings> {
+  decodeSettings(elem: Element): ReturnObject<Settings> {
     const settingsElem = this.utils.getElement(
       elem,
       'Settings',
@@ -1604,7 +1591,7 @@ export class SensorMLDecoder {
     return undefined;
   }
 
-  public decodeSetStatus(elem: Element): ReturnObject<StatusSetting> {
+  decodeSetStatus(elem: Element): ReturnObject<StatusSetting> {
     const statusSett = new StatusSetting();
 
     if (elem.hasAttribute('ref')) {
@@ -1639,7 +1626,7 @@ export class SensorMLDecoder {
     return new ReturnObject(statusSett, elem);
   }
 
-  public decodeSetMode(elem: Element): ReturnObject<ModeSetting> {
+  decodeSetMode(elem: Element): ReturnObject<ModeSetting> {
     const modeSett = new ModeSetting();
 
     if (elem.hasAttribute('ref')) {
@@ -1657,7 +1644,7 @@ export class SensorMLDecoder {
     return new ReturnObject(modeSett, elem);
   }
 
-  public decodeSetValue(elem: Element): ReturnObject<ValueSetting> {
+  decodeSetValue(elem: Element): ReturnObject<ValueSetting> {
     const valueSett = new ValueSetting();
 
     if (elem.hasAttribute('ref')) {
@@ -1683,7 +1670,7 @@ export class SensorMLDecoder {
     return new ReturnObject(valueSett, elem);
   }
 
-  public decodeSetArrayValue(elem: Element): ReturnObject<ArrayValueSetting> {
+  decodeSetArrayValue(elem: Element): ReturnObject<ArrayValueSetting> {
     const arrayValueSett = new ArrayValueSetting();
 
     if (elem.hasAttribute('ref')) {
@@ -1729,7 +1716,7 @@ export class SensorMLDecoder {
     return new ReturnObject(arrayValueSett, elem);
   }
 
-  public decodeSetConstraint(elem: Element): ReturnObject<ConstraintSetting> {
+  decodeSetConstraint(elem: Element): ReturnObject<ConstraintSetting> {
     const constraintSett = new ConstraintSetting();
 
     if (elem.hasAttribute('ref')) {
@@ -1760,7 +1747,7 @@ export class SensorMLDecoder {
     return new ReturnObject(constraintSett, elem);
   }
 
-  public decodeTerm(elem: Element): ReturnObject<Term> {
+  decodeTerm(elem: Element): ReturnObject<Term> {
     const termElem = this.utils.getElement(elem, 'Term', NAMESPACES.SML);
     if (termElem != null) {
       const term = new Term();

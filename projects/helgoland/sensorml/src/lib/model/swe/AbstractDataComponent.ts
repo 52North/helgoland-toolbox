@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { AbstractSWEIdentifiable } from './AbstractSWEIdentifiable';
 import { DisplayName } from '../../common/decorators/DisplayName';
+import { AbstractSWEIdentifiable } from './AbstractSWEIdentifiable';
 
 /**
  * Abstract base class for all data components
@@ -28,7 +28,7 @@ export abstract class AbstractDataComponent extends AbstractSWEIdentifiable {
     return super.toString(fallbackLabel);
   }
 
-  public getLabel() {
+  getLabel() {
     return this.label;
   }
 

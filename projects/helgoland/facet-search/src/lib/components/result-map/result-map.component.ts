@@ -1,16 +1,15 @@
 import {
   AfterViewInit,
   Component,
-  EventEmitter,
-  Input,
-  KeyValueDiffers,
+  input,
   OnDestroy,
   OnInit,
-  Output,
+  output,
 } from '@angular/core';
-import { CachedMapComponent, MapCache } from '@helgoland/map';
-import { geoJSON } from 'leaflet';
+import { CachedMapComponent } from '@helgoland/map';
 import * as L from 'leaflet';
+import { geoJSON } from 'leaflet';
+import 'leaflet.markercluster';
 import { Subscription } from 'rxjs';
 
 import {
@@ -36,39 +35,32 @@ export class ResultMapComponent
   extends CachedMapComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
-  @Input({ required: true }) public facetSearchService!: FacetSearchService;
+  readonly facetSearchService = input.required<FacetSearchService>();
 
-  @Input() public cluster = true;
+  readonly cluster = input(true);
 
-  @Input() public aggregateToStations = false;
+  readonly aggregateToStations = input(false);
 
-  @Input() public selectSingleStation = false;
+  readonly selectSingleStation = input(false);
 
-  @Input() public autoZoomToResults = true;
+  readonly autoZoomToResults = input(true);
 
-  @Input() public nextResultsZoom = true;
+  readonly nextResultsZoom = input(true);
 
-  @Output() public selectedFeature: EventEmitter<{
+  private resultZoomed = this.nextResultsZoom();
+
+  readonly selectedFeature = output<{
     feature: FacetSearchElementFeature;
     url: string;
-  }> = new EventEmitter();
+  }>();
 
-  @Output() public selectedEntry: EventEmitter<FacetSearchElement> =
-    new EventEmitter();
+  readonly selectedEntry = output<FacetSearchElement>();
 
   private markerFeatureGroup: L.FeatureGroup | undefined;
   private resultsSubs: Subscription | undefined;
 
-  constructor(
-    protected override mapCache: MapCache,
-    protected differs: KeyValueDiffers,
-  ) {
-    super(mapCache, differs);
-  }
-
-  override ngOnInit() {
-    super.ngOnInit();
-    this.resultsSubs = this.facetSearchService
+  ngOnInit() {
+    this.resultsSubs = this.facetSearchService()
       .getResults()
       .subscribe((ts) => this.fetchResults(ts));
   }
@@ -80,7 +72,7 @@ export class ResultMapComponent
 
   ngAfterViewInit(): void {
     this.createMap();
-    const res = this.facetSearchService.getFilteredResults();
+    const res = this.facetSearchService().getFilteredResults();
     if (res) {
       this.fetchResults(res);
     }
@@ -91,12 +83,12 @@ export class ResultMapComponent
       if (this.markerFeatureGroup) {
         this.map.removeLayer(this.markerFeatureGroup);
       }
-      if (this.cluster) {
+      if (this.cluster()) {
         this.markerFeatureGroup = L.markerClusterGroup({ animate: true });
       } else {
         this.markerFeatureGroup = L.featureGroup();
       }
-      if (this.aggregateToStations) {
+      if (this.aggregateToStations()) {
         const features = new Map<
           string,
           { feature: FacetSearchElementFeature; url: string }
@@ -115,9 +107,12 @@ export class ResultMapComponent
             this.markerFeatureGroup!.addLayer(geom);
           }
         });
-        if (features.size === 1 && this.selectSingleStation) {
-          const entry = features.get(features.keys().next().value);
-          this.selectedFeature.emit(entry);
+        if (features.size === 1 && this.selectSingleStation()) {
+          const nextKey = features.keys().next().value;
+          if (nextKey) {
+            const entry = features.get(nextKey);
+            entry && this.selectedFeature.emit(entry);
+          }
         }
       } else {
         entries.forEach((e) => {
@@ -132,13 +127,10 @@ export class ResultMapComponent
       this.markerFeatureGroup.addTo(this.map);
 
       const bounds = this.markerFeatureGroup.getBounds();
-      if (
-        bounds.isValid() &&
-        (this.autoZoomToResults || this.nextResultsZoom)
-      ) {
+      if (bounds.isValid() && (this.autoZoomToResults() || this.resultZoomed)) {
         this.map.fitBounds(bounds);
         this.map.invalidateSize();
-        this.nextResultsZoom = false;
+        this.resultZoomed = false;
       }
     }
   }

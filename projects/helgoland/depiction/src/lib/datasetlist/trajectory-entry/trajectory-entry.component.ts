@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import {
   DatasetFilter,
   DatasetOptions,
@@ -7,50 +7,39 @@ import {
   HelgolandServicesConnector,
   HelgolandTrajectory,
   InternalDatasetId,
-  InternalIdHandler,
 } from '@helgoland/core';
-import { TranslateService } from '@ngx-translate/core';
 
 import { ListEntryComponent } from '../list-entry.component';
 
 @Component({
   selector: 'n52-trajectory-entry',
   templateUrl: './trajectory-entry.component.html',
-  standalone: true,
   imports: [NgClass, NgStyle],
 })
 export class TrajectoryEntryComponent extends ListEntryComponent {
-  @Input()
-  public datasetOptions: DatasetOptions | undefined;
+  protected servicesConnector = inject(HelgolandServicesConnector);
 
-  @Output()
+  readonly datasetOptions = input<DatasetOptions>();
+
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onUpdateOptions: EventEmitter<DatasetOptions> = new EventEmitter();
+  readonly onUpdateOptions = output<DatasetOptions>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onEditOptions: EventEmitter<DatasetOptions> = new EventEmitter();
+  readonly onEditOptions = output<DatasetOptions>();
 
-  public dataset: HelgolandTrajectory | undefined;
+  dataset: HelgolandTrajectory | undefined;
 
-  public tempColor: string | undefined;
+  tempColor: string | undefined;
 
-  constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    protected override internalIdHandler: InternalIdHandler,
-    protected override translateSrvc: TranslateService,
-  ) {
-    super(internalIdHandler, translateSrvc);
-  }
-
-  public toggleVisibility() {
-    if (this.datasetOptions) {
-      this.datasetOptions.visible = !this.datasetOptions.visible;
-      this.onUpdateOptions.emit(this.datasetOptions);
+  toggleVisibility() {
+    const datasetOptions = this.datasetOptions();
+    if (datasetOptions) {
+      datasetOptions.visible = !datasetOptions.visible;
+      this.onUpdateOptions.emit(datasetOptions);
     }
   }
 
-  public editDatasetOptions(options: DatasetOptions) {
+  editDatasetOptions(options: DatasetOptions) {
     this.onEditOptions.emit(options);
   }
 

@@ -12,13 +12,13 @@ export class SensorMLDocumentEncoder {
   private resolver = new SensorMLNamespaceResolver();
   private encoder = new SensorMLEncoder();
 
-  public encode(object: AbstractProcess): Document {
+  encode(object: AbstractProcess): Document {
     const doc = this.createDocumentForProcess(object);
     this.encoder.encodeProcess(object, doc, doc.documentElement);
     return doc;
   }
 
-  public createDocumentForProcess(object: AbstractProcess): Document {
+  createDocumentForProcess(object: AbstractProcess): Document {
     if (object instanceof SimpleProcess) {
       return this.createDocument(
         'sml',

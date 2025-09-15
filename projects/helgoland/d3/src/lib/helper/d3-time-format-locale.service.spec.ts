@@ -1,14 +1,20 @@
 import { inject, TestBed } from '@angular/core/testing';
 
-import { D3TimeFormatLocaleService } from './d3-time-format-locale.service';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { D3TimeFormatLocaleService } from './d3-time-format-locale.service';
 
 describe('D3TimeFormatLocaleService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, TranslateTestingModule],
-      providers: [D3TimeFormatLocaleService],
+      imports: [TranslateTestingModule],
+      providers: [
+        D3TimeFormatLocaleService,
+        provideHttpClient(withInterceptorsFromDi()),
+      ],
     });
   });
 

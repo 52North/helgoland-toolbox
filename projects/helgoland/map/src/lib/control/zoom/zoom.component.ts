@@ -1,4 +1,3 @@
-import { MapCache } from './../../base/map-cache.service';
 import { Component } from '@angular/core';
 
 import { MapControlComponent } from '../map-control-component';
@@ -9,15 +8,11 @@ import { MapControlComponent } from '../map-control-component';
   standalone: true,
 })
 export class ZoomControlComponent extends MapControlComponent {
-  constructor(protected override mapCache: MapCache) {
-    super(mapCache);
+  zoomIn() {
+    this.mapCache.getMap(this.mapId()).zoomIn();
   }
 
-  public zoomIn() {
-    this.mapCache.getMap(this.mapId).zoomIn();
-  }
-
-  public zoomOut() {
-    this.mapCache.getMap(this.mapId).zoomOut();
+  zoomOut() {
+    this.mapCache.getMap(this.mapId()).zoomOut();
   }
 }

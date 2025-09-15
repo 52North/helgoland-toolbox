@@ -1,6 +1,5 @@
 import { InjectionToken } from '@angular/core';
 import { SeriesGraphDataset } from '@helgoland/d3';
-import { Observable } from 'rxjs';
 
 import { Favorite } from './favorite.service';
 
@@ -10,8 +9,9 @@ export interface DatasetStateService {
   handleStoredDs(dsId: string): boolean;
 }
 
-export const DATASET_STATE_SERVICE_INJECTION =
-  new InjectionToken<DatasetStateService>('DATASET_STATE_SERVICE');
+export const DATASET_STATE_SERVICE_INJECTION = new InjectionToken<
+  DatasetStateService[]
+>('DATASET_STATE_SERVICE');
 
 export interface DatasetFavoriteService {
   addFavoriteToDiagram(fav: Favorite): void;
@@ -24,5 +24,6 @@ export interface DatasetFavoriteService {
   removeFavorite(id: string): void;
 }
 
-export const DATASET_FAVORITE_SERVICE_INJECTION =
-  new InjectionToken<DatasetFavoriteService>('DATASET_FAVORITE_SERVICE');
+export const DATASET_FAVORITE_SERVICE_INJECTION = new InjectionToken<
+  DatasetFavoriteService[]
+>('DATASET_FAVORITE_SERVICE');

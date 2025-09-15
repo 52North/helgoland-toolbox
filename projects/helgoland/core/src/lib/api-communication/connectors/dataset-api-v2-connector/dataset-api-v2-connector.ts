@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -54,12 +54,10 @@ import { HelgolandServiceQuantities } from './../../model/internal/service';
   providedIn: 'root',
 })
 export class DatasetApiV2Connector implements HelgolandServiceConnector {
-  name = 'DatasetApiV2Connector';
+  protected http = inject(HttpService);
+  protected api = inject(DatasetApiInterface);
 
-  constructor(
-    protected http: HttpService,
-    protected api: DatasetApiInterface,
-  ) {}
+  name = 'DatasetApiV2Connector';
 
   canHandle(url: string): Observable<boolean> {
     return this.http

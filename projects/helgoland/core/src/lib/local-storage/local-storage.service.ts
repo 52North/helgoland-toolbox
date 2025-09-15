@@ -23,7 +23,7 @@ export class LocalStorage {
    * @param object
    * @returns successfull saving
    */
-  public save(key: string, object: any): boolean {
+  save(key: string, object: any): boolean {
     if (this.localStorageEnabled) {
       localStorage.setItem(key, JSON.stringify(object));
       return true;
@@ -37,7 +37,7 @@ export class LocalStorage {
    * @param key
    * @returns the object if exists, else null
    */
-  public load<T>(key: string): T {
+  load<T>(key: string): T {
     if (this.localStorageEnabled) {
       const result = localStorage.getItem(key);
       if (result) {
@@ -53,7 +53,7 @@ export class LocalStorage {
    * @param key
    * @returns the array of objects if exists, else null
    */
-  public loadArray<T>(key: string): T[] {
+  loadArray<T>(key: string): T[] {
     if (this.localStorageEnabled) {
       const result = localStorage.getItem(key);
       if (result) {
@@ -69,7 +69,7 @@ export class LocalStorage {
    * @param key
    * @returns the string if exists, else null
    */
-  public loadTextual(key: string): string {
+  loadTextual(key: string): string {
     if (this.localStorageEnabled) {
       const result = localStorage.getItem(key);
       if (result) {
@@ -82,7 +82,7 @@ export class LocalStorage {
   /**
    * clears the complete local storage
    */
-  public clearStorage() {
+  clearStorage() {
     if (this.localStorageEnabled) {
       localStorage.clear();
     }
@@ -92,7 +92,7 @@ export class LocalStorage {
    * removes the item for the specified key
    * @param key
    */
-  public removeItem(key: string) {
+  removeItem(key: string) {
     if (this.localStorageEnabled) {
       localStorage.removeItem(key);
     }

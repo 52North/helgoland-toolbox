@@ -10,8 +10,7 @@ describe('DsSeriesGraphOverviewWrapperComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [HelgolandCoreModule],
-      declarations: [D3SeriesGraphOverviewWrapperComponent],
+      imports: [HelgolandCoreModule, D3SeriesGraphOverviewWrapperComponent],
     }).compileComponents();
   }));
 

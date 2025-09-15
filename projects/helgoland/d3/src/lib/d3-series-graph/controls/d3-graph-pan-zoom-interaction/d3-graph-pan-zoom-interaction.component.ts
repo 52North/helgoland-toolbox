@@ -2,13 +2,6 @@ import { Component } from '@angular/core';
 import { Timespan } from '@helgoland/core';
 import * as d3 from 'd3';
 
-import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
-import { D3GraphId } from '../../../helper/d3-graph-id.service';
-import { D3Graphs } from '../../../helper/d3-graphs.service';
-import {
-  GraphDataEntry,
-  SeriesGraphDataset,
-} from '../../models/series-graph-dataset';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import {
   AdjustBackgroundOptions,
@@ -16,6 +9,10 @@ import {
   D3GraphObserver,
   D3SeriesGraphControl,
 } from '../../d3-series-graph-control';
+import {
+  GraphDataEntry,
+  SeriesGraphDataset,
+} from '../../models/series-graph-dataset';
 
 @Component({
   selector: 'n52-d3-graph-pan-zoom-interaction',
@@ -52,15 +49,7 @@ export class D3GraphPanZoomInteractionComponent
   protected datasets: SeriesGraphDataset[] = [];
   protected data: Map<string, GraphDataEntry[]> | undefined;
 
-  constructor(
-    protected override graphId: D3GraphId,
-    protected override graphs: D3Graphs,
-    protected override graphHelper: D3GraphHelperService,
-  ) {
-    super(graphId, graphs, graphHelper);
-  }
-
-  public graphInitialized(graph: D3GraphInterface) {
+  graphInitialized(graph: D3GraphInterface) {
     this.d3Graph = graph;
   }
 
@@ -72,30 +61,30 @@ export class D3GraphPanZoomInteractionComponent
     this.data = options.preparedData;
   }
 
-  public zoomStartBackground(event: MouseEvent) {
+  zoomStartBackground(event: MouseEvent) {
     if (this.timespan) this.zoomStartHandler(this.timespan, event);
   }
 
-  public zoomMoveBackground(event: MouseEvent) {
+  zoomMoveBackground(event: MouseEvent) {
     if (this.graph && this.graphExtent)
       this.zoomHandler(this.graph, this.graphExtent, event);
   }
 
-  public zoomEndBackground() {
+  zoomEndBackground() {
     if (this.graphExtent && this.timespan)
       this.zoomEndHandler(this.timespan, this.graphExtent, this.datasets);
   }
 
-  public dragStartBackground(event: MouseEvent) {
+  dragStartBackground(event: MouseEvent) {
     if (this.timespan) this.panStartHandler(this.timespan, event);
   }
 
-  public dragMoveBackground(event: MouseEvent) {
+  dragMoveBackground(event: MouseEvent) {
     if (this.graphExtent && this.dragMoveRange)
       this.panMoveHandler(this.graphExtent, this.dragMoveRange, event);
   }
 
-  public dragEndBackground(event: MouseEvent) {
+  dragEndBackground(event: MouseEvent) {
     this.panEndHandler();
   }
 

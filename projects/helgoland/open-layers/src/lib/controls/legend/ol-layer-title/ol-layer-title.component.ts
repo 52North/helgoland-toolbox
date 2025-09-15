@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, inject, input } from '@angular/core';
 import { Layer } from 'ol/layer';
 import { TileWMS } from 'ol/source';
 
@@ -13,16 +13,15 @@ import { WmsCapabilitiesService } from '../../../services/wms-capabilities.servi
   standalone: true,
 })
 export class OlLayerTitleComponent implements OnInit {
-  @Input({ required: true })
-  layer!: Layer;
+  private wmsCaps = inject(WmsCapabilitiesService);
 
-  public title: string | undefined;
+  readonly layer = input.required<Layer>();
 
-  constructor(private wmsCaps: WmsCapabilitiesService) {}
+  title: string | undefined;
 
   ngOnInit() {
-    const source = this.layer.getSource();
-    this.layer.getExtent();
+    const source = this.layer().getSource();
+    this.layer().getExtent();
     if (source instanceof TileWMS && source.getUrls()?.length) {
       const url = source.getUrls()![0];
       const layerid =

@@ -5,7 +5,7 @@
   }
   @if (plotOptions.hoverStyle === "point") {
     <n52-d3-graph-hover-point
-      [hoveringService]="hoveringService"
+      [hoveringService]="hoveringService()"
       (onHighlightChanged)="onHighlightChanged.emit($event)"
     ></n52-d3-graph-hover-point>
   }

@@ -1,11 +1,11 @@
 import { NgClass } from '@angular/common';
 import {
   Component,
-  EventEmitter,
-  Input,
   OnChanges,
-  Output,
   SimpleChanges,
+  inject,
+  input,
+  output,
 } from '@angular/core';
 import {
   HelgolandParameterFilter,
@@ -14,7 +14,6 @@ import {
   Parameter,
 } from '@helgoland/core';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
-import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Component to select an item out of a list of provider with a given filter combination.
@@ -22,57 +21,41 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'n52-service-filter-selector',
   templateUrl: './service-filter-selector.component.html',
-  standalone: true,
   imports: [NgClass, HelgolandLabelMapperModule],
 })
 export class ServiceFilterSelectorComponent
   extends LanguageChangNotifier
   implements OnChanges
 {
-  @Input({ required: true })
-  public endpoint!: string;
+  protected servicesConnector = inject(HelgolandServicesConnector);
 
-  @Input({ required: true })
-  public serviceUrl!: string;
+  readonly endpoint = input.required<string>();
 
-  @Input()
-  public filter: HelgolandParameterFilter | undefined;
+  readonly serviceUrl = input.required<string>();
 
-  @Input()
-  public selectionId: string | undefined;
+  readonly filter = input<HelgolandParameterFilter>();
 
-  @Output()
+  readonly selectionId = input<string>();
+
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onItemSelected: EventEmitter<Parameter> =
-    new EventEmitter<Parameter>();
+  readonly onItemSelected = output<Parameter>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onItemsFound: EventEmitter<Parameter[]> = new EventEmitter<
-    Parameter[]
-  >();
+  readonly onItemsFound = output<Parameter[]>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onLoading: EventEmitter<boolean> = new EventEmitter<boolean>();
+  readonly onLoading = output<boolean>();
 
-  public loading = false;
-  public items: Parameter[] = [];
+  loading = false;
+  items: Parameter[] = [];
 
-  constructor(
-    protected override translate: TranslateService,
-    protected servicesConnector: HelgolandServicesConnector,
-  ) {
-    super(translate);
-  }
-
-  public ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges) {
     if (changes['endpoint'] || changes['filter'] || changes['serviceUrl']) {
       this.loadItems();
     }
   }
 
-  public onSelectItem(item: Parameter): void {
+  onSelectItem(item: Parameter): void {
     this.onItemSelected.emit(item);
   }
 
@@ -83,10 +66,11 @@ export class ServiceFilterSelectorComponent
   private loadItems() {
     this.loading = true;
     this.onLoading.emit(true);
-    switch (this.endpoint) {
+    const endpoint = this.endpoint();
+    switch (endpoint) {
       case 'offering':
         this.servicesConnector
-          .getOfferings(this.serviceUrl, this.filter)
+          .getOfferings(this.serviceUrl(), this.filter())
           .subscribe({
             next: (res) => this.setItems(res),
             error: () => this.errorOnLoading,
@@ -94,7 +78,7 @@ export class ServiceFilterSelectorComponent
         break;
       case 'phenomenon':
         this.servicesConnector
-          .getPhenomena(this.serviceUrl, this.filter)
+          .getPhenomena(this.serviceUrl(), this.filter())
           .subscribe({
             next: (res) => this.setItems(res),
             error: () => this.errorOnLoading,
@@ -102,7 +86,7 @@ export class ServiceFilterSelectorComponent
         break;
       case 'procedure':
         this.servicesConnector
-          .getProcedures(this.serviceUrl, this.filter)
+          .getProcedures(this.serviceUrl(), this.filter())
           .subscribe({
             next: (res) => this.setItems(res),
             error: () => this.errorOnLoading,
@@ -110,7 +94,7 @@ export class ServiceFilterSelectorComponent
         break;
       case 'category':
         this.servicesConnector
-          .getCategories(this.serviceUrl, this.filter)
+          .getCategories(this.serviceUrl(), this.filter())
           .subscribe({
             next: (res) => this.setItems(res),
             error: () => this.errorOnLoading,
@@ -118,14 +102,14 @@ export class ServiceFilterSelectorComponent
         break;
       case 'feature':
         this.servicesConnector
-          .getFeatures(this.serviceUrl, this.filter)
+          .getFeatures(this.serviceUrl(), this.filter())
           .subscribe({
             next: (res) => this.setItems(res),
             error: () => this.errorOnLoading,
           });
         break;
       default:
-        console.error('Wrong endpoint: ' + this.endpoint);
+        console.error('Wrong endpoint: ' + endpoint);
     }
   }
 

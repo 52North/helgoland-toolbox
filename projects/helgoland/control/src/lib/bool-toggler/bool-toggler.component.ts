@@ -1,27 +1,22 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgClass } from '@angular/common';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'n52-bool-toggler',
   templateUrl: './bool-toggler.component.html',
-  standalone: true,
   imports: [NgClass],
 })
 export class BoolTogglerComponent {
-  @Input()
-  public value: boolean | undefined;
+  readonly value = input<boolean>();
 
-  @Input()
-  public icon: string | undefined;
+  readonly icon = input<string>();
 
-  @Input()
-  public tooltip: string | undefined;
+  readonly tooltip = input<string>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onToggled: EventEmitter<boolean> = new EventEmitter();
+  readonly onToggled = output<boolean>();
 
-  public toggle() {
-    this.onToggled.emit(!this.value);
+  toggle() {
+    this.onToggled.emit(!this.value());
   }
 }

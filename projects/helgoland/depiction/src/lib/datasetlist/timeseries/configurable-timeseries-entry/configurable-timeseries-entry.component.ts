@@ -1,10 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-  DatasetOptions,
-  HelgolandServicesConnector,
-  InternalIdHandler,
-} from '@helgoland/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, input, output } from '@angular/core';
+import { DatasetOptions } from '@helgoland/core';
 
 import { SimpleTimeseriesEntryComponent } from '../simple-timeseries-entry/simple-timeseries-entry.component';
 
@@ -20,44 +15,31 @@ import { SimpleTimeseriesEntryComponent } from '../simple-timeseries-entry/simpl
   standalone: true,
 })
 export class ConfigurableTimeseriesEntryComponent extends SimpleTimeseriesEntryComponent {
-  @Input({ required: true })
-  public datasetOptions!: DatasetOptions;
+  readonly datasetOptions = input.required<DatasetOptions>();
 
-  @Input()
-  public highlight: boolean | undefined;
+  readonly highlight = input<boolean>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onUpdateOptions: EventEmitter<DatasetOptions> = new EventEmitter();
+  readonly onUpdateOptions = output<DatasetOptions>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onEditOptions: EventEmitter<DatasetOptions> = new EventEmitter();
+  readonly onEditOptions = output<DatasetOptions>();
 
-  @Output()
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onShowGeometry: EventEmitter<GeoJSON.GeoJsonObject> =
-    new EventEmitter();
+  readonly onShowGeometry = output<GeoJSON.GeoJsonObject>();
 
-  constructor(
-    protected override servicesConnector: HelgolandServicesConnector,
-    protected override internalIdHandler: InternalIdHandler,
-    protected override translateSrvc: TranslateService,
-  ) {
-    super(servicesConnector, internalIdHandler, translateSrvc);
+  toggleVisibility() {
+    const datasetOptions = this.datasetOptions();
+    datasetOptions.visible = !datasetOptions.visible;
+    this.onUpdateOptions.emit(datasetOptions);
   }
 
-  public toggleVisibility() {
-    this.datasetOptions.visible = !this.datasetOptions.visible;
-    this.onUpdateOptions.emit(this.datasetOptions);
+  editDatasetOptions() {
+    this.onEditOptions.emit(this.datasetOptions());
   }
 
-  public editDatasetOptions() {
-    this.onEditOptions.emit(this.datasetOptions);
-  }
-
-  public showGeometry() {
-    if (this.dataset) {
+  showGeometry() {
+    if (this.dataset?.platform.geometry) {
       this.onShowGeometry.emit(this.dataset.platform.geometry);
     }
   }

@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input } from '@angular/core';
+import { Component, HostBinding, input } from '@angular/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
@@ -6,13 +6,12 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
   templateUrl: './loading-overlay-progress-bar.component.html',
   styleUrls: ['./loading-overlay-progress-bar.component.scss'],
   imports: [MatProgressBarModule],
-  standalone: true,
 })
 export class LoadingOverlayProgressBarComponent {
-  @Input() progressBarPosition: 'top' | 'bottom' | undefined;
+  readonly progressBarPosition = input<'top' | 'bottom'>();
 
   @HostBinding('style.align-items') get alignItems() {
-    switch (this.progressBarPosition) {
+    switch (this.progressBarPosition()) {
       case 'top':
         return 'flex-start';
       default:

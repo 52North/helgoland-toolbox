@@ -1,17 +1,13 @@
 import {
   Component,
-  Input,
   OnChanges,
   OnDestroy,
   SimpleChanges,
   ViewEncapsulation,
+  input,
 } from '@angular/core';
-import { Timespan } from '@helgoland/core';
 import { BaseType } from 'd3';
 
-import { D3GraphHelperService } from '../../../helper/d3-graph-helper.service';
-import { D3GraphId } from '../../../helper/d3-graph-id.service';
-import { D3Graphs } from '../../../helper/d3-graphs.service';
 import { D3GraphInterface } from '../../d3-graph.interface';
 import {
   AdjustBackgroundOptions,
@@ -20,10 +16,6 @@ import {
   D3SeriesGraphControl,
 } from '../../d3-series-graph-control';
 import { D3Copyright } from '../../models/d3-plot-options';
-import {
-  GraphDataEntry,
-  SeriesGraphDataset,
-} from '../../models/series-graph-dataset';
 
 @Component({
   selector: 'n52-d3-graph-copyright',
@@ -39,7 +31,7 @@ export class D3GraphCopyrightComponent
   /**
    * Copyright, which should be shown on the graph
    */
-  @Input() copyright: D3Copyright | undefined;
+  readonly copyright = input<D3Copyright>();
 
   protected d3Graph: D3GraphInterface | undefined;
   protected copyrightLayer:
@@ -51,28 +43,20 @@ export class D3GraphCopyrightComponent
   protected background: d3.Selection<SVGGElement, any, any, any> | undefined;
   protected graphExtent: D3GraphExtent | undefined;
 
-  constructor(
-    protected override graphId: D3GraphId,
-    protected override graphs: D3Graphs,
-    protected override graphHelper: D3GraphHelperService,
-  ) {
-    super(graphId, graphs, graphHelper);
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['copyright'] && this.copyright) {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['copyright'] && this.copyright()) {
       this.setText();
     }
   }
 
-  public graphInitialized(graph: D3GraphInterface) {
+  graphInitialized(graph: D3GraphInterface) {
     this.d3Graph = graph;
   }
 
   adjustBackground(options: AdjustBackgroundOptions) {
     this.background = options.background;
     this.graphExtent = options.graphExtent;
-    if (this.copyright && this.d3Graph) {
+    if (this.copyright() && this.d3Graph) {
       this.clearLayer();
       this.copyrightLayer = this.d3Graph.getDrawingLayer('copyright', true);
       this.createLabelRect();
@@ -81,7 +65,7 @@ export class D3GraphCopyrightComponent
     }
   }
 
-  public override cleanUp() {
+  override cleanUp() {
     this.clearLayer();
   }
 
@@ -94,10 +78,11 @@ export class D3GraphCopyrightComponent
 
   protected createLabelText() {
     if (this.copyrightLayer) {
-      if (this.copyright?.link) {
+      const copyright = this.copyright();
+      if (copyright?.link) {
         this.labelText = this.copyrightLayer
           .append('a')
-          .attr('href', this.copyright.link)
+          .attr('href', copyright.link)
           .attr('target', '_blank')
           .attr('rel', 'noopener noreferrer')
           .append('svg:text')
@@ -124,10 +109,11 @@ export class D3GraphCopyrightComponent
   }
 
   protected setText() {
+    const copyright = this.copyright();
     if (
       this.background &&
       this.labelText &&
-      this.copyright &&
+      copyright &&
       this.graphExtent &&
       this.labelRect
     ) {
@@ -136,14 +122,14 @@ export class D3GraphCopyrightComponent
       );
       let x = 3;
       let y = 3;
-      this.labelText.text(this.copyright.label);
-      if (this.copyright.positionX === 'right') {
+      this.labelText.text(copyright.label);
+      if (copyright.positionX === 'right') {
         x =
           backgroundDim.w -
           this.graphExtent.margin.right -
           this.graphHelper.getDimensions(this.labelText.node()).w;
       }
-      if (this.copyright.positionY === 'bottom') {
+      if (copyright.positionY === 'bottom') {
         y = backgroundDim.h - this.graphExtent.margin.top * 2;
       }
       const yTransform =

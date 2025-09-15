@@ -1,60 +1,56 @@
 import { NgClass } from '@angular/common';
 import {
   Component,
-  EventEmitter,
-  Input,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
+  inject,
+  input,
+  output,
 } from '@angular/core';
 import { Settings, SettingsService } from '@helgoland/core';
 
 @Component({
   selector: 'n52-refresh-button',
   templateUrl: './refresh-button.component.html',
-  standalone: true,
   imports: [NgClass],
 })
 export class RefreshButtonComponent implements OnChanges, OnInit {
-  @Input()
-  public refreshInterval: number | undefined;
+  protected settings = inject<SettingsService<Settings>>(SettingsService);
 
-  @Input()
-  public toggled: boolean | undefined;
+  readonly refreshInterval = input<number>();
 
-  @Output()
-  public refreshing: EventEmitter<boolean> = new EventEmitter();
+  readonly toggled = input<boolean>();
+
+  readonly refreshing = output<boolean>();
 
   private interval: number | undefined;
 
-  constructor(protected settings: SettingsService<Settings>) {}
-
-  public ngOnInit(): void {
-    if (!this.refreshInterval) {
+  ngOnInit(): void {
+    if (!this.refreshInterval()) {
       const refreshDataInterval =
         this.settings.getSettings().refreshDataInterval;
-      this.refreshInterval = refreshDataInterval ? refreshDataInterval : 60;
+      // this.refreshInterval = refreshDataInterval ? refreshDataInterval : 60;
     }
     this.evaluteRefreshing();
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['toggled']) {
       this.evaluteRefreshing();
     }
   }
 
-  public toggle() {
-    this.toggled = !this.toggled;
-    if (this.toggled) {
+  toggle() {
+    const toggled = !this.toggled();
+    if (toggled) {
       this.refresh();
     }
     this.evaluteRefreshing();
   }
 
   private evaluteRefreshing() {
-    if (this.toggled) {
+    if (this.toggled()) {
       this.startRefreshInterval();
     } else {
       this.stopRefreshInterval();
@@ -64,7 +60,7 @@ export class RefreshButtonComponent implements OnChanges, OnInit {
   private startRefreshInterval() {
     this.interval = window.setInterval(
       () => this.refresh(),
-      this.refreshInterval! * 1000,
+      this.refreshInterval()! * 1000,
     );
   }
 

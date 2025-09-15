@@ -12,7 +12,7 @@ import {
 import { NAMESPACES } from './Namespaces';
 
 export class IsoEncoder {
-  public encodeContact(contact: Contact, document: Document): Node {
+  encodeContact(contact: Contact, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.GMD, 'CI_Contact');
 
     if (contact.phone) {
@@ -66,7 +66,7 @@ export class IsoEncoder {
     return node;
   }
 
-  public encodePhone(phone: Phone, document: Document): Node {
+  encodePhone(phone: Phone, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.GMD, 'gmd:CI_Telephone');
 
     if (phone.voice) {
@@ -93,7 +93,7 @@ export class IsoEncoder {
     return node;
   }
 
-  public encodeOnlineResource(
+  encodeOnlineResource(
     onlineResource: OnlineResource,
     document: Document,
   ): Node {
@@ -166,7 +166,7 @@ export class IsoEncoder {
     return node;
   }
 
-  public encodeAddress(address: Address, document: Document): Node {
+  encodeAddress(address: Address, document: Document): Node {
     const node = document.createElementNS(NAMESPACES.GMD, 'gmd:CI_Address');
 
     if (address.deliveryPoint) {
@@ -237,7 +237,7 @@ export class IsoEncoder {
     return node;
   }
 
-  public encodeResponsibleParty(
+  encodeResponsibleParty(
     responsibleParty: ResponsibleParty,
     document: Document,
   ): Node {
@@ -299,7 +299,7 @@ export class IsoEncoder {
     return node;
   }
 
-  public encodeRole(role: Role, document: Document): Node {
+  encodeRole(role: Role, document: Document): Node {
     return this.encodeCodeListValue(
       document,
       NAMESPACES.GMD,
@@ -309,7 +309,7 @@ export class IsoEncoder {
     );
   }
 
-  public encodeOnlineFunction(
+  encodeOnlineFunction(
     onlineFunction: OnlineFunction,
     document: Document,
   ): Node {
@@ -322,7 +322,7 @@ export class IsoEncoder {
     );
   }
 
-  public encodeRestriction(restriction: Restriction, document: Document): Node {
+  encodeRestriction(restriction: Restriction, document: Document): Node {
     return this.encodeCodeListValue(
       document,
       NAMESPACES.GMD,
@@ -332,7 +332,7 @@ export class IsoEncoder {
     );
   }
 
-  public encodeLegalConstraints(
+  encodeLegalConstraints(
     legalConstraints: LegalConstraints,
     document: Document,
   ): Node {

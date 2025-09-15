@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { HelgolandPlatform } from '@helgoland/core';
 import {
   HelgolandOpenLayersModule,
@@ -13,17 +12,18 @@ import { OSM, TileWMS } from 'ol/source';
   selector: 'n52-ol',
   templateUrl: './ol.component.html',
   styleUrls: ['./ol.component.scss'],
-  imports: [HelgolandOpenLayersModule, CommonModule],
-  standalone: true,
+  imports: [HelgolandOpenLayersModule],
 })
 export class OlComponent implements OnInit {
-  public layers: Layer[] = [];
+  private mapService = inject(OlMapService);
 
-  public overviewMapLayers: Layer[] = [new TileLayer({ source: new OSM() })];
+  layers: Layer[] = [];
 
-  public mapId = 'test-map';
+  overviewMapLayers: Layer[] = [new TileLayer({ source: new OSM() })];
 
-  constructor(private mapService: OlMapService) {}
+  mapId = 'test-map';
+
+  constructor() {}
 
   ngOnInit() {
     this.layers.push(
@@ -81,19 +81,19 @@ export class OlComponent implements OnInit {
     // }));
   }
 
-  public getLegendUrl(legendUrl: string) {
+  getLegendUrl(legendUrl: string) {
     alert(legendUrl);
     console.log(legendUrl);
   }
 
-  public removeLayer(i: number) {
+  removeLayer(i: number) {
     const layer = this.layers.splice(i, 1);
     this.mapService
       .getMap(this.mapId)
       .subscribe((map) => map.removeLayer(layer[0]));
   }
 
-  public stationSelected(station: HelgolandPlatform) {
+  stationSelected(station: HelgolandPlatform) {
     alert(station.label);
     console.log(station);
   }

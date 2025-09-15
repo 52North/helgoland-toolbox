@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, input } from '@angular/core';
 import { Map } from 'ol';
 import { OverviewMap } from 'ol/control';
 import { Layer } from 'ol/layer';
@@ -19,38 +19,40 @@ export class OlOverviewMapComponent extends OlBaseComponent {
   /**
    * Collapsed on startup
    */
-  @Input() collased = true;
+  readonly collased = input(true);
 
   /**
    * Can be collapsed
    */
-  @Input() collapsible = true;
+  readonly collapsible = input(true);
 
   /**
    * Layers, which are shown in the overview map
    */
-  @Input() layers: Layer[] = [];
+  readonly layers = input<Layer[]>([]);
 
   /**
    * position of the overview map
    */
-  @Input() position: 'upperleft' | 'upperright' | 'bottomleft' | 'bottomright' =
-    'bottomleft';
+  readonly position = input<
+    'upperleft' | 'upperright' | 'bottomleft' | 'bottomright'
+  >('bottomleft');
 
   mapInitialized(map: Map) {
     const control = new OverviewMap({
       className: this.generateClassName(),
       collapseLabel: this.createCollapseLabel(),
       label: this.createLabel(),
-      collapsed: this.collased,
-      collapsible: this.collapsible,
-      layers: this.layers,
+      collapsed: this.collased(),
+      collapsible: this.collapsible(),
+      layers: this.layers(),
     });
     map.addControl(control);
   }
 
   private createLabel(): string {
-    if (this.position === 'bottomright' || this.position === 'upperright') {
+    const position = this.position();
+    if (position === 'bottomright' || position === 'upperright') {
       return '\u00AB';
     } else {
       return '\u00BB';
@@ -58,7 +60,8 @@ export class OlOverviewMapComponent extends OlBaseComponent {
   }
 
   private createCollapseLabel(): string {
-    if (this.position === 'bottomright' || this.position === 'upperright') {
+    const position = this.position();
+    if (position === 'bottomright' || position === 'upperright') {
       return '\u00BB';
     } else {
       return '\u00AB';
@@ -66,6 +69,6 @@ export class OlOverviewMapComponent extends OlBaseComponent {
   }
 
   generateClassName(): string {
-    return `ol-overviewmap ol-custom-overviewmap ol-${this.position}-overviewmap`;
+    return `ol-overviewmap ol-custom-overviewmap ol-${this.position()}-overviewmap`;
   }
 }

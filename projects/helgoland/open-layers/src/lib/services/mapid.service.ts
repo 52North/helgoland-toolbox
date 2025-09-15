@@ -17,7 +17,7 @@ export class OlMapId {
    *
    * @returns Observable of the map id
    */
-  public getId(): Observable<string> {
+  getId(): Observable<string> {
     return this.id ? of(this.id) : this.subject;
   }
 
@@ -26,7 +26,7 @@ export class OlMapId {
    *
    * @param id the map id
    */
-  public setId(id: string) {
+  setId(id: string) {
     this.id = id;
     this.subject.next(id);
     this.subject.complete();

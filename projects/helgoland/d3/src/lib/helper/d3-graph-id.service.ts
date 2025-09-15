@@ -15,7 +15,7 @@ export class D3GraphId {
    *
    * @returns Observable of the graph id
    */
-  public getId(): Observable<string> {
+  getId(): Observable<string> {
     return this.id ? of(this.id) : this.subject;
   }
 
@@ -24,7 +24,7 @@ export class D3GraphId {
    *
    * @param id the graph id
    */
-  public setId(id: string) {
+  setId(id: string) {
     this.id = id;
     this.subject.next(id);
     this.subject.complete();

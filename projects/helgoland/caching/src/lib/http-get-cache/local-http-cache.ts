@@ -1,5 +1,5 @@
 import { HttpRequest, HttpResponse } from '@angular/common/http';
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { CacheConfig, CacheConfigService } from '../config';
 import { HttpCache } from '../model';
@@ -16,20 +16,21 @@ interface Cache {
 @Injectable()
 export class LocalHttpCache extends HttpCache {
   private cache: Cache = {};
+  private config = inject<CacheConfig>(CacheConfigService, { optional: true });
 
   /**
    * Default caching duration
    */
   private cachingDuration = 30000;
 
-  constructor(@Optional() @Inject(CacheConfigService) config: CacheConfig) {
+  constructor() {
     super();
-    if (config && config.cachingDurationInMilliseconds) {
-      this.cachingDuration = config.cachingDurationInMilliseconds;
+    if (this.config && this.config.cachingDurationInMilliseconds) {
+      this.cachingDuration = this.config.cachingDurationInMilliseconds;
     }
   }
 
-  public get(
+  get(
     req: HttpRequest<any>,
     expirationAtMs?: number,
   ): HttpResponse<any> | null {
@@ -57,11 +58,7 @@ export class LocalHttpCache extends HttpCache {
     return null;
   }
 
-  public put(
-    req: HttpRequest<any>,
-    resp: HttpResponse<any>,
-    expirationAtMs?: number,
-  ) {
+  put(req: HttpRequest<any>, resp: HttpResponse<any>, expirationAtMs?: number) {
     this.cache[req.urlWithParams] = {
       expirationAtMs:
         expirationAtMs || new Date().getTime() + this.cachingDuration,

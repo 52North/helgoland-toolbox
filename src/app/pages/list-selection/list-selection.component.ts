@@ -8,17 +8,15 @@ import {
 import {
   HelgolandSelectorModule,
   ListSelectorParameter,
-  MultiServiceFilterEndpoint,
 } from '@helgoland/selector';
 
 @Component({
   templateUrl: './list-selection.component.html',
   styleUrls: ['./list-selection.component.scss'],
   imports: [HelgolandSelectorModule],
-  standalone: true,
 })
 export class ListSelectionComponent {
-  public categoryParams: ListSelectorParameter[] = [
+  categoryParams: ListSelectorParameter[] = [
     {
       type: 'platform',
       header: 'Platform',
@@ -41,9 +39,9 @@ export class ListSelectionComponent {
     },
   ];
 
-  public selectedProviderList: FilteredProvider[] = [];
+  selectedProviderList: FilteredProvider[] = [];
 
-  public parameterFilter: HelgolandParameterFilter = {
+  parameterFilter: HelgolandParameterFilter = {
     type: DatasetType.Timeseries,
   };
 
@@ -55,7 +53,7 @@ export class ListSelectionComponent {
     });
   }
 
-  public onDatasetSelected(datasets: HelgolandDataset[]) {
+  onDatasetSelected(datasets: HelgolandDataset[]) {
     datasets.forEach((dataset) =>
       console.log(
         'Select Dataset: ' + dataset.label + ' with ID: ' + dataset.id,

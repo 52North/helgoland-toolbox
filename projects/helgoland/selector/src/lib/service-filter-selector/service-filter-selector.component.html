@@ -8,7 +8,7 @@
   <div
     class="selector-entry"
     (click)="onSelectItem(item)"
-    [ngClass]="{ selected: selectionId === item.id }"
+    [ngClass]="{ selected: selectionId() === item.id }"
   >
     <n52-label-mapper label="{{ item.label }}"></n52-label-mapper>
   </div>

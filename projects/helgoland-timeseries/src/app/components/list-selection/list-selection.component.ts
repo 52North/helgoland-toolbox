@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -10,7 +9,6 @@ import {
   HelgolandServicesConnector,
   Parameter,
 } from '@helgoland/core';
-import { MultiServiceFilterEndpoint } from '@helgoland/selector';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   ErrorHandlerService,
@@ -34,7 +32,6 @@ import {
   templateUrl: './list-selection.component.html',
   styleUrls: ['./list-selection.component.scss'],
   imports: [
-    CommonModule,
     FilterLabelComponent,
     MatButtonModule,
     MatButtonToggleModule,
@@ -44,21 +41,18 @@ import {
     TimeseriesListSelectorComponent,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class ListSelectionComponent implements OnInit {
-  public selectedService: HelgolandService | undefined;
+  private dialog = inject(MatDialog);
+  private serviceConnector = inject(HelgolandServicesConnector);
+  protected appRouter = inject(AppRouterService);
+  protected graphDatasetsSrvc = inject(DatasetsService);
+  private configSrvc = inject(ConfigurationService);
+  private errorHandler = inject(ErrorHandlerService);
 
-  public filterList: ParameterListEntry[] = [];
+  selectedService: HelgolandService | undefined;
 
-  constructor(
-    private dialog: MatDialog,
-    private serviceConnector: HelgolandServicesConnector,
-    public appRouter: AppRouterService,
-    public graphDatasetsSrvc: DatasetsService,
-    private configSrvc: ConfigurationService,
-    private errorHandler: ErrorHandlerService,
-  ) {}
+  filterList: ParameterListEntry[] = [];
 
   ngOnInit(): void {
     if (this.configSrvc.configuration.defaultService?.apiUrl) {

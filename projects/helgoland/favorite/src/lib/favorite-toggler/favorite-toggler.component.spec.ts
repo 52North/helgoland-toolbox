@@ -1,9 +1,12 @@
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { LocalStorage, NotifierService } from '@helgoland/core';
 
-import { FavoriteService } from '../service/favorite.service';
 import { TranslateTestingModule } from '../../../../../testing/translate.testing.module';
+import { FavoriteService } from '../service/favorite.service';
 import { FavoriteTogglerComponent } from './favorite-toggler.component';
 
 describe('FavoriteTogglerComponent', () => {
@@ -12,12 +15,13 @@ describe('FavoriteTogglerComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        TranslateTestingModule,
-        FavoriteTogglerComponent,
+      imports: [TranslateTestingModule, FavoriteTogglerComponent],
+      providers: [
+        FavoriteService,
+        LocalStorage,
+        NotifierService,
+        provideHttpClient(withInterceptorsFromDi()),
       ],
-      providers: [FavoriteService, LocalStorage, NotifierService],
     }).compileComponents();
   }));
 

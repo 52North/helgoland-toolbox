@@ -1,4 +1,4 @@
-import { OnDestroy, Pipe, PipeTransform } from '@angular/core';
+import { OnDestroy, Pipe, PipeTransform, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
@@ -10,6 +10,9 @@ import { TimezoneService } from './timezone.service';
   standalone: true,
 })
 export class TzDatePipe implements PipeTransform, OnDestroy {
+  private timezoneSrvc = inject(TimezoneService);
+  private translateSrvc = inject(TranslateService);
+
   date!: Date | number | string;
   format: string | undefined;
   formattedDate: string = '';
@@ -18,11 +21,6 @@ export class TzDatePipe implements PipeTransform, OnDestroy {
   );
   onTranslationChanged: Subscription =
     this.translateSrvc.onLangChange.subscribe(() => this.updateDate());
-
-  constructor(
-    private timezoneSrvc: TimezoneService,
-    private translateSrvc: TranslateService,
-  ) {}
 
   transform(date: Date | number | string, ...args: any[]): any {
     if (!date) {

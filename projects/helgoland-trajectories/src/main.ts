@@ -3,9 +3,10 @@ import 'moment/locale/de';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import {
-  APP_INITIALIZER,
   enableProdMode,
   importProvidersFrom,
+  inject,
+  provideAppInitializer,
 } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -28,7 +29,7 @@ import { firstValueFrom, forkJoin, from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AppComponent } from './app/app.component';
-import { TrajectoryViewComponent } from './app/components/trajectory-view/trajectory-view.component';
+
 import {
   AppConfig,
   ConfigurationService,
@@ -86,7 +87,10 @@ bootstrapApplication(AppComponent, {
       {
         path: '**',
         pathMatch: 'full',
-        component: TrajectoryViewComponent,
+        loadComponent: () =>
+          import(
+            './app/components/trajectory-view/trajectory-view.component'
+          ).then((m) => m.TrajectoryViewComponent),
       },
     ]),
     provideAnimations(),
@@ -99,12 +103,14 @@ bootstrapApplication(AppComponent, {
       }),
     ),
     importProvidersFrom(HelgolandCoreModule),
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initApplication,
-      deps: [ConfigurationService, TranslateService, LocalStorage],
-      multi: true,
-    },
+    provideAppInitializer(() => {
+      const initializerFn = initApplication(
+        inject(ConfigurationService),
+        inject(TranslateService),
+        inject(LocalStorage),
+      );
+      return initializerFn();
+    }),
     {
       provide: SettingsService,
       useExisting: ConfigurationService,

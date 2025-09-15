@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   HttpRequestOptions,
   HttpService,
@@ -28,11 +28,9 @@ import {
 
 @Injectable()
 export class EventingImplApiInterface extends EventingApiService {
-  constructor(private httpService: HttpService) {
-    super();
-  }
+  private httpService = inject(HttpService);
 
-  public getEvents(
+  getEvents(
     apiUrl: string,
     filterParameter: EventFilter = {},
     options: HttpRequestOptions = {},
@@ -49,7 +47,7 @@ export class EventingImplApiInterface extends EventingApiService {
     return this.requestApi<EventResults>(url, httpParams, options);
   }
 
-  public getEvent(
+  getEvent(
     id: string,
     apiUrl: string,
     options: HttpRequestOptions = {},
@@ -58,7 +56,7 @@ export class EventingImplApiInterface extends EventingApiService {
     return this.requestApi<Event>(url, null, options);
   }
 
-  public getSubscriptions(
+  getSubscriptions(
     apiUrl: string,
     filterParameter: SubscriptionFilter = {},
     options: HttpRequestOptions = {},
@@ -68,7 +66,7 @@ export class EventingImplApiInterface extends EventingApiService {
     return this.requestApi<SubscriptionResults>(url, httpParams, options);
   }
 
-  public getSubscription(
+  getSubscription(
     id: string,
     apiUrl: string,
     options: HttpRequestOptions = {},
@@ -77,7 +75,7 @@ export class EventingImplApiInterface extends EventingApiService {
     return this.requestApi<Subscription>(url, null, options);
   }
 
-  public getPublications(
+  getPublications(
     apiUrl: string,
     filterParameter: PublicationFilter = {},
     options?: HttpRequestOptions,
@@ -92,7 +90,7 @@ export class EventingImplApiInterface extends EventingApiService {
     return this.requestApi<PublicationResults>(url, httpParams, options);
   }
 
-  public getPublication(
+  getPublication(
     id: string,
     apiUrl: string,
     options: HttpRequestOptions = {},
@@ -101,7 +99,7 @@ export class EventingImplApiInterface extends EventingApiService {
     return this.requestApi<Publication>(url, null, options);
   }
 
-  public getNotifications(
+  getNotifications(
     apiUrl: string,
     filterParameter: NotificationFilter = {},
     options?: HttpRequestOptions,
@@ -116,7 +114,7 @@ export class EventingImplApiInterface extends EventingApiService {
     return this.requestApi<NotificationResults>(url, httpParams, options);
   }
 
-  public getNotification(
+  getNotification(
     id: string,
     apiUrl: string,
     options?: HttpRequestOptions,

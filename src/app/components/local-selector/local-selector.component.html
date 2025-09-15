@@ -1,5 +1,5 @@
 <div class="example-radio-group">
-  @for (lang of languageList; track lang) {
+  @for (lang of languageList(); track lang) {
     <mat-radio-button
       class="example-radio-button"
       (click)="setLanguage(lang)"

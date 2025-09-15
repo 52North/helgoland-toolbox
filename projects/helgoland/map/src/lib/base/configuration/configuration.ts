@@ -22,7 +22,7 @@ export interface TileLayerConfiguration extends LayerConfiguration {
 }
 
 export class LayerCreator {
-  public createLayerOptions(layerConf: LayerConfiguration): LayerOptions {
+  createLayerOptions(layerConf: LayerConfiguration): LayerOptions {
     switch (layerConf.type) {
       case 'wms':
         return this.createWmsLayerOptions(layerConf as WmsConfiguration);

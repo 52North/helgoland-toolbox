@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -12,10 +11,7 @@ import {
   HelgolandServicesConnector,
   Parameter,
 } from '@helgoland/core';
-import {
-  MultiServiceFilter,
-  MultiServiceFilterEndpoint,
-} from '@helgoland/selector';
+import { MultiServiceFilter } from '@helgoland/selector';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   LoadingOverlayProgressBarComponent,
@@ -34,7 +30,6 @@ import { ParameterTypeLabelComponent } from './parameter-type-label/parameter-ty
   templateUrl: './modal-trajectory-selection.component.html',
   styleUrls: ['./modal-trajectory-selection.component.scss'],
   imports: [
-    CommonModule,
     LoadingOverlayProgressBarComponent,
     MatButtonModule,
     MatButtonToggleModule,
@@ -45,29 +40,24 @@ import { ParameterTypeLabelComponent } from './parameter-type-label/parameter-ty
     ServiceListSelectorComponent,
     TranslateModule,
   ],
-  standalone: true,
 })
 export class ModalTrajectorySelectionComponent implements OnInit {
-  public datasetApis: DatasetApi[] =
-    this.configSrvc.configuration?.datasetApis || [];
+  protected dialogRef =
+    inject<MatDialogRef<ModalTrajectorySelectionComponent>>(MatDialogRef);
+  private configSrvc = inject(ConfigurationService);
+  private servicesConnector = inject(HelgolandServicesConnector);
+  private trajectorySrvc = inject(TrajectoriesService);
 
-  public datasetsLoading: boolean | undefined;
+  datasetApis: DatasetApi[] = this.configSrvc.configuration?.datasetApis || [];
 
-  public filterList: ParameterListEntry[] = [];
+  datasetsLoading: boolean | undefined;
 
-  public providerFilter: HelgolandParameterFilter = {
+  filterList: ParameterListEntry[] = [];
+
+  providerFilter: HelgolandParameterFilter = {
     type: DatasetType.Trajectory,
     expanded: true,
   };
-
-  public filterEnpoints = MultiServiceFilterEndpoint;
-
-  constructor(
-    public dialogRef: MatDialogRef<ModalTrajectorySelectionComponent>,
-    private configSrvc: ConfigurationService,
-    private servicesConnector: HelgolandServicesConnector,
-    private trajectorySrvc: TrajectoriesService,
-  ) {}
 
   ngOnInit(): void {
     this.filterList.push({
@@ -78,7 +68,7 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     });
   }
 
-  public serviceSelected(service: HelgolandService) {
+  serviceSelected(service: HelgolandService) {
     this.filterList.splice(1);
     if (this.filterList.length > 0) {
       this.filterList[this.filterList.length - 1].expanded = false;
@@ -98,7 +88,7 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     });
   }
 
-  public selectFilter(entry: ParameterListEntry, filter: ParameterType) {
+  selectFilter(entry: ParameterListEntry, filter: ParameterType) {
     if (entry.selectedFilter === ParameterType.OFFERING) {
       delete entry.apiFilter[0].filter?.offering;
     }
@@ -111,7 +101,7 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     entry.selectedFilter = filter;
   }
 
-  public itemSelected(filter: ParameterListEntry, item: Parameter) {
+  itemSelected(filter: ParameterListEntry, item: Parameter) {
     filter.selectedItem = item;
     filter.expanded = false;
 
@@ -160,7 +150,7 @@ export class ModalTrajectorySelectionComponent implements OnInit {
     });
   }
 
-  public featureSelected(filter: ParameterListEntry, item: Parameter) {
+  featureSelected(filter: ParameterListEntry, item: Parameter) {
     const url = filter.apiFilter[0].url;
     const dsFilter = filter.apiFilter[0].filter!;
     dsFilter.feature = item.id;

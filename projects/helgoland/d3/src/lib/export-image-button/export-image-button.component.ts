@@ -3,7 +3,8 @@ import {
   Component,
   ComponentRef,
   EmbeddedViewRef,
-  Input,
+  inject,
+  input,
   ViewContainerRef,
 } from '@angular/core';
 import {
@@ -28,94 +29,80 @@ const wrapperClassName = 'export-diagram-wrapper';
   selector: 'n52-export-image-button',
   templateUrl: './export-image-button.component.html',
   styleUrls: ['./export-image-button.component.scss'],
-  standalone: true,
   imports: [],
 })
 export class ExportImageButtonComponent {
+  private servicesConnector = inject(HelgolandServicesConnector);
+  private applicationRef = inject(ApplicationRef);
+  private viewContainerRef = inject(ViewContainerRef);
+  private timeSrvc = inject(Time);
+  private graphHelper = inject(D3GraphHelperService);
+
   /**
    * List of datasetIds, similiar to the timeseries component
    */
-  @Input()
-  datasetIds: string[] = [];
+  readonly datasetIds = input<string[]>([]);
 
   /**
    * Map of datasetOptions, similiar to the timeseries component
    */
-  @Input()
-  datasetOptions: Map<string, DatasetOptions> = new Map();
+  readonly datasetOptions = input<Map<string, DatasetOptions>>(new Map());
 
   /**
    * Timespan, similiar to the timeseries component
    */
-  @Input({ required: true })
-  timespan!: Timespan;
+  readonly timespan = input.required<Timespan>();
 
   /**
    * Height (as number) in px for the diagram extent, default is 300
    */
-  @Input()
-  height = 300;
+  readonly height = input(300);
 
   /**
    * Width (as number) in px for the diagram extent, default is 600
    */
-  @Input()
-  width = 600;
+  readonly width = input(600);
 
   /**
    * Filename for the exported file, default is 'export'
    */
-  @Input()
-  fileName = 'export';
+  readonly fileName = input('export');
 
   /**
    * Filetype for the export, currently png and svg are possible, default is 'png'
    */
-  @Input()
-  exportType: 'png' | 'svg' = 'png';
+  readonly exportType = input<'png' | 'svg'>('png');
 
   /**
    * Optional title in the picture of the exported file
    */
-  @Input()
-  title: string | undefined;
+  readonly title = input<string>();
 
   /**
    * Option to show a simple legend in th exported picture
    */
-  @Input()
-  showLegend = false;
+  readonly showLegend = input(false);
 
   /**
    * Option to show first and last date at the bottom edges of the exported picture
    */
-  @Input()
-  showFirstLastDate: boolean = false;
+  readonly showFirstLastDate = input<boolean>(false);
 
   /**
    * Presenter Options for the exported image
    */
-  @Input()
-  presenterOptions: D3PlotOptions = {
+  readonly presenterOptions = input<D3PlotOptions>({
     showTimeLabel: false,
     showReferenceValues: true,
     grid: true,
-  };
+  });
 
-  public loading: boolean = false;
+  loading: boolean = false;
 
-  private internalHeight = this.height;
-  private internalWidth = this.width;
+  private internalHeight = this.height();
+  private internalWidth = this.width();
 
-  constructor(
-    private servicesConnector: HelgolandServicesConnector,
-    private applicationRef: ApplicationRef,
-    private viewContainerRef: ViewContainerRef,
-    private timeSrvc: Time,
-    private graphHelper: D3GraphHelperService,
-  ) {}
-
-  public exportImage() {
+  exportImage() {
     this.createDiagramElem();
   }
 
@@ -123,22 +110,23 @@ export class ExportImageButtonComponent {
     this.loading = true;
     let once = true;
 
-    this.internalHeight = this.height;
-    this.internalWidth = this.width;
+    this.internalHeight = this.height();
+    this.internalWidth = this.width();
 
-    if (this.showFirstLastDate && !this.presenterOptions.timeRangeLabel) {
-      this.presenterOptions.timeRangeLabel = { show: true, format: 'L' };
+    const presenterOptions = this.presenterOptions();
+    if (this.showFirstLastDate() && !presenterOptions.timeRangeLabel) {
+      presenterOptions.timeRangeLabel = { show: true, format: 'L' };
     }
 
     const comp = this.appendComponentToBody(
       D3SeriesGraphWrapperComponent,
     ) as ComponentRef<D3SeriesGraphWrapperComponent>;
 
-    comp.instance.datasetIds = this.datasetIds;
-    comp.instance.datasetOptions = this.datasetOptions;
-    comp.instance.yaxisModifier = false;
-    comp.instance.timespan = this.timespan;
-    comp.instance.presenterOptions = this.presenterOptions;
+    comp.setInput('datasetIds', this.datasetIds());
+    comp.setInput('datasetOptions', this.datasetOptions());
+    comp.setInput('yaxisModifier', false);
+    comp.instance.timespan = this.timespan();
+    comp.setInput('presenterOptions', presenterOptions);
 
     comp.instance.dataLoaded.subscribe((loaded) => {
       debugger;
@@ -151,7 +139,7 @@ export class ExportImageButtonComponent {
           const svgElem = document.querySelector<SVGSVGElement>(temp);
           if (svgElem) {
             this.diagramAdjustments(svgElem).subscribe(() => {
-              switch (this.exportType) {
+              switch (this.exportType()) {
                 case 'svg':
                   this.createSvgDownload(svgElem);
                   break;
@@ -184,13 +172,13 @@ export class ExportImageButtonComponent {
   }
 
   private addLegend(element: SVGSVGElement): Observable<void> {
-    if (this.showLegend) {
+    if (this.showLegend()) {
       const obs: Observable<{
         label: d3.Selection<SVGGElement, unknown, null, undefined> | undefined;
         xPos: number;
       }>[] = [];
       const selection = d3.select(element);
-      this.datasetOptions.forEach((option, k) => {
+      this.datasetOptions().forEach((option, k) => {
         if (option.visible) {
           obs.push(
             this.servicesConnector
@@ -201,7 +189,7 @@ export class ExportImageButtonComponent {
                     ts.firstValue &&
                     ts.lastValue &&
                     this.timeSrvc.overlaps(
-                      this.timespan,
+                      this.timespan(),
                       ts.firstValue.timestamp,
                       ts.lastValue.timestamp,
                     )
@@ -266,7 +254,8 @@ export class ExportImageButtonComponent {
   }
 
   private addTitle(element: SVGSVGElement) {
-    if (this.title) {
+    const title = this.title();
+    if (title) {
       const addedHeight = 20;
 
       this.internalHeight += addedHeight;
@@ -278,7 +267,7 @@ export class ExportImageButtonComponent {
       this.moveDown(graph, addedHeight);
       const titleElem = selection
         .append<SVGGraphicsElement>('svg:text')
-        .text(this.title);
+        .text(title);
       const titleElemNode = titleElem.node();
       if (titleElem && titleElemNode) {
         const titleWidth = titleElemNode.getBBox().width;
@@ -328,7 +317,7 @@ export class ExportImageButtonComponent {
         (element.id ||
           element.getAttribute('name') ||
           element.getAttribute('aria-label') ||
-          this.fileName) + '.png';
+          this.fileName()) + '.png';
       a.click();
       window.URL.revokeObjectURL(uri);
       document.body.removeChild(a);
@@ -359,7 +348,7 @@ export class ExportImageButtonComponent {
     const svgUrl = URL.createObjectURL(svgBlob);
     const downloadLink = document.createElement('a');
     downloadLink.href = svgUrl;
-    downloadLink.download = `${this.fileName}.svg`;
+    downloadLink.download = `${this.fileName()}.svg`;
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);

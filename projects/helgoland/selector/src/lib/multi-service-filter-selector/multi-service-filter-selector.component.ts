@@ -1,11 +1,11 @@
 import { NgStyle } from '@angular/common';
 import {
   Component,
-  EventEmitter,
-  Input,
   OnChanges,
-  Output,
   SimpleChanges,
+  inject,
+  input,
+  output,
 } from '@angular/core';
 import {
   Filter,
@@ -14,7 +14,6 @@ import {
   LanguageChangNotifier,
   Parameter,
 } from '@helgoland/core';
-import { TranslateService } from '@ngx-translate/core';
 
 export interface MultiServiceFilter {
   url: string;
@@ -37,44 +36,33 @@ export type MultiServiceFilterEndpoint =
 @Component({
   selector: 'n52-multi-service-filter-selector',
   templateUrl: './multi-service-filter-selector.component.html',
-  standalone: true,
   imports: [NgStyle],
 })
 export class MultiServiceFilterSelectorComponent
   extends LanguageChangNotifier
   implements OnChanges
 {
-  @Input({ required: true })
-  public endpoint!: MultiServiceFilterEndpoint;
+  protected servicesConnector = inject(HelgolandServicesConnector);
 
-  @Input()
-  public filterList: MultiServiceFilter[] = [];
+  readonly endpoint = input.required<MultiServiceFilterEndpoint>();
 
-  @Input()
-  public selected: string | undefined;
+  readonly filterList = input<MultiServiceFilter[]>([]);
 
-  @Output()
+  readonly selected = input<string>();
+
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  public onItemSelected: EventEmitter<FilteredParameter> =
-    new EventEmitter<FilteredParameter>();
+  readonly onItemSelected = output<FilteredParameter>();
 
-  public loading = 0;
-  public items: FilteredParameter[] = [];
+  loading = 0;
+  items: FilteredParameter[] = [];
 
-  constructor(
-    protected servicesConnector: HelgolandServicesConnector,
-    protected override translate: TranslateService,
-  ) {
-    super(translate);
-  }
-
-  public ngOnChanges(changes: SimpleChanges) {
-    if (changes['filterList'] && this.filterList) {
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['filterList'] && this.filterList()) {
       this.loadItems();
     }
   }
 
-  public onSelectItem(item: FilteredParameter): void {
+  onSelectItem(item: FilteredParameter): void {
     this.deselectAllItems();
     item.selected = true;
     this.onItemSelected.emit(item);
@@ -86,10 +74,11 @@ export class MultiServiceFilterSelectorComponent
 
   protected loadItems() {
     this.items = [];
-    this.filterList.forEach((entry) => {
+    this.filterList().forEach((entry) => {
       const filter = entry.filter || {};
       this.loading++;
-      switch (this.endpoint) {
+      const endpoint = this.endpoint();
+      switch (endpoint) {
         case 'offering':
           this.servicesConnector.getOfferings(entry.url, filter).subscribe({
             next: (res) =>
@@ -140,7 +129,7 @@ export class MultiServiceFilterSelectorComponent
           });
           break;
         default:
-          console.error('Wrong endpoint: ' + this.endpoint);
+          console.error('Wrong endpoint: ' + endpoint);
           this.loading--;
       }
     });
@@ -158,7 +147,7 @@ export class MultiServiceFilterSelectorComponent
   ): void {
     this.loading--;
     res.forEach((entry) => {
-      entry.selected = this.selected === entry.label;
+      entry.selected = this.selected() === entry.label;
       const filter: Filter = {
         filter: prevfilter,
         itemId: entry.id,
