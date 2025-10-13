@@ -48,7 +48,7 @@
     "version": "npm run lib:build && git add -A .",
     "_postversion": "git push && git push --tags && npm run lib:publish",
     "bundle-war": "node scripts/bundle-war.js",
-    "bundle-rpm:timeseries": "ts-node scripts/bundle-rpm.ts helgoland-timeseries",
+    "bundle-rpm:timeseries": "tsx scripts/bundle-rpm.ts helgoland-timeseries",
     "i18n": "npm run i18n:extract:common && npm run i18n:extract:timeseries && npm run i18n:extract:trajectories",
     "i18n:extract:common": "ngx-translate-extract --input ./projects/helgoland-common/src --output ./projects/helgoland-common/src/i18n/*.json --clean --format --sort",
     "i18n:extract:timeseries": "ngx-translate-extract --input ./projects/helgoland-timeseries/src --output ./projects/helgoland-timeseries/src/assets/i18n/*.json --clean --format --sort",
@@ -88,7 +88,9 @@
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "typescript-logging": "^0.6.3",
-    "zone.js": "0.15.1"
+    "zone.js": "0.15.1",
+    "rimraf": "^5.0.1",
+    "rpm-builder": "^1.2.1"
   },
   "optionalDependencies": {
     "@nx/nx-darwin-arm64": "18.3.5",
@@ -135,7 +137,7 @@
     "prettier-eslint": "^16.2.0",
     "syncpack": "11.2.1",
     "tablemark-cli": "^3.0.0",
-    "ts-node": "^10.9.1",
+    "tsx": "^4.20.6",
     "typescript": "^5.8.3"
   }
 }

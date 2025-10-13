@@ -102,7 +102,12 @@
     "useDefineForClassFields": false
   },
   "ts-node": {
-    "transpileOnly": true
+    "transpileOnly": true,
+    "compilerOptions": {
+      "moduleResolution": "bundler",
+      "module": "ES2022",
+      "target": "ES2022"
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
