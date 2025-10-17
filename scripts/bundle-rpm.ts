@@ -13,9 +13,6 @@ console.log(`rpm release version: ${releaseVersion}`)
 
 const application = process.argv[2] !== undefined ? process.argv[2] : "helgoland-timeseries";
 const targetName = process.argv[3] !== undefined ?process.argv[3] : application;
-const buildPath = `./dist/${targetName}/`;
-
-console.log(`build application ${application} into ${buildPath}`)
 
 const options = {
   name: 'sensorwebclient',
@@ -27,7 +24,7 @@ const options = {
   keepTemp: false,
   rpmDest: './dist',
   files: [
-    { cwd: buildPath, src: '*', dest: `/var/www/html/${targetName}` }
+    { cwd: `./dist/${targetName}/browser`, src: '*', dest: `/var/www/html/${targetName}` }
   ]
 };
 
