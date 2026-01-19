@@ -64,6 +64,8 @@ export class ServiceSelectorComponent implements OnInit {
                     entry.quantities?.datasets ||
                     (filter && !filter.expanded)
                   ) {
+                    (entry as ExtendedHelgolandService).protected = entry.type == "protected";
+                    console.log("pushing")
                     this.services.push(entry);
                   }
                 });

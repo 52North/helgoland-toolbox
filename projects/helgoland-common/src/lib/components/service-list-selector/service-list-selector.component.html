@@ -8,11 +8,8 @@
 >
   @for (service of services; track service) {
     <mat-list-option [value]="service" [selected]="isSelected(service)">
-      <span matListItemTitle>
+      <span matListItemTitle matTooltip="{{ service.apiUrl }}">
         <span>{{ service.label }}</span>
-        @if (service.type || service.version) {
-          <span> ({{ service.type }}, {{ service.version }}) </span>
-        }
       </span>
       @if (service.quantities) {
         <span matListItemLine>
@@ -22,7 +19,7 @@
               {{ "service-selector.platforms" | translate }} -
             </span>
           }
-          @if (service.quantities.datasets !== undefined) {
+          @if (service.quantities.datasets !== undefined && service.quantities.datasets > 0) {
             <span
               >{{ service.quantities.datasets }}
               {{ "service-selector.datasets" | translate }} -
@@ -36,7 +33,6 @@
           }
         </span>
       }
-      <span matListItemLine style="font-size: 70%">{{ service.apiUrl }}</span>
       @if (service.protected) {
         <mat-icon matListItemIcon>lock</mat-icon>
       }

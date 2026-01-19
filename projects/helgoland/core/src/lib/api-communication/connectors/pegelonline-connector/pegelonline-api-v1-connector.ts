@@ -652,18 +652,18 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
 
   protected createService(url: string): HelgolandService {
     const id = '1';
-    const label = 'PegelOnline WSV';
-    const type = 'RESTful API';
+    const label = 'PegelOnline Login';
+    const type = 'protected';
     const version = '1.0';
     const quantities: HelgolandServiceQuantities = {};
 
-    quantities.categories = 1;
-    quantities.features = 1299;
-    quantities.offerings = 1299;
+    quantities.categories = undefined;
+    quantities.features = undefined;
+    quantities.offerings = undefined;
     // quantities.phenomena = this.getPhenomenaList().length;
-    quantities.procedures = 1299;
-    quantities.datasets = 1458;
-    quantities.platforms = 1299;
+    quantities.procedures = undefined;
+    quantities.datasets = -1;
+    quantities.platforms = undefined;
 
     return new HelgolandService(id, url, label, type, version, quantities);
   }
