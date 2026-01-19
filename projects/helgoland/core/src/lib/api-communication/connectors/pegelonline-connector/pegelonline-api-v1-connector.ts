@@ -652,7 +652,7 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
 
   protected createService(url: string): HelgolandService {
     const id = '1';
-    const label = 'PegelOnline Login';
+    const label = 'PEGELONLINE Login';
     const type = 'protected';
     const version = '1.0';
     const quantities: HelgolandServiceQuantities = {};
