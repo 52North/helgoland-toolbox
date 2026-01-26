@@ -1,24 +1,16 @@
 {
     "defaultService": {
         "serviceId": "1",
-        "apiUrl": "https://fluggs.wupperverband.de/sws5/api/"
+        "apiUrl": "https://test.sensor-gdi.de/webservices/gis/gdi-sos/api/"
     },
     "datasetApis": [
         {
-            "name": "geo.irceline.be",
-            "url": "https://geo.irceline.be/sos/api/v1/"
+            "name": "PEGELONLINE_PUBLIC",
+            "url": "https://test.sensor-gdi.de/webservices/gis/gdi-sos/api/"
         },
         {
-            "name": "fluggs.wupperverband.de",
-            "url": "https://fluggs.wupperverband.de/sws5/api/"
-        },
-        {
-            "name": "STA-Test",
-            "url": "https://calgary-aq-sta.sensorup.com/v1.0/"
-        },
-        {
-            "name": "Pegelonline WSV",
-            "url": "https://pegelonline-testprev.wsv.de/webservices/nutzer/rest-api/v2/",
+            "name": "PEGELONLINE_PRIVATE",
+            "url": "https://pegelonline.wsv.de/webservices/nutzer/rest-api/v2/",
             "basicAuth": true,
             "basicAuthPostFix": "stations",
             "connector": "PegelonlineApiConnector"

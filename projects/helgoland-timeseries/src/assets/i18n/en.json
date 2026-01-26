@@ -80,5 +80,7 @@
 	"timeseries-symbol-select.type.square": "Square",
 	"timeseries-symbol-select.type.star": "Star",
 	"timeseries-symbol-select.type.triangle": "Triangle",
-	"timeseries-symbol-select.type.wye": "Wye"
+	"timeseries-symbol-select.type.wye": "Wye",
+	"PEGELONLINE HelgolandAPI": "PEGELONLINE public",
+	"PEGELONLINE_PRIVATE": "PEGELONLINE login"
 }

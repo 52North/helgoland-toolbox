@@ -9,7 +9,7 @@ import {
   HelgolandServicesConnector,
   Parameter,
 } from '@helgoland/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   ErrorHandlerService,
   FilterLabelComponent,
@@ -49,8 +49,10 @@ export class ListSelectionComponent implements OnInit {
   protected graphDatasetsSrvc = inject(DatasetsService);
   private configSrvc = inject(ConfigurationService);
   private errorHandler = inject(ErrorHandlerService);
+  protected translateService = inject(TranslateService);
 
   selectedService: HelgolandService | undefined;
+  selectedServiceName: string = "";
 
   filterList: ParameterListEntry[] = [];
 
@@ -65,6 +67,7 @@ export class ListSelectionComponent implements OnInit {
                 e.id ===
                 this.configSrvc.configuration.defaultService!.serviceId,
             )!;
+            this.selectedServiceName = this.translateService.instant(this.selectedService.label);
             this.resetView(this.selectedService);
           },
           error: (error) => this.errorHandler.error(error),
@@ -88,6 +91,7 @@ export class ListSelectionComponent implements OnInit {
             this.selectedService!.apiUrl !== newConf.selectedService.apiUrl
           ) {
             this.selectedService = newConf.selectedService;
+            this.selectedServiceName = this.translateService.instant(this.selectedService.label);
             this.resetView(this.selectedService);
           }
         }

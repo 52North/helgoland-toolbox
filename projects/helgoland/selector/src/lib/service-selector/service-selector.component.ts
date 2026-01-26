@@ -5,7 +5,7 @@ import {
   HelgolandParameterFilter,
   HelgolandService,
 } from '@helgoland/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { CommonModule } from '@angular/common';
 import { ServiceSelectorService } from './service-selector.service';
@@ -25,6 +25,7 @@ interface ExtendedHelgolandService extends HelgolandService {
 })
 export class ServiceSelectorComponent implements OnInit {
   protected serviceSelectorService = inject(ServiceSelectorService);
+  protected translateService = inject(TranslateService);
 
   readonly datasetApiList = input<DatasetApi[]>([]);
 
@@ -65,20 +66,22 @@ export class ServiceSelectorComponent implements OnInit {
                     (filter && !filter.expanded)
                   ) {
                     (entry as ExtendedHelgolandService).protected = entry.type == "protected";
-                    console.log("pushing")
+                    entry.label = this.translateService.instant(entry.label),
                     this.services.push(entry);
+                    this.services.sort((a, b) => a.id < b.id ? -1 : 1);
                   }
                 });
               } else {
                 this.loadingCount--;
                 this.services.push({
                   apiUrl: api.url,
-                  label: api.name,
+                  label: this.translateService.instant(api.name),
                   protected: true,
                   id: api.url,
                   type: '',
                   version: '',
                 });
+                this.services.sort((a, b) => a.id < b.id ? -1 : 1);
               }
             },
             error: (error) => {
