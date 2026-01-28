@@ -111,6 +111,7 @@ export class AxisSettings {
 export interface GraphDataEntry {
   timestamp: number;
   value: number;
+  parameter?: any;
   highlight?: boolean;
   xDiagCoord?: number;
   yDiagCoord?: number;
@@ -126,6 +127,7 @@ export interface DatasetDescription {
   serviceLabel?: string;
   firstValue?: FirstLastValue;
   lastValue?: FirstLastValue;
+  additional?: { [key: string]: any };
 }
 
 export abstract class DatasetChild {
@@ -276,6 +278,7 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
         platformLabel: this.description.platformLabel,
         procedureLabel: this.description.procedureLabel,
         uom: this.description.uom,
+        additional: this.description.additional,
       },
     );
   }

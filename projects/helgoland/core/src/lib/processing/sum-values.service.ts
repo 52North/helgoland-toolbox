@@ -46,10 +46,10 @@ export class SumValuesService {
           });
           result.push([
             currentBucketStart.unix() * 1000,
-            hasValues ? sum : NaN,
+            { value: hasValues ? sum : NaN },
           ]);
         } else {
-          result.push([currentBucketStart.unix() * 1000, NaN]);
+          result.push([currentBucketStart.unix() * 1000, { value: NaN }]);
         }
         bucketVals = [];
         currentBucketStart = currentBucketStart.add(period);

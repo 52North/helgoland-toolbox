@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import moment from 'moment';
 import { forkJoin, Observable, Observer, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -496,7 +496,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
           params.timespan = this.createRequestTimespan(chunkSpan);
           requests.push(
             this.api
-              .getDatasetData<TimeValueTuple>(dataset.id, dataset.url, params)
+              .getDatasetData<[number, number]>(dataset.id, dataset.url, params)
               .pipe(map((res) => this.createTimeseriesData(res))),
           );
           start = end.add(1, 'millisecond');
@@ -556,7 +556,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
           params.expanded = filter.expanded;
         }
         return this.api
-          .getDatasetData<TimeValueTuple>(dataset.id, dataset.url, params)
+          .getDatasetData<[number, number]>(dataset.id, dataset.url, params)
           .pipe(map((res) => this.createTimeseriesData(res)));
       }
     }
@@ -632,15 +632,39 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
   }
 
   protected createTimeseriesData(
-    res: Data<TimeValueTuple>,
+    res: Data<[number, number]>,
   ): HelgolandTimeseriesData {
-    const data = new HelgolandTimeseriesData(res.values);
-    data.referenceValues = res.referenceValues ? res.referenceValues : {};
+    const values: TimeValueTuple[] = res.values.map((e) => [e[0], { value: e[1] }]);
+    const data = new HelgolandTimeseriesData(values);
+    if (res.referenceValues) {
+      for (const key in res.referenceValues) {
+        if (res.referenceValues.hasOwnProperty(key)) {
+          const refVals: TimeValueTuple[] = res.referenceValues[key].values.map(
+            (e) => [e[0], { value: e[1] }],
+          );
+          data.referenceValues[key] = {
+            values: refVals,
+          };
+          if (res.referenceValues[key].valueBeforeTimespan) {
+            data.referenceValues[key].valueBeforeTimespan = [
+              res.referenceValues[key].valueBeforeTimespan[0],
+              { value: res.referenceValues[key].valueBeforeTimespan[1] },
+            ];
+          }
+          if (res.referenceValues[key].valueAfterTimespan) {
+            data.referenceValues[key].valueAfterTimespan = [
+              res.referenceValues[key].valueAfterTimespan[0],
+              { value: res.referenceValues[key].valueAfterTimespan[1] },
+            ];
+          }
+        } 
+      }
+    }
     if (res.valueBeforeTimespan) {
-      data.valueBeforeTimespan = res.valueBeforeTimespan;
+      data.valueBeforeTimespan = [res.valueBeforeTimespan[0], { value: res.valueBeforeTimespan[1] }];
     }
     if (res.valueAfterTimespan) {
-      data.valueAfterTimespan = res.valueAfterTimespan;
+      data.valueAfterTimespan = [res.valueAfterTimespan[0], { value: res.valueAfterTimespan[1] }];
     }
     return data;
   }

@@ -20,7 +20,7 @@ export interface TimeValueEntry extends IDataEntry {
   value: number | null;
 }
 
-export type TimeValueTuple = [number, number];
+export type TimeValueTuple = [number, { value: number; parameter?: any }];
 
 export interface LocatedTimeValueEntry extends TimeValueEntry {
   geometry: GeoJSON.Point;

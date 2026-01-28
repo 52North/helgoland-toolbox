@@ -14,6 +14,9 @@ export enum DefinedTimespan {
   LAST_MONTH = 'last_month',
   CURRENT_YEAR = 'current_year',
   LAST_YEAR = 'last_year',
+  LAST_10_YEARS = 'last_10_years',
+  LAST_20_YEARS = 'last_20_years',
+  LAST_100_YEARS = 'last_100_years'
 }
 
 @Injectable()
@@ -71,6 +74,21 @@ export class DefinedTimespanService {
     this.intervals.set(DefinedTimespan.LAST_YEAR, () => {
       const from = moment().subtract(1, 'years').startOf('year').unix() * 1000;
       const to = moment().subtract(1, 'years').endOf('year').unix() * 1000;
+      return new Timespan(from, to);
+    });
+    this.intervals.set(DefinedTimespan.LAST_10_YEARS, () => {
+      const from = moment().subtract(10, 'years').startOf('year').unix() * 1000;
+      const to = moment().unix() * 1000;
+      return new Timespan(from, to);
+    });
+    this.intervals.set(DefinedTimespan.LAST_20_YEARS, () => {
+      const from = moment().subtract(20, 'years').startOf('year').unix() * 1000;
+      const to = moment().unix() * 1000;
+      return new Timespan(from, to);
+    });
+    this.intervals.set(DefinedTimespan.LAST_100_YEARS, () => {
+      const from = moment().subtract(100, 'years').startOf('year').unix() * 1000;
+      const to = moment().unix() * 1000;
       return new Timespan(from, to);
     });
   }

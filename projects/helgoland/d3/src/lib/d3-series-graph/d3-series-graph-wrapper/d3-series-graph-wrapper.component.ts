@@ -418,7 +418,7 @@ export class D3SeriesGraphWrapperComponent
 
       const data = rawdata.values.map((e) => ({
         timestamp: e[0],
-        value: e[1],
+        value: e[1].value,
       }));
       this.addReferenceValueDatasets(dsEntry, rawdata);
       dsEntry.setData(data);

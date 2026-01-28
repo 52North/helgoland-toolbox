@@ -617,17 +617,17 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
     values.forEach((element, idx) => {
       const curr = moment(element.timestamp).valueOf();
       if (curr >= timespan.from && curr <= timespan.to) {
-        items.push([curr, element.value]);
+        items.push([curr, { value: element.value }]);
         return;
       }
       const next = moment(values[idx + 1]?.timestamp).valueOf();
       if (curr <= timespan.from && next >= timespan.from) {
-        items.push([curr, element.value]);
+        items.push([curr, { value: element.value }]);
         return;
       }
       const before = moment(values[idx - 1]?.timestamp).valueOf();
       if (curr >= timespan.to && before <= timespan.to) {
-        items.push([curr, element.value]);
+        items.push([curr, { value: element.value }]);
         return;
       }
     });

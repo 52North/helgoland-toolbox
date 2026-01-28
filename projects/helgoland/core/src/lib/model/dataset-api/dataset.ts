@@ -22,6 +22,7 @@ export class ParameterConstellation {
     public procedure?: Parameter,
     public phenomenon?: Parameter,
     public category?: Parameter[],
+    public additional?: { [key: string]: any },
   ) {}
 }
 

@@ -337,8 +337,10 @@ export class TimeseriesServiceImpl
           featureLabel: ts.parameters.feature?.label,
           firstValue: ts.firstValue,
           lastValue: ts.lastValue,
+          additional: ts.parameters.additional,
         },
       );
+      
       this.setState(dataset.id, style, yaxis, selected, visible);
       this.saveState();
       this.graphDatasetsSrvc.addOrUpdateDataset(dataset);
@@ -581,9 +583,10 @@ export class TimeseriesServiceImpl
         rawdata.values = this.sumValues.sum(startOf, period, rawdata.values);
       }
 
-      const data = rawdata.values.map((e) => ({
+      const data: GraphDataEntry[] = rawdata.values.map((e) => ({
         timestamp: e[0],
-        value: e[1],
+        value: e[1].value,
+        parameter: e[1].parameter,
       }));
 
       const ds = this.graphDatasetsSrvc.getDatasetEntry(dataset.internalId);
@@ -613,17 +616,20 @@ export class TimeseriesServiceImpl
     data: HelgolandTimeseriesData,
     refId: string,
   ): GraphDataEntry[] {
-    let refValues = data.referenceValues[refId] as any;
+    const refValues = data.referenceValues[refId];
+    let vals = refValues.values;
     if (!(refValues instanceof Array)) {
       if (refValues.valueBeforeTimespan) {
-        refValues.values.unshift(refValues.valueBeforeTimespan);
+        vals.unshift(refValues.valueBeforeTimespan);
       }
       if (refValues.valueAfterTimespan) {
-        refValues.values.push(refValues.valueAfterTimespan);
+        vals.push(refValues.valueAfterTimespan);
       }
-      refValues = refValues.values;
     }
-    return refValues.map((d: any) => ({ timestamp: d[0], value: d[1] }));
+    return vals.map((d) => ({
+      timestamp: d[0],
+      value: d[1].value,
+    }));
   }
 
   private prepareOverviewData(
@@ -654,7 +660,7 @@ export class TimeseriesServiceImpl
 
       const data = rawdata.values.map((e) => ({
         timestamp: e[0],
-        value: e[1],
+        value: e[1].value,
       }));
 
       const ds = this.graphDatasetsSrvc.getOverviewDatasetEntry(

@@ -659,7 +659,7 @@ export class StaInterfaceService {
   ) {
     let requestStub = `${url}${endpoint}`;
     if (id !== null && id !== undefined) {
-      requestStub += `(${id})`;
+      requestStub += `('${id}')`;
       if (relation !== undefined) {
         requestStub += `/${relation}`;
       }
