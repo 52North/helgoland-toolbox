@@ -157,11 +157,13 @@ export class D3GraphHoverLineComponent
         this.drawLineIndicator(mouse);
         if (this.showLabels()) {
           this.datasets.forEach((entry, entryIdx) => {
-            const idx = this.getItemForX(
-              mouse[0] + this.graphExtent!.leftOffset,
-              this.data!.get(entry.id)!,
-            );
-            if (idx) this.showLabel(entry, idx, mouse[0], entryIdx);
+            if (this.data!.has(entry.id)) {
+              const idx = this.getItemForX(
+                mouse[0] + this.graphExtent!.leftOffset,
+                this.data!.get(entry.id)!,
+              );
+              if (idx) this.showLabel(entry, idx, mouse[0], entryIdx);
+            }
           });
         }
       }
@@ -211,6 +213,9 @@ export class D3GraphHoverLineComponent
     const PixelBuffer = 5;
     const time = this.graphExtent?.xScale.invert(xCoord);
     const idx = d3.bisector((d: DataEntry) => d.timestamp).left(data, time);
+    if (idx >= data.length) {
+      return undefined;
+    }
     const distIdx = this.calcDist(data[idx], xCoord);
     if (idx > 0) {
       const distPrev = this.calcDist(data[idx - 1], xCoord);
