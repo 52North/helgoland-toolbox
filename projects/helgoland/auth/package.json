@@ -1,6 +1,6 @@
 {
   "name": "@helgoland/auth",
-  "version": "20.0.0",
+  "version": "20.0.1",
   "dependencies": {
     "@angular/common": "^20.0.0",
     "@angular/core": "^20.0.0",
