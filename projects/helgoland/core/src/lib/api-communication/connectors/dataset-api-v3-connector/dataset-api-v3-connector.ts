@@ -634,7 +634,10 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
   protected createTimeseriesData(
     res: Data<[number, number]>,
   ): HelgolandTimeseriesData {
-    const values: TimeValueTuple[] = res.values.map((e) => [e[0], { value: e[1] }]);
+    const values: TimeValueTuple[] = res.values.map((e) => [
+      e[0],
+      { value: e[1] },
+    ]);
     const data = new HelgolandTimeseriesData(values);
     if (res.referenceValues) {
       for (const key in res.referenceValues) {
@@ -657,14 +660,20 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
               { value: res.referenceValues[key].valueAfterTimespan[1] },
             ];
           }
-        } 
+        }
       }
     }
     if (res.valueBeforeTimespan) {
-      data.valueBeforeTimespan = [res.valueBeforeTimespan[0], { value: res.valueBeforeTimespan[1] }];
+      data.valueBeforeTimespan = [
+        res.valueBeforeTimespan[0],
+        { value: res.valueBeforeTimespan[1] },
+      ];
     }
     if (res.valueAfterTimespan) {
-      data.valueAfterTimespan = [res.valueAfterTimespan[0], { value: res.valueAfterTimespan[1] }];
+      data.valueAfterTimespan = [
+        res.valueAfterTimespan[0],
+        { value: res.valueAfterTimespan[1] },
+      ];
     }
     return data;
   }

@@ -243,7 +243,7 @@ export class D3GraphHoverPointComponent
             (d) => d.yDiagCoord!,
           );
           const idx = delaunay.find(x, y);
-  
+
           if (idx != null && !isNaN(idx) && this.graphLayer) {
             const datum = data[idx] as DataEntry;
             const distance = this.distance(

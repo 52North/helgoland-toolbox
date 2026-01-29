@@ -340,7 +340,7 @@ export class TimeseriesServiceImpl
           additional: ts.parameters.additional,
         },
       );
-      
+
       this.setState(dataset.id, style, yaxis, selected, visible);
       this.saveState();
       this.graphDatasetsSrvc.addOrUpdateDataset(dataset);

@@ -44,7 +44,7 @@ import {
   AxisSettings,
   DatasetDescription,
   DatasetStyle,
-  SeriesGraphDataset
+  SeriesGraphDataset,
 } from '../models/series-graph-dataset';
 
 @Component({

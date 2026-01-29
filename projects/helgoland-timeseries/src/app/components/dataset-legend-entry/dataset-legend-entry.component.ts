@@ -7,7 +7,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { HelgolandCoreModule, Time, TimeInterval } from '@helgoland/core';
-import { AreaDatasetChild, SeriesGraphDataset, TimeseriesChild } from '@helgoland/d3';
+import {
+  AreaDatasetChild,
+  SeriesGraphDataset,
+  TimeseriesChild,
+} from '@helgoland/d3';
 import { HelgolandLabelMapperModule } from '@helgoland/depiction';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LoadingOverlayProgressBarComponent } from 'helgoland-common';

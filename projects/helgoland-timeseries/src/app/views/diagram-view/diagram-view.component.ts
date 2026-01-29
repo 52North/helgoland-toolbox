@@ -38,7 +38,10 @@ import {
   ModalDiagramSettingsComponent,
 } from '../../components/modal-diagram-settings/modal-diagram-settings.component';
 import { GeneralTimeSelectionComponent } from '../../components/time/general-time-selection/general-time-selection.component';
-import { AppConfig, ConfigurationService } from '../../services/configuration.service';
+import {
+  AppConfig,
+  ConfigurationService,
+} from '../../services/configuration.service';
 import { ModalMainConfigButtonComponent } from './../../components/main-config/modal-main-config-button/modal-main-config-button.component';
 import { AppRouterService } from './../../services/app-router.service';
 import {
@@ -82,7 +85,9 @@ export class DiagramViewComponent implements OnInit {
   protected initStateService = inject(DiagramViewInitStateService);
   private time = inject(Time);
   protected graphDatasetsSrvc = inject(DatasetsService);
-  private configSrvc = inject(ConfigurationService<AppConfig>) as ConfigurationService<AppConfig>;
+  private configSrvc = inject(
+    ConfigurationService<AppConfig>,
+  ) as ConfigurationService<AppConfig>;
 
   mobileQuery: MediaQueryList;
 

@@ -5,7 +5,7 @@ import {
   DatasetStyle,
   LineStyle,
   SeriesGraphDataset,
-  TimeseriesChild
+  TimeseriesChild,
 } from '@helgoland/d3';
 
 import { Favorite } from './favorite.service';
