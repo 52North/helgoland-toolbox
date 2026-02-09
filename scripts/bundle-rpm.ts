@@ -27,7 +27,7 @@ const options = {
   rpmDest: './dist',
   files: [
     { cwd: `${buildPath}browser/`, src: '*', dest: `/var/www/html/${targetName}` },
-    { cwd: `${buildPath}/`, src: 'sensorwebclient-sbom.json', dest: `/opt/edis/` }
+    { cwd: `${buildPath}/`, src: 'sensorwebclient-sbom.json', dest: `/opt/edis` }
   ]
 };
 
