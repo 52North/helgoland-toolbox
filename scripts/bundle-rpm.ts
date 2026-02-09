@@ -26,13 +26,26 @@ const options = {
   keepTemp: false,
   rpmDest: './dist',
   files: [
-    { cwd: `${buildPath}browser/`, src: '*', dest: `/var/www/html/${targetName}` }
+    { cwd: `${buildPath}browser/`, src: '*', dest: `/var/www/html/${targetName}` },
+    { cwd: `${buildPath}/`, src: 'sensorwebclient-sbom.json', dest: `/opt/edis/sensorwebclient-sbom.json` }
   ]
 };
 
-console.log(`Build application ${application}`);
+console.log(`Cleaning output directory ${buildPath}`);
 execSync(
-  `rimraf -rf ${buildPath} && ng build ${application} --configuration production --output-path=${buildPath} --base-href=/${targetName}/`,
+  `rimraf -rf ${buildPath}`,
+  { stdio: [0, 1, 2] }
+);
+
+console.log(`Building application ${application}`);
+execSync(
+  `ng build ${application} --configuration production --output-path=${buildPath} --base-href=/${targetName}/`,
+  { stdio: [0, 1, 2] }
+);
+
+console.log(`Creating SBOM for application ${application}`);
+execSync(
+  `npm sbom --sbom-format cyclonedx --omit dev > ${buildPath}/sensorwebclient-sbom.json`,
   { stdio: [0, 1, 2] }
 );
 
