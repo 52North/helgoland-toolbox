@@ -263,7 +263,7 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
   ) {}
 
   clone(): SeriesGraphDataset {
-    return new SeriesGraphDataset(
+    const clone = new SeriesGraphDataset(
       this.id,
       this.style.clone(),
       this.yAxis.clone(),
@@ -281,6 +281,9 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
         additional: this.description.additional,
       },
     );
+    clone.setDataLoading(this._dataLoading);
+    clone.setData(this._data);
+    return clone
   }
 
   get dataLoading(): boolean {
