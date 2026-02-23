@@ -54,6 +54,7 @@ import {
   SeriesGraphDataset,
   TimeseriesChild,
 } from './models/series-graph-dataset';
+import { debounceTime, from, fromEvent, Observable, Subject } from 'rxjs';
 
 const TICKS_COUNT_YAXIS = 5;
 
@@ -209,6 +210,8 @@ export class D3SeriesGraphComponent
 
   private resizeObserver: ResizeObserver | undefined;
 
+  private redraw: Subject<SeriesGraphDataset | undefined>;
+
   constructor() {
     this.datasetsDiffer = this.iterableDiffers.find([]).create();
     this.graphOptionsDiffer = this.keyValueDiffers.find({}).create();
@@ -218,6 +221,13 @@ export class D3SeriesGraphComponent
     this.timezoneSubscription = this.timezoneSrvc.timezoneChange.subscribe(
       (tz: string) => this.onTimezoneChanged(),
     );
+    this.redraw = new Subject();
+    from(this.redraw)
+    .pipe(debounceTime(100))
+    .subscribe(() => {
+      this.prepareDatasets();
+      this.redrawGraph();
+    });
   }
 
   ngOnInit(): void {
@@ -230,14 +240,14 @@ export class D3SeriesGraphComponent
       graphDatasetsChanges.forEachAddedItem((addedItem) => {
         if (addedItem.item instanceof SeriesGraphDataset) {
           if (addedItem.item.hasData()) {
-            this.redrawCompleteGraph();
+            this.redraw.next(addedItem.item);
           }
           this.subscribeEvents(addedItem.item);
         }
       });
       graphDatasetsChanges.forEachRemovedItem((removedItem) => {
-        this.redrawCompleteGraph();
         if (removedItem.item instanceof SeriesGraphDataset) {
+          this.redraw.next(removedItem.item);
           this.unsubscribeEvents(removedItem.item);
         }
       });
@@ -248,7 +258,7 @@ export class D3SeriesGraphComponent
     );
     if (graphOptionsChanged && this.plotOptions) {
       Object.assign(this.plotOptions, this.graphOptions());
-      this.redrawCompleteGraph();
+      this.redraw.next(undefined);
     }
 
     const timespan = this.timespan();
@@ -259,17 +269,17 @@ export class D3SeriesGraphComponent
     ) {
       this.oldTimespan.from = timespan.from;
       this.oldTimespan.to = timespan.to;
-      this.redrawCompleteGraph();
+      this.redraw.next(undefined);
     }
   }
 
   private subscribeEvents(ds: SeriesGraphDataset) {
     let dataSubscription: Subscription;
-    dataSubscription = ds.dataChangeEvent.subscribe(() => {
-      this.redrawCompleteGraph();
+    dataSubscription = ds.dataChangeEvent.subscribe((ds) => {
+      this.redraw.next(ds);
     });
     const events: DatasetEventSubscriptions = {
-      state: ds.stateChangeEvent.subscribe(() => this.redrawCompleteGraph()),
+      state: ds.stateChangeEvent.subscribe((ds) => this.redraw.next(ds)),
       data: dataSubscription,
     };
     this.subscriptions.set(ds.id, events);
@@ -321,12 +331,12 @@ export class D3SeriesGraphComponent
       );
 
     this.addResizeObserver();
-    this.redrawCompleteGraph();
+    this.redraw.next(undefined);
   }
 
   private addResizeObserver() {
     this.resizeObserver = new ResizeObserver((entries) =>
-      this.zone.run(() => this.redrawCompleteGraph()),
+      this.zone.run(() => this.redraw.next(undefined)),
     );
     this.resizeObserver.observe(this.d3Elem()?.nativeElement);
   }
@@ -563,6 +573,7 @@ export class D3SeriesGraphComponent
 
   private prepareDatasets() {
     const datasets = this.datasets();
+    //TODO: we only need to do this for datasets that actually changed and not for all
     if (datasets && datasets.length) {
       this.preparedData = new Map();
       datasets.forEach((entry) => {
@@ -574,8 +585,7 @@ export class D3SeriesGraphComponent
   }
 
   redrawCompleteGraph() {
-    this.prepareDatasets();
-    this.redrawGraph();
+    this.redraw.next(undefined);
   }
 
   /**
