@@ -283,6 +283,7 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
     );
     clone.setDataLoading(this._dataLoading);
     clone.setData(this._data);
+    clone._children = [...this.children];
     return clone
   }
 
