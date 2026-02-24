@@ -70,8 +70,13 @@ Research covered experimenting on how to achieve the integration of access-contr
 ## Quick Start
 
 ### Dependencies
+Make sure you have Node.js version ≥ 18 (LTS recommended) and NPM ≥ 9.
 
-#### Node/NPM
+Ensure that:
+- Node.js ≥ 18
+- NPM ≥ 9
+
+Older versions may not be compatible with modern Angular builds.
 
 Install latest Node and NPM following the [instructions](https://nodejs.org/en/download/). Make sure you have Node version ≥ 10 and NPM ≥ 6. `brew install node` for Mac.
 
@@ -154,6 +159,7 @@ The software is in operational use by the following organizations or within the 
 
 - add `allowSyntheticDefaultImports: true` to your tsconfig.json to avoid error messages like `... has no default export`
 - don't forget to add styles of nested dependencies
+
 
 
 ## Funding organizations/projects
