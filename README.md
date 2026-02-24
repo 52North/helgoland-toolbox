@@ -76,7 +76,7 @@ Ensure that:
 - Node.js ≥ 18
 - NPM ≥ 9
 
-Older versions may not be compatible with modern Angular builds.
+This project contains Angular-based modules, components, and services to build a sensor observation service-based client.
 
 Install latest Node and NPM following the [instructions](https://nodejs.org/en/download/). Make sure you have Node version ≥ 10 and NPM ≥ 6. `brew install node` for Mac.
 
