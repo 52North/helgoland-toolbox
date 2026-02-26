@@ -37,7 +37,6 @@ export class D3SeriesGraphOverviewWrapperComponent
     },
     {
       transform: (value: D3PlotOptions) => {
-        debugger;
         return {
           ...value,
           overview: true,

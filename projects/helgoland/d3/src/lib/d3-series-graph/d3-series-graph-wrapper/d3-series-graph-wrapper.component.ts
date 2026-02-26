@@ -151,7 +151,7 @@ export class D3SeriesGraphWrapperComponent
   }
 
   protected removeDataset(id: string): void {
-    const dataset = this.datasetMap.get(id);
+    // const dataset = this.datasetMap.get(id);
     // first remove all reference values
     // dataset.referenceValues.forEach(refVal => {
     //   const refValIdx = this.graphDatasets.findIndex(e => e.id === this.createRefValueId(id, refVal.referenceValueId));
@@ -283,7 +283,6 @@ export class D3SeriesGraphWrapperComponent
           const refVis = !!options.showReferenceValues.find(
             (ref) => ref.id === refVal.referenceValueId,
           );
-          debugger;
           // dsEntry!.addChild(
           //   new DatasetChild(
           //     refVal.referenceValueId,
@@ -432,7 +431,7 @@ export class D3SeriesGraphWrapperComponent
     if (ds.children && ds.children.length) {
       ds.children.forEach((child) => {
         const refVals = rawdata.referenceValues[child.id];
-        debugger;
+        // debugger;
         // if (refVals) {
         //   child.setData(this.createReferenceValueData(rawdata, child.id));
         // }

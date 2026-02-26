@@ -276,7 +276,7 @@ export class D3SeriesGraphComponent
   private subscribeEvents(ds: SeriesGraphDataset) {
     let dataSubscription: Subscription;
     if (ds === undefined) {
-      debugger;
+      return;
     };
     dataSubscription = ds.dataChangeEvent.subscribe((ds) => {
       this.redraw.next(ds);
