@@ -436,7 +436,7 @@ export class D3SeriesGraphComponent
     // set variable extend bounds
     if (visualMin === undefined || visualMax === undefined) {
       const data = this.preparedData.get(entry.id)!;
-      const baseDataExtent = d3.extent<DataEntry, number>(data, (d) => {
+      let baseDataExtent = d3.extent<DataEntry, number>(data, (d) => {
         // if (typeof d.value === 'number') {
         if (!isNaN(d.value)) {
           // with timespan restriction, it only selects values inside the selected timespan
@@ -449,6 +449,12 @@ export class D3SeriesGraphComponent
         }
         return null;
       });
+
+      // If we cannot calculate a data Extend (e.g. because the timespan filter matches nothing)
+      // use sane defaults instead of crashing
+      if (baseDataExtent[0] === undefined && baseDataExtent[1] === undefined) {
+        baseDataExtent = [0, 0];
+      }
 
       const dataExtentChildValues = entry.children
         .filter((c) => c.visible)
@@ -822,10 +828,10 @@ export class D3SeriesGraphComponent
             // add id to axis
             axis.ids.push(id);
             // update range for axis
-            if (!axis.fixedMin && axis.range.min) {
+            if (!axis.fixedMin && axis.range.min !== undefined) {
               axis.range.min = d3.min([axis.range.min, axisSettings.visualMin]);
             }
-            if (!axis.fixedMax && axis.range.max) {
+            if (!axis.fixedMax && axis.range.max !== undefined) {
               axis.range.max = d3.max([axis.range.max, axisSettings.visualMax]);
             }
             axis.fixedMin = axis.fixedMin || axisSettings.fixedMin;
