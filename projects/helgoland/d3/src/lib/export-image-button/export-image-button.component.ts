@@ -129,7 +129,6 @@ export class ExportImageButtonComponent {
     comp.setInput('presenterOptions', presenterOptions);
 
     comp.instance.dataLoaded.subscribe((loaded) => {
-      debugger;
       if (loaded.size === 0 && once) {
         once = false;
         setTimeout(() => {
