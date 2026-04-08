@@ -18,7 +18,7 @@ import {
   HelgolandServicesConnector,
   Phenomenon,
 } from '@helgoland/core';
-import { HelgolandMapSelectorModule, MapCache } from '@helgoland/map';
+import { HelgolandMapSelectorModule, LayerMap, MapCache } from '@helgoland/map';
 import { MultiServiceFilter } from '@helgoland/selector';
 import { TranslateModule } from '@ngx-translate/core';
 import {
@@ -39,6 +39,7 @@ import {
   ModalMapSettingsComponent,
 } from '../modal-map-settings/modal-map-settings.component';
 import { MapSelectionStateService } from './map-selection-state.service';
+import L from 'leaflet';
 
 interface MapSelectionAppConfig extends AppConfig {
   mapSelectionClusterConfig: MarkerClusterGroupOptions;
@@ -83,6 +84,8 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
 
   cluster = true;
 
+  baseMaps: LayerMap = new Map();
+
   ngAfterViewInit(): void {
     this.drawer()?.openedChange.subscribe((_) => {
       const map = this.mapCache.getMap(this.mapId);
@@ -115,6 +118,21 @@ export class MapSelectionComponent implements OnInit, AfterViewInit {
     }
     this.clusterConfig =
       this.configSrvc.configuration.mapSelectionClusterConfig;
+
+    const BKG_BASE_LAYER_URL =
+      'https://sgx.geodatenzentrum.de/wmts_topplus_open/tile/1.0.0/web_light_grau/default/WEBMERCATOR/{z}/{y}/{x}.png';
+    const BKG_BASE_LAYER_ATTRIBUTION =
+      '&copy; <a href="https://www.bkg.bund.de/">BKG</a> 2026 <a href="https://www.govdata.de/dl-de/by-2-0">dl-de/by-2-0</a> <a href="https://sgx.geodatenzentrum.de/web_public/gdz/datenquellen/datenquellen_topplusopen.html">Datenquellen</a>';
+
+
+    this.baseMaps.set("BaseLayer", {
+      label: "BaseLayer",
+      visible: true,
+      layer: L.tileLayer(BKG_BASE_LAYER_URL, {
+        attribution: BKG_BASE_LAYER_ATTRIBUTION,
+        minZoom: 6
+      }),
+    });
   }
 
   phenomenonToggled() {
