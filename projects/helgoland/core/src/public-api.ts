@@ -11,25 +11,26 @@ export * from './lib/color/color.service';
 
 export {
   DatasetApiInterface,
-  UriParameterCoder,
+  UriParameterCoder
 } from './lib/dataset-api/api-interface';
 export {
   DatasetApiMapping,
-  DatasetApiVersion,
+  DatasetApiVersion
 } from './lib/dataset-api/api-mapping.service';
 export { DatasetImplApiInterface } from './lib/dataset-api/dataset-impl-api-interface.service';
+export * from './lib/dataset-api/helper/reference-value-grouping.service';
 export * from './lib/dataset-api/helper/status-interval-resolver.service';
 export {
   HTTP_SERVICE_INTERCEPTORS,
   HttpService,
   HttpServiceHandler,
-  HttpServiceInterceptor,
+  HttpServiceInterceptor
 } from './lib/dataset-api/http.service';
 export { DatasetApiV1 } from './lib/dataset-api/interfaces/api-v1.interface';
 export { DatasetApiV2 } from './lib/dataset-api/interfaces/api-v2.interface';
 export {
   InternalDatasetId,
-  InternalIdHandler,
+  InternalIdHandler
 } from './lib/dataset-api/internal-id-handler.service';
 export { SplittedDataDatasetApiInterface } from './lib/dataset-api/splitted-data-api-interface.service';
 

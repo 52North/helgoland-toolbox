@@ -44,3 +44,10 @@ export interface TimespanMomentTemplate {
   to: string;
   from: string;
 }
+
+export interface ReferenceValueGroup {
+  id: string;
+  displayName: string;
+  memberIds: string[];
+  opacity: number;
+}

@@ -10,10 +10,14 @@ import {
   HelgolandTimeseriesData,
   LineRenderingHints,
   LocalStorage,
+  ReferenceValueGroupingService,
+  Settings,
+  SettingsService,
   SumValuesService,
   Time,
 } from '@helgoland/core';
 import {
+  AreaDatasetChild,
   AxisSettings,
   BarStyle,
   D3SeriesGraphErrorHandler,
@@ -77,6 +81,8 @@ export class TimeseriesServiceImpl
   })!;
   protected notifier = inject(NotifierService);
   protected la = inject(LiveAnnouncer);
+  protected settingsService = inject(SettingsService<Settings>);
+  protected refValueGroupService = inject(ReferenceValueGroupingService);
 
   private state = new Map<string, SaveState>();
   private favorites: {
@@ -348,23 +354,85 @@ export class TimeseriesServiceImpl
         this.saveState();
       });
       dataset.stateChangeEvent.subscribe((ds) => {
+        this.updateGroupColor(ds);
         this.setState(ds.id, ds.style, ds.yAxis, ds.selected, ds.visible);
         this.saveState();
       });
-      ts.referenceValues?.forEach((ref) => {
-        dataset.addChild(
-          new TimeseriesChild(
-            ref.referenceValueId,
-            ref.label,
-            ref.visible || false,
-            [],
-            this.colorService.getColor(),
-          ),
-        );
-      });
+
+      this.addReferenceValues(ts, dataset);
+
       this.loadDatasetData(ts.internalId);
     } else {
       // console.error(`Dataset with internal id ${dataset.internalId} is not HelgolandTimeseries`);
+    }
+  }
+
+  updateGroupColor(ds: SeriesGraphDataset<DatasetStyle>) {
+    const dataset = this.datasetMap.get(ds.id);
+    if (!dataset?.referenceValues || !ds.children?.length) {
+      return;
+    }
+
+    const settings = this.settingsService.getSettings();
+    const groupingResult = this.refValueGroupService.detectGroups(
+      dataset.referenceValues,
+      settings.referenceValueGroups || [],
+    );
+
+    ds.children.forEach((child) => {
+      if (!(child instanceof AreaDatasetChild) || child.styles.length === 0) {
+        return;
+      }
+
+      const group = groupingResult.groups.find((g) => g.group.id === child.id);
+      if (!group?.group) {
+        return;
+      }
+
+      child.styles[0].color = this.colorService.convertHexToRGBA(
+        ds.style.baseColor,
+        group.group.opacity || 0.3,
+      );
+    });
+  }
+
+  private addReferenceValues(
+    ts: HelgolandTimeseries,
+    dataset: SeriesGraphDataset<DatasetStyle>,
+  ) {
+    if (ts.referenceValues && ts.referenceValues.length > 0) {
+      const settings = this.settingsService.getSettings();
+      const groupingResult = this.refValueGroupService.detectGroups(
+        ts.referenceValues,
+        settings.referenceValueGroups || [],
+      );
+
+      groupingResult.groups.forEach((group) => {
+        const isVisible = false;
+        const col = this.colorService.convertHexToRGBA(
+          dataset.style.baseColor,
+          group.group.opacity || 0.3,
+        );
+
+        const areaChild = new AreaDatasetChild(
+          group.group.id,
+          group.group.displayName,
+          isVisible,
+          [{ color: col }],
+        );
+        dataset.addChild(areaChild);
+      });
+
+      groupingResult.ungrouped.forEach((refVal) => {
+        const timeseriesChild = new TimeseriesChild(
+          refVal.referenceValueId,
+          refVal.label,
+          refVal.visible || false,
+          [],
+          this.colorService.getColor(),
+        );
+        dataset!.addChild(timeseriesChild);
+      });
     }
   }
 
@@ -598,14 +666,35 @@ export class TimeseriesServiceImpl
     rawdata: HelgolandTimeseriesData,
   ) {
     if (ds.children && ds.children.length) {
-      ds.children.forEach((child) => {
-        if (child instanceof TimeseriesChild) {
-          const refVals = rawdata.referenceValues[child.id];
-          if (refVals) {
-            child.setData(this.createReferenceValueData(rawdata, child.id));
+      const dataset = this.datasetMap.get(ds.id);
+      const settings = this.settingsService.getSettings();
+
+      if (dataset && dataset.referenceValues) {
+        const groupingResult = this.refValueGroupService.detectGroups(
+          dataset.referenceValues,
+          settings.referenceValueGroups || [],
+        );
+        ds.children.forEach((child) => {
+          if (child instanceof TimeseriesChild) {
+            const refVals = rawdata.referenceValues[child.id];
+            if (refVals) {
+              child.setData(this.createReferenceValueData(rawdata, child.id));
+            }
+          } else if (child instanceof AreaDatasetChild) {
+            const group = groupingResult.groups.find(
+              (g) => g.group.id === child.id,
+            );
+            if (group && group.members.length >= 2) {
+              const areaData = this.createAreaReferenceValueData(
+                rawdata,
+                group.members[0].referenceValueId,
+                group.members[1].referenceValueId,
+              );
+              child.setData(areaData);
+            }
           }
-        }
-      });
+        });
+      }
     }
   }
 
@@ -624,6 +713,35 @@ export class TimeseriesServiceImpl
       refValues = refValues.values;
     }
     return refValues.map((d: any) => ({ timestamp: d[0], value: d[1] }));
+  }
+
+  private createAreaReferenceValueData(
+    data: HelgolandTimeseriesData,
+    lowerRefId: string,
+    upperRefId: string,
+  ) {
+    const lowerData = this.createReferenceValueData(data, lowerRefId);
+    const upperData = this.createReferenceValueData(data, upperRefId);
+
+    const upperMap = new Map<number, number>();
+    upperData.forEach((entry) => {
+      upperMap.set(entry.timestamp, entry.value);
+    });
+
+    const areaData = lowerData
+      .map((lowerEntry) => {
+        const upperValue = upperMap.get(lowerEntry.timestamp);
+        if (upperValue !== undefined) {
+          return {
+            timestamp: lowerEntry.timestamp,
+            values: [lowerEntry.value, upperValue],
+          };
+        }
+        return null;
+      })
+      .filter((e) => e !== null);
+
+    return areaData;
   }
 
   private prepareOverviewData(

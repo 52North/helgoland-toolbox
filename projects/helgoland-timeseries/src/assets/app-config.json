@@ -29,5 +29,13 @@
     "supportTimeseriesSymbols": true,
     "mapSelectionClusterConfig": {
         "maxClusterRadius": 60
-    }
+    },
+    "referenceValueGroups": [
+        {
+            "id": "quantile",
+            "displayName": "Quantil",
+            "memberIds": ["percentile10", "percentile90"],
+            "opacity": 0.3
+        }
+    ]
 }

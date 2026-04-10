@@ -6,6 +6,7 @@ import { Injectable, NgModule } from '@angular/core';
 
 import { ColorService } from './color/color.service';
 import { DatasetApiMapping } from './dataset-api/api-mapping.service';
+import { ReferenceValueGroupingService } from './dataset-api/helper/reference-value-grouping.service';
 import { StatusIntervalResolverService } from './dataset-api/helper/status-interval-resolver.service';
 import { HttpService } from './dataset-api/http.service';
 import { InternalIdHandler } from './dataset-api/internal-id-handler.service';
@@ -43,6 +44,7 @@ export class ExtendedSettingsService extends SettingsService<Settings> {
     ColorService,
     DatasetApiMapping,
     DefinedTimespanService,
+    ReferenceValueGroupingService,
     InternalIdHandler,
     LocalStorage,
     NotifierService,

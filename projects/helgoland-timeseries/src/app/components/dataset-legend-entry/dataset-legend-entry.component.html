@@ -177,8 +177,24 @@
         </div>
       }
       <!-- Reference values -->
-      @if (getTimeseriesDatasetChildren().length > 0) {
+      @if (
+        getTimeseriesDatasetChildren().length > 0 ||
+        getAreaDatasetChildren().length > 0
+      ) {
         <div>{{ "diagram-view.legend-reference-values" | translate }}:</div>
+        @for (child of getAreaDatasetChildren(); track child) {
+          <div>
+            <mat-slide-toggle
+              [checked]="child.visible"
+              color="primary"
+              (change)="child.setVisible($event.checked)"
+            >
+              <span>
+                {{ child.label }}
+              </span>
+            </mat-slide-toggle>
+          </div>
+        }
         @for (child of getTimeseriesDatasetChildren(); track child) {
           <div>
             <mat-slide-toggle
