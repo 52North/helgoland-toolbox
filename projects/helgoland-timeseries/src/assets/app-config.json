@@ -33,7 +33,7 @@
     "referenceValueGroups": [
         {
             "id": "quantile",
-            "displayName": "80%-Quantil",
+            "displayName": "80%-Konfidenzintervall",
             "memberIds": ["percentile10", "percentile90"],
             "opacity": 0.3
         }
