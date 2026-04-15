@@ -703,6 +703,9 @@ export class TimeseriesServiceImpl
     refId: string,
   ): GraphDataEntry[] {
     let refValues = data.referenceValues[refId] as any;
+    if (!refValues) {
+      return [];
+    }
     if (!(refValues instanceof Array)) {
       if (refValues.valueBeforeTimespan) {
         refValues.values.unshift(refValues.valueBeforeTimespan);
