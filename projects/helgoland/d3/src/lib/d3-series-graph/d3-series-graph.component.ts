@@ -1266,7 +1266,8 @@ export class D3SeriesGraphComponent
     e: AreaDatasetChild,
     yScaleBase: d3.ScaleLinear<number, number>,
   ) {
-    for (let i = 0; i < e.styles.length; i++) {
+    let style_index = 0;
+    for (let i = 0; i < e.data[0].values.length; i+=2) {
       const idx1 = i;
       const idx2 = i + 1;
 
@@ -1289,13 +1290,14 @@ export class D3SeriesGraphComponent
           return yScaleBase(d.values[idx2]!);
         })
         .curve(d3.curveLinear);
-
       this.graphBody
         .append('svg:path')
         .datum(e.data)
         .attr('class', 'area')
-        .attr('fill', e.styles[i].color)
+        .attr('fill', e.styles[style_index].color)
         .attr('d', area);
+
+      style_index += 1;
     }
   }
 

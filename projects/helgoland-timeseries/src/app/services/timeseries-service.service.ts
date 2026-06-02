@@ -388,11 +388,14 @@ export class TimeseriesServiceImpl
       const group = groupingResult.groups.find((g) => g.group.id === child.id);
       if (!group?.group) {
         return;
-      }
-
+      };
       child.styles[0].color = this.colorService.convertHexToRGBA(
         ds.style.baseColor,
         group.group.opacity || 0.3,
+      );
+      child.styles[1].color = this.colorService.convertHexToRGBA(
+        ds.style.baseColor,
+        group.group.opacity / 2|| 0.15,
       );
     });
   }
@@ -414,12 +417,16 @@ export class TimeseriesServiceImpl
           dataset.style.baseColor,
           group.group.opacity || 0.3,
         );
+        const col2 = this.colorService.convertHexToRGBA(
+          dataset.style.baseColor,
+          0.15,
+        );
 
         const areaChild = new AreaDatasetChild(
           group.group.id,
           group.group.displayName,
           isVisible,
-          [{ color: col }],
+          [{ color: col }, { color: col2 }],
         );
         dataset.addChild(areaChild);
       });
@@ -685,13 +692,23 @@ export class TimeseriesServiceImpl
             const group = groupingResult.groups.find(
               (g) => g.group.id === child.id,
             );
+            //debugger;
             if (group && group.members.length >= 2) {
               const areaData = this.createAreaReferenceValueData(
                 rawdata,
+                0,
+                2,
                 group.members[0].referenceValueId,
-                group.members[1].referenceValueId,
+                group.members[1].referenceValueId
               );
-              child.setData(areaData);
+              const estimateData = this.createAreaReferenceValueData(
+                rawdata,
+                2,
+                0,
+                group.members[2].referenceValueId,
+                group.members[3].referenceValueId
+              );
+              child.setData(areaData.concat(estimateData));
             }
           }
         });
@@ -721,6 +738,8 @@ export class TimeseriesServiceImpl
 
   private createAreaReferenceValueData(
     data: HelgolandTimeseriesData,
+    prepend: number,
+    append: number,
     lowerRefId: string,
     upperRefId: string,
   ) {
@@ -738,7 +757,12 @@ export class TimeseriesServiceImpl
         if (upperValue !== undefined) {
           return {
             timestamp: lowerEntry.timestamp,
-            values: [lowerEntry.value, upperValue],
+            values: [
+                ...Array(prepend || 0).fill(NaN), // Adds NaNs to the start
+                lowerEntry.value, 
+                upperValue,
+                ...Array(append || 0).fill(NaN)   // Adds NaNs to the end
+              ],
           };
         }
         return null;
