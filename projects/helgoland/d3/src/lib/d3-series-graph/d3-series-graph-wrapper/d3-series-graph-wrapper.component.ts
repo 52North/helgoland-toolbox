@@ -270,6 +270,7 @@ export class D3SeriesGraphWrapperComponent
           uom: dataset.uom,
           firstValue: dataset.firstValue,
           lastValue: dataset.lastValue,
+          description: dataset.description
         };
         dsEntry = new SeriesGraphDataset(
           dataset.internalId,
@@ -283,7 +284,6 @@ export class D3SeriesGraphWrapperComponent
           const refVis = !!options.showReferenceValues.find(
             (ref) => ref.id === refVal.referenceValueId,
           );
-          debugger;
           // dsEntry!.addChild(
           //   new DatasetChild(
           //     refVal.referenceValueId,
@@ -432,7 +432,6 @@ export class D3SeriesGraphWrapperComponent
     if (ds.children && ds.children.length) {
       ds.children.forEach((child) => {
         const refVals = rawdata.referenceValues[child.id];
-        debugger;
         // if (refVals) {
         //   child.setData(this.createReferenceValueData(rawdata, child.id));
         // }

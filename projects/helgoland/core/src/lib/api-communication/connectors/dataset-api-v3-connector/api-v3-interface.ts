@@ -92,6 +92,7 @@ export interface ApiV3Dataset extends ApiV3Parameter {
   observationType: string;
   extras?: string[];
   internalId: string;
+  description?: string;
   valueType: string;
   mobile: boolean;
   insitu: boolean;

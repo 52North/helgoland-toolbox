@@ -251,7 +251,6 @@ export class StaApiCustomConnector extends StaApiV1Connector {
     if (params) {
       const filterList: string[] = [];
       if (params.phenomenon) {
-        debugger;
         filterList.push(`ObservedProperty/id eq ${params.phenomenon}`);
       }
       if (params.feature) {

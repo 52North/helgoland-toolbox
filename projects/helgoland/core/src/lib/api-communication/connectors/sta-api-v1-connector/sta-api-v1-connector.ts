@@ -644,6 +644,7 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
         id,
         url,
         name,
+        ds.description,
         symbol,
         platform,
         first,

@@ -124,6 +124,7 @@
           [dataset]="dataset()"
         ></helgoland-favorite-toggle-button>
       </div>
+
       @if (dataset().description.firstValue) {
         <div
           class="entry-line clickable"
@@ -206,6 +207,9 @@
             </mat-slide-toggle>
           </div>
         }
+      }
+      @if (dataset().description.description) {
+        <br/><span>{{ dataset().description.description }}</span>
       }
     </div>
   }

@@ -118,6 +118,7 @@ export interface GraphDataEntry {
 
 export interface DatasetDescription {
   uom: string;
+  description?: string;
   phenomenonLabel?: string;
   platformLabel?: string;
   procedureLabel?: string;
@@ -276,6 +277,7 @@ export class SeriesGraphDataset<T extends DatasetStyle = DatasetStyle> {
         platformLabel: this.description.platformLabel,
         procedureLabel: this.description.procedureLabel,
         uom: this.description.uom,
+        description: this.description.description,
       },
     );
   }

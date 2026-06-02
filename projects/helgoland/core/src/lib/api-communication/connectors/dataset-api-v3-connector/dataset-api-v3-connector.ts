@@ -311,6 +311,7 @@ export class DatasetApiV3Connector implements HelgolandServiceConnector {
             ds.id,
             url,
             ds.label,
+            ds.description,
             ds.uom,
             platform,
             firstValue,

@@ -34,6 +34,7 @@ export class HelgolandTimeseries extends HelgolandDataset {
     public override id: string,
     public override url: string,
     public override label: string,
+    public description: string | undefined,
     public uom: string,
     public platform: HelgolandPlatform,
     public firstValue: FirstLastValue | undefined,

@@ -313,6 +313,7 @@ export class DatasetApiV2Connector implements HelgolandServiceConnector {
             dataset.id,
             url,
             dataset.label,
+            undefined,
             dataset.uom,
             station,
             dataset.firstValue,

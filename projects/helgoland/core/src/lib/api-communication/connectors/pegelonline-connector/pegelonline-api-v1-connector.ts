@@ -528,6 +528,7 @@ export class PegelonlineApiV1Connector implements HelgolandServiceConnector {
       `${stationId}/${dataset.shortname}`,
       url,
       label,
+      undefined,
       dataset.unit,
       platform,
       undefined,
