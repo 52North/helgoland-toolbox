@@ -708,6 +708,20 @@ export class TimeseriesServiceImpl
                 group.members[2].referenceValueId,
                 group.members[3].referenceValueId
               );
+              
+              // Transition area
+              if (areaData && areaData.length > 0 && estimateData && estimateData.length > 0) {
+                const lastPoint = areaData.at(-1)!; // or areaData.at(-1)
+                estimateData.unshift({
+                  timestamp: lastPoint.timestamp,
+                  values: [
+                    NaN,
+                    NaN,
+                    lastPoint.values[0],
+                    lastPoint.values[1],
+                  ]
+                });
+              }
               child.setData(areaData.concat(estimateData));
             }
           }
@@ -759,7 +773,7 @@ export class TimeseriesServiceImpl
             timestamp: lowerEntry.timestamp,
             values: [
                 ...Array(prepend || 0).fill(NaN), // Adds NaNs to the start
-                lowerEntry.value, 
+                lowerEntry.value,
                 upperValue,
                 ...Array(append || 0).fill(NaN)   // Adds NaNs to the end
               ],
