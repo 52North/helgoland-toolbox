@@ -11,6 +11,7 @@ import {
   D3SeriesGraphControl,
 } from '../../d3-series-graph-control';
 import {
+  AreaDatasetChild,
   GraphDataEntry,
   SeriesGraphDataset,
 } from '../../models/series-graph-dataset';
@@ -32,8 +33,7 @@ const TIME_LABEL_CLASS = 'time-label';
 })
 export class D3GraphHoverLineComponent
   extends D3SeriesGraphControl
-  implements D3GraphObserver
-{
+  implements D3GraphObserver {
   protected timezoneSrvc = inject(TimezoneService);
 
   readonly showLabels = input(true);
@@ -227,8 +227,12 @@ export class D3GraphHoverLineComponent
   }
 
   protected calcDist(entry: DataEntry, x: number) {
-    const scale = this.graphExtent?.xScale(entry.timestamp);
-    return entry && scale ? Math.abs(scale - x) : Infinity;
+    if (entry != null) {
+      const scale = this.graphExtent?.xScale(entry.timestamp);
+      return entry && scale ? Math.abs(scale - x) : Infinity;
+    } else {
+      return Infinity;
+    }
   }
 
   protected showLabel(
@@ -321,14 +325,42 @@ export class D3GraphHoverLineComponent
     item: DataEntry,
     entry: SeriesGraphDataset,
   ) {
+    const uom = entry.description.uom ? entry.description.uom : '';
     label.text.selectAll('*').remove();
-    label.text
+    const textSelection = label.text
       .append('text')
-      .text(
-        `${item.value} ${entry.description.uom ? entry.description.uom : ''}`,
-      )
-      .attr('alignment-baseline', 'text-before-edge')
+      .attr('dominant-baseline', 'hanging')
       .attr('class', 'hoverline-label-text');
+
+    const predictions = entry.children
+      .filter(child => child instanceof AreaDatasetChild)
+      .filter(child => child.visible);
+
+    if (predictions.length > 0) {
+      predictions.forEach(areaChild => {
+        textSelection
+          .append('tspan')
+          .text(`Vorhersage: ${item.value} ${uom}`)
+          .attr('x', 0);
+        const prediction = areaChild.data.find(c => c.timestamp == item.timestamp)?.values.filter(n => !Number.isNaN(n));
+        if (prediction?.length == 2) {
+
+          let predictionText = "Min: " + prediction[0] + `${uom} | `;
+          predictionText += "Max: " + prediction[1] + `${uom}`;
+          textSelection
+            .append('tspan')
+            .text(`${predictionText}`)
+            .attr('x', 0)
+            .attr('dy', '1.2em');
+
+        }
+      })
+    } else {
+      textSelection
+        .append('tspan')
+        .text(`${item.value} ${uom}`)
+        .attr('x', 0);
+    }
   }
 
   /**

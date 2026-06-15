@@ -17,6 +17,7 @@ import {
 } from '../../d3-series-graph-control';
 import { HighlightOutput, HighlightValue } from '../../models/d3-highlight';
 import {
+  AreaDatasetChild,
   BarStyle,
   GraphDataEntry,
   LineStyle,
@@ -44,8 +45,7 @@ interface BarHoverElement extends HoveredElement {
 })
 export class D3GraphHoverPointComponent
   extends D3SeriesGraphControl
-  implements D3GraphObserver
-{
+  implements D3GraphObserver {
   protected timezoneSrvc = inject(TimezoneService);
   protected pointSymbolDrawer = inject(D3PointSymbolDrawerService);
 
@@ -138,11 +138,36 @@ export class D3GraphHoverPointComponent
 
   protected highlightPoint(nearestPoint: HoveredElement) {
     this.previousPoint = nearestPoint;
-    this.hoveringService().showPointHovering(
-      this.previousPoint.dataEntry,
-      this.previousPoint.dataset,
-      nearestPoint.selection,
-    );
+    const predictions = this.previousPoint.dataset.children
+      .filter(child => child instanceof AreaDatasetChild)
+      .filter(child => child.visible);
+
+    let text : string[] = [];
+    if (predictions.length > 0) {
+      predictions.forEach(areaChild => {
+        const uom = this.previousPoint?.dataset.description.uom
+        const prediction = areaChild.data.find(c => c.timestamp == this.previousPoint?.dataEntry.timestamp)?.values.filter(n => !Number.isNaN(n));
+
+        text.push(`${this.previousPoint?.dataEntry.value} ${uom} | ${this.timezoneSrvc.formatTzDate(this.previousPoint!.dataEntry.timestamp)}`)
+        if (prediction?.length == 2) {
+          text.push(`${areaChild.label}: Min ${prediction[0]} ${uom} | Max: ${prediction[1]} ${uom}`);
+        }
+      })
+      this.hoveringService().showPointHovering(
+        this.previousPoint.dataEntry.timestamp,
+        text,
+        this.previousPoint.dataset,
+        nearestPoint.selection,
+      );
+    } else {
+      this.hoveringService().showPointHovering(
+        this.previousPoint.dataEntry.timestamp,
+        this.previousPoint.dataEntry.value,
+        this.previousPoint.dataset,
+        nearestPoint.selection,
+      );
+    }
+
     if (
       this.previousPoint.dataEntry.xDiagCoord &&
       this.previousPoint.dataEntry.yDiagCoord
@@ -243,7 +268,7 @@ export class D3GraphHoverPointComponent
             (d) => d.yDiagCoord!,
           );
           const idx = delaunay.find(x, y);
-  
+
           if (idx != null && !isNaN(idx) && this.graphLayer) {
             const datum = data[idx] as DataEntry;
             const distance = this.distance(

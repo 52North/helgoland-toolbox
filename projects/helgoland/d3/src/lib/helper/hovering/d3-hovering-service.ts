@@ -25,7 +25,8 @@ export abstract class D3HoveringService {
   ): void;
 
   abstract showPointHovering(
-    d: DataEntry,
+    timestamp: number,
+    value: number | string[],
     entry: SeriesGraphDataset,
     pointElem: d3.Selection<d3.BaseType, any, any, any>,
   ): void;

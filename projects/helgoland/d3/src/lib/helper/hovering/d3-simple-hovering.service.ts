@@ -55,7 +55,8 @@ export class D3SimpleHoveringService extends D3HoveringService {
   }
 
   showPointHovering(
-    d: DataEntry,
+    timestamp: number,
+    value: number | string[],
     entry: SeriesGraphDataset<LineStyle>,
     pointElem: d3.Selection<d3.BaseType, any, any, any>,
   ) {
@@ -73,7 +74,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
           .attr('r', this.calculatePointRadius(entry) + 3);
       }
 
-      this.setHoveringLabel(this.highlightText, d, entry);
+      this.setHoveringLabel(this.highlightText, timestamp, value, entry);
     }
   }
 
@@ -120,7 +121,7 @@ export class D3SimpleHoveringService extends D3HoveringService {
           .style('stroke-width', '1px')
           .style('pointer-events', 'none');
         const textContainer = this.tooltipContainer!.append('g');
-        this.setHoveringLabel(textContainer, elem.dataEntry, elem.entry);
+        this.setHoveringLabel(textContainer, elem.dataEntry.timestamp, elem.dataEntry.value, elem.entry);
         this.positionTooltip(textContainer, rect, onLeftSide, itemCounter);
         itemCounter++;
       });
@@ -164,27 +165,30 @@ export class D3SimpleHoveringService extends D3HoveringService {
 
   protected setHoveringLabel(
     textContainer: d3.Selection<SVGGElement, any, any, any>,
-    d: DataEntry,
+    timestamp: number,
+    value: number | string[],
     entry: SeriesGraphDataset,
   ) {
     const stringedValue =
-      typeof d.value === 'number'
-        ? parseFloat(d.value.toPrecision(15)).toString()
-        : d.value;
-    textContainer
-      .append('text')
-      .attr(
-        'transform',
-        `translate(${0}, ${this.textPadding - this.rectPadding})`,
-      )
-      .text(
-        `${stringedValue} ${
-          entry.description.uom
-        } ${this.timezoneSrvc.formatTzDate(d.timestamp)}`,
-      )
-      .attr('class', 'mouseHoverDotLabel')
-      .style('pointer-events', 'none')
-      .style('fill', 'black');
+      typeof value === 'number'
+        ? [`${parseFloat(value.toPrecision(15)).toString()} ${entry.description.uom
+          } ${this.timezoneSrvc.formatTzDate(timestamp)}`]
+        : value;
+    for (let i = 0; i < stringedValue.length; i++) {
+      textContainer
+        .append('text')
+        .attr(
+          'transform',
+          `translate(${0}, ${this.textPadding - this.rectPadding})`,
+        )
+        .text(
+          stringedValue[i],
+        )
+        .attr('class', 'mouseHoverDotLabel')
+        .style('pointer-events', 'none')
+        .style('fill', 'black')
+        .attr('dy', (1.2 * i) + 'em');;
+    }
   }
 
   protected calculatePointRadius(entry: SeriesGraphDataset<LineStyle>) {
