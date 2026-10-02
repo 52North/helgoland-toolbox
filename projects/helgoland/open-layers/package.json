@@ -1,10 +1,15 @@
 {
   "name": "@helgoland/open-layers",
   "version": "20.0.2",
-  "dependencies": {
-    "@angular/common": "^20.3.33",
-    "@angular/core": "^20.3.33",
+  "peerDependencies": {
+    "@angular/common": "^20.0.0",
+    "@angular/core": "^20.0.0",
+    "@angular/forms": "^20.0.0",
+    "@helgoland/core": "^20.0.0",
     "ol": "^6.4.3",
+    "rxjs": "^7.8.0"
+  },
+  "dependencies": {
     "@types/ol": "^5.3.5",
     "tslib": "^2.1.0"
   }

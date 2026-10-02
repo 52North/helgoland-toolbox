@@ -1,9 +1,16 @@
 {
   "name": "@helgoland/depiction",
   "version": "20.0.2",
+  "peerDependencies": {
+    "@angular/common": "^20.0.0",
+    "@angular/core": "^20.0.0",
+    "@angular/forms": "^20.0.0",
+    "@helgoland/core": "^20.0.0",
+    "@ngx-translate/core": "^15.0.0",
+    "moment": "^2.29.4",
+    "rxjs": "^7.8.0"
+  },
   "dependencies": {
-    "@angular/common": "^20.3.33",
-    "@angular/core": "^20.3.33",
     "@types/geojson": "^7946.0.10",
     "tslib": "^2.1.0",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"

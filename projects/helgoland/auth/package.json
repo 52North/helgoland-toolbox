@@ -1,9 +1,13 @@
 {
   "name": "@helgoland/auth",
   "version": "20.0.2",
+  "peerDependencies": {
+    "@angular/common": "^20.0.0",
+    "@angular/core": "^20.0.0",
+    "@helgoland/core": "^20.0.0",
+    "rxjs": "^7.8.0"
+  },
   "dependencies": {
-    "@angular/common": "^20.3.33",
-    "@angular/core": "^20.3.33",
     "tslib": "^2.1.0"
   }
 }

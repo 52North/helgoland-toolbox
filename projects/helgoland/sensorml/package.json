@@ -1,9 +1,12 @@
 {
   "name": "@helgoland/sensorml",
   "version": "13.0.1",
+  "peerDependencies": {
+    "@angular/common": "^20.0.0",
+    "@angular/core": "^20.0.0",
+    "typescript-logging": "^0.6.3"
+  },
   "dependencies": {
-    "@angular/common": "^20.3.33",
-    "@angular/core": "^20.3.33",
     "reflect-metadata": "^0.1.13",
     "tslib": "^2.1.0"
   }
