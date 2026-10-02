@@ -223,11 +223,11 @@ export class D3SeriesGraphComponent
     );
     this.redraw = new Subject();
     from(this.redraw)
-    .pipe(debounceTime(100))
-    .subscribe(() => {
-      this.prepareDatasets();
-      this.redrawGraph();
-    });
+      .pipe(debounceTime(100))
+      .subscribe(() => {
+        this.prepareDatasets();
+        this.redrawGraph();
+      });
   }
 
   ngOnInit(): void {
@@ -277,7 +277,7 @@ export class D3SeriesGraphComponent
     let dataSubscription: Subscription;
     if (ds === undefined) {
       return;
-    };
+    }
     dataSubscription = ds.dataChangeEvent.subscribe((ds) => {
       this.redraw.next(ds);
     });
