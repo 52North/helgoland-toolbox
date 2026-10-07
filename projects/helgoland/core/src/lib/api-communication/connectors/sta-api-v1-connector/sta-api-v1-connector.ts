@@ -8,10 +8,10 @@ import { InternalDatasetId } from '../../../dataset-api/internal-id-handler.serv
 import { Category } from '../../../model/dataset-api/category';
 import { TimeValueTuple } from '../../../model/dataset-api/data';
 import {
-  FirstLastValue,
-  ParameterConstellation,
-  ReferenceValue,
-  RenderingHints,
+    FirstLastValue,
+    ParameterConstellation,
+    ReferenceValue,
+    RenderingHints,
 } from '../../../model/dataset-api/dataset';
 import { Feature } from '../../../model/dataset-api/feature';
 import { Offering } from '../../../model/dataset-api/offering';
@@ -22,48 +22,48 @@ import { Timespan } from '../../../model/internal/timeInterval';
 import { HELGOLAND_SERVICE_CONNECTOR_HANDLER } from '../../helgoland-services-connector';
 import { HelgolandServiceConnector } from '../../interfaces/service-connector-interfaces';
 import {
-  HelgolandData,
-  HelgolandDataFilter,
-  HelgolandTimeseriesData,
+    HelgolandData,
+    HelgolandDataFilter,
+    HelgolandTimeseriesData,
 } from '../../model/internal/data';
 import {
-  DatasetExtras,
-  DatasetFilter,
-  DatasetType,
-  HelgolandDataset,
-  HelgolandTimeseries,
+    DatasetExtras,
+    DatasetFilter,
+    DatasetType,
+    HelgolandDataset,
+    HelgolandTimeseries,
 } from '../../model/internal/dataset';
 import {
-  HelgolandCsvExportLinkParams,
-  HelgolandParameterFilter,
+    HelgolandCsvExportLinkParams,
+    HelgolandParameterFilter,
 } from '../../model/internal/filter';
 import { HelgolandPlatform } from '../../model/internal/platform';
 import { HelgolandService } from '../../model/internal/service';
 import {
-  Datastream,
-  DatastreamExpandParams,
-  DatastreamSelectParams,
+    Datastream,
+    DatastreamExpandParams,
+    DatastreamSelectParams,
 } from './model/datasetreams';
 import {
-  Location,
-  LocationExpandParams,
-  LocationSelectParams,
+    Location,
+    LocationExpandParams,
+    LocationSelectParams,
 } from './model/locations';
 import { Observation } from './model/observations';
 import {
-  ObservedProperty,
-  ObservedPropertyExpandParams,
-  ObservedPropertySelectParams,
+    ObservedProperty,
+    ObservedPropertyExpandParams,
+    ObservedPropertySelectParams,
 } from './model/observed-properties';
 import {
-  Sensor,
-  SensorExpandParams,
-  SensorSelectParams,
+    Sensor,
+    SensorExpandParams,
+    SensorSelectParams,
 } from './model/sensors';
 import {
-  StaExpandParams,
-  StaFilter,
-  StaSelectParams,
+    StaExpandParams,
+    StaFilter,
+    StaSelectParams,
 } from './model/sta-interface';
 import { Thing, ThingExpandParams, ThingSelectParams } from './model/things';
 import { StaInterfaceService } from './sta-interface.service';
@@ -624,6 +624,13 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     ds: Datastream,
     thing: Thing,
   ): ParameterConstellation {
+    // Check if location exists, as it is required to create a valid feature
+    if (!thing.Locations?.length) {
+      throw new Error(
+        `Could not create feature: Thing "${thing.name}" (${thing['@iot.id']}) has no location specified. Location is required for map display.`,
+      );
+    }
+
     const parameters: ParameterConstellation = {
       additional: {},
     };
@@ -635,15 +642,13 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
       label: DEFAULT_SERVICE_LABEL,
     };
     parameters.offering = this.createOffering(thing);
-    if (thing.Locations?.length) {
-      const location = thing.Locations[0];
-      parameters.feature = this.createFeature(location);
-      if (location.properties) {
-        parameters.additional = {
-          ...parameters.additional,
-          location: location.properties,
-        };
-      }
+    const location = thing.Locations[0];
+    parameters.feature = this.createFeature(location);
+    if (location.properties) {
+      parameters.additional = {
+        ...parameters.additional,
+        location: location.properties,
+      };
     }
     if (ds.Sensor) parameters.procedure = this.createProcedure(ds.Sensor);
     if (ds.ObservedProperty)
@@ -673,29 +678,38 @@ export class StaApiV1Connector implements HelgolandServiceConnector {
     refValues: ReferenceValue[],
     url: string,
   ): HelgolandTimeseries {
-    if (ds['@iot.id'] && ds.Thing?.Locations) {
-      const id = ds['@iot.id'];
-      // Symbol is null for "einheitenlose" parameters such as pH-Value
-      const symbol = ds.unitOfMeasurement?.symbol ?? ' ';
-      const platform = this.createHelgolandPlatform(ds.Thing.Locations[0]);
-      const parameter = this.createTsParameter(ds, ds.Thing);
-      const name = this.createTimeseriesName(ds, parameter);
-      const renderingHints: RenderingHints | undefined =
-        ds.properties?.['renderingHints'] || undefined;
-      return new HelgolandTimeseries(
-        id,
-        url,
-        name,
-        symbol,
-        platform,
-        first,
-        last,
-        refValues,
-        renderingHints,
-        parameter,
+    if (!ds['@iot.id']) {
+      throw new Error('Could not create timeseries: Datastream has no @iot.id.');
+    }
+    if (!ds.Thing) {
+      throw new Error('Could not create timeseries: Datastream has no Thing.');
+    }
+    if (!ds.Thing.Locations?.length) {
+      throw new Error(
+        `Could not create timeseries: Thing "${ds.Thing.name}" (${ds.Thing['@iot.id']}) has no location specified. Location is required for map display.`,
       );
     }
-    throw new Error('Could not create feature.');
+
+    const id = ds['@iot.id'];
+    // Symbol is null for "einheitenlose" parameters such as pH-Value
+    const symbol = ds.unitOfMeasurement?.symbol ?? ' ';
+    const platform = this.createHelgolandPlatform(ds.Thing.Locations[0]);
+    const parameter = this.createTsParameter(ds, ds.Thing);
+    const name = this.createTimeseriesName(ds, parameter);
+    const renderingHints: RenderingHints | undefined =
+      ds.properties?.['renderingHints'] || undefined;
+    return new HelgolandTimeseries(
+      id,
+      url,
+      name,
+      symbol,
+      platform,
+      first,
+      last,
+      refValues,
+      renderingHints,
+      parameter,
+    );
   }
 
   protected createTimeseriesName(
