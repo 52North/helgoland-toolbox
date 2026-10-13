@@ -5,6 +5,7 @@ import {
   ElementRef,
   inject,
   input,
+  linkedSignal,
   IterableDiffer,
   IterableDiffers,
   KeyValueDiffer,
@@ -136,6 +137,11 @@ export class D3SeriesGraphComponent
 
   readonly timespan = input<Timespan>();
   protected oldTimespan: Timespan = { from: 0, to: 0 };
+  /**
+   * The timespan the diagram is drawn for. Follows the `timespan` input, but
+   * can be overridden by `setTimespan()` (e.g. while panning).
+   */
+  protected readonly currentTimespan = linkedSignal(() => this.timespan());
 
   readonly hoveringService = input<D3HoveringService>(
     new D3SimpleHoveringService(),
@@ -374,7 +380,7 @@ export class D3SeriesGraphComponent
   }
 
   centerTime(timestamp: number): void {
-    const timespan = this.timespan();
+    const timespan = this.currentTimespan();
     if (timespan) {
       const centeredTimespan = this.timeSrvc.centerTimespan(
         timespan,
@@ -397,7 +403,7 @@ export class D3SeriesGraphComponent
     let visualMax: number | undefined = undefined;
     let fixedMin = false;
     let fixedMax = false;
-    if (!this.timespan()) return;
+    if (!this.currentTimespan()) return;
 
     // set out of yAxisRange
     if (entry.yAxis.range?.min && entry.yAxis.range?.max) {
@@ -441,8 +447,8 @@ export class D3SeriesGraphComponent
         if (!isNaN(d.value)) {
           // with timespan restriction, it only selects values inside the selected timespan
           if (
-            this.timespan()!.from <= d.timestamp &&
-            this.timespan()!.to >= d.timestamp
+            this.currentTimespan()!.from <= d.timestamp &&
+            this.currentTimespan()!.to >= d.timestamp
           ) {
             return d.value;
           }
@@ -529,8 +535,7 @@ export class D3SeriesGraphComponent
    * Just sets the timespan, which is used for the diagram visualisation
    */
   setTimespan(timespan: Timespan) {
-    // debugger;
-    // this.timespan = timespan;
+    this.currentTimespan.set(timespan);
   }
 
   drawBaseGraph(): void {
@@ -542,19 +547,19 @@ export class D3SeriesGraphComponent
   private drawYGridLines() {
     this.graph.selectAll('.grid.y-grid').remove();
     if (this.plotOptions.grid) {
-      const idx = this.yAxes
+      const yAxis = [...this.yAxes]
         .reverse()
-        .findIndex((yAxe) =>
+        .find((yAxe) =>
           yAxe.ids.find((id) => this.datasets().find((e) => e.id)),
         );
-      if (idx >= 0) {
+      if (yAxis) {
         this.graph
           .append('svg:g')
           .attr('class', 'grid y-grid')
           .attr('transform', 'translate(' + this.leftOffset + ', 0)')
           .call(
             d3
-              .axisLeft(this.yAxes[idx].yScale!)
+              .axisLeft(yAxis.yScale!)
               .ticks(TICKS_COUNT_YAXIS)
               .tickSize(-this.width + this.leftOffset)
               .tickFormat(() => '') as any,
@@ -740,7 +745,7 @@ export class D3SeriesGraphComponent
           graphExtent,
           preparedDatasets: this.datasets(),
           preparedData: this.preparedData,
-          timespan: this.timespan()!,
+          timespan: this.currentTimespan()!,
         });
       }
     });
@@ -748,7 +753,7 @@ export class D3SeriesGraphComponent
   }
 
   protected drawTimeRangeLabels() {
-    const timespan = this.timespan();
+    const timespan = this.currentTimespan();
     if (
       this.plotOptions.timeRangeLabel &&
       this.plotOptions.timeRangeLabel.show &&
@@ -875,7 +880,10 @@ export class D3SeriesGraphComponent
     // range for x axis scale
     this.xScaleBase = d3
       .scaleTime()
-      .domain([new Date(this.timespan()!.from), new Date(this.timespan()!.to)])
+      .domain([
+        new Date(this.currentTimespan()!.from),
+        new Date(this.currentTimespan()!.to),
+      ])
       .range([bufferXrange, this.width]);
 
     const ticks = this.calcTicks();
@@ -947,7 +955,7 @@ export class D3SeriesGraphComponent
 
   private calcTicks() {
     const tickCount = (this.width - this.leftOffset) / 120;
-    return this.ticks(this.timespan()!, tickCount);
+    return this.ticks(this.currentTimespan()!, tickCount);
   }
 
   private ticks(ts: Timespan, interval: number) {
