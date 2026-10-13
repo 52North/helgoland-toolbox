@@ -21,6 +21,11 @@
         stroke: lightgrey;
         stroke-opacity: 0.7;
         shape-rendering: crispEdges;
+
+        /* below 1 device pixel per line (e.g. browser zoom < 100%), crispEdges rounds some lines away */
+        @media (max-resolution: 0.99dppx) {
+            shape-rendering: auto;
+        }
     }
 
     .grid.x-grid .domain {
