@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, NgZone } from '@angular/core';
 import { Timespan } from '@helgoland/core';
 import * as d3 from 'd3';
 
@@ -30,8 +30,9 @@ export class D3GraphPanZoomInteractionComponent
   protected draggingMove: boolean | undefined;
   protected dragMoveStart: number | undefined;
   protected dragMoveRange: [number, number] | undefined;
-  protected dragTimeStart: number | undefined;
-  protected plotWhileDrag: boolean | undefined;
+  protected panFrame: number | undefined;
+
+  protected zone = inject(NgZone);
 
   protected isHoverable: boolean | undefined;
 
@@ -93,7 +94,6 @@ export class D3GraphPanZoomInteractionComponent
    */
   protected panStartHandler(timespan: Timespan, event: MouseEvent) {
     if (this.d3Graph) {
-      this.dragTimeStart = new Date().valueOf();
       this.draggingMove = false;
       this.dragMoveStart = event.x;
       this.dragMoveRange = [timespan.from, timespan.to];
@@ -111,30 +111,45 @@ export class D3GraphPanZoomInteractionComponent
     event: MouseEvent,
   ) {
     this.draggingMove = true;
-    if (
-      this.dragMoveStart &&
-      this.draggingMove &&
-      this.dragTimeStart &&
-      this.d3Graph
-    ) {
-      const timeDiff = new Date().valueOf() - this.dragTimeStart >= 50;
-      if (!this.plotWhileDrag && timeDiff) {
-        this.plotWhileDrag = true;
-        this.dragTimeStart = new Date().valueOf();
-        const diff = -(event.x - this.dragMoveStart); // d3.event.subject.x);
-        const amountTimestamp = dragMoveRange[1] - dragMoveRange[0];
-        const ratioTimestampDiagCoord = amountTimestamp / graphExtent.width;
-        const newTimeMin = dragMoveRange[0] + ratioTimestampDiagCoord * diff;
-        const newTimeMax = dragMoveRange[1] + ratioTimestampDiagCoord * diff;
+    if (this.dragMoveStart !== undefined && this.d3Graph) {
+      const diff = -(event.x - this.dragMoveStart); // d3.event.subject.x);
+      const amountTimestamp = dragMoveRange[1] - dragMoveRange[0];
+      const ratioTimestampDiagCoord = amountTimestamp / graphExtent.width;
+      const newTimeMin = dragMoveRange[0] + ratioTimestampDiagCoord * diff;
+      const newTimeMax = dragMoveRange[1] + ratioTimestampDiagCoord * diff;
 
-        this.xAxisRangePan = [newTimeMin, newTimeMax];
-        this.d3Graph.setTimespan({
-          from: this.xAxisRangePan[0],
-          to: this.xAxisRangePan[1],
-        });
-        this.d3Graph.drawBaseGraph();
-        this.plotWhileDrag = false;
-      }
+      // updated on every move, so the release always applies the latest range
+      this.xAxisRangePan = [newTimeMin, newTimeMax];
+      this.requestPanDraw(this.d3Graph);
+    }
+  }
+
+  /**
+   * Draws the current pan range once per animation frame. Runs outside of
+   * Angular, so the redraws while dragging do not trigger change detection.
+   */
+  protected requestPanDraw(d3Graph: D3GraphInterface) {
+    if (this.panFrame !== undefined) {
+      return;
+    }
+    this.zone.runOutsideAngular(() => {
+      this.panFrame = requestAnimationFrame(() => {
+        this.panFrame = undefined;
+        if (this.xAxisRangePan) {
+          d3Graph.setTimespan({
+            from: this.xAxisRangePan[0],
+            to: this.xAxisRangePan[1],
+          });
+          d3Graph.drawBaseGraph();
+        }
+      });
+    });
+  }
+
+  protected cancelPanDraw() {
+    if (this.panFrame !== undefined) {
+      cancelAnimationFrame(this.panFrame);
+      this.panFrame = undefined;
     }
   }
 
@@ -143,13 +158,18 @@ export class D3GraphPanZoomInteractionComponent
    */
   protected panEndHandler() {
     if (this.xAxisRangePan && this.d3Graph) {
+      this.cancelPanDraw();
       this.d3Graph.plotOptions.hoverable = this.isHoverable;
       this.d3Graph.changeTime(this.xAxisRangePan[0], this.xAxisRangePan[1]);
       this.dragMoveStart = undefined;
       this.draggingMove = false;
       this.xAxisRangePan = undefined;
-      this.dragTimeStart = undefined;
     }
+  }
+
+  override ngOnDestroy(): void {
+    this.cancelPanDraw();
+    super.ngOnDestroy();
   }
 
   /**
