@@ -39,6 +39,7 @@ export * from './lib/api-communication/connectors/dataset-api-v2-connector/datas
 export * from './lib/api-communication/connectors/dataset-api-v3-connector/api-v3-interface';
 export * from './lib/api-communication/connectors/dataset-api-v3-connector/dataset-api-v3-connector';
 export * from './lib/api-communication/connectors/pegelonline-connector/pegelonline-api-v1-connector';
+export * from './lib/api-communication/connectors/hydas-api-connector/hydas-api-connector';
 export * from './lib/api-communication/connectors/sta-api-v1-connector/model/datasetreams';
 export * from './lib/api-communication/connectors/sta-api-v1-connector/model/features-of-interest';
 export * from './lib/api-communication/connectors/sta-api-v1-connector/model/historical-locations';

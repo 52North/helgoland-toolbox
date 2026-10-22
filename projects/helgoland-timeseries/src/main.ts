@@ -25,6 +25,7 @@ import {
   DatasetApiV3ConnectorProvider,
   DatasetStaConnectorProvider,
   HelgolandCoreModule,
+  HydasApiConnectorProvider,
   LocalStorage,
   PegelonlineApiConnectorProvider,
   SettingsService,
@@ -183,6 +184,7 @@ const initializeApp = async () => {
       DatasetStaConnectorProvider,
       DatasetStaCustomConnectorProvider,
       PegelonlineApiConnectorProvider,
+      HydasApiConnectorProvider,
     ],
   };
 

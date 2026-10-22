@@ -14,6 +14,16 @@
             "basicAuth": true,
             "basicAuthPostFix": "stations",
             "connector": "PegelonlineApiConnector"
+        },
+        {
+            "name": "Pegelonline HyDAS",
+            "url": "https://pegelonline.wsv.de/api/v1",
+            "connector": "HydasApiConnector"
+        },
+        {
+            "name": "HyDAS Demo",
+            "url": "https://hydrodaten-api.mhwz.de/demo-basic/v1",
+            "connector": "HydasApiConnector"
         }
     ],
     "languages": [
