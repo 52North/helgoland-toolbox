@@ -39,8 +39,8 @@ export class SumValuesService {
           let sum = 0;
           let hasValues = false;
           bucketVals.forEach((e) => {
-            if (typeof e === 'number') {
-              sum += e;
+            if (typeof e.value === 'number' && !Number.isNaN(e.value)) {
+              sum += e.value;
               hasValues = true;
             }
           });
