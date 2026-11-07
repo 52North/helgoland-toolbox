@@ -16,7 +16,7 @@ describe('TimeListSelectorComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TimeListSelectorComponent);
     component = fixture.componentInstance;
-    component.timeList = [];
+    fixture.componentRef.setInput('timeList', []);
     fixture.detectChanges();
   });
 

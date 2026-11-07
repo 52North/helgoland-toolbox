@@ -16,12 +16,12 @@ describe('AutoUpdateTimespanComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AutoUpdateTimespanComponent);
     component = fixture.componentInstance;
-    component.currentTimespan = new Timespan(
-      new Date().getTime() - 10000000,
-      new Date().getTime(),
+    fixture.componentRef.setInput(
+      'currentTimespan',
+      new Timespan(new Date().getTime() - 10000000, new Date().getTime()),
     );
-    component.timeInterval = 100000;
-    component.refreshInterval = 2;
+    fixture.componentRef.setInput('timeInterval', 100000);
+    fixture.componentRef.setInput('refreshInterval', 2);
     fixture.detectChanges();
   });
 
