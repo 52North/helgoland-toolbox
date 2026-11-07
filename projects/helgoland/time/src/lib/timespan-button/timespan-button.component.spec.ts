@@ -17,7 +17,7 @@ describe('TimespanButtonComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TimespanButtonComponent);
     component = fixture.componentInstance;
-    component.label = 'label';
+    fixture.componentRef.setInput('label', 'label');
     fixture.detectChanges();
   });
 

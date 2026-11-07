@@ -21,9 +21,9 @@ describe('TimespanShiftSelectorComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TimespanShiftSelectorComponent);
     component = fixture.componentInstance;
-    component.timespan = new Timespan(
-      new Date().getTime() - 10000000,
-      new Date().getTime(),
+    fixture.componentRef.setInput(
+      'timespan',
+      new Timespan(new Date().getTime() - 10000000, new Date().getTime()),
     );
     fixture.detectChanges();
   });
