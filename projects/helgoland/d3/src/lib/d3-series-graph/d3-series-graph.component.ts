@@ -1088,7 +1088,7 @@ export class D3SeriesGraphComponent
           this.wrapText,
           axisHeight - 10,
           diagramHeight / 2,
-          this.plotOptions.yaxisModifier,
+          this.plotOptions.yaxisModifier ?? false,
           axis.label,
         );
 
