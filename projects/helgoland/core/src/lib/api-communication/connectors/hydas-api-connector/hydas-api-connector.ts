@@ -78,7 +78,12 @@ interface HydasStation {
   };
 }
 
-type HydasProcedure = 'measured' | 'manual' | 'predicted';
+type HydasProcedure =
+  | 'measured'
+  | 'manual'
+  | 'calculated'
+  | 'simulated'
+  | 'predicted';
 
 interface HydasParameter {
   id: string;
@@ -109,6 +114,8 @@ const PARAMETER_REQUEST_CONCURRENCY = 8;
 const PROCEDURE_LABELS: Record<HydasProcedure, string> = {
   measured: 'Messwert',
   manual: 'Manuelle Ablesung',
+  calculated: 'Berechneter Wert',
+  simulated: 'Simulation',
   predicted: 'Vorhersage',
 };
 
