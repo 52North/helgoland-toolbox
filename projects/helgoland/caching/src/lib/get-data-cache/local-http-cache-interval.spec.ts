@@ -50,8 +50,8 @@ describe('LocalHttpCacheInterval', () => {
         values: {
           referenceValues: {},
           values: [
-            [currTimespan.from, 1],
-            [currTimespan.to, 2],
+            [currTimespan.from, { value: 1 }],
+            [currTimespan.to, { value: 2 }],
           ],
         },
         expirationDate: moment(new Date()).add(2, 'hours').toDate(),
@@ -82,8 +82,8 @@ describe('LocalHttpCacheInterval', () => {
         values: {
           referenceValues: {},
           values: [
-            [currTimespanToday.from, 1],
-            [currTimespanToday.to, 2],
+            [currTimespanToday.from, { value: 1 }],
+            [currTimespanToday.to, { value: 2 }],
           ],
         },
         expirationDate: moment(new Date()).add(2, 'hours').toDate(),
@@ -95,8 +95,8 @@ describe('LocalHttpCacheInterval', () => {
         values: {
           referenceValues: {},
           values: [
-            [currTimespanYesterday.from, 1],
-            [currTimespanYesterday.to, 2],
+            [currTimespanYesterday.from, { value: 1 }],
+            [currTimespanYesterday.to, { value: 2 }],
           ],
         },
         expirationDate: moment(new Date()).add(2, 'hours').toDate(),
@@ -143,8 +143,8 @@ describe('LocalHttpCacheInterval', () => {
         values: {
           referenceValues: {},
           values: [
-            [currTimespan1.from, 1],
-            [currTimespan1.to, 2],
+            [currTimespan1.from, { value: 1 }],
+            [currTimespan1.to, { value: 2 }],
           ],
         },
         expirationDate: moment(new Date()).add(2, 'hours').toDate(),
@@ -157,8 +157,8 @@ describe('LocalHttpCacheInterval', () => {
         values: {
           referenceValues: {},
           values: [
-            [currTimespan2.from, 1],
-            [currTimespan2.to, 2],
+            [currTimespan2.from, { value: 1 }],
+            [currTimespan2.to, { value: 2 }],
           ],
         },
         expirationDate: moment(new Date()).add(2, 'hours').toDate(),
@@ -198,8 +198,8 @@ describe('LocalHttpCacheInterval', () => {
         values: {
           referenceValues: {},
           values: [
-            [currTimespan1.from, 1],
-            [currTimespan1.to, 2],
+            [currTimespan1.from, { value: 1 }],
+            [currTimespan1.to, { value: 2 }],
           ],
         },
         expirationDate: moment(new Date()).add(2, 'hours').toDate(),
@@ -212,8 +212,8 @@ describe('LocalHttpCacheInterval', () => {
         values: {
           referenceValues: {},
           values: [
-            [currTimespan2.from, 1],
-            [currTimespan2.to, 2],
+            [currTimespan2.from, { value: 1 }],
+            [currTimespan2.to, { value: 2 }],
           ],
         },
         expirationDate: moment(new Date()).add(2, 'hours').toDate(),
@@ -255,11 +255,11 @@ describe('LocalHttpCacheInterval', () => {
         values: {
           referenceValues: {},
           values: [
-            [100, 1],
-            [150, 2],
-            [200, 3],
-            [250, 4],
-            [300, 5],
+            [100, { value: 1 }],
+            [150, { value: 2 }],
+            [200, { value: 3 }],
+            [250, { value: 4 }],
+            [300, { value: 5 }],
           ],
         },
         expirationDate: expirationDate,
@@ -271,9 +271,9 @@ describe('LocalHttpCacheInterval', () => {
         values: {
           referenceValues: {},
           values: [
-            [301, 1],
-            [325, 2],
-            [350, 3],
+            [301, { value: 1 }],
+            [325, { value: 2 }],
+            [350, { value: 3 }],
           ],
         },
         expirationDate: expirationDate,
@@ -285,11 +285,11 @@ describe('LocalHttpCacheInterval', () => {
         values: {
           referenceValues: {},
           values: [
-            [500, 1],
-            [550, 2],
-            [600, 3],
-            [650, 4],
-            [700, 5],
+            [500, { value: 1 }],
+            [550, { value: 2 }],
+            [600, { value: 3 }],
+            [650, { value: 4 }],
+            [700, { value: 5 }],
           ],
         },
         expirationDate: expirationDate,
@@ -301,9 +301,9 @@ describe('LocalHttpCacheInterval', () => {
         values: {
           referenceValues: {},
           values: [
-            [701, 1],
-            [725, 2],
-            [750, 3],
+            [701, { value: 1 }],
+            [725, { value: 2 }],
+            [750, { value: 3 }],
           ],
         },
         expirationDate: expirationDate,
@@ -315,11 +315,11 @@ describe('LocalHttpCacheInterval', () => {
         values: {
           referenceValues: {},
           values: [
-            [900, 1],
-            [950, 2],
-            [1000, 3],
-            [1050, 4],
-            [1100, 5],
+            [900, { value: 1 }],
+            [950, { value: 2 }],
+            [1000, { value: 3 }],
+            [1050, { value: 4 }],
+            [1100, { value: 5 }],
           ],
         },
         expirationDate: expirationDate,
@@ -339,8 +339,8 @@ describe('LocalHttpCacheInterval', () => {
           {
             values: {
               referenceValues: {},
-              values: [[100, 1]],
-              valueAfterTimespan: [150, 2],
+              values: [[100, { value: 1 }]],
+              valueAfterTimespan: [150, { value: 2 }],
             },
             expirationDate: expirationDate,
             expirationAtMs: expirationAtMs,
@@ -356,8 +356,8 @@ describe('LocalHttpCacheInterval', () => {
           {
             values: {
               referenceValues: {},
-              values: [[1100, 5]],
-              valueBeforeTimespan: [1050, 4],
+              values: [[1100, { value: 5 }]],
+              valueBeforeTimespan: [1050, { value: 4 }],
             },
             expirationDate: expirationDate,
             expirationAtMs: expirationAtMs,
@@ -374,12 +374,12 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [150, 2],
-                [200, 3],
-                [250, 4],
+                [150, { value: 2 }],
+                [200, { value: 3 }],
+                [250, { value: 4 }],
               ],
-              valueBeforeTimespan: [100, 1],
-              valueAfterTimespan: [300, 5],
+              valueBeforeTimespan: [100, { value: 1 }],
+              valueAfterTimespan: [300, { value: 5 }],
             },
             expirationDate: expirationDate,
             expirationAtMs: expirationAtMs,
@@ -396,11 +396,11 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [100, 1],
-                [150, 2],
-                [200, 3],
-                [250, 4],
-                [300, 5],
+                [100, { value: 1 }],
+                [150, { value: 2 }],
+                [200, { value: 3 }],
+                [250, { value: 4 }],
+                [300, { value: 5 }],
               ],
             },
             expirationDate: expirationDate,
@@ -418,11 +418,11 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [100, 1],
-                [150, 2],
-                [200, 3],
-                [250, 4],
-                [300, 5],
+                [100, { value: 1 }],
+                [150, { value: 2 }],
+                [200, { value: 3 }],
+                [250, { value: 4 }],
+                [300, { value: 5 }],
               ],
             },
             expirationDate: expirationDate,
@@ -433,8 +433,8 @@ describe('LocalHttpCacheInterval', () => {
           {
             values: {
               referenceValues: {},
-              values: [[301, 1]],
-              valueAfterTimespan: [325, 2],
+              values: [[301, { value: 1 }]],
+              valueAfterTimespan: [325, { value: 2 }],
             },
             expirationDate: expirationDate,
             expirationAtMs: expirationAtMs,
@@ -451,11 +451,11 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [100, 1],
-                [150, 2],
-                [200, 3],
-                [250, 4],
-                [300, 5],
+                [100, { value: 1 }],
+                [150, { value: 2 }],
+                [200, { value: 3 }],
+                [250, { value: 4 }],
+                [300, { value: 5 }],
               ],
             },
             expirationDate: expirationDate,
@@ -466,8 +466,8 @@ describe('LocalHttpCacheInterval', () => {
           {
             values: {
               referenceValues: {},
-              values: [[301, 1]],
-              valueAfterTimespan: [325, 2],
+              values: [[301, { value: 1 }]],
+              valueAfterTimespan: [325, { value: 2 }],
             },
             expirationDate: expirationDate,
             expirationAtMs: expirationAtMs,
@@ -484,12 +484,12 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [550, 2],
-                [600, 3],
-                [650, 4],
+                [550, { value: 2 }],
+                [600, { value: 3 }],
+                [650, { value: 4 }],
               ],
-              valueBeforeTimespan: [500, 1],
-              valueAfterTimespan: [700, 5],
+              valueBeforeTimespan: [500, { value: 1 }],
+              valueAfterTimespan: [700, { value: 5 }],
             },
             expirationDate: expirationDate,
             expirationAtMs: expirationAtMs,
@@ -506,11 +506,11 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [200, 3],
-                [250, 4],
-                [300, 5],
+                [200, { value: 3 }],
+                [250, { value: 4 }],
+                [300, { value: 5 }],
               ],
-              valueBeforeTimespan: [150, 2],
+              valueBeforeTimespan: [150, { value: 2 }],
             },
             expirationDate: expirationDate,
             expirationAtMs: expirationAtMs,
@@ -521,9 +521,9 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [301, 1],
-                [325, 2],
-                [350, 3],
+                [301, { value: 1 }],
+                [325, { value: 2 }],
+                [350, { value: 3 }],
               ],
             },
             expirationDate: expirationDate,
@@ -535,11 +535,11 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [500, 1],
-                [550, 2],
-                [600, 3],
+                [500, { value: 1 }],
+                [550, { value: 2 }],
+                [600, { value: 3 }],
               ],
-              valueAfterTimespan: [650, 4],
+              valueAfterTimespan: [650, { value: 4 }],
             },
             expirationDate: expirationDate,
             expirationAtMs: expirationAtMs,
@@ -556,11 +556,11 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [200, 3],
-                [250, 4],
-                [300, 5],
+                [200, { value: 3 }],
+                [250, { value: 4 }],
+                [300, { value: 5 }],
               ],
-              valueBeforeTimespan: [150, 2],
+              valueBeforeTimespan: [150, { value: 2 }],
             },
             expirationDate: expirationDate,
             expirationAtMs: expirationAtMs,
@@ -571,9 +571,9 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [301, 1],
-                [325, 2],
-                [350, 3],
+                [301, { value: 1 }],
+                [325, { value: 2 }],
+                [350, { value: 3 }],
               ],
             },
             expirationDate: expirationDate,
@@ -585,11 +585,11 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [500, 1],
-                [550, 2],
-                [600, 3],
-                [650, 4],
-                [700, 5],
+                [500, { value: 1 }],
+                [550, { value: 2 }],
+                [600, { value: 3 }],
+                [650, { value: 4 }],
+                [700, { value: 5 }],
               ],
             },
             expirationDate: expirationDate,
@@ -601,9 +601,9 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [701, 1],
-                [725, 2],
-                [750, 3],
+                [701, { value: 1 }],
+                [725, { value: 2 }],
+                [750, { value: 3 }],
               ],
             },
             expirationDate: expirationDate,
@@ -621,10 +621,10 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [325, 2],
-                [350, 3],
+                [325, { value: 2 }],
+                [350, { value: 3 }],
               ],
-              valueBeforeTimespan: [301, 1],
+              valueBeforeTimespan: [301, { value: 1 }],
             },
             expirationDate: expirationDate,
             expirationAtMs: expirationAtMs,
@@ -635,11 +635,11 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [500, 1],
-                [550, 2],
-                [600, 3],
-                [650, 4],
-                [700, 5],
+                [500, { value: 1 }],
+                [550, { value: 2 }],
+                [600, { value: 3 }],
+                [650, { value: 4 }],
+                [700, { value: 5 }],
               ],
             },
             expirationDate: expirationDate,
@@ -650,8 +650,8 @@ describe('LocalHttpCacheInterval', () => {
           {
             values: {
               referenceValues: {},
-              values: [[701, 1]],
-              valueAfterTimespan: [725, 2],
+              values: [[701, { value: 1 }]],
+              valueAfterTimespan: [725, { value: 2 }],
             },
             expirationDate: expirationDate,
             expirationAtMs: expirationAtMs,
@@ -668,11 +668,11 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [100, 1],
-                [150, 2],
-                [200, 3],
-                [250, 4],
-                [300, 5],
+                [100, { value: 1 }],
+                [150, { value: 2 }],
+                [200, { value: 3 }],
+                [250, { value: 4 }],
+                [300, { value: 5 }],
               ],
             },
             expirationDate: expirationDate,
@@ -684,9 +684,9 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [301, 1],
-                [325, 2],
-                [350, 3],
+                [301, { value: 1 }],
+                [325, { value: 2 }],
+                [350, { value: 3 }],
               ],
             },
             expirationDate: expirationDate,
@@ -698,11 +698,11 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [500, 1],
-                [550, 2],
-                [600, 3],
-                [650, 4],
-                [700, 5],
+                [500, { value: 1 }],
+                [550, { value: 2 }],
+                [600, { value: 3 }],
+                [650, { value: 4 }],
+                [700, { value: 5 }],
               ],
             },
             expirationDate: expirationDate,
@@ -714,9 +714,9 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [701, 1],
-                [725, 2],
-                [750, 3],
+                [701, { value: 1 }],
+                [725, { value: 2 }],
+                [750, { value: 3 }],
               ],
             },
             expirationDate: expirationDate,
@@ -728,11 +728,11 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [900, 1],
-                [950, 2],
-                [1000, 3],
-                [1050, 4],
-                [1100, 5],
+                [900, { value: 1 }],
+                [950, { value: 2 }],
+                [1000, { value: 3 }],
+                [1050, { value: 4 }],
+                [1100, { value: 5 }],
               ],
             },
             expirationDate: expirationDate,
@@ -754,8 +754,8 @@ describe('LocalHttpCacheInterval', () => {
           {
             values: {
               referenceValues: {},
-              values: [[300, 5]],
-              valueBeforeTimespan: [250, 4],
+              values: [[300, { value: 5 }]],
+              valueBeforeTimespan: [250, { value: 4 }],
             },
             expirationDate: expirationDate,
             expirationAtMs: expirationAtMs,
@@ -766,9 +766,9 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [301, 1],
-                [325, 2],
-                [350, 3],
+                [301, { value: 1 }],
+                [325, { value: 2 }],
+                [350, { value: 3 }],
               ],
             },
             expirationDate: expirationDate,
@@ -780,11 +780,11 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [500, 1],
-                [550, 2],
-                [600, 3],
-                [650, 4],
-                [700, 5],
+                [500, { value: 1 }],
+                [550, { value: 2 }],
+                [600, { value: 3 }],
+                [650, { value: 4 }],
+                [700, { value: 5 }],
               ],
             },
             expirationDate: expirationDate,
@@ -796,9 +796,9 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [701, 1],
-                [725, 2],
-                [750, 3],
+                [701, { value: 1 }],
+                [725, { value: 2 }],
+                [750, { value: 3 }],
               ],
             },
             expirationDate: expirationDate,
@@ -810,10 +810,10 @@ describe('LocalHttpCacheInterval', () => {
             values: {
               referenceValues: {},
               values: [
-                [900, 1],
-                [950, 2],
+                [900, { value: 1 }],
+                [950, { value: 2 }],
               ],
-              valueAfterTimespan: [1000, 3],
+              valueAfterTimespan: [1000, { value: 3 }],
             },
             expirationDate: expirationDate,
             expirationAtMs: expirationAtMs,
@@ -827,7 +827,7 @@ describe('LocalHttpCacheInterval', () => {
       const elURL2: CachedObject = {
         values: {
           referenceValues: {},
-          values: [[100, 1]],
+          values: [[100, { value: 1 }]],
         },
         expirationDate: expirationDate,
         expirationAtMs: expirationAtMs,
@@ -839,7 +839,7 @@ describe('LocalHttpCacheInterval', () => {
           {
             values: {
               referenceValues: {},
-              values: [[100, 1]],
+              values: [[100, { value: 1 }]],
             },
             expirationDate: expirationDate,
             expirationAtMs: expirationAtMs,
@@ -854,8 +854,8 @@ describe('LocalHttpCacheInterval', () => {
           {
             values: {
               referenceValues: {},
-              values: [[1100, 5]],
-              valueBeforeTimespan: [1050, 4],
+              values: [[1100, { value: 5 }]],
+              valueBeforeTimespan: [1050, { value: 4 }],
             },
             expirationDate: expirationDate,
             expirationAtMs: expirationAtMs,
