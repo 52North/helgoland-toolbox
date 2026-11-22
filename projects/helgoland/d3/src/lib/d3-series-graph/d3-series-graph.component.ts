@@ -1429,7 +1429,11 @@ export class D3SeriesGraphComponent
 
     this.graphBody
       .selectAll('.bar')
-      .data(this.preparedData.get(ds.id))
+      .data(
+        (this.preparedData.get(ds.id) ?? []).filter(
+          (entry) => entry.value !== 0,
+        ),
+      )
       .enter()
       .append('rect')
       .attr('class', 'bar')
